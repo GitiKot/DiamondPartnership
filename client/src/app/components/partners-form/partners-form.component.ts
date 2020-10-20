@@ -1,0 +1,129 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { from } from 'rxjs';
+import { Partner } from 'src/app/data/partner';
+import { PartnerService } from 'src/app/services/partner.service';
+import { phoneValidator } from 'src/app/validtors/phone.validator';
+import { ContactNumberValidator } from 'src/app/validtors/contact.validator'
+@Component({
+  selector: 'app-partners-form',
+  templateUrl: './partners-form.component.html',
+  styleUrls: ['./partners-form.component.css']
+})
+export class PartnersFormComponent implements OnInit {
+  constructor(private partnerService: PartnerService, private router: Router) { }
+  partnersList: Array<Partner>;
+  partnersForm: FormGroup;
+
+  ngOnInit()//: void 
+  {
+    var firstInput = document.getElementById('name');
+    var allInput = document.querySelectorAll('input');
+    firstInput.focus();
+
+
+    ///פוקוס
+    var input = document.getElementById("name");
+
+    allInput.forEach(a => a.addEventListener("keypress", function (event) {
+    
+      ;
+      if (event.code === "Enter") {
+        var current = (event.target as Element);
+          event.preventDefault();
+        var index = current.getAttribute('tabindex');
+        var num = (Number(index));
+        num += 1;
+        // let nextInput= document.querySelector('[tabindex=num]');
+        let nextInput = FindByAttributeValue("tabindex", num, "input");
+        if (nextInput != undefined) { 
+          // alert(nextInput);
+          nextInput.focus();}
+          else{
+            var save = document.getElementById('save');
+            save.focus();
+           alert("האם הנך בטוח במה שאתה עושה");
+          
+          }
+        function FindByAttributeValue(attribute, value, element_type) {
+          element_type = element_type || "*";
+          var All = document.getElementsByTagName(element_type);
+          for (var i = 0; i < All.length; i++) {
+            if (All[i].getAttribute(attribute) == value) { return All[i]; }
+          }
+        }
+      }
+    }, false))
+
+
+    // this.partnerService.getAllPartners().subscribe(ans=>this.partnersList=ans);
+    this.partnersForm = new FormGroup({
+      name: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
+      contact: new FormControl('', Validators.required),
+      phone: new FormControl('', Validators.compose([Validators.minLength(9), Validators.pattern('[0][2,3,4,8,9][0-9]{7}')])),
+      pel: new FormControl('', Validators.compose([Validators.minLength(10), Validators.pattern('[0][5][0-9]{8}'), phoneValidator()])),
+      fax: new FormControl('', Validators.required),
+      Remarks: new FormControl(''),
+
+    }, ContactNumberValidator(['phone', 'pel', 'email'])); console.log(this.partnersForm.controls.email.value);
+  }
+
+  save() {
+    alert("האם הנך בטוח במה שאתה עושה");
+    if (this.partnersForm.valid) {
+      const p = new Partner();
+      // p.name = this.partnersForm.controls.name.value.trim();
+      // p.email = this.partnersForm.controls.email.value;
+      // p.contact = this.partnersForm.controls.phone.value;
+      // p.pel = this.partnersForm.controls.phone.value;
+      // p.phone = this.partnersForm.controls.phone.value;
+      // p.fax = this.partnersForm.controls.phone.value;
+      // p.Remarks = this.partnersForm.controls.phone.value;
+      this.partnerService.addPartner(this.partnersForm.value)
+        .subscribe(a => {
+          this.partnersList.push(a);
+          this.partnersForm.reset();
+        });
+    }
+
+    // let p = new Partner(this.partnersForm.controls.name.value,
+    //   this.partnersForm.controls.email.value
+
+    //   ,this.partnersForm.controls.phone.value);
+
+    // נרשמים לפונ שהיא מחזירה תשובה =האוביקט= רק כשגומרת ליצור אוביקט חדש 
+    // this.partnerService.addPartner(p).subscribe(a=>this.partnersForm.reset())     
+    // this.router.navigate(['']);
+
+    //אם י שפונקציית הצלחה נעשה אלרת עם:השותף נותר בהלחה
+  }
+  cancel() {
+    this.router.navigate(['/partners']);
+  }
+  // keypressevt(event) {
+  //  alert(event);
+
+
+  // var body = document.body,
+  //   btn = document.getElementById('name');
+  // body.addEventListener('keyup', function (event) {
+  //   console.log(event.currentTarget === body);
+  //   console.log(event.target === btn);
+  //   alert(event.currentTarget);
+  //   alert(event.target);
+  // }, false);
+
+  // var gg = document.querySelector('[tabindex="1"]');
+  // var ggg = document.getElementById('contact');
+  // alert(gg.getAttribute('tabindex'));
+  // ggg.focus();
+  // e => console.log((e.target as Element).id)
+
+
+  // }
+
+
+}
+

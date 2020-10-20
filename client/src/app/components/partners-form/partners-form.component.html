@@ -1,0 +1,119 @@
+<form [formGroup]='partnersForm' (submit)="save()">
+
+  <div class="form-group row">
+    <label for="name">שם שותף:</label>
+    <input  tabindex="0" type="text"   class="form-control" formControlName="name" placeholder="שם שותף" id="name">
+  </div>
+  <!-- <div class="form-group row">
+        <label for="inputPassword" class="col-sm-2 col-form-label">שם שותף</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" id="inputPassword" placeholder="שם שותף">
+        </div>
+      </div> -->
+  <div class="form-group row">
+    <label for="contact">איש קשר:</label>
+    <input tabindex="1" type="text" class="form-control" formControlName="contact" placeholder="הכנס איש קשר" id="contact">
+  </div>
+  <div class="form-group row">
+    <label for="email">כתובת מייל:</label>
+    <input  tabindex="2" type="email" class="form-control" formControlName="email" placeholder=" הכנס כתובת מייל" id="email">
+    <label class="error" *ngIf="partnersForm.controls['email'].errors!=null&&partnersForm.controls['email'].dirty">מייל
+      לא תקין</label>
+  </div>
+
+  <div class="form-group row">
+    <label for="phone">טלפון:</label>
+    <input  tabindex="3" type="tel" class="form-control" formControlName="phone" placeholder=" הכנס טלפון" id="phone">
+    <label class="error" *ngIf="partnersForm.controls['phone'].errors!=null&&partnersForm.controls['phone'].dirty">
+      המספר אינו תקין </label> 
+    <!-- <br> -->
+    <label class="error" *ngIf="partnersForm.controls['phone'].errors?.minlength!=null">
+      הקשת {{partnersForm.controls['phone'].errors?.minlength.actualLength}} ספרות<br>
+      יש להקיש מינימום {{partnersForm.controls['phone'].errors?.minlength.requiredLength}} ספרות.
+    </label>
+  </div>
+  <div class="form-group row">
+    <label for="fax">פקס:</label>
+    <input tabindex="4" type="tel" class="form-control" formControlName="fax" placeholder="הכנס פקס" id="fax">
+  </div>
+  <div class="form-group row">
+    <label for="pel">פלאפון:</label>
+    <input tabindex="5" type="tel" class="form-control" formControlName="pel" placeholder="הכנס פלאפון" id="pel">
+    <label class="error" *ngIf="partnersForm.controls['pel'].errors!=null&&partnersForm.controls['pel'].dirty">
+      <!-- הספרה במקום ה- {{partnersForm.controls['pel'].errors?.phoneError.requiredValue}} אינה תקינה. -->
+      המספר אינו תקין
+    </label>
+    <label class="error" *ngIf="partnersForm.controls['pel'].errors?.minlength!=null">
+      הקשת {{partnersForm.controls['pel'].errors?.minlength.actualLength}} ספרות<br>
+      יש להקיש מינימום {{partnersForm.controls['pel'].errors?.minlength.requiredLength}} ספרות.
+    </label>
+  </div>
+  <div class="error"
+    *ngIf="partnersForm.errors?.contactnumber&&(partnersForm.controls['email'].dirty||partnersForm.controls['phone'].dirty||partnersForm.controls['pel'].dirty)">
+    אין אמצעי תקשורת</div>
+
+  <div class="form-group row">
+
+    <input tabindex="6" type="text" class="form-control" formControlName="Remarks" placeholder="הערות" id="Remarks">
+  </div>
+  <!-- <input type="submit" class="btn btn-primary" value="שמירה"> -->
+ 
+  <button type="submit" class="btn btn-primary" id="save">שמירה</button>&nbsp; &nbsp;
+  <button (click)="cancel()" class="btn btn-primary" id="cancel"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+  <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+</svg> ביטול</button>
+
+  <div class="container">
+ 
+    <!-- Button to Open the Modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+      Open modal
+    </button>
+  
+    <!-- The Modal -->
+    <div class="modal" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+        
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Modal Heading</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          
+          <!-- Modal body -->
+          <div class="modal-body">
+            Modal body..
+          </div>
+          
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  
+
+
+
+
+
+
+
+
+
+</form>
+
+
+
+
+
+
+ <!-- tabindex="{{item.tabIndex}}"
+    ng-keydown="onKeydown(item, $event)" ng-focus="onFocus(item)"" -->
+    <!-- (keyup.uparrow)="keypressevt()" -->

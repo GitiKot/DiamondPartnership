@@ -1,0 +1,68 @@
+<br>
+<form  [formGroup]='salesForm' class="form-inline d-flex justify-content-center md-form form-sm mt-0">
+<!-- <h1> אפשר להביא את הכל ולעשות סינון אן זה מידי כבד?</h1> -->
+  <div *ngIf="isSalesPage == 'true'">
+    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd"
+        d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
+      <path fill-rule="evenodd"
+        d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+    </svg>&nbsp;
+
+    <input type="text" id="public" class="form-control form-control-sm ml-3 " (keyup.enter)="keypressevt()"
+      placeholder="חיפוש לפי שם סריה כללית" title="Type in a name">
+  </div>
+  <div>
+    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd"
+        d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
+      <path fill-rule="evenodd"
+        d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+    </svg>&nbsp;
+    <input type="text" id="private" class="form-control form-control-sm ml-3 " (keyup)="searchPrivate()"
+      placeholder="חיפוש לפי שם סריה פרטית" title="Type in a name11">
+   
+    <a class="btn btn-primary" *ngIf="isSalesPage == 'true'" [routerLink]="['/sales-form']">מכירה חדשה</a>
+   
+ </div>
+<br> <br><br>
+<div class="container">
+  <table id="salesTable">
+    <thead>
+    <tr class="header">
+      <th>תאריך מכירה</th>
+      <th>סך ימים</th>
+      <th>תאריך קבלת הצ'ק</th>
+      <th>מספר חשבונית</th>
+      <th>שם סריה פרטית</th>
+      <th>שם אבן</th>
+      <th>משקל</th>
+      <th>מחיר לקרט</th>
+      <th>סה"כ</th>
+      <th>גלם/מלוטש</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr *ngFor="let s of salesList">
+       <td>{{s.date}}</td>
+      <td>{{s.numdate}}</td>
+      <td>{{s.getchack}}</td>
+      <td>{{s.InvoiceNumber}}</td>
+      <!-- <td>{{s.PublicSerialName}}</td> -->
+      <td>{{s.PrivateSerialName}}</td>
+      <td>{{s.StoneName}}</td> 
+      <td>{{s.Weight}}</td>
+      <td>{{s.PricePerCarat}}</td>
+      <td>{{s.TotalPrice}}</td>
+      <td>{{s.RawOrPolished}}</td>
+     
+    </tr>
+  </tbody>
+  </table>
+  
+</div>
+
+</form>

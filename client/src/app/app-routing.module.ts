@@ -1,0 +1,40 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
+import { PartnersComponent } from './components/partners/partners.component';
+import { HomeComponent } from './components/home/home.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { SeriousnessComponent } from './components/seriousness/seriousness.component';
+import { SalesComponent } from './components/sales/sales.component';
+import { ExpensesComponent } from './components/expenses/expenses.component';
+import { ChecksComponent } from './components/checks/checks.component';
+import { PartnersFormComponent } from './components/partners-form/partners-form.component';
+import { SalesFormComponent } from './components/sales-form/sales-form.component';
+import { AppComponent } from './app.component';
+
+
+const routes: Routes = [
+  { path: 'home', component: HomeComponent },
+  { path: 'checks', component: ChecksComponent },
+  { path: 'expenses', component: ExpensesComponent },
+  { path: 'sales/:isSales', component: SalesComponent },
+  { path: 'sales-form', component: SalesFormComponent },
+  { path: 'seriousness', component: SeriousnessComponent },
+  { path: 'nav-bar', component: NavBarComponent },
+  { path: 'partners', component: PartnersComponent },
+  { path: 'partners-form', component: PartnersFormComponent },
+  // { path: '', component: AppComponent, pathMatch: 'full' },
+  // { path: 'sales', loadChildren: () => import('./sales/sales.module').then(m => m.ArticlesModule) },
+  // { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+  // { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
+  // { path: '', component: HomeComponent },
+//  {path:'**',redirectTo:'/nav-bar',pathMatch:'full'}
+
+];
+
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+exports: [RouterModule]
+})
+export class AppRoutingModule{}
