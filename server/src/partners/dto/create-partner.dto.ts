@@ -7,5 +7,5 @@ export class createPartnerDto{
     readonly  fax:string;
     readonly pel:string;
     readonly Remarks:string;
-    
+   
 } 
