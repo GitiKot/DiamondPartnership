@@ -20,6 +20,9 @@ export class PartnersFormComponent implements OnInit {
   {
     var firstInput = document.getElementById('name');
     var allInput = document.querySelectorAll('input');
+  
+
+
     firstInput.focus();
 
 
@@ -123,7 +126,11 @@ export class PartnersFormComponent implements OnInit {
 
 
   // }
-
+  // When the user clicks on div, open the popup
+  // myFunction() {
+  //   var popup = document.getElementById("myPopup");
+  //   popup.toggle("show");
+  // }
 
 }
 
