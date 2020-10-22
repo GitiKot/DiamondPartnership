@@ -11,7 +11,7 @@ import { ChecksComponent } from './components/checks/checks.component';
 import { PartnersFormComponent } from './components/partners-form/partners-form.component';
 import { SalesFormComponent } from './components/sales-form/sales-form.component';
 import { AppComponent } from './app.component';
-
+import{ModalFormComponent}from './components/modal-form/modal-form.component'
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -23,12 +23,7 @@ const routes: Routes = [
   { path: 'nav-bar', component: NavBarComponent },
   { path: 'partners', component: PartnersComponent },
   { path: 'partners-form', component: PartnersFormComponent },
-  // { path: '', component: AppComponent, pathMatch: 'full' },
-  // { path: 'sales', loadChildren: () => import('./sales/sales.module').then(m => m.ArticlesModule) },
-  // { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
-  // { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
-  // { path: '', component: HomeComponent },
-//  {path:'**',redirectTo:'/nav-bar',pathMatch:'full'}
+  { path: '123', component: ModalFormComponent },
 
 ];
 

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+// import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http'
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -17,9 +17,11 @@ import { PrivateSeriousnessListComponent } from './components/private-seriousnes
 import { SalesFormComponent } from './components/sales-form/sales-form.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
-
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { ModalFormComponent } from './components/modal-form/modal-form.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import{HttpClientModule} from ''
-
 // import {MatInputModule} from '@angular/material/input';
 
 
@@ -39,13 +41,19 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
     PrivateSeriousnessListComponent,
     SalesFormComponent,
     HomeComponent,
-    NavBarComponent
+    NavBarComponent,
+    ModalFormComponent,
+
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
-    AppRoutingModule, ReactiveFormsModule
-  ],
+    AppRoutingModule, ReactiveFormsModule,
+    MDBBootstrapModule.forRoot(),
+    BrowserAnimationsModule,
+
+  ], 
+  schemas: [NO_ERRORS_SCHEMA] ,
   providers: [],
   bootstrap: [AppComponent]
 })
