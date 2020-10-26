@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Expenses } from 'src/app/data/expenses';
+import{ExpensesService} from 'src/app/services/expenses.service'
 
 @Component({
   selector: 'app-expenses',
@@ -8,9 +11,23 @@ import { FormGroup } from '@angular/forms';
 })
 export class ExpensesComponent implements OnInit {
 expensesForm: FormGroup;
-  constructor() { }
+expensessList:Array<Expenses>;
+
+  constructor(private r:Router, private expensesService:ExpensesService) { }
   
   ngOnInit(): void {
+    
+      this.expensesService.getAllExpenses().subscribe(ans => this.expensessList = ans);
+  
+  
+      this.expensesForm = new FormGroup({
+        contactFormModalName: new FormControl('', Validators.required),
+        contactFormModalEmail: new FormControl('', Validators.email),
+        contactFormModalSubject: new FormControl('', Validators.required),
+        contactFormModalMessage: new FormControl('', Validators.required)
+      });
+    
+
   }
    myFunction() {
     var input, filter, table, tr, td, i, txtValue;
@@ -99,4 +116,22 @@ expensesForm: FormGroup;
       
  }
   
+
+
+ 
+  get contactFormModalName() {
+    return this.expensesForm.get('contactFormModalName');
+  }
+
+  get contactFormModalEmail() {
+    return this.expensesForm.get('contactFormModalEmail');
+  }
+
+  get contactFormModalSubject() {
+    return this.expensesForm.get('contactFormModalSubject');
+  }
+
+  get contactFormModalMessage() {
+    return this.expensesForm.get('contactFormModalMessage');
+  }
 }

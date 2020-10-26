@@ -5,7 +5,7 @@ import { SaleSchema } from './sales.model';
 import { SalesService } from './sales.service';
 
 @Module({
-    imports:[MongooseModule.forFeature([{name:'sale',schema:SaleSchema}]),
+    imports:[MongooseModule.forFeature([{name:'Sale',schema:SaleSchema}]),
 ],
 controllers:[SalesController],
 providers:[SalesService],

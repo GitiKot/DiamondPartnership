@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 
-export interface Partner extends Document {
+export interface Sale extends Document {
     id: string;
     date: Date;
     numdate: string;///totaldate

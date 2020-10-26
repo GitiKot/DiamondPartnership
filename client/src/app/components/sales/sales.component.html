@@ -25,11 +25,12 @@
       placeholder="חיפוש לפי שם סריה פרטית" title="Type in a name11">
    
     <a class="btn btn-primary" *ngIf="isSalesPage == 'true'" [routerLink]="['/sales-form']">מכירה חדשה</a>
-   
+ 
+    
  </div>
 <br> <br><br>
 <div class="container">
-  <table id="salesTable">
+  <table id="salesTable" class="table table-hover">
     <thead>
     <tr class="header">
       <th>תאריך מכירה</th>
@@ -66,3 +67,7 @@
 </div>
 
 </form>
+
+
+
+ 

@@ -17,13 +17,28 @@ export class SalesFormComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.salesForm = new FormGroup({ 
-      datesale: new FormControl('', Validators.compose([Validators.required,Validators.email])), 
-      // PaymentsNumber: new FormControl('', Validators.required),
-      numdate: new FormControl('', Validators.required),
+  //   this.salesForm = new FormGroup({ 
+  //     datesale: new FormControl('', Validators.compose([Validators.required,Validators.email])), 
+  //     // PaymentsNumber: new FormControl('', Validators.required),
+  //     numdate: new FormControl('', Validators.required),
 
-      InvoiceNumber: new FormControl('', Validators.required) 
-  });  
+  //     InvoiceNumber: new FormControl('', Validators.required) 
+      
+  // });  
+
+  this.salesForm = new FormGroup({
+    contactFormModalDate: new FormControl('', Validators.required),
+    contactFormModalNumdate: new FormControl('', Validators.required),
+    contactFormModalGetchack: new FormControl('', Validators.required),
+    contactFormModalInvoiceNumber: new FormControl('', Validators.required),
+    contactFormModalPublicSerialName: new FormControl('', Validators.required),
+    contactFormModalPrivateSerialName: new FormControl('', Validators.required),
+    contactFormModalStoneName: new FormControl('', Validators.required),
+    contactFormModalWeight: new FormControl('', Validators.required),
+    contactFormModalPricePerCarat: new FormControl('', Validators.required),
+    contactFormModalTotalPrice: new FormControl('', Validators.required),
+    contactFormModalRawOrPolished: new FormControl('', Validators.required)
+  });
   }
   
   save() {

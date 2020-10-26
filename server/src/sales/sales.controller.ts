@@ -6,7 +6,7 @@ import { SalesService } from './sales.service';
 
 @Controller('sales')
 export class SalesController {
-constructor(private salesService:SalesService){}
+constructor(private readonly salesService:SalesService){}
 
     @Post()
     async addSale(@Body() createSaleDto: createSaleDto) {
@@ -18,9 +18,33 @@ constructor(private salesService:SalesService){}
         const sale = await this.salesService.getSales();
         return sale;
       }
-    //   @Get(':id')
-    //   getSale(@Param('id') saleId: string) {
-    //     return this.salesService.getSingleSale(saleId);
-    //   }
+      @Get(':id')
+      getSale(@Param('id') saleId: string) {
+        return this.salesService.getSingleSale(saleId);
+      }
+  
+    
+  
+    // @Patch(':id')
+    // async updatePartner(
+    
+    //   @Param('id') partId: string,
+    //   @Body('name') partname: string,
+    //   @Body('contact') partcontact: string,
+    //   @Body('email') partemail: string,
+    //   @Body('phone') parttel: string,
+    //   @Body('fax') partfax: string,
+    //   @Body('pel') partpel: string,
+    //   @Body('Remarks') partRemarks: string,
+    // ) {
+    //   await this.partnerService.updatePartner(partId, partname, partcontact, partemail,parttel,partfax,partpel,partRemarks);
+    //   return null;
+    // }
+  
+    // @Delete(':id')
+    // async removeProduct(@Param('id') prodId: string) {
+    //     await this.partnerService.deletePartner(prodId);
+    //     return null;
+    // }
 
 }

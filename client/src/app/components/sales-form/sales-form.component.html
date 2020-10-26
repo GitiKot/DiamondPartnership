@@ -1,6 +1,7 @@
 <div>
   <h3> הוספהמכירה לשאוב עדכון או </h3>
 </div>
+
 <form [formGroup]='salesForm' action="action" (submit)="save()" method="POST" class="form-inline">
   <!-- date
   getchack
@@ -10,8 +11,8 @@
   <br>
 
   <span>
-    <label for="datesale"> תאריך מכירה:</label>
-    <input type="date"  class="form-control" formControlName="datesale" id="datesale">
+    <label for="date"> תאריך מכירה:</label>
+    <input type="date"  class="form-control" formControlName="date" id="date">
     <!-- <label  *ngIf="salesForm.controls['datesale'].error!=null">גדול </label> -->
   </span>&nbsp; &nbsp;
 <!-- PaymentsNumber -->
@@ -32,9 +33,9 @@
   </span>&nbsp; &nbsp;
   <br><br><br><br>
   <div>
-    <label class="form-check-label">
-      <input type="radio" class="form-check-input" name="optradio">&nbsp;גלם
-      &nbsp;<input type="radio" class="form-check-input" name="optradio">&nbsp;מלוטש
+    <label for="RawOrPolished" class="form-check-label">
+      <input type="radio" class="form-check-input" formControlName="RawOrPolished" id="Raw"name="optradio">&nbsp;גלם
+      &nbsp;<input type="radio" class="form-check-input" formControlName="RawOrPolished" id="Polished" name="optradio">&nbsp;מלוטש
     </label></div>
   <br>
   <br>
@@ -61,11 +62,11 @@
           <path d="M9.5 3V0L14 4.5h-3A1.5 1.5 0 0 1 9.5 3z"/>
           <path fill-rule="evenodd" d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z"/>
         </svg></th>
-        <td><input type="text" class="input" id="PublicSerialName"> </td>
-        <td><input type="text" class="input" id="PrivateSerialName"> </td>
-        <td><input type="text" class="input" id="StoneName"> </td>
-        <td><input type="text" class="input" id="Weight"> </td>
-        <td><input type="text" class="input" id="PricePerCarat"> </td>
+        <td><input type="text" class="input" formConrtolName="PublicSerialName" id="PublicSerialName"> </td>
+        <td><input type="text" class="input" formControlName="PrivateSerialName" id="PrivateSerialName"> </td>
+        <td><input type="text" class="input" formControlName="StoneName" id="StoneName"> </td>
+        <td><input type="text" class="input" formControlName="Weight" id="Weight"> </td>
+        <td><input type="text" class="input" formControlName="PricePerCarat" id="PricePerCarat"> </td>
         <td> </td>
 
       </tr>
