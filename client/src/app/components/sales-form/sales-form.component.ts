@@ -27,17 +27,17 @@ export class SalesFormComponent implements OnInit {
   // });  
 
   this.salesForm = new FormGroup({
-    contactFormModalDate: new FormControl('', Validators.required),
-    contactFormModalNumdate: new FormControl('', Validators.required),
-    contactFormModalGetchack: new FormControl('', Validators.required),
-    contactFormModalInvoiceNumber: new FormControl('', Validators.required),
-    contactFormModalPublicSerialName: new FormControl('', Validators.required),
-    contactFormModalPrivateSerialName: new FormControl('', Validators.required),
-    contactFormModalStoneName: new FormControl('', Validators.required),
-    contactFormModalWeight: new FormControl('', Validators.required),
-    contactFormModalPricePerCarat: new FormControl('', Validators.required),
-    contactFormModalTotalPrice: new FormControl('', Validators.required),
-    contactFormModalRawOrPolished: new FormControl('', Validators.required)
+    Date: new FormControl('', Validators.required),
+    Numdate: new FormControl('', Validators.required),
+    Getchack: new FormControl('', Validators.required),
+    InvoiceNumber: new FormControl('', Validators.required),
+    PublicSerialName: new FormControl('', Validators.required),
+    PrivateSerialName: new FormControl('', Validators.required),
+    StoneName: new FormControl('', Validators.required),
+    Weight: new FormControl('', Validators.required),
+    PricePerCarat: new FormControl('', Validators.required),
+    TotalPrice: new FormControl('', Validators.required),
+    RawOrPolished: new FormControl('', Validators.required)
   });
   }
   

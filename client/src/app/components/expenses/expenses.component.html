@@ -41,7 +41,7 @@
           <th style="width: 125px;">מספר חשבונית</th>
           <th>הערות</th>
           <th>סכום(אוטומטי)</th>
-          <th>+</th>
+          <th>פרוט</th>
           <th style="width: 100px;">סכום לשותף</th>
           <!-- <th style="width:60%;">Name</th>
     <th style="width:40%;">Country</th> -->
@@ -57,53 +57,84 @@
     <td>{{}}</td>
     <td>{{}}</td>
     <td>{{}}</td>
+    
   </tr> -->
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><button type="button" class="btn btn-primary" (click)="frame.show()" data-toggle="modal"
+              data-target="#modalCart">+</button></td>
+          <td></td>
 
 
-      </tbody>
-      <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
-        (click)="frame.show()" mdbWavesEffect>
-        <i class="fas fa-user-plus"></i>
-        שותף חדש
-      </button>
+        </tr>
 
-      <div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
-        aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header text-center">
-              <!-- <h4 class="modal-title w-100 font-weight-bold">הוצאות</h4> -->
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body mx-3">
-            <table>
-<thead>
-<tr>
-  <th>שם הוצאה</th>
-  <th>סכום</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>vgg</td>
-<td>ff</td>
-<!-- <td>{{}}</td>
-<td>{{}}</td> -->
-</tr>
-</tbody>
-            </table>
+        <!-- --------------------------------------------- -->
+
+        <!-- Modal: modalCart -->
+        <div mdbModal #frame="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
+          aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <!--Header-->
+              <div class="modal-header text-center">
+                <!-- <h4 class="modal-title" id="myModalLabel">Your cart</h4> -->
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <!-- <div class="modal-header text-center"> -->
+              <!-- <span aria-hidden="true">&times;</span> -->
+              <!--Body-->
+              <div class="modal-body">
+
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Product name</th>
+                      <th>Price</th>
+                      <th>Remove</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Product 1</td>
+                      <td>100$</td>
+                      <td><a><i class="fas fa-times"></i></a></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">2</th>
+                      <td>Product 2</td>
+                      <td>100$</td>
+                      <td><a><i class="fas fa-times"></i></a></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3</th>
+                      <td>Product 3</td>
+                      <td>100$</td>
+                      <td><a><i class="fas fa-times"></i></a></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </div>
+              <!--Footer-->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
+                  (click)="frame.hide()">Close</button>
+                <button class="btn btn-primary">Checkout</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <!-- <tr   scope="row" ><svg (click)="addrow()"id="svg" width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-file-earmark-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 0h5.5v1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h1V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/>
-    <path d="M9.5 3V0L14 4.5h-3A1.5 1.5 0 0 1 9.5 3z"/>
-    <path fill-rule="evenodd" d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z"/>
-  </svg>
-</tr> -->
+        <!----------------------------------------------------------- -->
+      </tbody>
 
     </table>
 

@@ -23,14 +23,14 @@ export class SalesComponent implements OnInit {
   this.salesForm = new FormGroup({
     contactFormModalDate: new FormControl('', Validators.required),
     contactFormModalNumdate: new FormControl('', Validators.required),
-    contactFormModalGetchack: new FormControl('', Validators.required),
+    // contactFormModalGetchack: new FormControl('', Validators.required),
     contactFormModalInvoiceNumber: new FormControl('', Validators.required),
     contactFormModalPublicSerialName: new FormControl('', Validators.required),
     contactFormModalPrivateSerialName: new FormControl('', Validators.required),
     contactFormModalStoneName: new FormControl('', Validators.required),
     contactFormModalWeight: new FormControl('', Validators.required),
     contactFormModalPricePerCarat: new FormControl('', Validators.required),
-    contactFormModalTotalPrice: new FormControl('', Validators.required),
+    // contactFormModalTotalPrice: new FormControl('', Validators.required),
     contactFormModalRawOrPolished: new FormControl('', Validators.required)
   });
    
@@ -65,9 +65,9 @@ export class SalesComponent implements OnInit {
   get contactFormModalNumdate(){
     return this.salesForm.get('contactFormModalNumdate');
   }
-  get contactFormModalGetchack(){
-    return this.salesForm.get('contactFormModalGetchack');
-  }
+  // get contactFormModalGetchack(){
+  //   return this.salesForm.get('contactFormModalGetchack');
+  // }
   get contactFormModalInvoiceNumber(){
     return this.salesForm.get('contactFormModalInvoiceNumber');
   }
@@ -90,9 +90,9 @@ export class SalesComponent implements OnInit {
       return this.salesForm.get('contactFormModalPricePerCarat');
     }
   
-    get contactFormModalTotalPrice() {
-      return this.salesForm.get('contactFormModalTotalPrice');
-    }
+    // get contactFormModalTotalPrice() {
+    //   return this.salesForm.get('contactFormModalTotalPrice');
+    // }
     get contactFormModalRawOrPolished() {
       return this.salesForm.get('contactFormModalRawOrPolished');
     }
