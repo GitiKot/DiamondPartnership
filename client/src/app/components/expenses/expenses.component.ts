@@ -22,8 +22,10 @@ expensessList:Array<Expenses>;
   
       this.expensesForm = new FormGroup({
         contactFormModalName: new FormControl('', Validators.required),
-        contactFormModalEmail: new FormControl('', Validators.email),
-        contactFormModalSubject: new FormControl('', Validators.required),
+        contactFormModalDate: new FormControl('', Validators.required),
+        contactFormModalGetChack: new FormControl('', Validators.required),
+        contactFormModalInvoicing: new FormControl('', Validators.required),
+        contactFormModalAmountPartner: new FormControl('', Validators.required),
         contactFormModalMessage: new FormControl('', Validators.required)
       });
     
@@ -122,15 +124,21 @@ expensessList:Array<Expenses>;
   get contactFormModalName() {
     return this.expensesForm.get('contactFormModalName');
   }
-
-  get contactFormModalEmail() {
-    return this.expensesForm.get('contactFormModalEmail');
+  get contactFormModalDate() {
+    return this.expensesForm.get('contactFormModalDate');
   }
 
-  get contactFormModalSubject() {
-    return this.expensesForm.get('contactFormModalSubject');
+  get contactFormModalGetChack() {
+    return this.expensesForm.get('contactFormModalGetChack');
   }
 
+  get contactFormModalInvoicing() {
+    return this.expensesForm.get('contactFormModalInvoicing');
+  }
+
+  get contactFormModalAmountPartner() {
+    return this.expensesForm.get('contactFormModalAmountPartner');
+  }
   get contactFormModalMessage() {
     return this.expensesForm.get('contactFormModalMessage');
   }

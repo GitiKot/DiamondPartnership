@@ -42,6 +42,10 @@
   
   
   
-  
+ #newexpenses{
+    position: fixed; 
+    bottom: 25px; left: 25px;
+    /* width: 100px; */
+}
  
   
