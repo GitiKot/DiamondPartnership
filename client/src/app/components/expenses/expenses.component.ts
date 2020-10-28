@@ -28,7 +28,9 @@ expensessList:Array<Expenses>;
         contactFormModalAmountPartner: new FormControl('', Validators.required),
         contactFormModalMessage: new FormControl('', Validators.required)
       });
-    
+
+
+     
 
   }
    myFunction() {
@@ -119,6 +121,7 @@ expensessList:Array<Expenses>;
  }
   
 
+ 
 
  
   get contactFormModalName() {
@@ -143,3 +146,7 @@ expensessList:Array<Expenses>;
     return this.expensesForm.get('contactFormModalMessage');
   }
 }
+
+
+
+ 

@@ -98,38 +98,38 @@
                       <th>#</th>
                       <th>Product name</th>
                       <th>Price</th>
-                      <th>Remove</th>
+                      <!-- <th>Remove</th> -->
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <th scope="row">1</th>
-                      <td>Product 1</td>
-                      <td>100$</td>
-                      <td><a><i class="fas fa-times"></i></a></td>
+                      <td><input id="expenses1" class="input"></td>
+                      <td> <input id="price1"class="input"> </td>
+                      <!-- <td><a><i class="fas fa-times"></i></a></td> -->
                     </tr>
                     <tr>
                       <th scope="row">2</th>
-                      <td>Product 2</td>
-                      <td>100$</td>
-                      <td><a><i class="fas fa-times"></i></a></td>
+                      <td><input id="expenses2"class="input"></td>
+                      <td> <input id="price2"class="input"> </td>
+                      <!-- <td><a><i class="fas fa-times"></i></a></td> -->
                     </tr>
                     <tr>
                       <th scope="row">3</th>
-                      <td>Product 3</td>
-                      <td>100$</td>
-                      <td><a><i class="fas fa-times"></i></a></td>
+                      <td><input id="expenses3"class="input"></td>
+                      <td> <input id="price3"class="input"> </td>
+                      <!-- <td><a><i class="fas fa-times"></i></a></td> -->
                     </tr>
                   </tbody>
                 </table>
 
               </div>
               <!--Footer-->
-              <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
-                  (click)="frame.hide()">Close</button>
-                <button class="btn btn-primary">Checkout</button>
-              </div>
+              <!-- <div class="modal-footer"> -->
+               <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
+                  (click)="frame.hide()">ביטול</button>
+                <button class="btn btn-primary" >שמירה</button></div>
+              <!-- </div> -->
             </div>
           </div>
         </div>
@@ -227,15 +227,17 @@
               </div>
             </div>
           </div>
-   
+
           <div class="row">
             <div class="col-8 col-sm-6 col-example">
               <!-- Level 2: .col-8 .col-sm-6 -->
+              
               <div class="md-form mb-5">
                 <!-- <mdb-icon fas icon="envelope" class="prefix grey-text"></mdb-icon> -->
+                
                 <input type="text" id="form29" class="form-control" mdbInput mdbValidate
                   [formControl]="contactFormModalGetChack">
-                <label for="form29">האם קיבלתי צ'ק או לקזז הצ'ק הבא</label>
+                <label for="form29">קיבלתי צ'ק או לקזז מהצ'ק הבא</label>
                 <mdb-error
                   *ngIf="contactFormModalGetChack.invalid && (contactFormModalGetChack.dirty || contactFormModalGetChack.touched)">
                   Input invalid
@@ -246,7 +248,7 @@
                   valid
                 </mdb-success>
               </div>
-    
+
             </div>
             <div class="col-4 col-sm-6 col-example">
               <!-- Level 2: .col-4 .col-sm-6 -->
@@ -264,7 +266,7 @@
                   Input valid
                 </mdb-success>
               </div>
-    
+
             </div>
           </div>
 
@@ -304,7 +306,7 @@
               </div>
             </div>
           </div>
-         
+
 
         </div>
         <div class="modal-footer d-flex justify-content-center">
@@ -315,6 +317,7 @@
       </div>
     </div>
   </div>
+
 
 </form>
 <!-- </html> -->
