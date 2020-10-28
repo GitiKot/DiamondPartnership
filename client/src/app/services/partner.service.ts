@@ -23,5 +23,15 @@ export class PartnerService {
 
    return this.http.post<Partner>(this.partnerUrl,p);
   }
- 
+  deletePartner(p:Partner){
+    var ttt=`${this.partnerUrl}/${p.id}`;
+    console.log("url="+ttt);
+  
+    return  this.http.delete<Partner>(ttt,this.options)
+    .subscribe((p:Partner)=>{console.log(p,"suecces");
+      },()=>{console.log("error");
+      }
+      );
+    
+    }
 }
