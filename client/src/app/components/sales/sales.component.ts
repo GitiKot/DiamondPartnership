@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { from } from 'rxjs';
 import { Sale } from 'src/app/data/sale';
-import { SalesService } from'src/app/services/sales.service';
+import { SalesService } from 'src/app/services/sales.service';
 
 @Component({
   selector: 'app-sales',
@@ -12,30 +12,19 @@ import { SalesService } from'src/app/services/sales.service';
 })
 export class SalesComponent implements OnInit {
   salesForm: FormGroup;
-   isSalesPage=this.route.snapshot.paramMap.get('isSales');
-  constructor(private r: Router, private saleService: SalesService,private route:ActivatedRoute) { }
-  salesList:Array<Sale>;
- 
+  isSalesPage = this.route.snapshot.paramMap.get('isSales');
+  //  constructor(private r: Router, private saleService: SalesService,private route:ActivatedRoute) { }
+
+  constructor(private r: Router, private route: ActivatedRoute, private saleService: SalesService) { }
+  salesList: Array<Sale>
+
   ngOnInit(): void {
-    // this.salesForm = new FormGroup({});
-  this.saleService.getAllSales().subscribe(ans=>this.salesList=ans);
-  
-  this.salesForm = new FormGroup({
-    contactFormModalDate: new FormControl('', Validators.required),
-    contactFormModalNumdate: new FormControl('', Validators.required),
-    // contactFormModalGetchack: new FormControl('', Validators.required),
-    contactFormModalInvoiceNumber: new FormControl('', Validators.required),
-    contactFormModalPublicSerialName: new FormControl('', Validators.required),
-    contactFormModalPrivateSerialName: new FormControl('', Validators.required),
-    contactFormModalStoneName: new FormControl('', Validators.required),
-    contactFormModalWeight: new FormControl('', Validators.required),
-    contactFormModalPricePerCarat: new FormControl('', Validators.required),
-    // contactFormModalTotalPrice: new FormControl('', Validators.required),
-    contactFormModalRawOrPolished: new FormControl('', Validators.required)
-  });
-   
+    this.salesForm = new FormGroup({});
+    this.saleService.getAllSales().subscribe(ans => this.salesList = ans);
+    // this.partnerService.getAllPartners().subscribe(ans => this.partnersList = ans);
+
   }
- 
+
   keypressevt() {
     // /do func to give the seria
   }
@@ -59,43 +48,7 @@ export class SalesComponent implements OnInit {
     }
   }
 
-  get contactFormModelDate(){
-    return this.salesForm.get('contactFormModelDate');
-  }
-  get contactFormModalNumdate(){
-    return this.salesForm.get('contactFormModalNumdate');
-  }
-  // get contactFormModalGetchack(){
-  //   return this.salesForm.get('contactFormModalGetchack');
-  // }
-  get contactFormModalInvoiceNumber(){
-    return this.salesForm.get('contactFormModalInvoiceNumber');
-  }
-  get contactFormModalPublicSerialName(){
-    return this.salesForm.get('contactFormModalPublicSerialName');
-  }
-  get contactFormModalPrivateSerialName(){
-    return this.salesForm.get('contactFormModalPrivateSerialName');
-  }
-  
-    get contactFormModalStoneName() {
-      return this.salesForm.get('contactFormModalStoneName');
-    }
-  
-    get contactFormModalWeight() {
-      return this.salesForm.get('contactFormModalWeight');
-    }
-  
-    get contactFormModalPricePerCarat() {
-      return this.salesForm.get('contactFormModalPricePerCarat');
-    }
-  
-    // get contactFormModalTotalPrice() {
-    //   return this.salesForm.get('contactFormModalTotalPrice');
-    // }
-    get contactFormModalRawOrPolished() {
-      return this.salesForm.get('contactFormModalRawOrPolished');
-    }
+
 
 }
 

@@ -1,4 +1,6 @@
 <br>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <div class="container">
        
         <table class="table table-hover">
@@ -15,6 +17,12 @@
           </thead>
           <tbody>
             <tr *ngFor="let p of partnersList" >
+              <td>
+                <button class="delete" type="button" (click)="deletePartner(p)"> <i
+                    class="material-icons">&#xe5cd;</i></button>
+              </td>
+             
+                
             <td>{{p.name}}</td>  
             <td>{{p.contact}}</td> 
             <td>{{p.email}}</td>  

@@ -43,4 +43,9 @@ validatingForm: FormGroup;
   get contactFormModalMessage() {
     return this.validatingForm.get('contactFormModalMessage');
   }
+  deletePartner(p) {
+    var tt= this.partnerService.deletePartner(p);
+   console.log( tt);
+   this.partnerService.getAllPartners().subscribe(ans => this.partnersList = ans);
+   }
 }

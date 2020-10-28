@@ -2,40 +2,51 @@ import { Data } from '@angular/router';
 
 export class Sale {
     id: string;
+
     date: Date;
-    numdate: Number;///totaldate
-    getchack: boolean;
-    InvoiceNumber: Number;//מספר חשבונית
-    PublicSerialName: String;
-    PrivateSerialName: String;
-    StoneName: string;
-    Weight: Number;
-    PricePerCarat: Number;
-    TotalPrice: Number;
-    RawOrPolished: string;
+    invoiceNumber: Number;//מספר חשבונית
+    publicSerialName: String;
 
+    privateSerialName: String;
+    stoneName: string;
+    weight: Number;
 
-    constructor(d?: Date, numdate?: Number,
-        getchack?: boolean,
-        Invoice?: Number,
-        PublicSerial?: String,
-        PrivateSerial?: String,
-        StoneName?: string,
+    pricePerCarat: Number;
+    rawOrPolished: string;
+    dateOfPayment:Date;
+
+// invoiceNumber: new FormControl('', Validators.required),
+// publicSerialName: new FormControl('', Validators.required),
+// privateSerialName: new FormControl('', Validators.required),
+// stoneName: new FormControl('', Validators.required),
+// weight: new FormControl('', Validators.required),
+// pricePerCarat: new FormControl('', Validators.required),
+// rawOrPolished: new FormControl('', Validators.required)
+
+    constructor(d?: Date, 
+      
+        invoice?: Number,
+        publicSerial?: String,
+        privateSerial?: String,
+        stoneName?: string,
         w?: Number,
-        PricePerCarat?: Number,
-        TotalPrice?: Number,
-        RawOrPolished?: string,) {
+        pricePerCarat?: Number,
+        dateOfPayment?:Date,
+        rawOrPolished?: string,)
+         {
         this.date = d;
-        this.Weight = w;
-        this.TotalPrice = TotalPrice;
-        this.StoneName = StoneName;
-        this.RawOrPolished = RawOrPolished;
-        this.PublicSerialName = PublicSerial;
-        this.PrivateSerialName = PrivateSerial;
-        this.PricePerCarat = PricePerCarat;
-        this.InvoiceNumber = Invoice
-        this.getchack = getchack;
-        this.numdate = numdate;
+        this.weight = w;
+        this.dateOfPayment=dateOfPayment;
+
+        this.stoneName = stoneName;
+        this.rawOrPolished = rawOrPolished;
+        this.publicSerialName = publicSerial;
+        
+        this.privateSerialName = privateSerial;
+        this.pricePerCarat = pricePerCarat;
+        this.invoiceNumber = invoice
+       
+        
     }
 
 
