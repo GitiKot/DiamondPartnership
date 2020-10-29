@@ -18,6 +18,7 @@ export class ExpensesService {
   addExpenses(e: Expenses): Observable<Expenses> {
     console.log("service", this.expensesrUrl);
 
+
     return this.http.post<Expenses>(this.expensesrUrl, e);
   }
 }

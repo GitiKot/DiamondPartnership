@@ -28,7 +28,7 @@ export class ExpensesController {
         @Param('id') exId: string,
         @Body('PublicSerialName') exPublicSerialName: string,
         @Body('date') exdate: Date,
-        @Body('getchack') exgetchack: boolean,
+        @Body('getchack') exgetchack: string,
         @Body('InvoiceNumber') exInvoiceNumber: number,
         @Body('Remarks') exRemarks: string,
         @Body('amount') examount: number,

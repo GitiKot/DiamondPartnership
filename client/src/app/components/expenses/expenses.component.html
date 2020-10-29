@@ -40,7 +40,7 @@
           <th style="width: 270px;">האם קיבלתי צ'ק או לקזז הצ'ק הבא</th>
           <th style="width: 125px;">מספר חשבונית</th>
           <th>הערות</th>
-          <th>סכום(אוטומטי)</th>
+          <th>סכום(סיכום פרוט)</th>
           <th>פרוט</th>
           <th style="width: 100px;">סכום לשותף</th>
           <!-- <th style="width:60%;">Name</th>
@@ -48,32 +48,22 @@
         </tr>
       </thead>
       <tbody>
-        <!-- <tr *NgFor="let e of expensesList">
-    <td>{{e.}}</td>
-    <td>{{}}</td>
-    <td>{{}}</td>
-    <td>{{}}</td>
-    <td>{{}}</td>
-    <td>{{}}</td>
-    <td>{{}}</td>
-    <td>{{}}</td>
-    
-  </tr> -->
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+
+        <tr *ngFor="let e of expensesList">
+          <td>{{e.PublicSerialName}}</td>
+          <td>{{e.date}}</td>
+          <td>{{e.getchack}}</td>
+          <td>{{e.InvoiceNumber}}</td>
+          <td>{{e.Remarks}}</td>
           <td></td>
           <td><button type="button" class="btn btn-primary" (click)="frame.show()" data-toggle="modal"
               data-target="#modalCart">+</button></td>
-          <td></td>
+          <td>{{e.amountPartner}}</td>
 
 
         </tr>
 
-        <!-- --------------------------------------------- -->
+        <!-- -------model expenses------------------------------------ -->
 
         <!-- Modal: modalCart -->
         <div mdbModal #frame="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
@@ -105,30 +95,35 @@
                     <tr>
                       <th scope="row">1</th>
                       <td><input id="expenses1" class="input"></td>
-                      <td> <input id="price1"class="input"> </td>
+                      <td> <input id="price1" class="input"> </td>
                       <!-- <td><a><i class="fas fa-times"></i></a></td> -->
                     </tr>
                     <tr>
                       <th scope="row">2</th>
-                      <td><input id="expenses2"class="input"></td>
-                      <td> <input id="price2"class="input"> </td>
+                      <td><input id="expenses2" class="input"></td>
+                      <td> <input id="price2" class="input"> </td>
                       <!-- <td><a><i class="fas fa-times"></i></a></td> -->
                     </tr>
                     <tr>
                       <th scope="row">3</th>
-                      <td><input id="expenses3"class="input"></td>
-                      <td> <input id="price3"class="input"> </td>
+                      <!-- <td><input type="text"  class="form-control" mdbInput mdbValidate
+                          [formControl]="detail[2].ProductName"></td>
+                          <td><input type="text"  class="form-control" mdbInput mdbValidate
+                            [formControl]="detail[2].Price"></td> -->
+
+                      <td><input id="expenses3" class="input"></td>
+                      <td> <input id="price3" class="input"> </td>
                       <!-- <td><a><i class="fas fa-times"></i></a></td> -->
                     </tr>
                   </tbody>
                 </table>
 
               </div>
-              <!--Footer-->
+
               <!-- <div class="modal-footer"> -->
-               <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
+              <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal" (click)="cancelex()"
                   (click)="frame.hide()">ביטול</button>
-                <button class="btn btn-primary" >שמירה</button></div>
+                <button class="btn btn-primary" (click)="savemodal()">שמירה</button></div>
               <!-- </div> -->
             </div>
           </div>
@@ -159,13 +154,6 @@
   
   </div>
   
-  <script>
-  var app = angular.module('myApp', []);
-  app.controller('customersCtrl', function($scope, $http) {
-      $http.get("customers.php")
-      .then(function (response) {$scope.names = response.data.records;});
-  });
-  </script>
   
   </body> -->
   <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
@@ -188,41 +176,24 @@
 
           <div class="row">
             <div class="col-8 col-sm-6 col-example">
-              <!-- Level 2: .col-8 .col-sm-6 -->
               <div class="md-form mb-5">
-                <!-- <mdb-icon fas icon="user" class="prefix grey-text"></mdb-icon>  -->
                 <input type="text" id="form34" class="form-control" mdbInput mdbValidate
-                  [formControl]="contactFormModalName">
+                  [formControl]="PublicSerialName">
                 <label for="form34">שם סריה כללית</label>
-                <mdb-error
-                  *ngIf="contactFormModalName.invalid && (contactFormModalName.dirty || contactFormModalName.touched)">
-                  Input
-                  invalid
+                <mdb-error *ngIf="PublicSerialName.invalid && (PublicSerialName.dirty || PublicSerialName.touched)">
                 </mdb-error>
-                <mdb-success
-                  *ngIf="contactFormModalName.valid && (contactFormModalName.dirty || contactFormModalName.touched)">
-                  Input
-                  valid
+                <mdb-success *ngIf="PublicSerialName.valid && (PublicSerialName.dirty || PublicSerialName.touched)">
                 </mdb-success>
               </div>
 
             </div>
             <div class="col-4 col-sm-6 col-example">
-              <!-- Level 2: .col-4 .col-sm-6 -->
               <div class="md-form mb-5">
-                <!-- <mdb-icon fas icon="user" class="prefix grey-text"></mdb-icon>  -->
-                <input type="date" id="form34" class="form-control" mdbInput mdbValidate
-                  [formControl]="contactFormModalDate">
+                <input type="date" id="form34" class="form-control" mdbInput mdbValidate [formControl]="date">
                 <label for="form34">תאריך</label>
-                <mdb-error
-                  *ngIf="contactFormModalDate.invalid && (contactFormModalDate.dirty || contactFormModalDate.touched)">
-                  Input
-                  invalid
+                <mdb-error *ngIf="date.invalid && (date.dirty || date.touched)">
                 </mdb-error>
-                <mdb-success
-                  *ngIf="contactFormModalDate.valid && (contactFormModalDate.dirty || contactFormModalDate.touched)">
-                  Input
-                  valid
+                <mdb-success *ngIf="date.valid && (date.dirty || date.touched)">
                 </mdb-success>
               </div>
             </div>
@@ -230,89 +201,77 @@
 
           <div class="row">
             <div class="col-8 col-sm-6 col-example">
-              <!-- Level 2: .col-8 .col-sm-6 -->
-              
               <div class="md-form mb-5">
-                <!-- <mdb-icon fas icon="envelope" class="prefix grey-text"></mdb-icon> -->
-                
-                <input type="text" id="form29" class="form-control" mdbInput mdbValidate
-                  [formControl]="contactFormModalGetChack">
-                <label for="form29">קיבלתי צ'ק או לקזז מהצ'ק הבא</label>
-                <mdb-error
-                  *ngIf="contactFormModalGetChack.invalid && (contactFormModalGetChack.dirty || contactFormModalGetChack.touched)">
-                  Input invalid
-                </mdb-error>
-                <mdb-success
-                  *ngIf="contactFormModalGetChack.valid && (contactFormModalGetChack.dirty || contactFormModalGetChack.touched)">
-                  Input
-                  valid
-                </mdb-success>
-              </div>
-
-            </div>
-            <div class="col-4 col-sm-6 col-example">
-              <!-- Level 2: .col-4 .col-sm-6 -->
-              <div class="md-form mb-5">
-                <!-- <mdb-icon fas icon="tag" class="prefix grey-text"></mdb-icon> -->
-                <input type="text" id="form32" class="form-control" mdbInput mdbValidate
-                  [formControl]="contactFormModalInvoicing">
+                <input type="text" id="form32" class="form-control" mdbInput mdbValidate [formControl]="InvoiceNumber">
                 <label for="form32">מספר חשבונית</label>
-                <mdb-error
-                  *ngIf="contactFormModalInvoicing.invalid && (contactFormModalInvoicing.dirty || contactFormModalInvoicing.touched)">
-                  Input invalid
+                <!-- <input type="text" id="form29" class="form-control" mdbInput mdbValidate
+                  [formControl]="contactFormModalGetChack">
+                <label for="form29">קיבלתי צ'ק או לקזז מהצ'ק הבא</label> -->
+                <mdb-error *ngIf="InvoiceNumber.invalid && (InvoiceNumber.dirty || InvoiceNumber.touched)">
+                  <!-- Input invalid -->
                 </mdb-error>
-                <mdb-success
-                  *ngIf="contactFormModalInvoicing.valid && (contactFormModalInvoicing.dirty || contactFormModalInvoicing.touched)">
-                  Input valid
+                <mdb-success *ngIf="InvoiceNumber.valid && (InvoiceNumber.dirty || InvoiceNumber.touched)">
+                  <!-- Input
+                  valid -->
                 </mdb-success>
               </div>
+
+            </div>
+            <div class="col-4 col-sm-6 col-example">
+              <div class="md-form mb-5">
+                <!-- <select class="browser-default custom-select" > -->
+                <select class="form-control" mdbInput mdbValidate [formControl]="getchack">
+                  <option selected>קיבלתי צ'ק</option>
+                  <option value="לקזז מהצ'ק הבא">לקזז מהצ'ק הבא</option>
+                </select>
+                <mdb-error *ngIf="getchack.invalid && (getchack.dirty || getchack.touched)">
+                </mdb-error>
+                <mdb-success *ngIf="getchack.valid && (getchack.dirty || getchack.touched)">
+                </mdb-success>
+              </div>
+
 
             </div>
           </div>
 
           <div class="row">
             <div class="col-8 col-sm-6 col-example">
-              <!-- Level 2: .col-8 .col-sm-6 -->
               <div class="md-form mb-5">
-                <!-- <mdb-icon fas icon="tag" class="prefix grey-text"></mdb-icon> -->
-                <input type="text" id="form32" class="form-control" mdbInput mdbValidate
-                  [formControl]="contactFormModalAmountPartner">
+                <input type="text" id="form32" class="form-control" mdbInput mdbValidate [formControl]="amountPartner">
                 <label for="form32">סכום לשותף</label>
-                <mdb-error
-                  *ngIf="contactFormModalAmountPartner.invalid && (contactFormModalAmountPartner.dirty || contactFormModalAmountPartner.touched)">
-                  Input invalid
+                <mdb-error *ngIf="amountPartner.invalid && (amountPartner.dirty || amountPartner.touched)">
                 </mdb-error>
-                <mdb-success
-                  *ngIf="contactFormModalAmountPartner.valid && (contactFormModalAmountPartner.dirty || contactFormModalAmountPartner.touched)">
-                  Input valid
+                <mdb-success *ngIf="amountPartner.valid && (amountPartner.dirty || amountPartner.touched)">
                 </mdb-success>
               </div>
+
             </div>
             <div class="col-4 col-sm-6 col-example">
-              <!-- Level 2: .col-4 .col-sm-6 -->
               <div class="md-form">
-                <!-- <mdb-icon fas icon="pencil-alt" class="prefix grey-text"></mdb-icon> -->
                 <textarea type="text" id="form8" class="md-textarea form-control" rows="1" mdbInput mdbValidate
-                  [formControl]="contactFormModalMessage"></textarea>
+                  [formControl]="Remarks"></textarea>
                 <label for="form8">הערות</label>
-                <mdb-error
-                  *ngIf="contactFormModalMessage.invalid && (contactFormModalMessage.dirty || contactFormModalMessage.touched)">
-                  Input invalid
+                <mdb-error *ngIf="Remarks.invalid && (Remarks.dirty || Remarks.touched)">
                 </mdb-error>
-                <mdb-success
-                  *ngIf="contactFormModalMessage.valid && (contactFormModalMessage.dirty || contactFormModalMessage.touched)">
-                  Input valid
+                <mdb-success *ngIf="Remarks.valid && (Remarks.dirty || Remarks.touched)">
                 </mdb-success>
               </div>
+
             </div>
           </div>
-
 
         </div>
+
+
         <div class="modal-footer d-flex justify-content-center">
-          <button mdbBtn color="unique" class="waves-light" mdbWavesEffect>Send
-            <mdb-icon far icon="paper-plane" class="ml-1"></mdb-icon>
-          </button>
+          <!--Footer-->
+          <!-- <div class="modal-footer"> -->
+          <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
+              (click)="frame1.hide()">ביטול</button>
+            <button class="btn btn-primary" (click)=save()>שמירה</button></div>
+          <!-- </div> -->
+          <!-- <button mdbBtn color="unique" class="waves-light" mdbWavesEffect>Send -->
+          <!-- </button> -->
         </div>
       </div>
     </div>
