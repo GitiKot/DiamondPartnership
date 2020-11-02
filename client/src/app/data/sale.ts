@@ -13,7 +13,7 @@ export class Sale {
 
     pricePerCarat: Number;
     rawOrPolished: string;
-    dateOfPayment:Date;
+    numOfDate:number;
 
 // invoiceNumber: new FormControl('', Validators.required),
 // publicSerialName: new FormControl('', Validators.required),
@@ -31,12 +31,12 @@ export class Sale {
         stoneName?: string,
         w?: Number,
         pricePerCarat?: Number,
-        dateOfPayment?:Date,
+        numOfDate?:number,
         rawOrPolished?: string,)
          {
         this.date = d;
         this.weight = w;
-        this.dateOfPayment=dateOfPayment;
+        this.numOfDate=numOfDate;
 
         this.stoneName = stoneName;
         this.rawOrPolished = rawOrPolished;
@@ -48,6 +48,6 @@ export class Sale {
        
         
     }
-
+  
 
 }

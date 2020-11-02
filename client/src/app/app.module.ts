@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-// import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http'
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
@@ -24,8 +23,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import{HttpClientModule} from ''
 // import {MatInputModule} from '@angular/material/input';
 
+// import { NgModule } from '@angular/core';
+// import { BrowserModule } from '@angular/platform-browser';
+// import { FormsModule } from '@angular/forms';
 
+// import { AppComponent } from 'app/components/app';
 
+// @NgModule({
+//     imports: [BrowserModule, FormsModule],
+//     declarations: [AppComponent],
+//     bootstrap: [AppComponent]
+// })
+
+// export class AppModule { }
 
 @NgModule({
   declarations: [
@@ -43,7 +53,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HomeComponent,
     NavBarComponent,
     ModalFormComponent,
-
+    
   ],
   imports: [
     HttpClientModule,
@@ -51,7 +61,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule, ReactiveFormsModule,
     MDBBootstrapModule.forRoot(),
     BrowserAnimationsModule,
-
+    FormsModule,
   ], 
   schemas: [NO_ERRORS_SCHEMA] ,
   providers: [],

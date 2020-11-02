@@ -24,9 +24,16 @@ export class SalesComponent implements OnInit {
     // this.partnerService.getAllPartners().subscribe(ans => this.partnersList = ans);
 
   }
-
+  deleteSale(sale){
+    var tt= this.saleService.deletePartner(sale);
+    console.log( tt);
+    this.saleService.getAllSales().subscribe(ans => this.salesList = ans);
+  }
   keypressevt() {
     // /do func to give the seria
+  }
+  rawOrPolishedFunc(sale:Sale):string{
+return sale.rawOrPolished == 'raw'?'גלם':'מלוטש'
   }
   searchPrivate() {
 
