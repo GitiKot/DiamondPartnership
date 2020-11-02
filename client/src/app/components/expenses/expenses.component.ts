@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormControl, FormGroup,FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { Expenses } from 'src/app/data/expenses';
 import { ExpensesService } from 'src/app/services/expenses.service'
 
@@ -12,22 +13,73 @@ import { ExpensesService } from 'src/app/services/expenses.service'
 export class ExpensesComponent implements OnInit {
   expensesForm: FormGroup;
   expensesList: Array<Expenses>;
+  @ViewChild('frame2') public showModalOnClick: ModalDirective;//model s
+  @ViewChild('frame1') public showModalOnClick1: ModalDirective;//model big
 
+  public showModal1(): void {//just big
+
+    this.showModalOnClick1.show();
+  }
+  public showModal2(): void {//2
+
+    this.showModalOnClick.show();
+    this.showModalOnClick1.show();
+
+  }
+  public hideModal(): void {//just s
+
+    this.showModalOnClick.hide();
+
+  }
+  
+  public hideModal2(): void {//2
+
+    this.showModalOnClick.hide();
+    this.showModalOnClick1.hide();
+
+  }
   constructor(private r: Router, private expensesService: ExpensesService) { }
 
   ngOnInit(): void {
 
     this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
-
-
+    // this.tripForm = this.fb.group({
+  //     name: [name, Validators.required],
+  //      cities: new FormArray(
+  //        [0] ---> new FormGroup({
+  //            name: new FormControl('', Validators.required),
+  //                places: new FormArray(
+  //                   [0]--> new FormGroup({
+  //                       name: new FormControl('', Validators.required),
+  //                          }),
+  //                       [1]--> new FormGroup({
+  //                          name: new FormControl('', Validators.required),
+  //                       })
+  //                   )
+  //               }), 
+  //        [1] ---> new FormGroup({
+  //            name: new FormControl('', Validators.required),
+  //            places: new FormArray(
+  //                [0]--> new FormGroup({
+  //                    name: new FormControl('', Validators.required),
+  //                }),
+  //                [1]--> new FormGroup({
+  //                    name: new FormControl('', Validators.required),
+  //                })
+  //                )
+  //       }))
+  // })
     this.expensesForm = new FormGroup({
       PublicSerialName: new FormControl('', Validators.required),
       date: new FormControl('', Validators.required),
       getchack: new FormControl('', Validators.required),
       InvoiceNumber: new FormControl('', Validators.required),
       amountPartner: new FormControl('', Validators.required),
-      detail:new FormControl(''),
-      Remarks: new FormControl('', Validators.required)
+      detail: new FormArray([
+        new FormArray([]),
+        new FormArray([]),
+      ]),
+      Remarks: new FormControl('', Validators.required)//requierd?
     });
 
 
@@ -120,36 +172,51 @@ export class ExpensesComponent implements OnInit {
   }
 
   save() {
-    
+
     console.log(this.expensesForm.value);
-    
+
     alert("האם ברצונך לשמור את הנתונים")
     if (this.expensesForm.valid) {
       this.expensesService.addExpenses(this.expensesForm.value).subscribe(e => {
         this.expensesList.push(e);
         this.expensesForm.reset();
-       
-      })
-    }
-  }
-savemodal(){
 
-    
+      })
+      
+    }
+    this.showModalOnClick.hide();
+    this.showModalOnClick1.hide();
+  }
+  savemodal() {
+
+    console.log(this.expensesForm.value.detail);
+    this.showModalOnClick1.show();
     // alert("האם ברצונך לשמור את הנתונים")
     // if (this.expensesForm.valid) {
     //   this.expensesService.addExpenses(this.expensesForm.value).subscribe(e => {
     //     this.expensesList.push(e);
     //     this.expensesForm.reset();
     //     alert("reset");
-       
     //   })
     // }
+if(this.expensesForm.value.detail){
+
+
+
+
+
 }
-  cancelex(){
-    
- console.log(this.expensesForm.controls);
-  
-}
+  }
+  cancelex() {
+
+    console.log(this.expensesForm.controls);
+
+    //  console.log( this.showModalOnClick.isShown);
+    this.expensesForm.reset();
+     this.showModalOnClick1.show();
+
+  }
+ 
   get PublicSerialName() {
     return this.expensesForm.get('PublicSerialName');
   }
@@ -168,8 +235,8 @@ savemodal(){
   get amountPartner() {
     return this.expensesForm.get('amountPartner');
   }
-  get detail() {
-    return this.expensesForm.get('detail');
+  get detail():FormArray {
+    return this.expensesForm.get('detail')as FormArray;
   }
   get Remarks() {
     return this.expensesForm.get('Remarks');

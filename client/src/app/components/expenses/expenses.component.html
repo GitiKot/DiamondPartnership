@@ -1,9 +1,4 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1"> -->
 
-<!-- </head> -->
 <form [formGroup]='expensesForm' class="form-inline d-flex justify-content-center md-form form-sm mt-0">
 
   <body>
@@ -43,15 +38,13 @@
           <th>סכום(סיכום פרוט)</th>
           <th>פרוט</th>
           <th style="width: 100px;">סכום לשותף</th>
-          <!-- <th style="width:60%;">Name</th>
-    <th style="width:40%;">Country</th> -->
         </tr>
       </thead>
       <tbody>
 
         <tr *ngFor="let e of expensesList">
           <td>{{e.PublicSerialName}}</td>
-          <td>{{e.date}}</td>
+          <td>{{e.date| date: "shortDate"}}</td>
           <td>{{e.getchack}}</td>
           <td>{{e.InvoiceNumber}}</td>
           <td>{{e.Remarks}}</td>
@@ -68,7 +61,10 @@
         <!-- Modal: modalCart -->
         <div mdbModal #frame="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
           aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
+          <!-- <div class="modal-dialog" role="document"> -->
+          <!-- <div class="modal-dialog modal-full-height modal-right" role="document"> -->
+          <!-- <div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true"> -->
+          <div class="modal-dialog  modal-side modal-top-right" role="document">
             <div class="modal-content">
               <!--Header-->
               <div class="modal-header text-center">
@@ -85,45 +81,47 @@
                 <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>#</th>
+                     
                       <th>Product name</th>
                       <th>Price</th>
                       <!-- <th>Remove</th> -->
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td><input id="expenses1" class="input"></td>
-                      <td> <input id="price1" class="input"> </td>
-                      <!-- <td><a><i class="fas fa-times"></i></a></td> -->
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
+
+                    <!-- <tr *ngFor="let e of expensesList.detail.controls">
+                      <td>{{e.expenses}}</td>
+                      <td>{{e.price}}</td>
+                    </tr> -->
+
+                    <!-- <tr> -->
+                    
+                    <!-- <td><input id="expenses1" class="input"[formControl]="detail"></td> -->
+                    <!-- <td> <input id="price1"  class="input"[formControl]="detail"> </td>  -->
+                    <!-- <td><input id="expenses1" type="text" class="form-control"[formControl]="detail[0].expenses"></td>
+                      <td> <input id="price1" type="text" class="form-control"[formControl]="detail[0].price"> </td> -->
+                    <!-- </tr> -->
+                    <!-- <tr>
                       <td><input id="expenses2" class="input"></td>
                       <td> <input id="price2" class="input"> </td>
-                      <!-- <td><a><i class="fas fa-times"></i></a></td> -->
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <!-- <td><input type="text"  class="form-control" mdbInput mdbValidate
+                    </tr> -->
+                    <!-- <tr> -->
+                    <!-- <td><input type="text"  class="form-control" mdbInput mdbValidate
                           [formControl]="detail[2].ProductName"></td>
                           <td><input type="text"  class="form-control" mdbInput mdbValidate
                             [formControl]="detail[2].Price"></td> -->
-
-                      <td><input id="expenses3" class="input"></td>
-                      <td> <input id="price3" class="input"> </td>
-                      <!-- <td><a><i class="fas fa-times"></i></a></td> -->
-                    </tr>
+                    <!-- <td><input id="expenses3" class="input"></td>
+                      <td> <input id="price3" class="input"> </td> -->
+                    <!-- </tr> -->
                   </tbody>
                 </table>
 
               </div>
 
               <!-- <div class="modal-footer"> -->
-              <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal" (click)="cancelex()"
+              <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal" 
                   (click)="frame.hide()">ביטול</button>
-                <button class="btn btn-primary" (click)="savemodal()">שמירה</button></div>
+                </div> 
               <!-- </div> -->
             </div>
           </div>
@@ -136,6 +134,67 @@
   </body>
 
 
+  <!-- model enter new expenses -->
+
+
+
+  <div mdbModal #frame2="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal-dialog" role="document"> -->
+    <!-- <div class="modal-dialog modal-full-height modal-right" role="document"> -->
+    <!-- <div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true"> -->
+    <div class="modal-dialog  modal-side modal-top-right" role="document">
+      <div class="modal-content">
+        <!--Header-->
+        <div class="modal-header text-center">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hideModal()">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <!-- <div class="modal-header text-center"> -->
+        <!-- <span aria-hidden="true">&times;</span> -->
+        <!--Body-->
+        <div class="modal-body">
+
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Product name</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td><input id="expenses1" class="input" ></td>
+                <td> <input id="price1" class="input" > </td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td><input id="expenses2" class="input"></td>
+                <td> <input id="price2" class="input"> </td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td><input id="expenses3" class="input"></td>
+                <td> <input id="price3" class="input"> </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+        <!-- <div class="modal-footer"> -->
+        <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal" (click)="cancelex()"
+            (click)="frame2.hide()">ביטול</button>
+          <button class="btn btn-primary" (click)="savemodal()">שמירה</button></div>
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+  <!----------------------------------------------------------- -->
+  
 
   <!-- .........check if we can write index........... -->
 
@@ -158,7 +217,7 @@
   </body> -->
   <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
     (click)="frame1.show()" mdbWavesEffect id="newexpenses">
-    <i class="fas fa-user-plus"></i>
+    <!-- <i class="fas fa-user-plus"></i> -->
     הוצאה חדשה
   </button>
 
@@ -168,9 +227,11 @@
       <div class="modal-content">
         <div class="modal-header text-center">
           <h4 class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור הוצאה חדשה</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame1.hide()">
-            <span aria-hidden="true">&times;</span>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hideModal2()">
+            <!-- <span aria-hidden="true">&times;</span> -->
+            <span aria-hidden="true">x</span>
           </button>
+
         </div>
         <div class="modal-body mx-3">
 
@@ -259,7 +320,8 @@
 
             </div>
           </div>
-
+          <button type="button" class="btn btn-primary" (click)="frame2.show()" data-toggle="modal"
+            data-target="#modalCart">+</button>
         </div>
 
 
@@ -267,7 +329,7 @@
           <!--Footer-->
           <!-- <div class="modal-footer"> -->
           <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
-              (click)="frame1.hide()">ביטול</button>
+              (click)="hideModal2()">ביטול</button>
             <button class="btn btn-primary" (click)=save()>שמירה</button></div>
           <!-- </div> -->
           <!-- <button mdbBtn color="unique" class="waves-light" mdbWavesEffect>Send -->
@@ -279,4 +341,3 @@
 
 
 </form>
-<!-- </html> -->
