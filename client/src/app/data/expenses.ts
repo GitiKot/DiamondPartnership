@@ -2,20 +2,23 @@ export class Expenses {
     id: string;
     PublicSerialName: string;
     date: Date;
-    getchack: boolean;
+    getchack: string;
     InvoiceNumber: number;//מספר חשבונית
     Remarks: string;
-    amount : number;///totaldate
+    amount: number;///totaldate
     amountPartner: number;
+    detail: [{ ProductName: string, Price: number },
+        { ProductName: string, Price: number },
+        { ProductName: string, Price: number }];
 
-    constructor(p?: string, d?:Date, g?: boolean, i?: number, r?: string, a?: number, ap?: number) {
-        this.getchack=g;
-        this.date=d;
-        this.amountPartner=ap;
-        this.amount=a;
-        this.Remarks=r;
-        this.PublicSerialName=p;
-        this.InvoiceNumber=i;
+    constructor(p?: string, d?: Date, g?: string, i?: number, r?: string, a?: number, ap?: number,) {
+        this.getchack = g;
+        this.date = d;
+        this.amountPartner = ap;
+        this.amount = a;
+        this.Remarks = r;
+        this.PublicSerialName = p;
+        this.InvoiceNumber = i;
 
     }
 }

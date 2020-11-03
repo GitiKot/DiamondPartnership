@@ -39,7 +39,12 @@
   } */
   
 
-  
+  .input{
+    border:0;outline:0; outline:none!important;
+    width: 150px;
+    margin: 0px;
+    padding: inline 0; ;
+}
   
   
  #newexpenses{
