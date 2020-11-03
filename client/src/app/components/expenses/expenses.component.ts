@@ -68,7 +68,7 @@ this.expensesForm=this.formBuilder.group({
     // })
     detail: this.formBuilder.array([{
       expenses: '',
-      price:null,
+      price:'',
     }]),
     Remarks:  ['',[Validators.required]],//requierd?
 
@@ -170,6 +170,7 @@ this.expensesForm=this.formBuilder.group({
     if (this.expensesForm.valid) {
       this.expensesService.addExpenses(this.expensesForm.value).subscribe(e => {
         this.expensesList.push(e);
+        
         this.expensesForm.reset();
 
       })
@@ -200,14 +201,34 @@ if(this.expensesForm.value.detail){
 
 }
   }
+  // addListItem() {
+  //   const control = <FormArray>this.listForm.controls['list_items'];
+  //   control.push(this.initListItem());
+  // }
+  // addNewAlias(){
+  //   const fa = (this.fg.get('aliases')as FormArray);
+  //   fa.push(this.fb.group({
+  //     name: ['', Validators.required]
+  //   }));
+  // }
   addDetail() {
     const detail = this.expensesForm.controls.detail as FormArray;
     detail.push(this.formBuilder.group({
-      expenses: '',
-      price:null,
+      expenses: [''],
+      price:[''],
     }));
     
   }
+  // addDetail() {
+  //       // const details = this.expensesForm.get('detail') as FormArray;
+
+  //   const details = this.expensesForm.controls.detail as FormArray;
+  //   details.push(this.formBuilder.group({
+  //     expenses: [''],
+  //     price:[''],
+  //   }));
+    
+  // }
   cancelex() {
 
     console.log(this.expensesForm.controls);
