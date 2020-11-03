@@ -4,12 +4,11 @@ export class Expenses {
     date: Date;
     getchack: string;
     InvoiceNumber: number;//מספר חשבונית
+    detail:Array<{expenses:string,price:number}>;
     Remarks: string;
     amount: number;///totaldate
     amountPartner: number;
-    detail: [{ ProductName: string, Price: number },
-        { ProductName: string, Price: number },
-        { ProductName: string, Price: number }];
+  
 
     constructor(p?: string, d?: Date, g?: string, i?: number, r?: string, a?: number, ap?: number,) {
         this.getchack = g;

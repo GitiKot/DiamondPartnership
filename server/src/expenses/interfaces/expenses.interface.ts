@@ -6,6 +6,7 @@ export interface Expenses extends Document {
     date: Date;
     getchack: string;
     InvoiceNumber: number;
+    detail:Array<{expenses:string,price:number}>;
     Remarks: string;
     amount: number;
     amountPartner: number;

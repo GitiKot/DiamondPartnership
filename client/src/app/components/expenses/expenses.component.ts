@@ -38,50 +38,41 @@ export class ExpensesComponent implements OnInit {
     this.showModalOnClick1.hide();
 
   }
-  constructor(private r: Router, private expensesService: ExpensesService) { }
+  constructor(private r: Router, private expensesService: ExpensesService,private formBuilder:FormBuilder) { }
 
   ngOnInit(): void {
 
     this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
-    // this.tripForm = this.fb.group({
-  //     name: [name, Validators.required],
-  //      cities: new FormArray(
-  //        [0] ---> new FormGroup({
-  //            name: new FormControl('', Validators.required),
-  //                places: new FormArray(
-  //                   [0]--> new FormGroup({
-  //                       name: new FormControl('', Validators.required),
-  //                          }),
-  //                       [1]--> new FormGroup({
-  //                          name: new FormControl('', Validators.required),
-  //                       })
-  //                   )
-  //               }), 
-  //        [1] ---> new FormGroup({
-  //            name: new FormControl('', Validators.required),
-  //            places: new FormArray(
-  //                [0]--> new FormGroup({
-  //                    name: new FormControl('', Validators.required),
-  //                }),
-  //                [1]--> new FormGroup({
-  //                    name: new FormControl('', Validators.required),
-  //                })
-  //                )
-  //       }))
-  // })
-    this.expensesForm = new FormGroup({
-      PublicSerialName: new FormControl('', Validators.required),
-      date: new FormControl('', Validators.required),
-      getchack: new FormControl('', Validators.required),
-      InvoiceNumber: new FormControl('', Validators.required),
-      amountPartner: new FormControl('', Validators.required),
-      detail: new FormArray([
-        new FormArray([]),
-        new FormArray([]),
-      ]),
-      Remarks: new FormControl('', Validators.required)//requierd?
-    });
+    // this.expensesForm = new FormGroup({
+    //   PublicSerialName: new FormControl('', Validators.required),
+    //   date: new FormControl('', Validators.required),
+    //   getchack: new FormControl('', Validators.required),
+    //   InvoiceNumber: new FormControl('', Validators.required),
+    //   amountPartner: new FormControl('', Validators.required),
+    //   detail: new FormArray([
+    //     new FormArray([]),
+    //     new FormArray([]),
+    //   ]),
+    //   Remarks: new FormControl('', Validators.required)//requierd?
+    // });
+// -------------------------------------------------------------------------------
+this.expensesForm=this.formBuilder.group({
+  PublicSerialName: ['',[Validators.required]],
+    date:  ['',[Validators.required]],
+    getchack:  ['',[Validators.required]],
+    InvoiceNumber:  ['',[Validators.required]],
+    amountPartner:  ['',[Validators.required]],
+    // account: this.fb.group({
+    //   email: ['', Validators.required],
+    //   confirm: ['', Validators.required]
+    // })
+    detail: this.formBuilder.array([{
+      expenses: '',
+      price:null,
+    }]),
+    Remarks:  ['',[Validators.required]],//requierd?
 
+})
 
   }
   myFunction() {
@@ -190,6 +181,8 @@ export class ExpensesComponent implements OnInit {
   savemodal() {
 
     console.log(this.expensesForm.value.detail);
+  
+    
     this.showModalOnClick1.show();
     // alert("האם ברצונך לשמור את הנתונים")
     // if (this.expensesForm.valid) {
@@ -206,6 +199,14 @@ if(this.expensesForm.value.detail){
 
 
 }
+  }
+  addDetail() {
+    const detail = this.expensesForm.controls.detail as FormArray;
+    detail.push(this.formBuilder.group({
+      expenses: '',
+      price:null,
+    }));
+    
   }
   cancelex() {
 
@@ -235,8 +236,14 @@ if(this.expensesForm.value.detail){
   get amountPartner() {
     return this.expensesForm.get('amountPartner');
   }
-  get detail():FormArray {
-    return this.expensesForm.get('detail')as FormArray;
+  // get detail():FormArray {
+  //   return this.expensesForm.get('detail')as FormArray;
+  // }
+  get expenses(){
+    return this.expensesForm.get("detail").get('expenses');
+  }
+  get price(){
+    return this.expensesForm.get("detail").get('price');
   }
   get Remarks() {
     return this.expensesForm.get('Remarks');

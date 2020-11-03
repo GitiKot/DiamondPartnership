@@ -84,38 +84,38 @@ export class SalesFormComponent implements OnInit {
   save() {
 
 
-    // alert("האם הנך בטוח במה שאתה עושה");
-    // if (this.tableContent[0] != undefined) {
-    //   this.tableContent.forEach(sale => {
-    //     this.salesForm.controls['publicSerialName'].setValue(sale.publicSerial);
+    alert("האם הנך בטוח במה שאתה עושה");
+    if (this.tableContent[0] != undefined) {
+      this.tableContent.forEach(sale => {
+        this.salesForm.controls['publicSerialName'].setValue(sale.publicSerial);
 
-    //     this.salesForm.controls['privateSerialName'].setValue(sale.privateSerial)
-    //     this.salesForm.controls['stoneName'].setValue(sale.stoneName)
-    //     this.salesForm.controls['weight'].setValue(sale.w)
-    //     this.salesForm.controls['pricePerCarat'].setValue(sale.pricePerCarat)
+        this.salesForm.controls['privateSerialName'].setValue(sale.privateSerial)
+        this.salesForm.controls['stoneName'].setValue(sale.stoneName)
+        this.salesForm.controls['weight'].setValue(sale.w)
+        this.salesForm.controls['pricePerCarat'].setValue(sale.pricePerCarat)
 
-    //     console.log("form:");
+        console.log("form:");
 
-    //     console.log(this.salesForm.value);
-    //     if (this.salesForm.valid) {
+        console.log(this.salesForm.value);
+        if (this.salesForm.valid) {
 
-    //       this.salesServise.addSale(this.salesForm.value)
-    //         .subscribe(a => {
-    //           console.log("sss");
+          this.salesServise.addSale(this.salesForm.value)
+            .subscribe(a => {
+              console.log("sss");
 
-    //           // this.salesList.push(sale);
-    //         });
-    //     }
+              // this.salesList.push(sale);
+            });
+        }
 
-    //     else alert("הנתונים לא נכונים")
-    //     //  this.router.navigate(['/sales/true']);
+        else alert("הנתונים לא נכונים")
+        //  this.router.navigate(['/sales/true']);
 
-    //   });
-    // }
-    // else {
-    //   alert("לא הוכנסו שורות לטבלה")
-    // }
-    // this.salesForm.reset()
+      });
+    }
+    else {
+      alert("לא הוכנסו שורות לטבלה")
+    }
+    this.salesForm.reset()
   }
   cancel() {
     this.router.navigate(['/sales/true']);
