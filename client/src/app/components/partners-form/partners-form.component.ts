@@ -31,7 +31,7 @@ export class PartnersFormComponent implements OnInit {
 
     allInput.forEach(a => a.addEventListener("keypress", function (event) {
     
-      ;
+      
       if (event.code === "Enter") {
         var current = (event.target as Element);
           event.preventDefault();

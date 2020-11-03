@@ -1,3 +1,5 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 <br>
 <form  [formGroup]='salesForm' class="form-inline d-flex justify-content-center md-form form-sm mt-0">
 <!-- <h1> אפשר להביא את הכל ולעשות סינון אן זה מידי כבד?</h1> -->
@@ -33,6 +35,7 @@
   <table id="salesTable" class="table table-hover">
     <thead>
     <tr class="header">
+      <th></th>
       <th>תאריך מכירה</th>
       <th>סך ימים</th>
       <th>תאריך קבלת הצ'ק</th>
@@ -47,18 +50,23 @@
   </thead>
   <tbody>
     
-    <tr *ngFor="let s of salesList">
-       <td>{{s.date}}</td>
-      <td>{{s.numdate}}</td>
-      <td>{{s.getchack}}</td>
-      <td>{{s.InvoiceNumber}}</td>
+    <tr *ngFor="let s of salesList" >
+      <td>
+        <button class="delete" type="button" (click)="deleteSale(s)"> <i
+            class="material-icons">&#xe5cd;</i></button>
+      </td>
+      
+       <td>{{s.date | date: "shortDate"}}</td>
+      <td>{{s.numOfDate}}</td>
+      <td>לעשות פונקציה</td>
+      <td>{{s.invoiceNumber}}</td>
       <!-- <td>{{s.PublicSerialName}}</td> -->
-      <td>{{s.PrivateSerialName}}</td>
-      <td>{{s.StoneName}}</td> 
-      <td>{{s.Weight}}</td>
-      <td>{{s.PricePerCarat}}</td>
-      <td>{{s.TotalPrice}}</td>
-      <td>{{s.RawOrPolished}}</td>
+      <td>{{s.privateSerialName}}</td>
+      <td>{{s.stoneName}}</td> 
+      <td>{{s.weight}}</td>
+      <td>{{s.pricePerCarat | currency:"USD":true}}</td>
+      <td> {{s.weight*s.pricePerCarat | currency:"USD":true}}</td>
+      <td>{{rawOrPolishedFunc(s)}}</td>
      
     </tr>
   </tbody>

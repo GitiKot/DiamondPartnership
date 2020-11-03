@@ -20,6 +20,17 @@ export class SalesService {
 
    return this.http.post<Sale>(this.salesUrl,s);
   }
+  deletePartner(s:Sale){
+    var ttt=`${this.salesUrl}/${s.id}`;
+    console.log("url="+ttt);
+  
+    return  this.http.delete<Sale>(ttt,this.options)
+    .subscribe((s:Sale)=>{console.log(s,"suecces");
+      },()=>{console.log("error");
+      }
+      );
+    
+    }
 }
 
 
