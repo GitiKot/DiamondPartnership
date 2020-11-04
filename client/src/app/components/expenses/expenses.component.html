@@ -1,4 +1,4 @@
-<form [formGroup]='expensesForm' class="form-inline d-flex justify-content-center md-form form-sm mt-0">
+<form [formGroup]='expensesForm' (ngSubmit)="onSubmit()"class="form-inline d-flex justify-content-center md-form form-sm mt-0">
 
   <body>
 
@@ -123,6 +123,27 @@
                     <!-- <td><input id="expenses3" class="input"></td>
                       <td> <input id="price3" class="input"> </td> -->
                     <!-- </tr> -->
+
+  detail:
+  <div formArrayName="detail">
+    <div *ngFor="let skill of detail.controls; let i=index">
+      <div [formGroupName]="i">
+        <!-- {{i}} -->
+       expenses :
+        <input type="text" formControlName="expenses">
+        price:
+        <input type="text" formControlName="price">
+ 
+        <!-- <button (click)="removeSkill(i)">Remove</button> -->
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
                   </tbody>
                 </table>
 
@@ -179,13 +200,53 @@
             <button (click)="removeSkill(i)">X</button>
           </div> -->
           <!--  -->
-          <div formArrayName="detail" *ngFor="let detail of expensesForm.controls.detail?.value; let i = index">
+          <!-- <div formArrayName="detail" *ngFor="let detail of expensesForm.controls.detail?.value; let i = index">
             <ng-container [formGroupName]="i">
-              <!-- <input placeholder="expenses" formControlName="`${expenses}+${i}`" type="text"> -->
-              <input placeholder="expenses" formControlName="expenses" type="text">
+               <input placeholder="expenses" formControlName="`${expenses}+${i}`" type="text"> -->
+            <!--  <input placeholder="expenses" formControlName="expenses" type="text">
               <input placeholder="price" formControlName="price" type="text">
             </ng-container>
+          </div> -->
+
+
+
+
+
+          <!-- detail: -->
+          <div formArrayName="detail">
+            <div *ngFor="let skill of detail.controls; let i=index">
+              <div [formGroupName]="i">
+                <!-- {{i}} -->
+               expenses :
+                <input type="text" formControlName="expenses">
+                price:
+                <input type="text" formControlName="price">
+         
+                <!-- <button (click)="removeSkill(i)">Remove</button> -->
+              </div>
+            </div>
           </div>
+         
+          <!-- <p>
+            <button type="submit">Submit</button>
+          </p> -->
+         
+        <!-- </fo/rm> -->
+         
+         
+        <p>
+          <button type="button" (click)="addDetail()">Add</button>
+        </p>
+         
+        <!-- {{this.expensesForm.value | json}} -->
+
+
+
+
+
+
+
+
 
            <!-- <table class="table table-hover">
             <thead>
@@ -398,4 +459,44 @@
   </div>
 
 
+
+
+
+
+<!-- דוגמה -->
+<!-- <form [formGroup]="skillsForm" (ngSubmit)="onSubmit()"> -->
+ 
+  <!-- <p>
+    <label for="name">Name </label>
+    <input type="text" id="name" name="name" formControlName="name">
+  </p> -->
+ 
+ 
+  <!-- detail:
+  <div formArrayName="detail">
+    <div *ngFor="let skill of detail.controls; let i=index">
+      <div [formGroupName]="i">
+        {{i}}
+       expenses :
+        <input type="text" formControlName="expenses">
+        price:
+        <input type="text" formControlName="price">
+  -->
+        <!-- <button (click)="removeSkill(i)">Remove</button> -->
+      <!-- </div>
+    </div>
+  </div> -->
+ 
+  <!-- <p>
+    <button type="submit">Submit</button>
+  </p> -->
+ 
+<!-- </form> -->
+ 
+ 
+<!-- <p>
+  <button type="button" (click)="addDetail()">Add</button>
+</p> -->
+ 
+<!-- {{this.expensesForm.value | json}} -->
 </form>

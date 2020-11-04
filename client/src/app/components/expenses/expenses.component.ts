@@ -213,14 +213,14 @@ if(this.expensesForm.value.detail){
   //   }));
   // }
  
-  addDetail1() {
-    const detail = this.expensesForm.controls.detail as FormArray;
-    detail.push(this.formBuilder.group({
-      expenses: [''],
-      price:[''],
-    }));
+  // addDetail1() {
+  //   const detail = this.expensesForm.controls.detail as FormArray;
+  //   detail.push(this.formBuilder.group({
+  //     expenses: [''],
+  //     price:[''],
+  //   }));
     
-  }
+  // }
   // addDetail() {
   //       // const details = this.expensesForm.get('detail') as FormArray;
 
@@ -273,7 +273,7 @@ if(this.expensesForm.value.detail){
   }
 
 
-//   expensesForm: FormGroup;
+
  
 //   constructor(private fb:FormBuilder) {
  
@@ -288,7 +288,7 @@ if(this.expensesForm.value.detail){
     return this.expensesForm.get("detail") as FormArray
   }
  
-  newSkill(): FormGroup {
+  newDetail(): FormGroup {
     return this.formBuilder.group({
       expenses: '',
       price: '',
@@ -296,16 +296,16 @@ if(this.expensesForm.value.detail){
   }
  
   addDetail() {
-    this.detail.push(this.newSkill());
+    this.detail.push(this.newDetail());
   }
  
-//   removeSkill(i:number) {
+//   removeDetail(i:number) {
 //     this.detail.removeAt(i);
 //   }
  
-//   onSubmit() {
-//     console.log(this.expensesForm.value);
-//   }
+  onSubmit() {
+    console.log(this.expensesForm.value);
+  }
  
 // }
  
