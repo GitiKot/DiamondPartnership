@@ -1,4 +1,4 @@
-<form [formGroup]='expensesForm' (ngSubmit)="onSubmit()"class="form-inline d-flex justify-content-center md-form form-sm mt-0">
+<form [formGroup]='expensesForm' class="form-inline d-flex justify-content-center md-form form-sm mt-0">
 
   <body>
 
@@ -39,14 +39,19 @@
           <td>{{e.getchack}}</td>
           <td>{{e.InvoiceNumber}}</td>
           <td>{{e.Remarks}}</td>
-          <td></td>
+          <td>
+            <!-- <tr *ngFor="let d of expensesList;let i=index">
+              <td>{{d.detail[i].expenses}}</td>
+              <td>{{d.detail[i].price}}</td> 
+             </tr> -->
+          </td>
           <td><button type="button" class="btn btn-primary" (click)="frame.show()" data-toggle="modal"
               data-target="#modalCart">+</button></td>
           <td>{{e.amountPartner}}</td>
-          
+
         </tr>
-      
-       
+
+
         <!-- -------model expenses------------------------------------ -->
 
         <!-- Modal: modalCart -->
@@ -59,7 +64,6 @@
             <div class="modal-content">
               <!--Header-->
               <div class="modal-header text-center">
-                <!-- <h4 class="modal-title" id="myModalLabel">Your cart</h4> -->
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
                   <span aria-hidden="true">×</span>
                 </button>
@@ -85,11 +89,11 @@
                         <input placeholder="price" formControlName="price" type="text">
                       </ng-container>
                     </div> -->
-<!--                   
+                    <!--                   
                       <tr *ngFor="let d of expensesList;let i=index">
                         <td>{{d.detail[i].expenses}}</td>
                         <td>{{d.price}}</td> -->
-                       <!--</tr> -->
+                    <!--</tr> -->
                     <!-- <div *ngFor="let d of expensesForm.controls.detail?.value;let i=index">
                      {{expensesForm.value.detail[i].expenses}}
                      {{expensesForm.value.detail[i].price}}
@@ -101,11 +105,11 @@
                       <td>{{e.price}}</td>
                     </tr> -->
                     <!-- aaaaaaaaaaaaaaaaa -->
-                      <!-- <tr *ngFor="let e of  expensesForm.value.detail">
+                    <!-- <tr *ngFor="let e of  expensesForm.value.detail">
                       <td>{{e.expenses}}</td>
                       <td>{{e.price}}</td>
                     </tr> -->
-                     
+
                     <!-- <td><input id="expenses1" class="input"[formControl]="detail"></td> -->
                     <!-- <td> <input id="price1"  class="input"[formControl]="detail"> </td>  -->
                     <!-- <td><input id="expenses1" type="text" class="form-control"[formControl]="detail[0].expenses"></td>
@@ -124,20 +128,20 @@
                       <td> <input id="price3" class="input"> </td> -->
                     <!-- </tr> -->
 
-  detail:
-  <div formArrayName="detail">
-    <div *ngFor="let skill of detail.controls; let i=index">
-      <div [formGroupName]="i">
-        <!-- {{i}} -->
-       expenses :
-        <input type="text" formControlName="expenses">
-        price:
-        <input type="text" formControlName="price">
- 
-        <!-- <button (click)="removeSkill(i)">Remove</button> -->
-      </div>
-    </div>
-  </div>
+                    <!-- detail:
+                    <div formArrayName="detail">
+                      <div *ngFor="let skill of detail.controls; let i=index">
+                        <div [formGroupName]="i">
+                           {{i}} -->
+                         <!-- expenses :
+                          <input type="text" formControlName="expenses">
+                          price:
+                          <input type="text" formControlName="price">
+
+                          <button (click)="removeSkill(i)">Remove</button> -->
+                       <!--  </div>
+                      </div>
+                    </div> -->
 
 
 
@@ -174,7 +178,7 @@
     <!-- <div class="modal-dialog" role="document"> -->
     <!-- <div class="modal-dialog modal-full-height modal-right" role="document"> -->
     <!-- <div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true"> -->
-    <div class="modal-dialog  modal-side modal-top-right" role="document">
+    <div class="modal-dialog modal-notify modal-side modal-top-right" role="document">
       <div class="modal-content">
         <!--Header-->
         <div class="modal-header text-center">
@@ -186,127 +190,86 @@
         <!-- <span aria-hidden="true">&times;</span> -->
         <!--Body-->
         <div class="modal-body">
-<!-- מכאן -->
+          <!-- מכאן -->
           <!-- <div formArrayName="detail" *ngFor="let details of expensesForm.controls.detail?.value; let i = index">
             <ng-container [formGroupName]="i">
                <input placeholder="expenses" formControlName="`${expenses}+${i}`" type="text"> -->
-            <!--  <input placeholder="expenses" formControlName="expenses" type="text">
+          <!--  <input placeholder="expenses" formControlName="expenses" type="text">
               <input placeholder="price" formControlName="price" type="text">
             </ng-container>
           </div> -->
           <!--ועד כאן זה טוב ללא הראשון  -->
           <!-- <div *ngFor="let control of skills.controls; index as i">
             <input [formControl]="skills.controls[i]" />
-            <button (click)="removeSkill(i)">X</button>
-          </div> -->
-          <!--  -->
-          <!-- <div formArrayName="detail" *ngFor="let detail of expensesForm.controls.detail?.value; let i = index">
-            <ng-container [formGroupName]="i">
-               <input placeholder="expenses" formControlName="`${expenses}+${i}`" type="text"> -->
-            <!--  <input placeholder="expenses" formControlName="expenses" type="text">
-              <input placeholder="price" formControlName="price" type="text">
-            </ng-container>
           </div> -->
 
-
-
-
-
-          <!-- detail: -->
-          <div formArrayName="detail">
-            <div *ngFor="let skill of detail.controls; let i=index">
-              <div [formGroupName]="i">
-                <!-- {{i}} -->
-               expenses :
-                <input type="text" formControlName="expenses">
-                price:
-                <input type="text" formControlName="price">
-         
-                <!-- <button (click)="removeSkill(i)">Remove</button> -->
+          <table id="myTable">
+            <tbody>
+              <div formArrayName="detail">
+                <div *ngFor="let d of detail.controls; let i=index">
+                  <div [formGroupName]="i">
+                    <tr class="header" *ngIf="i=='0'">
+                      <th>#</th>
+                      <th>שם הוצאה</th>
+                      <th>מחיר</th>
+                      <th>מחיקה</th>
+                    </tr>
+                    <tr>
+                      <td>{{i}}</td>
+                      <td><input type="text" formControlName="expenses"></td>
+                      <td><input type="text" formControlName="price"></td>
+                      <td><button (click)="removeDetail(i)">x</button></td>
+                    </tr>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-         
-          <!-- <p>
-            <button type="submit">Submit</button>
-          </p> -->
-         
-        <!-- </fo/rm> -->
-         
-         
-        <p>
-          <button type="button" (click)="addDetail()">Add</button>
-        </p>
-         
-        <!-- {{this.expensesForm.value | json}} -->
+            </tbody>
+          </table>
 
-
-
-
-
-
-
-
-
-           <!-- <table class="table table-hover">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Product name</th>
-                <th>Price</th>
-              </tr>
-            </thead>
+          <!-- <table class="table table-hover">
+           
             <tbody>
               <tr > -->
-                <!-- <th scope="row">1</th> -->
-                <!-- <div formGroupName="detail"> -->
- 
-                  <!-- <div class="form-group">
+          <!-- <th scope="row">1</th> -->
+          <!-- <div formGroupName="detail"> -->
+
+          <!-- <div class="form-group">
                     <label for="expenses">expenses</label>
                     <input type="text" class="form-control" name="expenses" formControlName="expenses">
                   </div> -->
-                 
-                  <!-- <div class="form-group">
+
+          <!-- <div class="form-group">
                     <label for="price">price</label>
                     <input type="text" class="form-control" name="price" formControlName="price">
                   </div> -->
-                  
-                <!-- </div>  -->
-                <!-- <div formGroupName="detail"> -->
- 
-                  <!-- <div class="form-group">
+
+          <!-- </div>  -->
+          <!-- <div formGroupName="detail"> -->
+
+          <!-- <div class="form-group">
                     <label for="expenses">expenses</label>
                     <input type="text" class="form-control" name="expenses" formControlName="expenses">
                   </div> -->
-                 
-                  <!-- <div class="form-group">
+
+          <!-- <div class="form-group">
                     <label for="price">price</label>
                     <input type="text" class="form-control" name="price" formControlName="price">
                   </div> -->
-                  
-                <!-- </div>  -->
+
+          <!-- </div>  -->
           <!-- <td class="form-group"> <input type="text" class="form-control" name="expenses" formControlName="expenses"></td>
                 <td class="form-group"> <input type="text" class="form-control" name="price" formControlName="price"> </td>   -->
-           <!-- </tr>  -->
-           <!-- <tr>
-                <th scope="row">2</th>
-                <td><input id="expenses2" class="input"></td>
-                <td> <input id="price2" class="input"> </td>
-              </tr>  -->
-          <!-- <tr>
-                <th scope="row">3</th>
-                <td><input id="expenses3" class="input"></td>
-                <td> <input id="price3" class="input"> </td>
-              </tr>  -->
-           <!-- </tbody>
+          <!-- </tr>  -->
+        
+          <!-- </tbody>
           </table>  -->
 
         </div>
 
         <!-- <div class="modal-footer"> -->
-        <div> <button class="btn btn-primary" (click)="addDetail()">הוספה</button>
-          <button type="button" class="btn btn-outline-primary" data-dismiss="modal" (click)="cancelex()"
-            (click)="frame2.hide()">ביטול</button>
+        <div> <button class="btn btn-outline-primary" (click)="addDetail()">הוספה</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cancelex()"
+           (click)="frame2.hide()">ביטול</button>
           <button class="btn btn-primary" (click)="savemodal()">שמירה</button></div>
         <!-- </div> -->
       </div>
@@ -388,11 +351,8 @@
                   [formControl]="contactFormModalGetChack">
                 <label for="form29">קיבלתי צ'ק או לקזז מהצ'ק הבא</label> -->
                 <mdb-error *ngIf="InvoiceNumber.invalid && (InvoiceNumber.dirty || InvoiceNumber.touched)">
-                  <!-- Input invalid -->
                 </mdb-error>
                 <mdb-success *ngIf="InvoiceNumber.valid && (InvoiceNumber.dirty || InvoiceNumber.touched)">
-                  <!-- Input
-                  valid -->
                 </mdb-success>
               </div>
 
@@ -409,8 +369,6 @@
                 <mdb-success *ngIf="getchack.valid && (getchack.dirty || getchack.touched)">
                 </mdb-success>
               </div>
-
-
             </div>
           </div>
 
@@ -450,9 +408,6 @@
           <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
               (click)="hideModal2()">ביטול</button>
             <button class="btn btn-primary" (click)=save()>שמירה</button></div>
-          <!-- </div> -->
-          <!-- <button mdbBtn color="unique" class="waves-light" mdbWavesEffect>Send -->
-          <!-- </button> -->
         </div>
       </div>
     </div>
@@ -463,15 +418,9 @@
 
 
 
-<!-- דוגמה -->
-<!-- <form [formGroup]="skillsForm" (ngSubmit)="onSubmit()"> -->
- 
-  <!-- <p>
-    <label for="name">Name </label>
-    <input type="text" id="name" name="name" formControlName="name">
-  </p> -->
- 
- 
+  <!-- דוגמה -->
+  <!-- <form [formGroup]="skillsForm" (ngSubmit)="onSubmit()"> -->
+
   <!-- detail:
   <div formArrayName="detail">
     <div *ngFor="let skill of detail.controls; let i=index">
@@ -482,21 +431,18 @@
         price:
         <input type="text" formControlName="price">
   -->
-        <!-- <button (click)="removeSkill(i)">Remove</button> -->
-      <!-- </div>
+  <!-- <button (click)="removeSkill(i)">Remove</button> -->
+  <!-- </div>
     </div>
   </div> -->
- 
+
   <!-- <p>
     <button type="submit">Submit</button>
   </p> -->
- 
-<!-- </form> -->
- 
- 
-<!-- <p>
+
+  <!-- <p>
   <button type="button" (click)="addDetail()">Add</button>
 </p> -->
- 
-<!-- {{this.expensesForm.value | json}} -->
+
+  <!-- {{this.expensesForm.value | json}} -->
 </form>

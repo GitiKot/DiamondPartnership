@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormControl, FormGroup,FormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { Expenses } from 'src/app/data/expenses';
@@ -31,14 +31,14 @@ export class ExpensesComponent implements OnInit {
     this.showModalOnClick.hide();
 
   }
-  
+
   public hideModal2(): void {//2
 
     this.showModalOnClick.hide();
     this.showModalOnClick1.hide();
-
+this.expensesForm.reset();
   }
-  constructor(private r: Router, private expensesService: ExpensesService,private formBuilder:FormBuilder) { }
+  constructor(private r: Router, private expensesService: ExpensesService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
 
@@ -55,25 +55,25 @@ export class ExpensesComponent implements OnInit {
     //   ]),
     //   Remarks: new FormControl('', Validators.required)//requierd?
     // });
-// -------------------------------------------------------------------------------
-this.expensesForm=this.formBuilder.group({
-  PublicSerialName: ['',[Validators.required]],
-    date:  ['',[Validators.required]],
-    getchack:  ['',[Validators.required]],
-    InvoiceNumber:  ['',[Validators.required]],
-    amountPartner:  ['',[Validators.required]],
-    // account: this.fb.group({
-    //   email: ['', Validators.required],
-    //   confirm: ['', Validators.required]
-    // })
-    detail: this.formBuilder.array([]) ,
-    // detail: this.formBuilder.array([{
+    // -------------------------------------------------------------------------------
+    this.expensesForm = this.formBuilder.group({
+      PublicSerialName: ['', [Validators.required]],
+      date: ['', [Validators.required]],
+      getchack: ['', [Validators.required]],
+      InvoiceNumber: ['', [Validators.required]],
+      amountPartner: ['', [Validators.required]],
+      // account: this.fb.group({
+      //   email: ['', Validators.required],
+      //   confirm: ['', Validators.required]
+      // })
+      detail: this.formBuilder.array([]),
+      // detail: this.formBuilder.array([{
       // expenses: '',
       // price:'',
-    // }]),
-    Remarks:  ['',[Validators.required]],//requierd?
+      // }]),
+      Remarks: ['', [Validators.required]],//requierd?
 
-})
+    })
 
   }
   myFunction() {
@@ -171,11 +171,11 @@ this.expensesForm=this.formBuilder.group({
     if (this.expensesForm.valid) {
       this.expensesService.addExpenses(this.expensesForm.value).subscribe(e => {
         this.expensesList.push(e);
-        
+
         this.expensesForm.reset();
 
       })
-      
+
     }
     this.showModalOnClick.hide();
     this.showModalOnClick1.hide();
@@ -183,8 +183,8 @@ this.expensesForm=this.formBuilder.group({
   savemodal() {
 
     console.log(this.expensesForm.value.detail);
-  
-    
+
+
     this.showModalOnClick1.show();
     // alert("האם ברצונך לשמור את הנתונים")
     // if (this.expensesForm.valid) {
@@ -194,13 +194,13 @@ this.expensesForm=this.formBuilder.group({
     //     alert("reset");
     //   })
     // }
-if(this.expensesForm.value.detail){
+    if (this.expensesForm.value.detail) {
 
 
 
 
 
-}
+    }
   }
   // addListItem() {
   //   const control = <FormArray>this.listForm.controls['list_items'];
@@ -212,14 +212,14 @@ if(this.expensesForm.value.detail){
   //     name: ['', Validators.required]
   //   }));
   // }
- 
+
   // addDetail1() {
   //   const detail = this.expensesForm.controls.detail as FormArray;
   //   detail.push(this.formBuilder.group({
   //     expenses: [''],
   //     price:[''],
   //   }));
-    
+
   // }
   // addDetail() {
   //       // const details = this.expensesForm.get('detail') as FormArray;
@@ -229,15 +229,15 @@ if(this.expensesForm.value.detail){
   //     expenses: [''],
   //     price:[''],
   //   }));
-    
+
   // }
   cancelex() {
 
     console.log(this.expensesForm.controls);
-
+    this.detail.reset();
     //  console.log( this.showModalOnClick.isShown);
-    this.expensesForm.reset();
-     this.showModalOnClick1.show();
+    // this.expensesForm.reset();
+    this.showModalOnClick1.show();
 
   }
  
@@ -259,66 +259,38 @@ if(this.expensesForm.value.detail){
   get amountPartner() {
     return this.expensesForm.get('amountPartner');
   }
-  // get detail():FormArray {
-  //   return this.expensesForm.get('detail')as FormArray;
-  // }
-  get expenses(){
+  get detail(): FormArray {
+    return this.expensesForm.get('detail') as FormArray
+  }
+  
+  get expenses() {
     return this.expensesForm.get("detail").get('expenses');
   }
-  get price(){
+  get price() {
     return this.expensesForm.get("detail").get('price');
   }
   get Remarks() {
     return this.expensesForm.get('Remarks');
   }
 
-
-
- 
-//   constructor(private fb:FormBuilder) {
- 
-//     this.expensesForm = this.fb.group({
-//       name: '',
-//       detail: this.fb.array([]) ,
-//     });
-  
-//   }
- 
-  get detail() : FormArray {
-    return this.expensesForm.get("detail") as FormArray
-  }
- 
   newDetail(): FormGroup {
     return this.formBuilder.group({
       expenses: '',
       price: '',
     })
   }
- 
+
   addDetail() {
     this.detail.push(this.newDetail());
   }
- 
-//   removeDetail(i:number) {
-//     this.detail.removeAt(i);
-//   }
- 
-  onSubmit() {
-    console.log(this.expensesForm.value);
+
+  removeDetail(i: number) {
+    this.detail.removeAt(i);
   }
- 
-// }
- 
-// export class country {
-//   id: string;
-//   name: string;
- 
-//   constructor(id: string, name: string) {
-//     this.id = id;
-//     this.name = name;
-//   }
-// }
- 
+  //  (ngSubmit)="onSubmit()" לשים ב html  אם רוצים להשתמש בפונ' זו
+  // onSubmit() {
+  //   console.log(this.expensesForm.value);
+  // }
 
 
 }
