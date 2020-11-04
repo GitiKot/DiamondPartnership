@@ -165,8 +165,21 @@
         <!-- <span aria-hidden="true">&times;</span> -->
         <!--Body-->
         <div class="modal-body">
-
-          <div formArrayName="detail" *ngFor="let details of expensesForm.controls.detail?.value; let i = index">
+<!-- מכאן -->
+          <!-- <div formArrayName="detail" *ngFor="let details of expensesForm.controls.detail?.value; let i = index">
+            <ng-container [formGroupName]="i">
+               <input placeholder="expenses" formControlName="`${expenses}+${i}`" type="text"> -->
+            <!--  <input placeholder="expenses" formControlName="expenses" type="text">
+              <input placeholder="price" formControlName="price" type="text">
+            </ng-container>
+          </div> -->
+          <!--ועד כאן זה טוב ללא הראשון  -->
+          <!-- <div *ngFor="let control of skills.controls; index as i">
+            <input [formControl]="skills.controls[i]" />
+            <button (click)="removeSkill(i)">X</button>
+          </div> -->
+          <!--  -->
+          <div formArrayName="detail" *ngFor="let detail of expensesForm.controls.detail?.value; let i = index">
             <ng-container [formGroupName]="i">
               <!-- <input placeholder="expenses" formControlName="`${expenses}+${i}`" type="text"> -->
               <input placeholder="expenses" formControlName="expenses" type="text">
@@ -174,8 +187,6 @@
             </ng-container>
           </div>
 
-          <!--  -->
-          
            <!-- <table class="table table-hover">
             <thead>
               <tr>

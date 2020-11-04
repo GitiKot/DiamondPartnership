@@ -66,10 +66,11 @@ this.expensesForm=this.formBuilder.group({
     //   email: ['', Validators.required],
     //   confirm: ['', Validators.required]
     // })
-    detail: this.formBuilder.array([{
-      expenses: '',
-      price:'',
-    }]),
+    detail: this.formBuilder.array([]) ,
+    // detail: this.formBuilder.array([{
+      // expenses: '',
+      // price:'',
+    // }]),
     Remarks:  ['',[Validators.required]],//requierd?
 
 })
@@ -211,7 +212,8 @@ if(this.expensesForm.value.detail){
   //     name: ['', Validators.required]
   //   }));
   // }
-  addDetail() {
+ 
+  addDetail1() {
     const detail = this.expensesForm.controls.detail as FormArray;
     detail.push(this.formBuilder.group({
       expenses: [''],
@@ -269,4 +271,54 @@ if(this.expensesForm.value.detail){
   get Remarks() {
     return this.expensesForm.get('Remarks');
   }
+
+
+//   expensesForm: FormGroup;
+ 
+//   constructor(private fb:FormBuilder) {
+ 
+//     this.expensesForm = this.fb.group({
+//       name: '',
+//       detail: this.fb.array([]) ,
+//     });
+  
+//   }
+ 
+  get detail() : FormArray {
+    return this.expensesForm.get("detail") as FormArray
+  }
+ 
+  newSkill(): FormGroup {
+    return this.formBuilder.group({
+      expenses: '',
+      price: '',
+    })
+  }
+ 
+  addDetail() {
+    this.detail.push(this.newSkill());
+  }
+ 
+//   removeSkill(i:number) {
+//     this.detail.removeAt(i);
+//   }
+ 
+//   onSubmit() {
+//     console.log(this.expensesForm.value);
+//   }
+ 
+// }
+ 
+// export class country {
+//   id: string;
+//   name: string;
+ 
+//   constructor(id: string, name: string) {
+//     this.id = id;
+//     this.name = name;
+//   }
+// }
+ 
+
+
 }
