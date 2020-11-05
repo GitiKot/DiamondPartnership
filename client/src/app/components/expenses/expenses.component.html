@@ -61,6 +61,7 @@
           <!-- <div class="modal-dialog modal-full-height modal-right" role="document"> -->
           <!-- <div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true"> -->
           <div class="modal-dialog  modal-side modal-top-right" role="document">
+            <!-- <div class="modal-dialog modal-fluid" role="document"> -->
             <div class="modal-content">
               <!--Header-->
               <div class="modal-header text-center">
@@ -83,63 +84,66 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <!-- <div formArrayName="detail" *ngFor="let details of expensesForm.controls.detail?.value; let i = index">
+                    <tr *ngFor="let e of expensesList">
+                      <td>{{e.PublicSerialName}}</td>
+                      <td>{{e.date| date: "shortDate"}}</td>
+                      <!-- <div formArrayName="detail" *ngFor="let details of expensesForm.controls.detail?.value; let i = index">
                       <ng-container [formGroupName]="i">
                         <input placeholder="expenses" formControlName="expenses" type="text">
                         <input placeholder="price" formControlName="price" type="text">
                       </ng-container>
                     </div> -->
-                    <!--                   
+                      <!--                   
                       <tr *ngFor="let d of expensesList;let i=index">
                         <td>{{d.detail[i].expenses}}</td>
                         <td>{{d.price}}</td> -->
-                    <!--</tr> -->
-                    <!-- <div *ngFor="let d of expensesForm.controls.detail?.value;let i=index">
+                      <!--</tr> -->
+                      <!-- <div *ngFor="let d of expensesForm.controls.detail?.value;let i=index">
                      {{expensesForm.value.detail[i].expenses}}
                      {{expensesForm.value.detail[i].price}}
                   </div>                   -->
-                    <!-- {{expensesForm.detail.controls}}    -->
+                      <!-- {{expensesForm.detail.controls}}    -->
 
-                    <!-- <tr *ngFor="let e of expensesList.controls.detail[0].value">
+                      <!-- <tr *ngFor="let e of expensesList.controls.detail[0].value">
                       <td>{{e.expenses}}</td>
                       <td>{{e.price}}</td>
                     </tr> -->
-                    <!-- aaaaaaaaaaaaaaaaa -->
-                    <!-- <tr *ngFor="let e of  expensesForm.value.detail">
+                      <!-- aaaaaaaaaaaaaaaaa -->
+                      <!-- <tr *ngFor="let e of  expensesForm.value.detail">
                       <td>{{e.expenses}}</td>
                       <td>{{e.price}}</td>
                     </tr> -->
 
-                    <!-- <td><input id="expenses1" class="input"[formControl]="detail"></td> -->
-                    <!-- <td> <input id="price1"  class="input"[formControl]="detail"> </td>  -->
-                    <!-- <td><input id="expenses1" type="text" class="form-control"[formControl]="detail[0].expenses"></td>
+                      <!-- <td><input id="expenses1" class="input"[formControl]="detail"></td> -->
+                      <!-- <td> <input id="price1"  class="input"[formControl]="detail"> </td>  -->
+                      <!-- <td><input id="expenses1" type="text" class="form-control"[formControl]="detail[0].expenses"></td>
                       <td> <input id="price1" type="text" class="form-control"[formControl]="detail[0].price"> </td> -->
-                    <!-- </tr> -->
-                    <!-- <tr>
+                      <!-- </tr> -->
+                      <!-- <tr>
                       <td><input id="expenses2" class="input"></td>
                       <td> <input id="price2" class="input"> </td>
                     </tr> -->
-                    <!-- <tr> -->
-                    <!-- <td><input type="text"  class="form-control" mdbInput mdbValidate
+                      <!-- <tr> -->
+                      <!-- <td><input type="text"  class="form-control" mdbInput mdbValidate
                           [formControl]="detail[2].ProductName"></td>
                           <td><input type="text"  class="form-control" mdbInput mdbValidate
                             [formControl]="detail[2].Price"></td> -->
-                    <!-- <td><input id="expenses3" class="input"></td>
+                      <!-- <td><input id="expenses3" class="input"></td>
                       <td> <input id="price3" class="input"> </td> -->
-                    <!-- </tr> -->
+                      <!-- </tr> -->
 
-                    <!-- detail:
+                      <!-- detail:
                     <div formArrayName="detail">
                       <div *ngFor="let skill of detail.controls; let i=index">
                         <div [formGroupName]="i">
                            {{i}} -->
-                         <!-- expenses :
+                      <!-- expenses :
                           <input type="text" formControlName="expenses">
                           price:
                           <input type="text" formControlName="price">
 
                           <button (click)="removeSkill(i)">Remove</button> -->
-                       <!--  </div>
+                      <!--  </div>
                       </div>
                     </div> -->
 
@@ -154,6 +158,10 @@
               </div>
 
               <!-- <div class="modal-footer"> -->
+              
+             
+                      <!-- <button (click)="enableSection(i, d.disabled)">{{ d.disabled ? 'Edit': 'Save' }}</button> -->
+            
               <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
                   (click)="frame.hide()">ביטול</button>
               </div>
@@ -260,7 +268,7 @@
           <!-- <td class="form-group"> <input type="text" class="form-control" name="expenses" formControlName="expenses"></td>
                 <td class="form-group"> <input type="text" class="form-control" name="price" formControlName="price"> </td>   -->
           <!-- </tr>  -->
-        
+
           <!-- </tbody>
           </table>  -->
 
@@ -269,7 +277,7 @@
         <!-- <div class="modal-footer"> -->
         <div> <button class="btn btn-outline-primary" (click)="addDetail()">הוספה</button>
           <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cancelex()"
-           (click)="frame2.hide()">ביטול</button>
+            (click)="frame2.hide()">ביטול</button>
           <button class="btn btn-primary" (click)="savemodal()">שמירה</button></div>
         <!-- </div> -->
       </div>
