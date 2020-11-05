@@ -12,6 +12,7 @@ import { PartnersFormComponent } from './components/partners-form/partners-form.
 import { SalesFormComponent } from './components/sales-form/sales-form.component';
 import { AppComponent } from './app.component';
 import{ModalFormComponent}from './components/modal-form/modal-form.component'
+import { SeriousnessListComponent } from './components/seriousness-list/seriousness-list.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -19,7 +20,7 @@ const routes: Routes = [
   { path: 'expenses', component: ExpensesComponent },
   { path: 'sales/:isSales', component: SalesComponent },
   { path: 'sales-form', component: SalesFormComponent },
-  { path: 'seriousness', component: SeriousnessComponent },
+  { path: 'seriousness', component: SeriousnessListComponent },
   { path: 'nav-bar', component: NavBarComponent },
   { path: 'partners', component: PartnersComponent },
   { path: 'partners-form', component: PartnersFormComponent },
