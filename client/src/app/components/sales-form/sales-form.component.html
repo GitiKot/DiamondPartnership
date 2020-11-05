@@ -4,10 +4,11 @@
 </div>
 <form [formGroup]='salesForm' action="action" (submit)="save()" method="POST" class="form-inline">
   <br>
+  
   <span>
 
-    <label for="datesale">מספר אבנים:</label>
-    <input type="number"   class="form-control" tabindex="0" (change) ="numStonesFunc()"id="numStones">
+    <label for="datesale"> להכניס מראש מספר אבנים אחרת ימחקו שורות:</label>
+    <input type="number" formControlName="num"  class="form-control" tabindex="0" (change) ="numStonesFunc()"id="numStones">
     <!-- <label  *ngIf="salesForm.controls['datesale'].error!=null">גדול </label> -->
   </span>&nbsp; &nbsp;
   <span>
@@ -23,7 +24,7 @@
 
   <span>
     <label>תאריך פרעון:</label>
-    <input [value]="dateP" type="text" class="form-control" 
+    <input [value]="dateP" type="text" class="form-control" formControlName="date2"
       placeholder="אוטומטי" id="DueDate"disabled="form-check-input" >
   </span>&nbsp; &nbsp;
   <span>
@@ -62,14 +63,14 @@
   <input [value]="totalPrice"  >
 
   <input [value]="totalPrice" > -->
-
+  
    <table class="table table-bordered" id="saleTable">
      <thead>
       <tr id="header">
         <!-- <th scope="col"></th> -->
         <th>סריה כללית</th>
         <th>סריה פרטית</th>
-        <th>אבן</th>
+        <th>שם אבן   </th>
         <th>משקל</th>
         <th style="height:5px ;">   מחיר לקראט</th>
         <th>סה"כ</th>
@@ -93,9 +94,9 @@
           formControlName="privateSerialName" type="text" class="input" 
           tabindex={{i*5+7}} > </td> 
 
-        <td><input  [(ngModel)]="sale.privateSerial" (input)="aa($event)"
+        <td><input  [(ngModel)]="sale.privateSerial" 
           formControlName="stoneName"type="text" class="input"  
-          [(ngModel)]="tableContent[i].stoneName" tabindex={{i*5+8}} (input)="aa($event)"> </td>
+          [(ngModel)]="tableContent[i].stoneName" tabindex={{i*5+8}} > </td>
 
         <td><input  #wee tabindex={{i*5+9}} (input) ="totalPrice[i] = wee.value * pricepercarat.value "  
           formControlName="weight"  class="input"
@@ -106,7 +107,7 @@
           [(ngModel)]="tableContent[i].pricePerCarat"  type="number"
              classNam="PricePerCarat" > </td>
 
-        <td ><input [value]="totalPrice[i]"   class="input" ></td> 
+        <td ><input [value]="totalPrice[i]" formControlName="totalPrice"  class="input" ></td> 
       </tr>
    </tbody>
   </table> 

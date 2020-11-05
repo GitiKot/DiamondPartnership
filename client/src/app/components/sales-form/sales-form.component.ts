@@ -20,13 +20,9 @@ export class SalesFormComponent implements OnInit {
   tableContent = []
   salesForm: FormGroup;
   salesList: Array<Sale>;
-  index: number = 8;
   totalPrice = [];
   dateP: string;
-  o = new Object({ "publicSerial": String, "privateSerial": String, "stoneName": String, "w": Number, "pricePerCarat": Number })
-  // למה לא עובד האנגולר היפה? בתאריךפרעון ובסכום סופי?
-  // constructor(private router: Router,private salesService:SalesService) {
-  //  }
+  
   constructor(private router: Router, private salesServise: SalesService, private cdRef: ChangeDetectorRef) {
 
   }
@@ -35,7 +31,6 @@ export class SalesFormComponent implements OnInit {
 
 
     this.keypressEnter();
-    // this.addrow1();
     this.addEventCalcDate();
 
     this.salesForm = new FormGroup({
@@ -47,7 +42,11 @@ export class SalesFormComponent implements OnInit {
       stoneName: new FormControl('', Validators.required),
       weight: new FormControl('', Validators.required),
       pricePerCarat: new FormControl('', Validators.required),
-      rawOrPolished: new FormControl('', Validators.required)
+      totalPrice: new FormControl(''),
+      rawOrPolished: new FormControl('', Validators.required),
+      date2: new FormControl(''),
+      num: new FormControl(''),
+
     });
     
 
@@ -69,14 +68,9 @@ export class SalesFormComponent implements OnInit {
 
     var num: number = +(document.querySelector('#numOfDate') as HTMLInputElement).value;
     dateSales.setDate(dateSales.getDate() + num);
-    console.log(dateSales);
-
-    // (document.querySelector('#numOfDate') as HTMLInputElement).value =new Date((document.querySelector('#numOfDate') as HTMLInputElement).value)
-    // this.dateP=dateSales.toLocaleDateString();
+    
     (document.querySelector('#DueDate') as HTMLInputElement).value = dateSales.toLocaleDateString();
-    // (document.querySelector('#numOfDate') as HTMLInputElement).value +
-    //   (document.querySelector('#datesale') as HTMLInputElement).value;
-    console.log("as");
+    
 
 
   }
@@ -84,38 +78,35 @@ export class SalesFormComponent implements OnInit {
   save() {
 
 
-    // alert("האם הנך בטוח במה שאתה עושה");
-    // if (this.tableContent[0] != undefined) {
-    //   this.tableContent.forEach(sale => {
-    //     this.salesForm.controls['publicSerialName'].setValue(sale.publicSerial);
+    alert("האם הנך בטוח במה שאתה עושה");
+    if (this.tableContent[0] != undefined) {
+      this.tableContent.forEach(sale => {
+        this.salesForm.controls['publicSerialName'].setValue(sale.publicSerial);
 
-    //     this.salesForm.controls['privateSerialName'].setValue(sale.privateSerial)
-    //     this.salesForm.controls['stoneName'].setValue(sale.stoneName)
-    //     this.salesForm.controls['weight'].setValue(sale.w)
-    //     this.salesForm.controls['pricePerCarat'].setValue(sale.pricePerCarat)
+        this.salesForm.controls['privateSerialName'].setValue(sale.privateSerial)
+        this.salesForm.controls['stoneName'].setValue(sale.stoneName)
+        this.salesForm.controls['weight'].setValue(sale.w)
+        this.salesForm.controls['pricePerCarat'].setValue(sale.pricePerCarat)
 
-    //     console.log("form:");
+        console.log("form:");
 
-    //     console.log(this.salesForm.value);
-    //     if (this.salesForm.valid) {
+        console.log(this.salesForm.value);
+        if (this.salesForm.valid) {
 
-    //       this.salesServise.addSale(this.salesForm.value)
-    //         .subscribe(a => {
-    //           console.log("sss");
+          this.salesServise.addSale(this.salesForm.value)
+            .subscribe(a => {
+              console.log("sss");
+              
+            });
+        }
 
-    //           // this.salesList.push(sale);
-    //         });
-    //     }
-
-    //     else alert("הנתונים לא נכונים")
-    //     //  this.router.navigate(['/sales/true']);
-
-    //   });
-    // }
-    // else {
-    //   alert("לא הוכנסו שורות לטבלה")
-    // }
-    // this.salesForm.reset()
+        else alert("הנתונים לא נכונים")
+      });
+    }
+    else {
+      alert("לא הוכנסו שורות לטבלה")
+    }
+    this.salesForm.reset()
   }
   cancel() {
     this.router.navigate(['/sales/true']);
@@ -129,17 +120,12 @@ export class SalesFormComponent implements OnInit {
       if ((event as KeyboardEvent)
         .code === "Enter") {
         var current = (event.target as Element);
-        console.log(current);
-
-
         event.preventDefault();
         var index = current.getAttribute('tabindex');
         var num = (Number(index));
         num++;
-        // let nextInput= document.querySelector('[tabindex=num]');
         let nextInput = FindByAttributeValue("tabindex", num, "input");
         if (nextInput != undefined) {
-          // alert(nextInput);
           nextInput.focus();
         }
         else {
@@ -159,35 +145,16 @@ export class SalesFormComponent implements OnInit {
   }
   tableKeyPresent() {
     var allInput = document.querySelectorAll('td input');
-  console.log("all input");
-  
-    console.log(allInput);
-
     allInput.forEach(a => a.addEventListener("keypress", function (event) {
       if ((event as KeyboardEvent)
         .code === "Enter") {
         var current = (event.target as Element);
-        console.log(current);
-
-        // if (current.getAttribute('classNam') == 'PricePerCarat') {
-        //   console.log((current as HTMLInputElement).value);
-        //   document.getElementsByName('w').forEach(w => {
-        //     console.log((w as HTMLInputElement).value);
-        //   })
-
-        //   // (document.querySelector('.total') as HTMLInputElement).value= ((
-        //   //   document.querySelector('.PricePerCarat') as HTMLInputElement).value)
-        //   //   *((document.querySelector('w') as HTMLInputElement).value);
-        // }
-
         event.preventDefault();
         var index = current.getAttribute('tabindex');
         var num = (Number(index));
         num++;
-        // let nextInput= document.querySelector('[tabindex=num]');
         let nextInput = FindByAttributeValue("tabindex", num, "input");
         if (nextInput != undefined) {
-          // alert(nextInput);
           nextInput.focus();
         }
         else {
@@ -219,22 +186,13 @@ export class SalesFormComponent implements OnInit {
      
     }
 
-    // console.log("after add ");
-    // console.log(this.tableContent);
+  }
+  ngAfterContentChecked() {
 
-
-    // this.tableKeyPresent();
+    this.cdRef.detectChanges()
 
   }
-  // ngAfterContentChecked() {
 
-  //   this.cdRef.detectChanges()
-
-  // }
-aa(e){
-  console.log(Number(e.target.getAttribute('tabindex')));
-  
-}
   // addrow2() {
 
   //   this.tableContent.push({
@@ -327,6 +285,6 @@ aa(e){
 
 
   // }
-  //למחוק את הפונ אם הכל עובד טוב!! בעז"ה
+  //למחוק את הפונ  אם הכל עובד טוב!! בעז"ה
 
 }
