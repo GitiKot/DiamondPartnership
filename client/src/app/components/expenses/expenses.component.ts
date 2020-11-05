@@ -76,6 +76,7 @@ this.expensesForm.reset();
     })
 
   }
+
   myFunction() {
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("myInput");
@@ -202,25 +203,7 @@ this.expensesForm.reset();
 
     }
   }
-  // addListItem() {
-  //   const control = <FormArray>this.listForm.controls['list_items'];
-  //   control.push(this.initListItem());
-  // }
-  // addNewAlias(){
-  //   const fa = (this.fg.get('aliases')as FormArray);
-  //   fa.push(this.fb.group({
-  //     name: ['', Validators.required]
-  //   }));
-  // }
-
-  // addDetail1() {
-  //   const detail = this.expensesForm.controls.detail as FormArray;
-  //   detail.push(this.formBuilder.group({
-  //     expenses: [''],
-  //     price:[''],
-  //   }));
-
-  // }
+  
   // addDetail() {
   //       // const details = this.expensesForm.get('detail') as FormArray;
 
@@ -294,3 +277,8 @@ this.expensesForm.reset();
 
 
 }
+
+  
+
+
+
