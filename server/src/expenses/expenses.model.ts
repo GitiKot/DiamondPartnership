@@ -8,6 +8,8 @@ export const ExpensesSchema = new mongoose.Schema({
     getchack: { type: String, required: true },
     InvoiceNumber: { type: Number, required: true },
     Remarks: { type: String, required: true },
+    // detail:Array<{expenses:string,price:number}>,
+    detail:{type:Array},
     amount: { type: Number },
     amountPartner: { type: Number },
 });
@@ -18,6 +20,7 @@ export interface Expenses extends mongoose.Document {
     date: Date;
     getchack: string;
     InvoiceNumber: number;
+    detail:Array<{expenses:string,price:number}>;
     Remarks: string;
     amount: number;
     amountPartner: number;
