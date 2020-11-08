@@ -20,6 +20,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ModalFormComponent } from './components/modal-form/modal-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ExpensesFormComponent } from './components/expenses-form/expenses-form.component';
 // import{HttpClientModule} from ''
 // import {MatInputModule} from '@angular/material/input';
 
@@ -53,6 +54,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HomeComponent,
     NavBarComponent,
     ModalFormComponent,
+    ExpensesFormComponent,
     
   ],
   imports: [

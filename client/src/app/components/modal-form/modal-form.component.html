@@ -1,4 +1,4 @@
-
+<!-- 
 <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
         (click)="frame.show()" mdbWavesEffect>Launch Modal
 </button>
@@ -81,4 +81,56 @@
       </div>
     </div>
   </div>
+</div> -->
+<!-- <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
+        (click)="showModal1()" mdbWavesEffect>Launch Modal
+</button> -->
+ <!-- Modal: modalCart -->
+ <div mdbModal #frame="mdbModal" class="modal fade" id="modal123" tabindex="-1" role="dialog"
+ aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <!-- <div class="modal-dialog" role="document"> -->
+ <!-- <div class="modal-dialog modal-full-height modal-right" role="document"> -->
+ <!-- <div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true"> -->
+ <div class="modal-dialog  modal-side modal-top-right" role="document">
+   <!-- <div class="modal-dialog modal-fluid" role="document"> -->
+   <div class="modal-content">
+     <!--Header-->
+     <div class="modal-header text-center">
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+         <span aria-hidden="true">×</span>
+       </button>
+     </div>
+     
+     <!-- <span aria-hidden="true">&times;</span> -->
+     <!--Body-->
+     <div class="modal-body">
+
+       <table class="table table-hover">
+         <thead>
+           <tr>
+
+             <th>Product name</th>
+             <th>Price</th>
+             <!-- <th>Remove</th> -->
+           </tr>
+         </thead>
+         <tbody>
+          <p >fdgfuefe</p>
+           <!-- <tr *ngFor="let details of this.detail">
+             <td>{{details.expenses}}</td>
+             <td>{{details.price}}</td>
+             -->
+
+         </tbody>
+       </table>
+
+     </div>
+
+     <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
+         (click)="frame.hide()">ביטול</button>
+     </div>
+    
+   </div>
+ </div>
 </div>
+

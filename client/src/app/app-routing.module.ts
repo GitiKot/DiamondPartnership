@@ -13,6 +13,7 @@ import { SalesFormComponent } from './components/sales-form/sales-form.component
 import { AppComponent } from './app.component';
 import{ModalFormComponent}from './components/modal-form/modal-form.component'
 import { SeriousnessListComponent } from './components/seriousness-list/seriousness-list.component';
+import{ExpensesFormComponent}from './components/expenses-form/expenses-form.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -25,7 +26,7 @@ const routes: Routes = [
   { path: 'partners', component: PartnersComponent },
   { path: 'partners-form', component: PartnersFormComponent },
   { path: '123', component: ModalFormComponent },
-
+  { path: 'expenses-form', component: ExpensesFormComponent },
 ];
 
 

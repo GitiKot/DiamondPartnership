@@ -24,6 +24,10 @@ export class ExpensesService {
             Remarks: ex.Remarks,
             amount: ex.amount,
             amountPartner: ex.amountPartner,
+            detail:ex.detail.map(d=>({
+expenses:d.expenses,
+price:d.price,
+            })  ),
         }));
     }
 
@@ -38,6 +42,7 @@ export class ExpensesService {
             Remarks: ex.Remarks,
             amount: ex.amount,
             amountPartner: ex.amountPartner,
+            detail:ex.detail,
         };
     }
 
@@ -50,6 +55,7 @@ export class ExpensesService {
         Remarks: string,
         amount: number,
         amountPartner: number,
+        detail:Array<{expenses:string;price:number}>,
     ) {
         const updatedExpenses = await this.findExpenses(id);
         if (PublicSerialName) {
@@ -71,6 +77,9 @@ export class ExpensesService {
         }
         if (amountPartner) {
             updatedExpenses.amountPartner = amountPartner;
+        }
+        if(detail){
+            updatedExpenses.detail=detail;
         }
         
         updatedExpenses.save();
