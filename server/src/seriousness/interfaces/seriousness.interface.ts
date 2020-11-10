@@ -1,15 +1,12 @@
-import { ObjectId } from 'mongodb';
 import { Document } from 'mongoose';
 
 export interface Seriousness extends Document {
-    serialName:  String;
-    dateBuy:Date;
-    parent:{type:ObjectId,ref:'Partner'},
-    partner:string
-    privateSeria:Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,price:number}>}>;
-    cost:number;
-    amountReceived:number;
-    partnersPercent:number;
-    AmountReceivedPartner:number
-    finishDate:Date;
+    id: string;
+    PublicSerialName: string;
+    date: Date;
+    getchack: string;
+    InvoiceNumber: number;
+    Remarks: string;
+    amount: number;
+    amountPartner: number;
 }
