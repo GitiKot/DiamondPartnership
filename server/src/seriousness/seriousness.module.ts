@@ -1,18 +1,18 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ExpensesController } from './seriousness.controller';
-import { ExpensesSchema } from './seriousness.model';
-import { ExpensesService } from './seriousness.service';
+import { SeriousnessController } from './seriousness.controller';
+import { SeriousnessSchema } from './seriousness.model';
+import { seriousnessService } from './seriousness.service';
 
 
 @Module({
     imports:[
-        MongooseModule.forFeature([{ name: 'Expenses', schema: ExpensesSchema }]),
+        MongooseModule.forFeature([{ name: 'Expenses', schema: SeriousnessSchema }]),
     ],
-    controllers:[ExpensesController],
-    providers:[ExpensesService],
+    controllers:[SeriousnessController],
+    providers:[seriousnessService],
 })
-export class ExpensesModule {}
+export class SeriousnessModule {}
 
 
 

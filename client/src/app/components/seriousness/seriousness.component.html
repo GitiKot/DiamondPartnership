@@ -1,1 +1,59 @@
-<h1>sr</h1>
+
+
+<br>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div class="container">
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>שם סריה</th>
+                <th>תאריך קניה</th>
+                <th>שותף</th>
+                <th>אחוזי שותף</th>
+                <th>קוסט</th>
+                <th> סכום שהתקבל</th>
+                <th> סכום שניתן לשותף</th>
+                <th>תאריך סגירת סריה </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let s of seriousnessList">
+                <td>
+                    <button class="delete" type="button" (click)="deletePartner(p)"> <i
+                            class="material-icons">&#xe5cd;</i></button>
+                </td>
+                <td>{{s.serialName}}</td>
+                <td>{{s.dateBuy}}</td>
+                <td>{{s.partner}}</td>
+                <td>{{s.partnersPercent}}</td>
+                <td>{{s.cost}}</td>
+                <td>{{s.amountReceived}}</td>
+
+                <td>{{s.AmountReceivedPartner}}</td>
+                <td>{{s.finishDate}}</td>
+                <td *ngFor="let sp of s.privateSeria">
+                    <p>sp.namePrivate</p>
+                    <p>sp.price</p>
+                    <p *ngFor="let e of sp">
+                        <a>e.nameExpenses</a>
+                        <a>e.price</a>
+                    </p>
+
+                </td>
+            </tr>
+
+
+
+        </tbody>
+    </table>
+</div>
+
+
+<button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
+   [routerLink]="['serial-form']"  mdbWavesEffect id="newexpenses">
+    סריה חדשה
+</button>
+
+   <router-outlet></router-outlet>
