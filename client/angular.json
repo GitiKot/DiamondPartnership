@@ -24,11 +24,11 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/angular-bootstrap-md/assets/scss/mdb.scss"
-             , "node_modules/angular-bootstrap-md/assets/scss/bootstrap/bootstrap.scss",
-              "node_modules/animate.css/animate.css",
+              "node_modules/angular-bootstrap-md/assets/scss/mdb.scss",
+              "node_modules/angular-bootstrap-md/assets/scss/bootstrap/bootstrap.scss",
+              
+              "node_modules/font-awesome/scss/font-awesome.scss",
               "src/styles.scss"
-             
             ],
             "scripts": [
              

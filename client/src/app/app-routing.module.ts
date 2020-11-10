@@ -11,8 +11,8 @@ import { ChecksComponent } from './components/checks/checks.component';
 import { PartnersFormComponent } from './components/partners-form/partners-form.component';
 import { SalesFormComponent } from './components/sales-form/sales-form.component';
 import { AppComponent } from './app.component';
-import {ModalFormComponent} from './components/modal-form/modal-form.component'
-import { SerialFormComponent } from './components/serial-form/serial-form.component';
+import{ModalFormComponent}from './components/modal-form/modal-form.component'
+import { SeriousnessListComponent } from './components/seriousness-list/seriousness-list.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -20,10 +20,14 @@ const routes: Routes = [
   { path: 'expenses', component: ExpensesComponent },
   { path: 'sales/:isSales', component: SalesComponent },
   { path: 'sales-form', component: SalesFormComponent },
+<<<<<<< HEAD
   { path: 'seriousness', component: SeriousnessComponent,
   children:[ { path: '', redirectTo: 'seriousness', pathMatch: 'full' }
   ,{path:'serial-form',component:SerialFormComponent}] },
 
+=======
+  { path: 'seriousness', component: SeriousnessListComponent },
+>>>>>>> parent of e519a99... יום שלשי
   { path: 'nav-bar', component: NavBarComponent },
   { path: 'partners', component: PartnersComponent },
   { path: 'partners-form', component: PartnersFormComponent },
