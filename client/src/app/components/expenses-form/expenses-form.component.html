@@ -1,17 +1,11 @@
-<!-- <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
-    (click)="frame1.show()" mdbWavesEffect id="newexpenses">
-    <i class="fas fa-user-plus"></i>
-    הוצאה חדשה
-</button>
-
 <div mdbModal #frame1="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
                 <h4 class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור הוצאה חדשה</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hideModal2()">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+                    <!-- <span aria-hidden="true">&times;</span> -->
                     <span aria-hidden="true">x</span>
                 </button>
 
@@ -52,9 +46,9 @@
                             <input type="text" id="form32" class="form-control" mdbInput mdbValidate
                                 [formControl]="InvoiceNumber">
                             <label for="form32">מספר חשבונית</label>
-                            <input type="text" id="form29" class="form-control" mdbInput mdbValidate
+                            <!-- <input type="text" id="form29" class="form-control" mdbInput mdbValidate
               [formControl]="contactFormModalGetChack">
-            <label for="form29">קיבלתי צ'ק או לקזז מהצ'ק הבא</label>
+            <label for="form29">קיבלתי צ'ק או לקזז מהצ'ק הבא</label> -->
                             <mdb-error *ngIf="InvoiceNumber.invalid && (InvoiceNumber.dirty || InvoiceNumber.touched)">
                             </mdb-error>
                             <mdb-success *ngIf="InvoiceNumber.valid && (InvoiceNumber.dirty || InvoiceNumber.touched)">
@@ -64,7 +58,7 @@
                     </div>
                     <div class="col-4 col-sm-6 col-example">
                         <div class="md-form mb-5">
-                            <select class="browser-default custom-select" >
+                            <!-- <select class="browser-default custom-select" > -->
                             <select class="form-control" mdbInput mdbValidate [formControl]="getchack">
                                 <option selected>קיבלתי צ'ק</option>
                                 <option value="לקזז מהצ'ק הבא">לקזז מהצ'ק הבא</option>
@@ -109,12 +103,109 @@
 
 
             <div class="modal-footer d-flex justify-content-center">
-                
-                <div class="modal-footer">
+                <!--Footer-->
+                <!-- <div class="modal-footer"> -->
                 <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
-                        (click)="hideModal2()">ביטול</button>
+                    (click)="close()">ביטול</button>
                     <button class="btn btn-primary" (click)=save()>שמירה</button></div>
             </div>
         </div>
     </div>
-</div> -->
+</div>
+
+
+<!-- model enter new expenses -->
+
+
+  <div mdbModal #frame2="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal-dialog" role="document"> -->
+    <!-- <div class="modal-dialog modal-full-height modal-right" role="document"> -->
+    <!-- <div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true"> -->
+    <div class="modal-dialog modal-notify modal-side modal-top-right" role="document">
+      <div class="modal-content">
+        <!--Header-->
+        <div class="modal-header text-center">
+          <button (click)="close()" type="button" class="close" data-dismiss="modal" aria-label="Close" >
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <!-- <div class="modal-header text-center"> -->
+        <!-- <span aria-hidden="true">&times;</span> -->
+        <!--Body-->
+        <div class="modal-body">
+          <table id="myTable">
+            <tbody>
+              <!-- <div formArrayName="detail">
+                <div *ngFor="let d of detail.controls; let i=index">
+                  <div [formGroupName]="i">
+                    <tr class="header" *ngIf="i=='0'">
+                      <th>#</th>
+                      <th>שם הוצאה</th>
+                      <th>מחיר</th>
+                      <th>מחיקה</th>
+                    </tr>
+                    <tr>
+                      <td>{{i}}</td>
+                      <td><input type="text" formControlName="expenses"></td>
+                      <td><input type="text" formControlName="price"></td>
+                      <td><button (click)="removeDetail(i)">x</button></td>
+                    </tr>
+                  </div>
+                </div>
+              </div>
+            </tbody> -->
+          </table>
+
+        </div>
+
+        <!-- <div class="modal-footer"> -->
+        <div> <button class="btn btn-outline-primary" (click)="addDetail()">הוספה</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cancelex()"
+          (click)="close()">ביטול</button>
+          <button class="btn btn-primary" (click)="savemodal()">שמירה</button></div>
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!--  -->
+<!--     
+<div mdbModal #frame1="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
+aria-hidden="true">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<i class="fa fa-check-square-o animated flip infinite slow" style='font-size:48px;color:green'
+    aria-hidden="true"></i>
+
+<div class="modal-header text-center">
+    <div class="modal-dialog modal-dialog-scrollable modal-l" role="document">
+        <div class="modal-content">
+            <button (click)="close()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+                <span aria-hidden="true">x</span>
+            </button>
+            <br>
+            <h4 class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור הוצאה חדשה</h4>
+            <div class="modal-body mx-3">
+               
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal"
+                        data-target="#basicExample" (click)="save()" mdbWavesEffect id="newexpenses">
+                        שמירה </button>
+
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+</div>
+</div>
+
+   -->

@@ -158,10 +158,10 @@
               </div>
 
               <!-- <div class="modal-footer"> -->
-              
-             
-                      <!-- <button (click)="enableSection(i, d.disabled)">{{ d.disabled ? 'Edit': 'Save' }}</button> -->
-            
+
+
+              <!-- <button (click)="enableSection(i, d.disabled)">{{ d.disabled ? 'Edit': 'Save' }}</button> -->
+
               <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
                   (click)="frame.hide()">ביטול</button>
               </div>
@@ -181,23 +181,23 @@
 
 
 
-  <div mdbModal #frame2="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- <div mdbModal #frame2="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
     <!-- <div class="modal-dialog" role="document"> -->
     <!-- <div class="modal-dialog modal-full-height modal-right" role="document"> -->
     <!-- <div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true"> -->
-    <div class="modal-dialog modal-notify modal-side modal-top-right" role="document">
-      <div class="modal-content">
+    <!-- <div class="modal-dialog modal-notify modal-side modal-top-right" role="document">
+      <div class="modal-content"> -->
         <!--Header-->
-        <div class="modal-header text-center">
+        <!-- <div class="modal-header text-center">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hideModal()">
             <span aria-hidden="true">×</span>
           </button>
-        </div>
+        </div> -->
         <!-- <div class="modal-header text-center"> -->
         <!-- <span aria-hidden="true">&times;</span> -->
         <!--Body-->
-        <div class="modal-body">
+        <!-- <div class="modal-body"> -->
           <!-- מכאן -->
           <!-- <div formArrayName="detail" *ngFor="let details of expensesForm.controls.detail?.value; let i = index">
             <ng-container [formGroupName]="i">
@@ -211,7 +211,7 @@
             <input [formControl]="skills.controls[i]" />
           </div> -->
 
-          <table id="myTable">
+          <!-- <table id="myTable">
             <tbody>
               <div formArrayName="detail">
                 <div *ngFor="let d of detail.controls; let i=index">
@@ -232,7 +232,7 @@
                 </div>
               </div>
             </tbody>
-          </table>
+          </table> -->
 
           <!-- <table class="table table-hover">
            
@@ -272,17 +272,17 @@
           <!-- </tbody>
           </table>  -->
 
-        </div>
+        <!-- </div> -->
 
         <!-- <div class="modal-footer"> -->
-        <div> <button class="btn btn-outline-primary" (click)="addDetail()">הוספה</button>
+        <!-- <div> <button class="btn btn-outline-primary" (click)="addDetail()">הוספה</button>
           <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cancelex()"
             (click)="frame2.hide()">ביטול</button>
           <button class="btn btn-primary" (click)="savemodal()">שמירה</button></div>
-        <!-- </div> -->
-      </div>
+         </div> -->
+  <!--    </div>
     </div>
-  </div>
+  </div> -->
   <!----------------------------------------------------------- -->
 
 
@@ -302,24 +302,22 @@
   </table>
   
   </div>
-  
-  
   </body> -->
   <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
-    (click)="frame1.show()" mdbWavesEffect id="newexpenses">
+  [routerLink]="['expenses-form']" mdbWavesEffect id="newexpenses">
     <!-- <i class="fas fa-user-plus"></i> -->
     הוצאה חדשה
   </button>
-
-  <div mdbModal #frame1="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
+  
+  <!-- <div mdbModal #frame1="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header text-center">
           <h4 class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור הוצאה חדשה</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hideModal2()">
-            <!-- <span aria-hidden="true">&times;</span> -->
-            <span aria-hidden="true">x</span>
+            <span aria-hidden="true">&times;</span> -->
+           <!--  <span aria-hidden="true">x</span>
           </button>
 
         </div>
@@ -355,10 +353,10 @@
               <div class="md-form mb-5">
                 <input type="text" id="form32" class="form-control" mdbInput mdbValidate [formControl]="InvoiceNumber">
                 <label for="form32">מספר חשבונית</label>
-                <!-- <input type="text" id="form29" class="form-control" mdbInput mdbValidate
+                 <input type="text" id="form29" class="form-control" mdbInput mdbValidate
                   [formControl]="contactFormModalGetChack">
                 <label for="form29">קיבלתי צ'ק או לקזז מהצ'ק הבא</label> -->
-                <mdb-error *ngIf="InvoiceNumber.invalid && (InvoiceNumber.dirty || InvoiceNumber.touched)">
+                <!--<mdb-error *ngIf="InvoiceNumber.invalid && (InvoiceNumber.dirty || InvoiceNumber.touched)">
                 </mdb-error>
                 <mdb-success *ngIf="InvoiceNumber.valid && (InvoiceNumber.dirty || InvoiceNumber.touched)">
                 </mdb-success>
@@ -367,8 +365,8 @@
             </div>
             <div class="col-4 col-sm-6 col-example">
               <div class="md-form mb-5">
-                <!-- <select class="browser-default custom-select" > -->
-                <select class="form-control" mdbInput mdbValidate [formControl]="getchack">
+                 <select class="browser-default custom-select" > -->
+               <!-- <select class="form-control" mdbInput mdbValidate [formControl]="getchack">
                   <option selected>קיבלתי צ'ק</option>
                   <option value="לקזז מהצ'ק הבא">לקזז מהצ'ק הבא</option>
                 </select>
@@ -410,47 +408,17 @@
         </div>
 
 
-        <div class="modal-footer d-flex justify-content-center">
+        <div class="modal-footer d-flex justify-content-center">-->
           <!--Footer-->
           <!-- <div class="modal-footer"> -->
-          <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
+          <!-- <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
               (click)="hideModal2()">ביטול</button>
             <button class="btn btn-primary" (click)=save()>שמירה</button></div>
         </div>
       </div>
     </div>
-  </div>
+  </div> --> 
 
 
-
-
-
-
-  <!-- דוגמה -->
-  <!-- <form [formGroup]="skillsForm" (ngSubmit)="onSubmit()"> -->
-
-  <!-- detail:
-  <div formArrayName="detail">
-    <div *ngFor="let skill of detail.controls; let i=index">
-      <div [formGroupName]="i">
-        {{i}}
-       expenses :
-        <input type="text" formControlName="expenses">
-        price:
-        <input type="text" formControlName="price">
-  -->
-  <!-- <button (click)="removeSkill(i)">Remove</button> -->
-  <!-- </div>
-    </div>
-  </div> -->
-
-  <!-- <p>
-    <button type="submit">Submit</button>
-  </p> -->
-
-  <!-- <p>
-  <button type="button" (click)="addDetail()">Add</button>
-</p> -->
-
-  <!-- {{this.expensesForm.value | json}} -->
 </form>
+<router-outlet></router-outlet>
