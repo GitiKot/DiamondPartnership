@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
 
 import { PartnersComponent } from './components/partners/partners.component';
@@ -10,6 +11,8 @@ import { SalesComponent } from './components/sales/sales.component';
 import { ChecksComponent } from './components/checks/checks.component';
 import { ExpensesComponent } from './components/expenses/expenses.component';
 import { PartnersFormComponent } from './components/partners-form/partners-form.component';
+// import { SeriousnessListComponent } from './components/seriousness-list/seriousness-list.component';
+// import { PrivateSeriousnessListComponent } from './components/private-seriousness-list/private-seriousness-list.component';
 import { SalesFormComponent } from './components/sales-form/sales-form.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
@@ -17,11 +20,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ModalFormComponent } from './components/modal-form/modal-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-<<<<<<< HEAD
-import { SerialFormComponent } from './components/serial-form/serial-form.component';
-=======
 import { ExpensesFormComponent } from './components/expenses-form/expenses-form.component';
->>>>>>> 2c6d992aa821914b05d1818e8fea09cae4ec29bc
 // import{HttpClientModule} from ''
 // import {MatInputModule} from '@angular/material/input';
 
@@ -49,25 +48,23 @@ import { ExpensesFormComponent } from './components/expenses-form/expenses-form.
     ChecksComponent,
     ExpensesComponent,
     PartnersFormComponent,
-    
+    // SeriousnessListComponent,
+    // PrivateSeriousnessListComponent,
     SalesFormComponent,
     HomeComponent,
     NavBarComponent,
     ModalFormComponent,
     ExpensesFormComponent,
     
-    SerialFormComponent,
-    
   ],
   imports: [
-    
     HttpClientModule,
     BrowserModule,
-    AppRoutingModule, ReactiveFormsModule,
+    AppRoutingModule, 
+    ReactiveFormsModule,
     MDBBootstrapModule.forRoot(),
     BrowserAnimationsModule,
     FormsModule,
-    
   ], 
   schemas: [NO_ERRORS_SCHEMA] ,
   providers: [],
