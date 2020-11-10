@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SeriousnessListComponent } from './seriousness-list.component';
+import { SerialFormComponent } from './serial-form.component';
 
-describe('SeriousnessListComponent', () => {
-  let component: SeriousnessListComponent;
-  let fixture: ComponentFixture<SeriousnessListComponent>;
+describe('SerialFormComponent', () => {
+  let component: SerialFormComponent;
+  let fixture: ComponentFixture<SerialFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SeriousnessListComponent ]
+      declarations: [ SerialFormComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SeriousnessListComponent);
+    fixture = TestBed.createComponent(SerialFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,0 +1,132 @@
+<!-- / serialName:  String,
+partner:{type:mongoose.Schema.Types.ObjectId,ref:'Partner'},
+privateSeria:Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,price:number}>}>;
+amountReceived:number;
+partnersPercent:number;
+AmountReceivedPartner:number
+finishDate:Date; -->
+<div mdbModal #frame1="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
+    aria-hidden="true">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <i class="fa fa-check-square-o animated flip infinite slow" style='font-size:48px;color:green'
+        aria-hidden="true"></i>
+
+
+
+    <div class="modal-header text-center">
+        <div class="modal-dialog modal-dialog-scrollable modal-l" role="document">
+            <div class="modal-content">
+
+
+                <button (click)="close()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+                    <span aria-hidden="true">x</span>
+                </button>
+                <br>
+                <h4 class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור הוצאה חדשה</h4>
+                <div class="modal-body mx-3">
+                    <div class="row">
+                        <div class="col-8 col-sm-6 col-example">
+                            <div class="md-form mb-5">
+                                <input type="text" id="form34" class="form-control" mdbInput mdbValidate
+                                    [formControl]="serialName">
+                                <label for="form34">שם סריה כללית</label>
+                                <mdb-error *ngIf="serialName.invalid && (serialName.dirty || serialName.touched)">
+                                </mdb-error>
+                                <mdb-success *ngIf="serialName.valid && (serialName.dirty || serialName.touched)">
+                                </mdb-success>
+                            </div>
+
+                        </div>
+                        <div class="col-4 col-sm-6 col-example">
+                            <div class="md-form mb-5">
+                                <input type="date" id="form34" class="form-control" mdbInput mdbValidate
+                                    [formControl]="dateBuy">
+                                <label for="form34"> תאריך קניה</label>
+                                <mdb-error *ngIf="dateBuy.invalid && (dateBuy.dirty || dateBuy.touched)">
+                                </mdb-error>
+                                <mdb-success *ngIf="dateBuy.valid && (dateBuy.dirty || dateBuy.touched)">
+                                </mdb-success>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-8 col-sm-6 col-example">
+                            <div class="md-form mb-5">
+                                <input type="number" id="form32" class="form-control" mdbInput mdbValidate
+                                    [formControl]="cost">
+                                <label for="form32">סכום קוסט </label>
+                                <mdb-error *ngIf="cost.invalid && (cost.dirty || cost.touched)">
+                                </mdb-error>
+                                <mdb-success *ngIf="cost.valid && (cost.dirty || cost.touched)">
+                                </mdb-success>
+                            </div>
+                        </div>
+
+                        <div class="col-8 col-sm-6 col-example">
+                            <div class="md-form mb-5">
+                                <input class="form-control" type="number" mdbInput mdbValidate
+                                    [formControl]="partnersPercent">
+                                <label> אחוזים לשותף </label>
+                                <mdb-error
+                                    *ngIf="partnersPercent.invalid && (partnersPercent.dirty || partnersPercent.touched)">
+                                </mdb-error>
+                                <mdb-success
+                                    *ngIf="partnersPercent.valid && (partnersPercent.dirty || partnersPercent.touched)">
+                                </mdb-success>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-8 col-sm-6 col-example">
+                            <div class="md-form mb-8 ">
+
+                                <input type="checkbox" id="form3" #closeSerial mdbInput mdbValidate>
+                                <label for="form3"> סריה סגורה </label>
+                            </div>
+
+                        </div>
+                        <div class="col-8 col-sm-6 col-example" *ngIf="closeSerial.checked">
+                            <div class="md-form mb-8 ">
+
+                                <input type="date" id="form3" class="form-control" mdbInput mdbValidate
+                                    [formControl]="finishDate">
+                                <label for="form3"> תאריך סגירת סריה </label>
+                            </div>
+
+                        </div>
+
+                        <div class="col-4 col-sm-6 col-example">
+                            <div class="md-form">
+                                <textarea type="text" id="form8" class="md-textarea form-control" rows="1" mdbInput
+                                    mdbValidate [formControl]="Remarks"></textarea>
+                                <label for="form8">הערות</label>
+                                <mdb-error *ngIf="Remarks.invalid && (Remarks.dirty || Remarks.touched)">
+                                </mdb-error>
+                                <mdb-success *ngIf="Remarks.valid && (Remarks.dirty || Remarks.touched)">
+                                </mdb-success>
+                            </div>
+
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary">+</button><br>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal"
+                            data-target="#basicExample" (click)="save()" mdbWavesEffect id="newexpenses">
+                            שמירה </button>
+
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
