@@ -14,6 +14,8 @@ export class ExpensesController {
     @Get()
     async getAllExpenses() {
         const expenses = await this.expensesService.getExpenses();
+        console.log(expenses);
+        
         return expenses;
     }
 
@@ -33,8 +35,9 @@ export class ExpensesController {
         @Body('Remarks') exRemarks: string,
         @Body('amount') examount: number,
         @Body('amountPartner') examountPartner: number,
+        @Body('detail') exdetail:Array<{expenses:string;price:number}>,
     ) {
-        await this.expensesService.updateExpenses(exId,exPublicSerialName,exdate,exgetchack, exInvoiceNumber, exRemarks, examount, examountPartner);
+        await this.expensesService.updateExpenses(exId,exPublicSerialName,exdate,exgetchack, exInvoiceNumber, exRemarks, examount, examountPartner,exdetail)
         return null;
     }
 
