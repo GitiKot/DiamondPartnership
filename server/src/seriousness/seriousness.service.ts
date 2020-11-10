@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-<<<<<<< HEAD
+
 import { Model } from 'mongoose';
 import { Seriousness } from './interfaces/seriousness.interface';
 import { createSeriousnessDto } from './dto/create-seriousness.dto';
@@ -126,13 +126,12 @@ export class seriousnessService {
         }
         return Seriousness;
     }
-=======
 // import { Model } from 'mongoose';
 // import { Expenses } from './interfaces/seriousness.interface';
 // import { createExpensesDto } from './dto/create-expenses.dto';
 
-@Injectable()
-export class ExpensesService {
+// @Injectable()
+// export class ExpensesService {
 //     constructor(
 //         @InjectModel('Expenses') private readonly expensesModel: Model<Expenses>,) { }
 
@@ -222,7 +221,6 @@ export class ExpensesService {
 //         }
 //         return expenses;
 //     }
->>>>>>> 2c6d992aa821914b05d1818e8fea09cae4ec29bc
 
 
 }
