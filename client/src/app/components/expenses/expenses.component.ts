@@ -36,20 +36,13 @@ export class ExpensesComponent implements OnInit {
 
     this.showModalOnClick.hide();
     this.showModalOnClick1.hide();
-    this.expensesForm.reset();
+this.expensesForm.reset();
   }
   constructor(private r: Router, private expensesService: ExpensesService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
 
-    this.expensesService.getAllExpenses().subscribe(ans =>{this.expensesList = ans ;console.log(ans.forEach(d=>{
-      console.log(d.detail);
-      
-      
-    }));
-    } );
-  
-    // this.expensesList.
+    this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
     // this.expensesForm = new FormGroup({
     //   PublicSerialName: new FormControl('', Validators.required),
     //   date: new FormControl('', Validators.required),
@@ -69,7 +62,15 @@ export class ExpensesComponent implements OnInit {
       getchack: ['', [Validators.required]],
       InvoiceNumber: ['', [Validators.required]],
       amountPartner: ['', [Validators.required]],
+      // account: this.fb.group({
+      //   email: ['', Validators.required],
+      //   confirm: ['', Validators.required]
+      // })
       detail: this.formBuilder.array([]),
+      // detail: this.formBuilder.array([{
+      // expenses: '',
+      // price:'',
+      // }]),
       Remarks: ['', [Validators.required]],//requierd?
 
     })
@@ -93,6 +94,74 @@ export class ExpensesComponent implements OnInit {
         }
       }
     }
+  }
+  addrow() {
+    // let svg=document.querySelector('#svg');
+    let tablesales = document.getElementById("myTable");
+    let input = document.createElement('input');
+    let input2 = document.createElement('input');
+    let input3 = document.createElement('input');
+    let input4 = document.createElement('input');
+    let input5 = document.createElement('input');
+    // input.setAttribute('type','text');
+
+    input.setAttribute("class", "input");
+    input.style.border = "0";
+    input.style.outline = "0";
+    input.style.outline = "none!important";
+    input.style.width = "90px";
+
+
+    input2.setAttribute("class", "input");
+    input2.style.border = "0";
+    input2.style.outline = "0";
+    input2.style.outline = "none!important";
+    input2.style.width = "90px";
+
+
+    input3.setAttribute("class", "input");
+    input3.style.border = "0";
+    input3.style.outline = "0";
+    input3.style.outline = "none!important";
+    input3.style.width = "90px";
+
+
+    input4.setAttribute("class", "input");
+    input4.style.border = "0";
+    input4.style.outline = "0";
+    input4.style.outline = "none!important";
+    input4.style.width = "90px";
+
+
+
+    input5.setAttribute("class", "input");
+    input5.style.border = "0";
+    input5.style.outline = "0";
+    input5.style.outline = "none!important";
+    input5.style.width = "90px";
+
+
+    let row = document.createElement('tr');
+
+
+
+
+    let cell1 = row.insertCell(0);
+    let cell2 = row.insertCell(1);
+
+    let cell3 = row.insertCell(2);
+    let cell4 = row.insertCell(3);
+    let cell5 = row.insertCell(4);
+    let cell6 = row.insertCell(5);
+    let cell7 = row.insertCell(6);
+    //  cell1.appendChild(svg);
+    cell2.appendChild(input2);
+    cell3.appendChild(input3);
+    cell4.appendChild(input4);
+    cell5.appendChild(input5);
+    cell6.appendChild(input);
+    tablesales.appendChild(row)
+
   }
 
   save() {
@@ -134,7 +203,7 @@ export class ExpensesComponent implements OnInit {
 
     }
   }
-
+  
   // addDetail() {
   //       // const details = this.expensesForm.get('detail') as FormArray;
 
@@ -154,7 +223,7 @@ export class ExpensesComponent implements OnInit {
     this.showModalOnClick1.show();
 
   }
-
+ 
   get PublicSerialName() {
     return this.expensesForm.get('PublicSerialName');
   }
@@ -176,7 +245,7 @@ export class ExpensesComponent implements OnInit {
   get detail(): FormArray {
     return this.expensesForm.get('detail') as FormArray
   }
-
+  
   get expenses() {
     return this.expensesForm.get("detail").get('expenses');
   }
@@ -201,28 +270,6 @@ export class ExpensesComponent implements OnInit {
   removeDetail(i: number) {
     this.detail.removeAt(i);
   }
-
- getaDetail(i: number) {
-   console.log( this.expensesForm[i].detail.length);
-  //  for(let e=0;e<this.detail[i].length;e++){
-     
-  //  }
-   
-   
-   
-  }
-  // getArrayDetail(ex: number) {
-  //   console.log("enter getArrayDetail");
-    
-  //   for (let e = 0; e < this.expensesForm.value; e++) {
-  //     for (let i = 0; i < this.expensesForm.value.detail; i++) {
-  //       if (ex == e) {
-  //         console.log(this.expensesForm.value.detail[i].expenses);
-  //         console.log(this.detail[i].price);
-  //       }
-  //     }
-  //   }
-  // }
   //  (ngSubmit)="onSubmit()" לשים ב html  אם רוצים להשתמש בפונ' זו
   // onSubmit() {
   //   console.log(this.expensesForm.value);
@@ -231,7 +278,7 @@ export class ExpensesComponent implements OnInit {
 
 }
 
-
+  
 
 
 

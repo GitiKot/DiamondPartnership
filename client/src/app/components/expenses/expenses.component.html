@@ -33,21 +33,20 @@
       </thead>
       <tbody>
 
-        <tr *ngFor="let e of expensesList;let ExId=index">
+        <tr *ngFor="let e of expensesList">
           <td>{{e.PublicSerialName}}</td>
           <td>{{e.date| date: "shortDate"}}</td>
           <td>{{e.getchack}}</td>
           <td>{{e.InvoiceNumber}}</td>
           <td>{{e.Remarks}}</td>
           <td>
-           {{e.detail[0].price}}         
+            <!-- <tr *ngFor="let d of expensesList;let i=index">
+              <td>{{d.detail[i].expenses}}</td>
+              <td>{{d.detail[i].price}}</td> 
+             </tr> -->
           </td>
-          <td>
-            <button type="button" class="btn btn-primary" (click)="frame.show()" data-toggle="modal"
-              data-target="#modalCart">+</button>
-              <!-- <button type="button" class="btn btn-primary" [routerLink]="['/123']" data-toggle="modal"
-              data-target="#modal123">+</button> -->
-            </td>
+          <td><button type="button" class="btn btn-primary" (click)="frame.show()" data-toggle="modal"
+              data-target="#modalCart">+</button></td>
           <td>{{e.amountPartner}}</td>
 
         </tr>
@@ -70,22 +69,24 @@
                   <span aria-hidden="true">×</span>
                 </button>
               </div>
-              
+              <!-- <div class="modal-header text-center"> -->
+              <!-- <span aria-hidden="true">&times;</span> -->
               <!--Body-->
               <div class="modal-body">
 
                 <table class="table table-hover">
                   <thead>
                     <tr>
+
                       <th>Product name</th>
                       <th>Price</th>
                       <!-- <th>Remove</th> -->
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let details of this.detail">
-                      <td>{{details.expenses}}</td>
-                      <td>{{details.price}}</td>
+                    <tr *ngFor="let e of expensesList">
+                      <td>{{e.PublicSerialName}}</td>
+                      <td>{{e.date| date: "shortDate"}}</td>
                       <!-- <div formArrayName="detail" *ngFor="let details of expensesForm.controls.detail?.value; let i = index">
                       <ng-container [formGroupName]="i">
                         <input placeholder="expenses" formControlName="expenses" type="text">
@@ -106,13 +107,58 @@
                       <!-- <tr *ngFor="let e of expensesList.controls.detail[0].value">
                       <td>{{e.expenses}}</td>
                       <td>{{e.price}}</td>
-                    </tr> -->                    
-                     
+                    </tr> -->
+                      <!-- aaaaaaaaaaaaaaaaa -->
+                      <!-- <tr *ngFor="let e of  expensesForm.value.detail">
+                      <td>{{e.expenses}}</td>
+                      <td>{{e.price}}</td>
+                    </tr> -->
+
+                      <!-- <td><input id="expenses1" class="input"[formControl]="detail"></td> -->
+                      <!-- <td> <input id="price1"  class="input"[formControl]="detail"> </td>  -->
+                      <!-- <td><input id="expenses1" type="text" class="form-control"[formControl]="detail[0].expenses"></td>
+                      <td> <input id="price1" type="text" class="form-control"[formControl]="detail[0].price"> </td> -->
+                      <!-- </tr> -->
+                      <!-- <tr>
+                      <td><input id="expenses2" class="input"></td>
+                      <td> <input id="price2" class="input"> </td>
+                    </tr> -->
+                      <!-- <tr> -->
+                      <!-- <td><input type="text"  class="form-control" mdbInput mdbValidate
+                          [formControl]="detail[2].ProductName"></td>
+                          <td><input type="text"  class="form-control" mdbInput mdbValidate
+                            [formControl]="detail[2].Price"></td> -->
+                      <!-- <td><input id="expenses3" class="input"></td>
+                      <td> <input id="price3" class="input"> </td> -->
+                      <!-- </tr> -->
+
+                      <!-- detail:
+                    <div formArrayName="detail">
+                      <div *ngFor="let skill of detail.controls; let i=index">
+                        <div [formGroupName]="i">
+                           {{i}} -->
+                      <!-- expenses :
+                          <input type="text" formControlName="expenses">
+                          price:
+                          <input type="text" formControlName="price">
+
+                          <button (click)="removeSkill(i)">Remove</button> -->
+                      <!--  </div>
+                      </div>
+                    </div> -->
+
+
+
+
+
+
                   </tbody>
                 </table>
+
               </div>
 
               <!-- <div class="modal-footer"> -->
+              
              
                       <!-- <button (click)="enableSection(i, d.disabled)">{{ d.disabled ? 'Edit': 'Save' }}</button> -->
             
@@ -125,10 +171,15 @@
         </div>
         <!----------------------------------------------------------- -->
       </tbody>
+
     </table>
+
   </body>
 
+
   <!-- model enter new expenses -->
+
+
 
   <div mdbModal #frame2="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -234,6 +285,26 @@
   </div>
   <!----------------------------------------------------------- -->
 
+
+  <!-- .........check if we can write index........... -->
+
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script> -->
+  <!-- <body>
+  
+  <div ng-app="myApp" ng-controller="customersCtrl"> 
+  
+  <table>
+    <tr ng-repeat="x in names">
+      <td>{{ $index + 1 }}</td>
+      <td>{{ x.Name }}</td>
+      <td>{{ x.Country }}</td>
+    </tr>
+  </table>
+  
+  </div>
+  
+  
+  </body> -->
   <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
     (click)="frame1.show()" mdbWavesEffect id="newexpenses">
     <!-- <i class="fas fa-user-plus"></i> -->
@@ -372,6 +443,10 @@
   <!-- </div>
     </div>
   </div> -->
+
+  <!-- <p>
+    <button type="submit">Submit</button>
+  </p> -->
 
   <!-- <p>
   <button type="button" (click)="addDetail()">Add</button>

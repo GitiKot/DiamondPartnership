@@ -17,11 +17,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ModalFormComponent } from './components/modal-form/modal-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-<<<<<<< HEAD
 import { SerialFormComponent } from './components/serial-form/serial-form.component';
-=======
-import { ExpensesFormComponent } from './components/expenses-form/expenses-form.component';
->>>>>>> 2c6d992aa821914b05d1818e8fea09cae4ec29bc
 // import{HttpClientModule} from ''
 // import {MatInputModule} from '@angular/material/input';
 
@@ -54,7 +50,6 @@ import { ExpensesFormComponent } from './components/expenses-form/expenses-form.
     HomeComponent,
     NavBarComponent,
     ModalFormComponent,
-    ExpensesFormComponent,
     
     SerialFormComponent,
     
