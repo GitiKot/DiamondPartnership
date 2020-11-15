@@ -7,7 +7,7 @@ export const ExpensesSchema = new mongoose.Schema({
     date: { type: Date, required: true },
     getchack: { type: String, required: true },
     InvoiceNumber: { type: Number, required: true },
-    Remarks: { type: String, required: true },
+    Remarks: { type: String },
     // detail:Array<{expenses:string,price:number}>,
     detail:{type:Array},
     amount: { type: Number },

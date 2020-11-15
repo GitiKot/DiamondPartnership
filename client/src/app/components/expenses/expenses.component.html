@@ -1,4 +1,4 @@
-<form [formGroup]='expensesForm' class="form-inline d-flex justify-content-center md-form form-sm mt-0">
+<!-- <form [formGroup]='expensesForm' class="form-inline d-flex justify-content-center md-form form-sm mt-0"> -->
 
   <body>
 
@@ -13,9 +13,6 @@
       </svg>&nbsp;
       <input type="text" id="myInput" class="form-control form-control-sm ml-3" (keyup)="myFunction()"
         placeholder="מיון לפי שם סריה כללית" title="Type in a name">
-
-      <!-- <input type="text" id="myInput" (keyup)="myFunction()" placeholder="מיון לפי..." title="Type in a name"> -->
-
     </div>
     <br>
     <table id="myTable">
@@ -26,35 +23,28 @@
           <th style="width: 270px;">האם קיבלתי צ'ק או לקזז הצ'ק הבא</th>
           <th style="width: 125px;">מספר חשבונית</th>
           <th>הערות</th>
-          <th>סכום(סיכום פרוט)</th>
+          <th>סכום</th>
           <th>פרוט</th>
           <th style="width: 100px;">סכום לשותף</th>
         </tr>
       </thead>
       <tbody>
-
-        <tr *ngFor="let e of expensesList">
+        <tr *ngFor="let e of expensesList;let ei=index">
           <td>{{e.PublicSerialName}}</td>
           <td>{{e.date| date: "shortDate"}}</td>
           <td>{{e.getchack}}</td>
           <td>{{e.InvoiceNumber}}</td>
           <td>{{e.Remarks}}</td>
-          <td>
-            <!-- <tr *ngFor="let d of expensesList;let i=index">
-              <td>{{d.detail[i].expenses}}</td>
-              <td>{{d.detail[i].price}}</td> 
-             </tr> -->
-          </td>
-          <td><button type="button" class="btn btn-primary" (click)="frame.show()" data-toggle="modal"
-              data-target="#modalCart">+</button></td>
+          <td>{{e.amount|currency}}</td>
+          <td><button type="button" class="btn btn-primary"(click)="updateEi(ei)" (click)="frame.show()" data-toggle="modal"
+              data-target="#modalCart" >+</button></td>
           <td>{{e.amountPartner}}</td>
-
         </tr>
 
 
         <!-- -------model expenses------------------------------------ -->
 
-        <!-- Modal: modalCart -->
+       
         <div mdbModal #frame="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
           aria-labelledby="exampleModalLabel" aria-hidden="true">
           <!-- <div class="modal-dialog" role="document"> -->
@@ -63,7 +53,7 @@
           <div class="modal-dialog  modal-side modal-top-right" role="document">
             <!-- <div class="modal-dialog modal-fluid" role="document"> -->
             <div class="modal-content">
-              <!--Header-->
+              
               <div class="modal-header text-center">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
                   <span aria-hidden="true">×</span>
@@ -78,51 +68,22 @@
                   <thead>
                     <tr>
 
-                      <th>Product name</th>
-                      <th>Price</th>
+                      <th>שם הוצאה</th>
+                      <th>מחיר</th>
                       <!-- <th>Remove</th> -->
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr *ngFor="let e of expensesList">
-                      <td>{{e.PublicSerialName}}</td>
-                      <td>{{e.date| date: "shortDate"}}</td>
-                      <!-- <div formArrayName="detail" *ngFor="let details of expensesForm.controls.detail?.value; let i = index">
-                      <ng-container [formGroupName]="i">
-                        <input placeholder="expenses" formControlName="expenses" type="text">
-                        <input placeholder="price" formControlName="price" type="text">
-                      </ng-container>
-                    </div> -->
-                      <!--                   
-                      <tr *ngFor="let d of expensesList;let i=index">
-                        <td>{{d.detail[i].expenses}}</td>
-                        <td>{{d.price}}</td> -->
-                      <!--</tr> -->
-                      <!-- <div *ngFor="let d of expensesForm.controls.detail?.value;let i=index">
-                     {{expensesForm.value.detail[i].expenses}}
-                     {{expensesForm.value.detail[i].price}}
-                  </div>                   -->
-                      <!-- {{expensesForm.detail.controls}}    -->
-
-                      <!-- <tr *ngFor="let e of expensesList.controls.detail[0].value">
+                  <tbody >       
+                   
+                    <tr *ngFor="let e of expensesList[indexE].detail;let i=index">
                       <td>{{e.expenses}}</td>
                       <td>{{e.price}}</td>
-                    </tr> -->
-                      <!-- aaaaaaaaaaaaaaaaa -->
+                     
                       <!-- <tr *ngFor="let e of  expensesForm.value.detail">
                       <td>{{e.expenses}}</td>
                       <td>{{e.price}}</td>
                     </tr> -->
 
-                      <!-- <td><input id="expenses1" class="input"[formControl]="detail"></td> -->
-                      <!-- <td> <input id="price1"  class="input"[formControl]="detail"> </td>  -->
-                      <!-- <td><input id="expenses1" type="text" class="form-control"[formControl]="detail[0].expenses"></td>
-                      <td> <input id="price1" type="text" class="form-control"[formControl]="detail[0].price"> </td> -->
-                      <!-- </tr> -->
-                      <!-- <tr>
-                      <td><input id="expenses2" class="input"></td>
-                      <td> <input id="price2" class="input"> </td>
-                    </tr> -->
                       <!-- <tr> -->
                       <!-- <td><input type="text"  class="form-control" mdbInput mdbValidate
                           [formControl]="detail[2].ProductName"></td>
@@ -147,18 +108,9 @@
                       </div>
                     </div> -->
 
-
-
-
-
-
                   </tbody>
                 </table>
-
               </div>
-
-              <!-- <div class="modal-footer"> -->
-
 
               <!-- <button (click)="enableSection(i, d.disabled)">{{ d.disabled ? 'Edit': 'Save' }}</button> -->
 
@@ -177,8 +129,9 @@
   </body>
 
 
-  <!-- model enter new expenses -->
 
+
+  <!-- model enter new expenses -->
 
 
   <!-- <div mdbModal #frame2="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
@@ -420,5 +373,5 @@
   </div> --> 
 
 
-</form>
+<!-- </form> -->
 <router-outlet></router-outlet>

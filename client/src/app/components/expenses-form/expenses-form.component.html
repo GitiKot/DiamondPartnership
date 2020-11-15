@@ -1,7 +1,10 @@
+ <form [formGroup]='expensesForm' class="form-inline d-flex justify-content-center md-form form-sm mt-0">
+
 <div mdbModal #frame1="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
+
             <div class="modal-header text-center">
                 <h4 class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור הוצאה חדשה</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
@@ -29,9 +32,9 @@
                     </div>
                     <div class="col-4 col-sm-6 col-example">
                         <div class="md-form mb-5">
-                            <input type="date" id="form34" class="form-control" mdbInput mdbValidate
+                            <input type="date" id="form31" class="form-control" mdbInput mdbValidate
                                 [formControl]="date">
-                            <label for="form34">תאריך</label>
+                            <label for="form31">תאריך</label>
                             <mdb-error *ngIf="date.invalid && (date.dirty || date.touched)">
                             </mdb-error>
                             <mdb-success *ngIf="date.valid && (date.dirty || date.touched)">
@@ -74,9 +77,9 @@
                 <div class="row">
                     <div class="col-8 col-sm-6 col-example">
                         <div class="md-form mb-5">
-                            <input type="text" id="form32" class="form-control" mdbInput mdbValidate
+                            <input type="text" id="form30" class="form-control" mdbInput mdbValidate
                                 [formControl]="amountPartner">
-                            <label for="form32">סכום לשותף</label>
+                            <label for="form30">סכום לשותף</label>
                             <mdb-error *ngIf="amountPartner.invalid && (amountPartner.dirty || amountPartner.touched)">
                             </mdb-error>
                             <mdb-success *ngIf="amountPartner.valid && (amountPartner.dirty || amountPartner.touched)">
@@ -89,8 +92,8 @@
                             <textarea type="text" id="form8" class="md-textarea form-control" rows="1" mdbInput
                                 mdbValidate [formControl]="Remarks"></textarea>
                             <label for="form8">הערות</label>
-                            <mdb-error *ngIf="Remarks.invalid && (Remarks.dirty || Remarks.touched)">
-                            </mdb-error>
+                            <!-- <mdb-error *ngIf="Remarks.invalid && (Remarks.dirty || Remarks.touched)"> -->
+                            <!-- </mdb-error> -->
                             <mdb-success *ngIf="Remarks.valid && (Remarks.dirty || Remarks.touched)">
                             </mdb-success>
                         </div>
@@ -109,6 +112,7 @@
                     (click)="close()">ביטול</button>
                     <button class="btn btn-primary" (click)=save()>שמירה</button></div>
             </div>
+            
         </div>
     </div>
 </div>
@@ -136,10 +140,20 @@
         <div class="modal-body">
           <table id="myTable">
             <tbody>
-              <!-- <div formArrayName="detail">
-                <div *ngFor="let d of detail.controls; let i=index">
+<!-- מכאן -->
+          <!-- <div formArrayName="detail" *ngFor="let details of expensesForm.controls.detail?.value; let i = index">
+            <ng-container [formGroupName]="i">            
+            <input placeholder="expenses" formControlName="expenses" type="text">
+              <input placeholder="price" formControlName="price" type="text">
+            </ng-container>
+          </div> -->
+          <!--ועד כאן זה טוב ללא הראשון  -->
+
+              <div formArrayName="detail">
+                <!-- <div *ngFor="let d of expensesForm.detail.value; let i=index">-->
+                    <div *ngFor="let d of expensesForm.controls.detail?.value; let i=index">
                   <div [formGroupName]="i">
-                    <tr class="header" *ngIf="i=='0'">
+                    <tr class="header" *ngIf="i=='0'"> 
                       <th>#</th>
                       <th>שם הוצאה</th>
                       <th>מחיר</th>
@@ -151,10 +165,10 @@
                       <td><input type="text" formControlName="price"></td>
                       <td><button (click)="removeDetail(i)">x</button></td>
                     </tr>
-                  </div>
-                </div>
+                   </div>
               </div>
-            </tbody> -->
+               </div>
+            </tbody>
           </table>
 
         </div>
@@ -169,43 +183,4 @@
     </div>
   </div>
 
-
-
-
-  <!--  -->
-<!--     
-<div mdbModal #frame1="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
-aria-hidden="true">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<i class="fa fa-check-square-o animated flip infinite slow" style='font-size:48px;color:green'
-    aria-hidden="true"></i>
-
-<div class="modal-header text-center">
-    <div class="modal-dialog modal-dialog-scrollable modal-l" role="document">
-        <div class="modal-content">
-            <button (click)="close()" type="button" class="close" data-dismiss="modal" aria-label="Close">
-
-                <span aria-hidden="true">x</span>
-            </button>
-            <br>
-            <h4 class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור הוצאה חדשה</h4>
-            <div class="modal-body mx-3">
-               
-                <div class="modal-footer d-flex justify-content-center">
-                    <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal"
-                        data-target="#basicExample" (click)="save()" mdbWavesEffect id="newexpenses">
-                        שמירה </button>
-
-                </div>
-            </div>
-
-
-
-
-
-        </div>
-    </div>
-</div>
-</div>
-
-   -->
+</form>

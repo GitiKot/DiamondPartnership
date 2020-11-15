@@ -16,28 +16,28 @@ export class ExpensesFormComponent implements OnInit {
   @ViewChild('frame1') public showModalOnClick1: ModalDirective;//model big
   expensesForm: FormGroup;
   expensesList: Array<Expenses>;
-  public showModal1(): void {//just big
+  // public showModal1(): void {//just big
 
-    this.showModalOnClick1.show();
-  }
-  public showModal2(): void {//2
+  //   this.showModalOnClick1.show();
+  // }
+  // public showModal2(): void {//2
 
-    this.showModalOnClick.show();
-    this.showModalOnClick1.show();
+  //   this.showModalOnClick.show();
+  //   this.showModalOnClick1.show();
 
-  }
-  public hideModal(): void {//just s
+  // }
+//   public hideModal(): void {//just s
 
-    this.showModalOnClick.hide();
+//     this.showModalOnClick.hide();
 
-  }
-  public hideModal2(): void {
+//   }
+//   public hideModal2(): void {
     
-    this.showModalOnClick.hide();
-    this.showModalOnClick1.hide();
-this.expensesForm.reset();
+//     this.showModalOnClick.hide();
+//     this.showModalOnClick1.hide();
+// this.expensesForm.reset();
 
-  }
+//   }
   constructor(private r: Router, private expensesService: ExpensesService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -50,48 +50,54 @@ this.expensesForm.reset();
       getchack: ['', [Validators.required]],
       InvoiceNumber: ['', [Validators.required]],
       amountPartner: ['', [Validators.required]],
+      amount:[''],
       detail: this.formBuilder.array([]),
-      Remarks: ['', [Validators.required]],//requierd?
+      Remarks: ['', ],
     })
   }
+
   ngAfterViewInit() {
     this.showModalOnClick1.show();
   }
+
   close(){
     this.r.navigate(['expenses']);
   }
+
   save() {
     console.log(this.expensesForm.value);
 
     alert("האם ברצונך לשמור את הנתונים")
     if (this.expensesForm.valid) {
+
+  this.expensesForm.value.amount = this.expensesForm.value.detail
+  .reduce((prev, curr) => prev + Number(curr.price), 0);
+
       this.expensesService.addExpenses(this.expensesForm.value).subscribe(e => {
         this.expensesList.push(e);
 
         this.expensesForm.reset();
 
       })
-
     }
     this.showModalOnClick.hide();
     this.showModalOnClick1.hide();
+    // צריך פה לעשות רפרש לטבלה
   }
 
   
   savemodal() {
-
-    console.log(this.expensesForm.value.detail);
+    // console.log(this.expensesForm.value.detail);
+   this.showModalOnClick.hide();
     this.showModalOnClick1.show();
-    
-    if (this.expensesForm.value.detail) {
-
-    }
+    // if (this.expensesForm.value.detail) { }
   }
   
   cancelex() {
 
     console.log(this.expensesForm.controls);
     this.detail.reset();
+    this.detail.clear();
     //  console.log( this.showModalOnClick.isShown);
     // this.expensesForm.reset();
     this.showModalOnClick1.show();
@@ -112,7 +118,9 @@ this.expensesForm.reset();
   get InvoiceNumber() {
     return this.expensesForm.get('InvoiceNumber');
   }
-
+  get amount() {
+    return this.expensesForm.get('amount');
+  }
   get amountPartner() {
     return this.expensesForm.get('amountPartner');
   }
@@ -138,6 +146,8 @@ this.expensesForm.reset();
   }
 
   addDetail() {
+    console.log(this.expensesList.values());
+    
     this.detail.push(this.newDetail());
   }
 
