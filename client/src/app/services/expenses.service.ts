@@ -9,16 +9,29 @@ import { Expenses } from '../data/expenses';
 })
 export class ExpensesService {
   options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-  expensesrUrl = 'http://localhost:3000/expenses';
+  expensesUrl = 'http://localhost:3000/expenses';
   constructor(private http: HttpClient) { }
 
   getAllExpenses(): Observable<Expenses[]> {
-    return this.http.get<Expenses[]>(this.expensesrUrl);
+    return this.http.get<Expenses[]>(this.expensesUrl);
   }
+
   addExpenses(e: Expenses): Observable<Expenses> {
-    console.log("service", this.expensesrUrl);
+    console.log("service", this.expensesUrl);
+    return this.http.post<Expenses>(this.expensesUrl, e);
+  }
 
+  deleteExpenses(e: Expenses) {
+    var ex = `${this.expensesUrl}/${e.id}`;
+    console.log("url=" + ex);
 
-    return this.http.post<Expenses>(this.expensesrUrl, e);
+    return this.http.delete<Expenses>(ex, this.options)
+      .subscribe((s: Expenses) => {
+        console.log(s, "suecces");
+      }, () => {
+        console.log("error");
+      }
+      );
+
   }
 }

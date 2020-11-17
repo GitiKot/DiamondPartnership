@@ -52,5 +52,13 @@
     bottom: 25px; left: 25px;
     /* width: 100px; */
 }
+.del{
+  text-align: center;
+  border: none;
+  display: none;
+  visibility: hidden;
+  /* background-position: center;  */
+  object-position: center;
+}
  
   

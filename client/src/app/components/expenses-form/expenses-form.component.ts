@@ -16,28 +16,7 @@ export class ExpensesFormComponent implements OnInit {
   @ViewChild('frame1') public showModalOnClick1: ModalDirective;//model big
   expensesForm: FormGroup;
   expensesList: Array<Expenses>;
-  // public showModal1(): void {//just big
 
-  //   this.showModalOnClick1.show();
-  // }
-  // public showModal2(): void {//2
-
-  //   this.showModalOnClick.show();
-  //   this.showModalOnClick1.show();
-
-  // }
-//   public hideModal(): void {//just s
-
-//     this.showModalOnClick.hide();
-
-//   }
-//   public hideModal2(): void {
-    
-//     this.showModalOnClick.hide();
-//     this.showModalOnClick1.hide();
-// this.expensesForm.reset();
-
-//   }
   constructor(private r: Router, private expensesService: ExpensesService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -50,9 +29,9 @@ export class ExpensesFormComponent implements OnInit {
       getchack: ['', [Validators.required]],
       InvoiceNumber: ['', [Validators.required]],
       amountPartner: ['', [Validators.required]],
-      amount:[''],
+      amount: [''],
       detail: this.formBuilder.array([]),
-      Remarks: ['', ],
+      Remarks: [''],
     })
   }
 
@@ -60,39 +39,52 @@ export class ExpensesFormComponent implements OnInit {
     this.showModalOnClick1.show();
   }
 
-  close(){
+  close() {
     this.r.navigate(['expenses']);
   }
 
   save() {
-    console.log(this.expensesForm.value);
-
+    // console.log(this.expensesForm.value);
     alert("האם ברצונך לשמור את הנתונים")
     if (this.expensesForm.valid) {
 
-  this.expensesForm.value.amount = this.expensesForm.value.detail
-  .reduce((prev, curr) => prev + Number(curr.price), 0);
+      this.expensesForm.value.amount = this.expensesForm.value.detail
+        .reduce((prev, curr) => prev + Number(curr.price), 0);
+
+
+      // if (this.expensesForm.value.detail) {
+      //   for (let i = 0; i < this.expensesForm.value.detail.length; i++) {
+      //     if (this.expensesForm.value.detail[i].expenses == ""
+      //       && this.expensesForm.value.detail[i].price == "") {        
+      //       cnt++;
+      //     }  }   
+      //         if (cnt == this.expensesForm.value.detail.length) {
+      //           console.log(cnt);
+      // this.expensesForm.value.detail='';
+      //         }
+      // console.log(this.expensesForm.value.detail.length);
+      // }
 
       this.expensesService.addExpenses(this.expensesForm.value).subscribe(e => {
         this.expensesList.push(e);
-
         this.expensesForm.reset();
-
       })
+
     }
     this.showModalOnClick.hide();
     this.showModalOnClick1.hide();
     // צריך פה לעשות רפרש לטבלה
+
   }
 
-  
+
   savemodal() {
     // console.log(this.expensesForm.value.detail);
-   this.showModalOnClick.hide();
+    this.showModalOnClick.hide();
     this.showModalOnClick1.show();
     // if (this.expensesForm.value.detail) { }
   }
-  
+
   cancelex() {
 
     console.log(this.expensesForm.controls);
@@ -103,7 +95,7 @@ export class ExpensesFormComponent implements OnInit {
     this.showModalOnClick1.show();
 
   }
- 
+
   get PublicSerialName() {
     return this.expensesForm.get('PublicSerialName');
   }
@@ -127,7 +119,7 @@ export class ExpensesFormComponent implements OnInit {
   get detail(): FormArray {
     return this.expensesForm.get('detail') as FormArray
   }
-  
+
   get expenses() {
     return this.expensesForm.get("detail").get('expenses');
   }
@@ -147,7 +139,7 @@ export class ExpensesFormComponent implements OnInit {
 
   addDetail() {
     console.log(this.expensesList.values());
-    
+
     this.detail.push(this.newDetail());
   }
 
@@ -156,7 +148,7 @@ export class ExpensesFormComponent implements OnInit {
   }
 }
 
-  
+
 
 
 

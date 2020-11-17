@@ -1,0 +1,11 @@
+#myTable tr.header, #myTable tr:hover {
+    background-color: #f1f1f1;
+  } 
+  table, th , td  {
+    border: 1px  grey;
+    border-collapse: collapse;
+    padding: 5px;
+  }
+  .input{
+    width: 130px;
+}

@@ -11,7 +11,7 @@ import { ExpensesService } from 'src/app/services/expenses.service'
   styleUrls: ['./expenses.component.css']
 })
 export class ExpensesComponent implements OnInit {
- indexE = 0;
+  indexE = 0;
   expensesForm: FormGroup;
   expensesList: Array<Expenses>;
   @ViewChild('frame2') public showModalOnClick: ModalDirective;//model s
@@ -51,7 +51,38 @@ export class ExpensesComponent implements OnInit {
   updateEi(i: number) {
     this.indexE = i;
   }
+  deleteExpe(e: Expenses) {
+    var ex = this.expensesService.deleteExpenses(e);
+    console.log(ex);
 
+    this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
+
+  }
+  // deleteSale(sale){
+  //   var tt= this.saleService.deletePartner(sale);
+  //   console.log( tt);
+  //   this.saleService.getAllSales().subscribe(ans => this.salesList = ans);
+  // }
+  toolbar(i: number) {
+   
+    let row = document.getElementById("row"+i);
+    let del = document.getElementById("del"+i);
+   
+    row.style.borderColor = " #f1f1f1";
+    del.style.display = "inline";
+    del.style.visibility = "visible";
+    
+    
+  }
+  toolbar1(i: number) {
+
+    let row = document.getElementById("row"+i);
+    let del = document.getElementById("del"+i);
+   
+    row.style.borderColor = "none";
+    del.style.display = "none";
+    del.style.visibility = "hidden";
+  }
 }
 
 

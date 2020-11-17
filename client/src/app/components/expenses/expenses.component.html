@@ -1,377 +1,118 @@
 <!-- <form [formGroup]='expensesForm' class="form-inline d-flex justify-content-center md-form form-sm mt-0"> -->
 
-  <body>
-
-    <h2>טבלת הוצאות</h2>
-    <div>
-      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
-        xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd"
-          d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
-        <path fill-rule="evenodd"
-          d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
-      </svg>&nbsp;
-      <input type="text" id="myInput" class="form-control form-control-sm ml-3" (keyup)="myFunction()"
-        placeholder="מיון לפי שם סריה כללית" title="Type in a name">
-    </div>
-    <br>
-    <table id="myTable">
-      <thead>
-        <tr class="header">
-          <th style="width: 150px;">שם סריה כללית</th>
-          <th>תאריך</th>
-          <th style="width: 270px;">האם קיבלתי צ'ק או לקזז הצ'ק הבא</th>
-          <th style="width: 125px;">מספר חשבונית</th>
-          <th>הערות</th>
-          <th>סכום</th>
-          <th>פרוט</th>
-          <th style="width: 100px;">סכום לשותף</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let e of expensesList;let ei=index">
-          <td>{{e.PublicSerialName}}</td>
-          <td>{{e.date| date: "shortDate"}}</td>
-          <td>{{e.getchack}}</td>
-          <td>{{e.InvoiceNumber}}</td>
-          <td>{{e.Remarks}}</td>
-          <td>{{e.amount|currency}}</td>
-          <td><button type="button" class="btn btn-primary"(click)="updateEi(ei)" (click)="frame.show()" data-toggle="modal"
-              data-target="#modalCart" >+</button></td>
-          <td>{{e.amountPartner}}</td>
-        </tr>
-
-
-        <!-- -------model expenses------------------------------------ -->
-
-       
-        <div mdbModal #frame="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
-          aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <!-- <div class="modal-dialog" role="document"> -->
-          <!-- <div class="modal-dialog modal-full-height modal-right" role="document"> -->
-          <!-- <div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true"> -->
-          <div class="modal-dialog  modal-side modal-top-right" role="document">
-            <!-- <div class="modal-dialog modal-fluid" role="document"> -->
-            <div class="modal-content">
-              
-              <div class="modal-header text-center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <!-- <div class="modal-header text-center"> -->
-              <!-- <span aria-hidden="true">&times;</span> -->
-              <!--Body-->
-              <div class="modal-body">
-
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-
-                      <th>שם הוצאה</th>
-                      <th>מחיר</th>
-                      <!-- <th>Remove</th> -->
-                    </tr>
-                  </thead>
-                  <tbody >       
-                   
-                    <tr *ngFor="let e of expensesList[indexE].detail;let i=index">
-                      <td>{{e.expenses}}</td>
-                      <td>{{e.price}}</td>
-                     
-                      <!-- <tr *ngFor="let e of  expensesForm.value.detail">
-                      <td>{{e.expenses}}</td>
-                      <td>{{e.price}}</td>
-                    </tr> -->
-
-                      <!-- <tr> -->
-                      <!-- <td><input type="text"  class="form-control" mdbInput mdbValidate
-                          [formControl]="detail[2].ProductName"></td>
-                          <td><input type="text"  class="form-control" mdbInput mdbValidate
-                            [formControl]="detail[2].Price"></td> -->
-                      <!-- <td><input id="expenses3" class="input"></td>
-                      <td> <input id="price3" class="input"> </td> -->
-                      <!-- </tr> -->
-
-                      <!-- detail:
-                    <div formArrayName="detail">
-                      <div *ngFor="let skill of detail.controls; let i=index">
-                        <div [formGroupName]="i">
-                           {{i}} -->
-                      <!-- expenses :
-                          <input type="text" formControlName="expenses">
-                          price:
-                          <input type="text" formControlName="price">
-
-                          <button (click)="removeSkill(i)">Remove</button> -->
-                      <!--  </div>
-                      </div>
-                    </div> -->
-
-                  </tbody>
-                </table>
-              </div>
-
-              <!-- <button (click)="enableSection(i, d.disabled)">{{ d.disabled ? 'Edit': 'Save' }}</button> -->
-
-              <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
-                  (click)="frame.hide()">ביטול</button>
-              </div>
-              <!-- </div> -->
-            </div>
-          </div>
-        </div>
-        <!----------------------------------------------------------- -->
-      </tbody>
-
-    </table>
-
-  </body>
-
-
-
-
-  <!-- model enter new expenses -->
-
-
-  <!-- <div mdbModal #frame2="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
-    <!-- <div class="modal-dialog" role="document"> -->
-    <!-- <div class="modal-dialog modal-full-height modal-right" role="document"> -->
-    <!-- <div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true"> -->
-    <!-- <div class="modal-dialog modal-notify modal-side modal-top-right" role="document">
-      <div class="modal-content"> -->
-        <!--Header-->
-        <!-- <div class="modal-header text-center">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hideModal()">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div> -->
-        <!-- <div class="modal-header text-center"> -->
-        <!-- <span aria-hidden="true">&times;</span> -->
-        <!--Body-->
-        <!-- <div class="modal-body"> -->
-          <!-- מכאן -->
-          <!-- <div formArrayName="detail" *ngFor="let details of expensesForm.controls.detail?.value; let i = index">
-            <ng-container [formGroupName]="i">
-               <input placeholder="expenses" formControlName="`${expenses}+${i}`" type="text"> -->
-          <!--  <input placeholder="expenses" formControlName="expenses" type="text">
-              <input placeholder="price" formControlName="price" type="text">
-            </ng-container>
-          </div> -->
-          <!--ועד כאן זה טוב ללא הראשון  -->
-          <!-- <div *ngFor="let control of skills.controls; index as i">
-            <input [formControl]="skills.controls[i]" />
-          </div> -->
-
-          <!-- <table id="myTable">
-            <tbody>
-              <div formArrayName="detail">
-                <div *ngFor="let d of detail.controls; let i=index">
-                  <div [formGroupName]="i">
-                    <tr class="header" *ngIf="i=='0'">
-                      <th>#</th>
-                      <th>שם הוצאה</th>
-                      <th>מחיר</th>
-                      <th>מחיקה</th>
-                    </tr>
-                    <tr>
-                      <td>{{i}}</td>
-                      <td><input type="text" formControlName="expenses"></td>
-                      <td><input type="text" formControlName="price"></td>
-                      <td><button (click)="removeDetail(i)">x</button></td>
-                    </tr>
-                  </div>
-                </div>
-              </div>
-            </tbody>
-          </table> -->
-
-          <!-- <table class="table table-hover">
-           
-            <tbody>
-              <tr > -->
-          <!-- <th scope="row">1</th> -->
-          <!-- <div formGroupName="detail"> -->
-
-          <!-- <div class="form-group">
-                    <label for="expenses">expenses</label>
-                    <input type="text" class="form-control" name="expenses" formControlName="expenses">
-                  </div> -->
-
-          <!-- <div class="form-group">
-                    <label for="price">price</label>
-                    <input type="text" class="form-control" name="price" formControlName="price">
-                  </div> -->
-
-          <!-- </div>  -->
-          <!-- <div formGroupName="detail"> -->
-
-          <!-- <div class="form-group">
-                    <label for="expenses">expenses</label>
-                    <input type="text" class="form-control" name="expenses" formControlName="expenses">
-                  </div> -->
-
-          <!-- <div class="form-group">
-                    <label for="price">price</label>
-                    <input type="text" class="form-control" name="price" formControlName="price">
-                  </div> -->
-
-          <!-- </div>  -->
-          <!-- <td class="form-group"> <input type="text" class="form-control" name="expenses" formControlName="expenses"></td>
-                <td class="form-group"> <input type="text" class="form-control" name="price" formControlName="price"> </td>   -->
-          <!-- </tr>  -->
-
-          <!-- </tbody>
-          </table>  -->
-
-        <!-- </div> -->
-
-        <!-- <div class="modal-footer"> -->
-        <!-- <div> <button class="btn btn-outline-primary" (click)="addDetail()">הוספה</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cancelex()"
-            (click)="frame2.hide()">ביטול</button>
-          <button class="btn btn-primary" (click)="savemodal()">שמירה</button></div>
-         </div> -->
-  <!--    </div>
-    </div>
-  </div> -->
-  <!----------------------------------------------------------- -->
-
-
-  <!-- .........check if we can write index........... -->
-
-  <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script> -->
-  <!-- <body>
-  
-  <div ng-app="myApp" ng-controller="customersCtrl"> 
-  
-  <table>
-    <tr ng-repeat="x in names">
-      <td>{{ $index + 1 }}</td>
-      <td>{{ x.Name }}</td>
-      <td>{{ x.Country }}</td>
-    </tr>
-  </table>
-  
+<body>
+  <h3>טבלת הוצאות</h3>
+  <div class="form-inline d-flex justify-content-center md-form form-sm mt-0">
+    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd"
+        d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
+      <path fill-rule="evenodd"
+        d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+    </svg>&nbsp;
+    <input type="text" id="myInput" class="form-control form-control-sm ml-3" (keyup)="myFunction()"
+      placeholder="מיון לפי שם סריה כללית" title="Type in a name">
   </div>
-  </body> -->
-  <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
-  [routerLink]="['expenses-form']" mdbWavesEffect id="newexpenses">
-    <!-- <i class="fas fa-user-plus"></i> -->
-    הוצאה חדשה
-  </button>
-  
-  <!-- <div mdbModal #frame1="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
-    aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header text-center">
-          <h4 class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור הוצאה חדשה</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hideModal2()">
-            <span aria-hidden="true">&times;</span> -->
-           <!--  <span aria-hidden="true">x</span>
-          </button>
+  <table id="myTable">
+    <thead>
+      <tr class="header">
+        <th style="width: 150px;">שם סריה כללית</th>
+        <th>תאריך</th>
+        <th style="width: 270px;">האם קיבלתי צ'ק או לקזז הצ'ק הבא</th>
+        <th style="width: 125px;">מספר חשבונית</th>
+        <th>הערות</th>
+        <th>סכום</th>
+        <th>פרוט</th>
+        <th style="width: 100px;">סכום לשותף</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- <div id="divei" (mouseenter)="toolbar(0)"(mouseleave)="toolbar1(0)">press
+        <button  id="del" ><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+          <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+        </svg></button>  
+      </div>-->
+      
+        <tr *ngFor="let e of expensesList;let ei=index" (mouseenter)="toolbar(ei)"(mouseleave)="toolbar1(ei)" id="row{{ei}}"><!--id="{{ei}}"(mouseover)="toolbar(ei)" -->       
+      <td>{{e.PublicSerialName}}</td>
+        <td>{{e.date| date: "shortDate"}}</td>
+        <td>{{e.getchack}}</td>
+        <td>{{e.InvoiceNumber}}</td>
+        <td>{{e.Remarks}}</td>
+        <td>{{e.amount|currency}}</td>
+        <td><button type="button" class="btn btn-primary" (click)="updateEi(ei)" (click)="frame.show()"
+            data-toggle="modal" data-target="#modalCart">+</button></td>
+        <td>{{e.amountPartner}}</td>
+        <button  id="del{{ei}}" class="del" (click)="deleteExpe(e)"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+      </svg>
+      <i class="fas fa-trash"></i>
+    </button> 
+      </tr>
 
-        </div>
-        <div class="modal-body mx-3">
 
-          <div class="row">
-            <div class="col-8 col-sm-6 col-example">
-              <div class="md-form mb-5">
-                <input type="text" id="form34" class="form-control" mdbInput mdbValidate
-                  [formControl]="PublicSerialName">
-                <label for="form34">שם סריה כללית</label>
-                <mdb-error *ngIf="PublicSerialName.invalid && (PublicSerialName.dirty || PublicSerialName.touched)">
-                </mdb-error>
-                <mdb-success *ngIf="PublicSerialName.valid && (PublicSerialName.dirty || PublicSerialName.touched)">
-                </mdb-success>
-              </div>
+      <!-- -------model expenses------------------------------------ -->
 
+      <div mdbModal #frame="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-side modal-top-right" role="document">
+          <!-- <div class="modal-dialog modal-fluid" role="document"> -->
+          <div class="modal-content">
+
+            <div class="modal-header text-center">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+                <!-- <span aria-hidden="true">×</span>  -->
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
-            <div class="col-4 col-sm-6 col-example">
-              <div class="md-form mb-5">
-                <input type="date" id="form34" class="form-control" mdbInput mdbValidate [formControl]="date">
-                <label for="form34">תאריך</label>
-                <mdb-error *ngIf="date.invalid && (date.dirty || date.touched)">
-                </mdb-error>
-                <mdb-success *ngIf="date.valid && (date.dirty || date.touched)">
-                </mdb-success>
-              </div>
+
+            <!--Body-->
+            <div class="modal-body">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>שם הוצאה</th>
+                    <th>מחיר</th>
+                    <!-- <th *ngIf="">Remove</th> -->
+                  </tr>
+                </thead>
+<!-- צריך לעשות ngif  רק אם יש נתונים בטבלה *ngIf="expensesList.detail"-->
+                <tbody>
+                  <tr *ngFor="let e of expensesList[indexE].detail;let i=index">
+                    <td>{{e.expenses}}</td>
+                    <td>{{e.price}}</td>
+                </tbody>
+
+              </table>
             </div>
+            <!-- <button (click)="enableSection(i, d.disabled)">{{ d.disabled ? 'Edit': 'Save' }}</button> -->
+
+            <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
+                (click)="frame.hide()">ביטול</button>
+
+              <!-- <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
+              (click)="frame.hide()">שמירה</button> לאחר עדכון?-->
+            </div>
+
           </div>
-
-          <div class="row">
-            <div class="col-8 col-sm-6 col-example">
-              <div class="md-form mb-5">
-                <input type="text" id="form32" class="form-control" mdbInput mdbValidate [formControl]="InvoiceNumber">
-                <label for="form32">מספר חשבונית</label>
-                 <input type="text" id="form29" class="form-control" mdbInput mdbValidate
-                  [formControl]="contactFormModalGetChack">
-                <label for="form29">קיבלתי צ'ק או לקזז מהצ'ק הבא</label> -->
-                <!--<mdb-error *ngIf="InvoiceNumber.invalid && (InvoiceNumber.dirty || InvoiceNumber.touched)">
-                </mdb-error>
-                <mdb-success *ngIf="InvoiceNumber.valid && (InvoiceNumber.dirty || InvoiceNumber.touched)">
-                </mdb-success>
-              </div>
-
-            </div>
-            <div class="col-4 col-sm-6 col-example">
-              <div class="md-form mb-5">
-                 <select class="browser-default custom-select" > -->
-               <!-- <select class="form-control" mdbInput mdbValidate [formControl]="getchack">
-                  <option selected>קיבלתי צ'ק</option>
-                  <option value="לקזז מהצ'ק הבא">לקזז מהצ'ק הבא</option>
-                </select>
-                <mdb-error *ngIf="getchack.invalid && (getchack.dirty || getchack.touched)">
-                </mdb-error>
-                <mdb-success *ngIf="getchack.valid && (getchack.dirty || getchack.touched)">
-                </mdb-success>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-8 col-sm-6 col-example">
-              <div class="md-form mb-5">
-                <input type="text" id="form32" class="form-control" mdbInput mdbValidate [formControl]="amountPartner">
-                <label for="form32">סכום לשותף</label>
-                <mdb-error *ngIf="amountPartner.invalid && (amountPartner.dirty || amountPartner.touched)">
-                </mdb-error>
-                <mdb-success *ngIf="amountPartner.valid && (amountPartner.dirty || amountPartner.touched)">
-                </mdb-success>
-              </div>
-
-            </div>
-            <div class="col-4 col-sm-6 col-example">
-              <div class="md-form">
-                <textarea type="text" id="form8" class="md-textarea form-control" rows="1" mdbInput mdbValidate
-                  [formControl]="Remarks"></textarea>
-                <label for="form8">הערות</label>
-                <mdb-error *ngIf="Remarks.invalid && (Remarks.dirty || Remarks.touched)">
-                </mdb-error>
-                <mdb-success *ngIf="Remarks.valid && (Remarks.dirty || Remarks.touched)">
-                </mdb-success>
-              </div>
-
-            </div>
-          </div>
-          <button type="button" class="btn btn-primary" (click)="frame2.show()" data-toggle="modal"
-            data-target="#modalCart">+</button>
-        </div>
-
-
-        <div class="modal-footer d-flex justify-content-center">-->
-          <!--Footer-->
-          <!-- <div class="modal-footer"> -->
-          <!-- <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
-              (click)="hideModal2()">ביטול</button>
-            <button class="btn btn-primary" (click)=save()>שמירה</button></div>
         </div>
       </div>
-    </div>
-  </div> --> 
+    </tbody>
 
+  </table>
+</body>
 
+<!-- model enter new expenses -->
+<!-- <td class="form-group"> <input type="text" class="form-control" name="expenses" formControlName="expenses"></td>
+                <td class="form-group"> <input type="text" class="form-control" name="price" formControlName="price"> </td>   -->
+<!----------------------------------------------------------- -->
+
+<button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
+  [routerLink]="['expenses-form']" mdbWavesEffect id="newexpenses">
+  <!-- <i class="fas fa-user-plus"></i> -->
+  הוצאה חדשה
+</button>
 <!-- </form> -->
 <router-outlet></router-outlet>
