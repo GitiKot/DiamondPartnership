@@ -40,6 +40,7 @@ export class ExpensesFormComponent implements OnInit {
   }
 
   close() {
+   
     this.r.navigate(['expenses']);
   }
 
@@ -50,21 +51,17 @@ export class ExpensesFormComponent implements OnInit {
 
       this.expensesForm.value.amount = this.expensesForm.value.detail
         .reduce((prev, curr) => prev + Number(curr.price), 0);
-
-
       // if (this.expensesForm.value.detail) {
       //   for (let i = 0; i < this.expensesForm.value.detail.length; i++) {
       //     if (this.expensesForm.value.detail[i].expenses == ""
       //       && this.expensesForm.value.detail[i].price == "") {        
-      //       cnt++;
-      //     }  }   
+      //       cnt++; }  }   
       //         if (cnt == this.expensesForm.value.detail.length) {
       //           console.log(cnt);
       // this.expensesForm.value.detail='';
       //         }
       // console.log(this.expensesForm.value.detail.length);
       // }
-
       this.expensesService.addExpenses(this.expensesForm.value).subscribe(e => {
         this.expensesList.push(e);
         this.expensesForm.reset();
@@ -74,7 +71,7 @@ export class ExpensesFormComponent implements OnInit {
     this.showModalOnClick.hide();
     this.showModalOnClick1.hide();
     // צריך פה לעשות רפרש לטבלה
-
+    this.r.navigate(['expenses']);
   }
 
 
@@ -86,12 +83,12 @@ export class ExpensesFormComponent implements OnInit {
   }
 
   cancelex() {
-
-    console.log(this.expensesForm.controls);
+    // console.log(this.expensesForm.controls);
     this.detail.reset();
     this.detail.clear();
     //  console.log( this.showModalOnClick.isShown);
     // this.expensesForm.reset();
+    this.showModalOnClick.hide();
     this.showModalOnClick1.show();
 
   }

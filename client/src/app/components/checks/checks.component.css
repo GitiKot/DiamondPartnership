@@ -1,9 +1,6 @@
-
  *{
     box-sizing: border-box;
   }
-  
-  
   
   #myTable {
     border-collapse: collapse;
@@ -24,4 +21,7 @@
   #myTable tr.header, #myTable tr:hover {
     background-color: #f1f1f1;
   } 
-  
+  .row{
+    position: fixed; 
+    bottom: 25px; left: 25px;
+  }
