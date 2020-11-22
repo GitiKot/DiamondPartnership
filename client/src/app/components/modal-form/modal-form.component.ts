@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
+
 @Component({
   selector: 'app-modal-form',
   templateUrl: './modal-form.component.html',
@@ -8,17 +8,12 @@ import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.direc
 })
 export class ModalFormComponent implements OnInit {
   validatingForm: FormGroup;
-  @ViewChild('frame') public showModalOnClick1: ModalDirective;
-  public showModal1(): void {
 
-    this.showModalOnClick1.show();
-  }
   constructor() { }
 
   // ngOnInit(): void {
   // }
   ngOnInit() {
-   
     this.validatingForm = new FormGroup({
       contactFormModalName: new FormControl('', Validators.required),
       contactFormModalEmail: new FormControl('', Validators.email),
@@ -37,7 +32,7 @@ export class ModalFormComponent implements OnInit {
 // })
 
   
-
+  
 
   get contactFormModalName() {
     return this.validatingForm.get('contactFormModalName');

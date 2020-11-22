@@ -13,11 +13,15 @@ import { SalesFormComponent } from './components/sales-form/sales-form.component
 import { AppComponent } from './app.component';
 import {ModalFormComponent} from './components/modal-form/modal-form.component'
 import { SerialFormComponent } from './components/serial-form/serial-form.component';
+import { ExpensesFormComponent } from './components/expenses-form/expenses-form.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'checks', component: ChecksComponent },
-  { path: 'expenses', component: ExpensesComponent },
+  { path: 'expenses', component: ExpensesComponent ,
+children:[{path:'',redirectTo:'expenses',pathMatch:'full'}
+,{path:'expenses-form',component:ExpensesFormComponent}]
+},
   { path: 'sales/:isSales', component: SalesComponent },
   { path: 'sales-form', component: SalesFormComponent },
   { path: 'seriousness', component: SeriousnessComponent,
