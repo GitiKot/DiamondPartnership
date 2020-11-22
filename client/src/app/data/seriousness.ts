@@ -1,8 +1,10 @@
+import { Partner } from './partner';
+
 export class Seriousness {
     id: string;
     serialName: string;
     dateBuy: Date;
-    partner: string;
+    partner: Partner;
     privateSeria: Array<{ namePrivate: string, price: number, expenses: Array<{ nameExpenses: string, price: number }> }>;//מספר חשבונית
     cost: number;
     amountReceived: number;
@@ -11,7 +13,7 @@ export class Seriousness {
     finishDate: Date;
     /////////
 
-    constructor(s?: string, d?: Date, p?: string,
+    constructor(s?: string, d?: Date, p?: Partner,
         ps?: Array<{
             namePrivate: string, price: number, expenses:
                 Array<{ nameExpenses: string, price: number }>

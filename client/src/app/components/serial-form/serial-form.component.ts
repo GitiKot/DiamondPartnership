@@ -1,10 +1,12 @@
-import { Component, OnInit ,ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalModule } from 'angular-bootstrap-md';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { Expenses } from 'src/app/data/expenses';
+import { Partner } from 'src/app/data/partner';
 import { ExpensesService } from 'src/app/services/expenses.service'
+import { PartnerService } from 'src/app/services/partner.service';
 import { seriousnessService } from 'src/app/services/seriousness.service';
 import { ModalFormComponent } from '../modal-form/modal-form.component';
 @Component({
@@ -14,51 +16,69 @@ import { ModalFormComponent } from '../modal-form/modal-form.component';
 })
 export class SerialFormComponent implements OnInit {
   serialForm: FormGroup;
- 
+  partnerList: Array<Partner>;
   @ViewChild('frame1') frame1: ModalDirective;
-  constructor(private r: Router,private seriousnessService:seriousnessService,private formBuilder: FormBuilder) { }
-
+  @ViewChild('frame2') frame2: ModalDirective;
+  elements: any = [
+    {id: 1, first: 'Mark', last: 'Otto', handle: '@mdo'},
+    {id: 2, first: 'Jacob', last: 'Thornton', handle: '@fat'},
+    {id: 3, first: 'Larry', last: 'the Bird', handle: '@twitter'},
+  ];
+  constructor(private changeDetectorRef: ChangeDetectorRef, private r: Router, private partnerService: PartnerService, private seriousnessService: seriousnessService, private formBuilder: FormBuilder) { }
+  // Validators.compose([Validators.minLength(10)
   ngOnInit(): void {
+    this.partnerService.getAllPartners().subscribe(ans => { this.partnerList = ans; console.log("fghj"); })
+
     this.serialForm = this.formBuilder.group({
       serialName: ['', [Validators.required]],
       dateBuy: ['', [Validators.required]],
       cost: ['', [Validators.required]],
-      partnersPercent: ['', [Validators.required]],
-      finishDate: ['', [Validators.required]],    
-      detail: this.formBuilder.array([]), 
-      Remarks: ['', [Validators.required]],//requierd?
+      partnersPercent: ['', [Validators.compose([Validators.required, Validators.pattern('[0-9]{2}')])]],
+      finishDate: ['', [Validators.required]],
+      privateSeria: this.formBuilder.array([]),
+      partner: ['', [Validators.required]],
     });
 
   }
   ngAfterViewInit() {
     this.frame1.show();
   }
+  Table2() {
+    var elem = document.getElementById("TableNested2");
+    var hide = elem.style.display == "none";
+    if (hide) {
+      elem.style.display = "table";
+    }
+    else {
+      elem.style.display = "none";
+    }
+  }
   save() {
+    console.log(this.privateSeria.value);
 
     console.log(this.serialForm.value);
 
-    alert("האם ברצונך לשמור את הנתונים") 
-  this.serialForm.reset();
-this.r.navigate(['./seriousness'])
+    alert("האם ברצונך לשמור את הנתונים")
+    this.serialForm.reset();
+    this.r.navigate(['./seriousness'])
     // if (this.serialForm.valid) {
     //   this.seriousnessService.addSeria(this.serialForm.value).subscribe(e => {
-          
-       
+
+
     //   })
 
     // }
-    
+
   }
- 
-  close(){
+  onCloseMember() {
+
+    this.changeDetectorRef.detectChanges();
+  }
+  close() {
     this.r.navigate(['seriousness']);
   }
   cancelex() {
-
-   
-    this.detail.reset();
-    
-   
+    this.privateSeria.reset();
   } get serialName() {
     return this.serialForm.get('serialName');
   }
@@ -69,45 +89,66 @@ this.r.navigate(['./seriousness'])
   get cost() {
     return this.serialForm.get('cost');
   }
-
+  get partner() {
+    return this.serialForm.get('partner');
+  }
+  get finishDate() {
+    return this.serialForm.get('finishDate');
+  }
   get partnersPercent() {
     return this.serialForm.get('partnersPercent');
   }
-  get detail(): FormArray {
-    return this.serialForm.get('detail') as FormArray
-  }
-  
-  get finishDate() {
-    return this.serialForm.get("detail").get('finishDate');
-  }
-  get price() {
-    return this.serialForm.get("detail").get('price');
-  }
-  get Remarks() {
-    return this.serialForm.get('Remarks');
+
+  get privateSeria(): FormArray {
+    return this.serialForm.get('privateSeria') as FormArray
   }
 
-  newDetail(): FormGroup {
+  get expensesArray():FormArray {
+    return this.serialForm.get("privateSeria").get('expensesArray')as FormArray;
+  }
+
+  get name() {
+    return this.serialForm.get("privateSeria").get('name');
+  }
+  newPrivateSerial(): FormGroup {
     return this.formBuilder.group({
-      expenses: '',
-      price: '',
+      name: '',
+      expensesArray: this.formBuilder.array([]),
     })
   }
+newExpenses():FormGroup{
+  return this.formBuilder.group({
+    exspensesName:'',
+    exspensesPrice:''
+  })
+}
+get exspensesName() {
+  return this.serialForm.get("privateSeria").get('expensesArray').get('exspensesName');
+}
+get exspensesPrice() {
+  return this.serialForm.get("privateSeria").get('expensesArray').get('exspensesPrice');
+}
+  addPrivateSerial() {
+    console.log(this.privateSeria.value);
 
-  addDetail() {
-    this.detail.push(this.newDetail());
+    this.privateSeria.push(this.newPrivateSerial());
+    console.log(this.privateSeria.value);
+
   }
+  addExArrray(i:number) {
 
-  removeDetail(i: number) {
-    this.detail.removeAt(i);
+    this.privateSeria[i].expensesArray.push(this.newExpenses());
+
+  }
+  removePrivateSerial(i: number) {
+    this.privateSeria.removeAt(i);
+  }
+  cancelPrivateSerial() {
+    this.privateSeria.clear()
+    this.frame2.hide()
+
+  }
+  savePrivateSerial() {
+    console.log(this.privateSeria.value);
   }
 }
-   
- 
-
-
-
-  
-
-
-
