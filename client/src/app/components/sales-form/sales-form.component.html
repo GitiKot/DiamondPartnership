@@ -8,7 +8,7 @@
   <span>
 
     <label for="datesale"> להכניס מראש מספר אבנים אחרת ימחקו שורות:</label>
-    <input type="number" formControlName="num"  class="form-control" tabindex="0" (change) ="numStonesFunc()"id="numStones">
+    <input type="number" min="0" formControlName="num"  class="form-control" tabindex="0" (change) ="numStonesFunc()"id="numStones">
     <!-- <label  *ngIf="salesForm.controls['datesale'].error!=null">גדול </label> -->
   </span>&nbsp; &nbsp;
   <span>
@@ -37,7 +37,7 @@
   <div>
     <label class="form-check-label">
       <label>
-        <input type="radio" (input)="tableKeyPresent()" class="form-check-input"tabindex="4" formControlName="rawOrPolished" value="raw"
+        <input type="radio"  (input)="tableKeyPresent()" class="form-check-input"tabindex="4" formControlName="rawOrPolished" value="raw"
           [checked]="false">&nbsp;גלם
       </label>
     <label>
@@ -100,11 +100,11 @@
 
         <td><input  #wee tabindex={{i*5+9}} (input) ="totalPrice[i] = wee.value * pricepercarat.value "  
           formControlName="weight"  class="input"
-          [(ngModel)]="tableContent[i].w"  type="number" name="w" > </td>
+          [(ngModel)]="tableContent[i].w"  min="0" type="number" name="w" > </td>
 
         <td><input  tabindex={{i*5+10}} #pricepercarat (input) ="totalPrice[i] = wee.value * pricepercarat.value "           
           formControlName="pricePerCarat"  class="input"
-          [(ngModel)]="tableContent[i].pricePerCarat"  type="number"
+          [(ngModel)]="tableContent[i].pricePerCarat" min="0" type="number"
              classNam="PricePerCarat" > </td>
 
         <td ><input [value]="totalPrice[i]" formControlName="totalPrice"  class="input" ></td> 

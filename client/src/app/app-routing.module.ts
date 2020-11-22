@@ -26,7 +26,7 @@ children:[{path:'',redirectTo:'expenses',pathMatch:'full'}
   { path: 'sales-form', component: SalesFormComponent },
   { path: 'seriousness', component: SeriousnessComponent,
   children:[ { path: '', redirectTo: 'seriousness', pathMatch: 'full' }
-  ,{path:'serial-form',component:SerialFormComponent}] },
+  ,{path:'serial-form',component:SerialFormComponent,}] },
 
   { path: 'nav-bar', component: NavBarComponent },
   { path: 'partners', component: PartnersComponent },

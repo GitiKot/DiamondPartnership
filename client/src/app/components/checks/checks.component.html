@@ -1,14 +1,4 @@
-<!-- <!DOCTYPE html>
-<html>
-<body>
-<h2>Use JavaScript to Change Text</h2>
-<p>checks</p>
-<p id="demo"></p>
-<script>
-document.getElementById("demo").innerHTML = "Hello JavaScript!";
-</script> 
-</body>
-</html> -->
+
 <br>
 <form [formGroup]='checksForm' class="form-inline d-flex justify-content-center md-form form-sm mt-0">
   <div>
@@ -23,23 +13,61 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
     <input type="text" id="public" class="form-control form-control-sm ml-3 " (keyup.enter)="keypressevt()"
       placeholder="חיפוש לפי שם סריה כללית" title="Type in a name">
   </div>
-  <table id="myTable">
+   <table id="myTable" ><!--mdbTable class="z-depth-1" -->
     <tr class="header">
-      <th>תאריך צ'ק</th>
+      <th class="th-sm">תאריך צ'ק</th>
       <th>סכום צ'ק</th>
       <th>קבלה/חשבונית</th>
       <th>מספר צ'ק</th>
       <th>+/-</th>
     </tr>
+    <tbody>
     <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>3.1.2012</td>
+      <td>3213</td>
+      <td>32344</td>
+      <td>6543</td>
+      <td><button type="button" class="btn btn-primary" (click)="framec.show()"
+        data-toggle="modal" data-target="#modalCart">+</button></td>
     </tr>
+   
+    <!-- modal -->
+    <div mdbModal #framec="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-side modal-top-right" role="document">
+          <!-- <div class="modal-dialog modal-fluid" role="document"> -->
+          <div class="modal-content">
 
+            <div class="modal-header text-center">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="framec.hide()">
+                <!-- <span aria-hidden="true">×</span>  -->
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <!--Body-->
+            <div class="modal-body">
+              
+                <app-sales></app-sales>
+
+            </div>
+            <!-- <button (click)="enableSection(i, d.disabled)">{{ d.disabled ? 'Edit': 'Save' }}</button> -->
+
+            <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
+                (click)="framec.hide()">ביטול</button>
+                 <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
+                  (click)="framec.hide()">להדפסה</button>
+              <!-- <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
+              (click)="frame.hide()">שמירה</button> לאחר עדכון?-->
+            </div>
+
+          </div>
+        </div>
+      </div>
+</tbody>
   </table>
+ 
+
   <div>צ'קים פתוחים----------------------------------------------------------------------------</div>
   <hr>
   <app-sales></app-sales>

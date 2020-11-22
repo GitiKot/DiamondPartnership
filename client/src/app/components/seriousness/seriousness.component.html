@@ -1,6 +1,3 @@
-
-
-
 <br>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -17,10 +14,12 @@
                 <th> סכום שהתקבל</th>
                 <th> סכום שניתן לשותף</th>
                 <th>תאריך סגירת סריה </th>
+                <th>סריות פרטיות </th>
+
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let s of seriousnessList">
+            <tr *ngFor="let s of seriousnessList;let i=index">
                 <td>
                     <button class="delete" type="button" (click)="deletePartner(p)"> <i
                             class="material-icons">&#xe5cd;</i></button>
@@ -43,6 +42,8 @@
                     </p>
 
                 </td>
+                <!-- <td> <button type="button" class="btn btn-primary"[indexSerial]={{i}} (click)="frame2.show()" data-toggle="modal"
+                        data-target="#modalCart">+</button></td> -->
             </tr>
 
 
@@ -53,8 +54,54 @@
 
 
 <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
-   [routerLink]="['serial-form']"  mdbWavesEffect id="newexpenses">
+    [routerLink]="['serial-form']" mdbWavesEffect id="newexpenses">
     סריה חדשה
 </button>
 
-   <router-outlet></router-outlet>
+<router-outlet></router-outlet>
+
+
+
+<div mdbModal #frame2="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-side modal-top-right" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame2.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+
+                <table class="table table-hover">
+
+                    <thead>
+                        <tr>
+
+                            <th>שם סריה</th>
+                            <th>מחיר</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <div *ngFor="let ps of seriousnessList[0].privateSeria; let i=index">
+
+                            <div>
+                                <tr>
+
+                                    <td> ps.namePrivate</td>
+                                    <td>ps.price</td>
+                                </tr>
+                            </div>
+                        </div> -->
+                    </tbody>
+                </table>
+
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                    (click)="frame2.hide()">ביטול</button>
+                <button class="btn btn-primary">שמירה</button></div>
+        </div>
+    </div>
+</div>

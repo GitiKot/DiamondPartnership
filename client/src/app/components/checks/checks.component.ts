@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-checks',
@@ -11,6 +11,9 @@ export class ChecksComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.checksForm=new FormGroup({
+      
+    })
   }
   keypressevt(){
 

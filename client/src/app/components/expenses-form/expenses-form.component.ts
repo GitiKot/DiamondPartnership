@@ -21,7 +21,7 @@ export class ExpensesFormComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
+    // this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
 
     this.expensesForm = this.formBuilder.group({
       PublicSerialName: ['', [Validators.required]],
@@ -135,7 +135,6 @@ export class ExpensesFormComponent implements OnInit {
   }
 
   addDetail() {
-    console.log(this.expensesList.values());
 
     this.detail.push(this.newDetail());
   }

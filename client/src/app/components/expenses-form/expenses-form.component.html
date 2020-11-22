@@ -57,6 +57,7 @@
                                 </mdb-success>
                             </div>
 
+<<<<<<< HEAD
                         </div>
                         <div class="col-4 col-sm-6 col-example">
                             <div class="md-form mb-5">
@@ -70,6 +71,26 @@
                                 <mdb-success *ngIf="getchack.valid && (getchack.dirty || getchack.touched)">
                                 </mdb-success>
                             </div>
+=======
+                    </div>
+                    <div class="col-4 col-sm-6 col-example">
+                        <div class="md-form mb-5">
+                            <!-- <select class="browser-default custom-select" > -->
+                            <select class="form-control" mdbInput mdbValidate [formControl]="getchack">
+                    
+                    
+                    
+                    
+                    
+                    
+                                <option selected>קיבלתי צ'ק</option>
+                                <option value="לקזז מהצ'ק הבא">לקזז מהצ'ק הבא</option>
+                            </select>
+                            <mdb-error *ngIf="getchack.invalid && (getchack.dirty || getchack.touched)">
+                            </mdb-error>
+                            <mdb-success *ngIf="getchack.valid && (getchack.dirty || getchack.touched)">
+                            </mdb-success>
+>>>>>>> 23156ab8bb2818ce75636bcc9e3e81c4a65176ac
                         </div>
                     </div>
 

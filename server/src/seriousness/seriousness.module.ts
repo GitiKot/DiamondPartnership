@@ -7,7 +7,7 @@ import { seriousnessService } from './seriousness.service';
 
 @Module({
     imports:[
-        MongooseModule.forFeature([{ name: 'Expenses', schema: SeriousnessSchema }]),
+        MongooseModule.forFeature([{ name: 'Seriousness', schema: SeriousnessSchema }]),
     ],
     controllers:[SeriousnessController],
     providers:[seriousnessService],
