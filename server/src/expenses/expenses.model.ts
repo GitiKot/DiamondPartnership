@@ -8,7 +8,6 @@ export const ExpensesSchema = new mongoose.Schema({
     getchack: { type: String, required: true },
     InvoiceNumber: { type: Number, required: true },
     Remarks: { type: String },
-    // detail:Array<{expenses:string,price:number}>,
     detail:{type:Array},
     amount: { type: Number },
     amountPartner: { type: Number },
