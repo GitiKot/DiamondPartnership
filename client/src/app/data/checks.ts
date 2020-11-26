@@ -1,11 +1,11 @@
 export class Checks {
-    IdSales: string;
+    IdSales: Array<string>;
     numCheck: number;
     date: Date;
     sum: number;
     ReceiptOrInvoice: string;
 
-    constructor(Id: string,
+    constructor(Id: Array<string>,
         num: number,d: Date, sum: number, ReceiptOrInvoice: string) {
         this.IdSales=Id;
         this.numCheck=num;

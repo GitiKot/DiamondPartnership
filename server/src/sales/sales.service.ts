@@ -76,16 +76,37 @@ export class SalesService {
         }
     }
     
-    private async findSale(id: string): Promise<Sales> {
-        let partner;
-        try {
-            partner = await this.salesModel.findById(id).exec();
-        } catch (error) {
-            throw new NotFoundException('Could not find Partner.');
-        }
-        if (!partner) {
-            throw new NotFoundException('Could not find Partner.');
-        }
-        return partner;
+    findAllSales(pn:string): Sales[] {
+        return this.findAllSales(pn);
+      }
+      async findSales(pn:string) {
+        const Sales = await this.salesModel.find().exec();
+        return Sales.map(sale => {if(sale.publicSerialName==pn)({
+            id: sale.id,
+            date: sale.date,
+            numOfDate: sale.numOfDate,
+            // getchack: sale.getchack,
+            invoiceNumber: sale.invoiceNumber,
+            publicSerialName: sale.publicSerialName,
+            privateSerialName: sale.privateSerialName,
+            stoneName: sale.stoneName,
+            weight: sale.weight,
+            pricePerCarat: sale.pricePerCarat,
+            // TotalPrice: sale.TotalPrice,
+            rawOrPolished: sale.rawOrPolished,
+        })});
     }
+    private async findSale(id: string): Promise<Sales> {
+        let sale;
+        try {
+            sale = await this.salesModel.findById(id).exec();
+        } catch (error) {
+            throw new NotFoundException('Could not find sale.');
+        }
+        if (!sale) {
+            throw new NotFoundException('Could not find sale.');
+        }
+        return sale;
+    }
+
 }

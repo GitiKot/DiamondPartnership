@@ -1,6 +1,22 @@
-
 <br>
 <form [formGroup]='checksForm' class="form-inline d-flex justify-content-center md-form form-sm mt-0">
+
+  <!-- ttttttttttttt -->
+  <!-- <mat-tab label="PINS" flex>
+    <div id="pinsDataSource" *ngFor="let pin of pins; let i = index" (click)="setClickedRow(i)" [class.alertactive]="i == selectedRow"> -->
+  <!-- {{pin.alertTitle}}
+    {{pin.alertCode}}
+    {{pin.date | date:'MM/dd/yyyy'}} -->
+  <!-- </div>
+    </mat-tab>
+     Here I want to show, the items that I have selected from that particular row like: -->
+  <!-- <div>
+    Selected Row :
+    <strong>{{selectedRow}}</strong>
+    </div>
+ <br> -->
+  <!-- <div>-------------------------------</div> -->
+  <!-- eeeeeeeeeeeeeeeeeeeeeeeeeeeeeee -->
   <div>
     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
       xmlns="http://www.w3.org/2000/svg">
@@ -13,7 +29,8 @@
     <input type="text" id="public" class="form-control form-control-sm ml-3 " (keyup.enter)="keypressevt()"
       placeholder="חיפוש לפי שם סריה כללית" title="Type in a name">
   </div>
-   <table id="myTable" ><!--mdbTable class="z-depth-1" -->
+  <table id="myTable">
+    <!--mdbTable class="z-depth-1" -->
     <tr class="header">
       <th class="th-sm">תאריך צ'ק</th>
       <th>סכום צ'ק</th>
@@ -22,17 +39,17 @@
       <th>+/-</th>
     </tr>
     <tbody>
-    <tr>
-      <td>3.1.2012</td>
-      <td>3213</td>
-      <td>32344</td>
-      <td>6543</td>
-      <td><button type="button" class="btn btn-primary" (click)="framec.show()"
-        data-toggle="modal" data-target="#modalCart">+</button></td>
-    </tr>
-   
-    <!-- modal -->
-    <div mdbModal #framec="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
+      <tr>
+        <td>3.1.2012</td>
+        <td>3213</td>
+        <td>32344</td>
+        <td>6543</td>
+        <td><button type="button" class="btn btn-primary" (click)="framec.show()" data-toggle="modal"
+            data-target="#modalCart">+</button></td>
+      </tr>
+
+      <!-- modal -->
+      <div mdbModal #framec="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-side modal-top-right" role="document">
           <!-- <div class="modal-dialog modal-fluid" role="document"> -->
@@ -47,16 +64,42 @@
 
             <!--Body-->
             <div class="modal-body">
-              
-                <app-sales></app-sales>
+
+              <table class="table table-hover">
+                <thead class="header">
+                  <tr>
+                    <!-- <th row-select-all="vm.data"  selected="vm.selected" ng-click="vm.selectAll(vm.data)"></th> -->
+                    <th>id</th>
+                    <th>תאריך תשלום</th>
+                    <th>שם סריה פרטית</th>
+                    <th>שם אבן</th>
+                    <th>קרט</th>
+                    <th>מחיר</th>
+                    <th>סך מכירה</th>
+                    <th>סך אחוזים לשותף</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let s of salesList;let i=index">
+                    <td>{{i}}</td>
+                    <td>{{s.date| date: "shortDate"}}</td>
+                    <td>{{s.privateSerialName}}</td>
+                    <td>{{s.stoneName}}</td>
+                    <td>{{s.w}}</td>
+                    <td>{{s.pricePerCarat}}</td>
+                    <td> {{s.weight*s.pricePerCarat | currency:"USD":true}}</td>
+                    <td>אחוזים לשותף????</td>
+                  </tr>
+                </tbody>
+              </table>
 
             </div>
             <!-- <button (click)="enableSection(i, d.disabled)">{{ d.disabled ? 'Edit': 'Save' }}</button> -->
 
             <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
                 (click)="framec.hide()">ביטול</button>
-                 <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
-                  (click)="framec.hide()">להדפסה</button>
+              <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
+                (click)="framec.hide()">להדפסה</button>
               <!-- <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
               (click)="frame.hide()">שמירה</button> לאחר עדכון?-->
             </div>
@@ -64,17 +107,153 @@
           </div>
         </div>
       </div>
-</tbody>
+    </tbody>
   </table>
- 
+
 
   <div>צ'קים פתוחים----------------------------------------------------------------------------</div>
   <hr>
   <app-sales></app-sales>
 
   <div id="row">
-    <span>סה"כ מכירות</span>&nbsp;<input  mdbInput mdbValidate>
+    <span>סה"כ מכירות</span>&nbsp;<input mdbInput mdbValidate>
     <span>צ'קים סגורים</span>&nbsp;<input mdbInput mdbValidate>
     <span>סה"כ מכירות פתוחות</span><input mdbInput mdbValidate>
   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- <div class="example-container mat-elevation-z8">
+    <mat-table #table [dataSource]="dataSource">
+  
+       Checkbox Column -->
+  <!--  <ng-container matColumnDef="select">
+        <mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+  
+       Position Column -->
+  <!-- <ng-container matColumnDef="position">
+        <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+      </ng-container>
+  
+       Name Column -->
+  <!-- <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+      </ng-container>
+  
+       Weight Column -->
+  <!--   <ng-container matColumnDef="weight">
+        <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
+      </ng-container>
+  
+       Symbol Column -->
+  <!--  <ng-container matColumnDef="symbol">
+        <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"
+               (click)="selection.toggle(row)">
+      </mat-row>
+    </mat-table>
+  </div> -->
+
+
+
 </form>

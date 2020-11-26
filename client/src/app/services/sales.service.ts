@@ -14,7 +14,9 @@ export class SalesService {
   getAllSales(): Observable<Sale[]> {
     return this.http.get<Sale[]>(this.salesUrl);
   }
-
+  findAllSales(pn:string): Observable<Sale[]> {
+    return this.http.get<Sale[]>(this.salesUrl);
+  }
   addSale(s: Sale): Observable<Sale> {
     console.log("service", this.salesUrl);
 
