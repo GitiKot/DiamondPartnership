@@ -40,7 +40,7 @@ export class ExpensesFormComponent implements OnInit {
   }
 
   close() {
-   
+
     this.r.navigate(['expenses']);
   }
 
@@ -142,8 +142,11 @@ export class ExpensesFormComponent implements OnInit {
   removeDetail(i: number) {
     this.detail.removeAt(i);
   }
-}
 
+getaDetail(i: number) {
+  console.log(this.expensesForm[i].detail.length);
+}
+}
 
 
 
