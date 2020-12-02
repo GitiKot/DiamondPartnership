@@ -19,11 +19,7 @@ export class SerialFormComponent implements OnInit {
   partnerList: Array<Partner>;
   @ViewChild('frame1') frame1: ModalDirective;
   @ViewChild('frame2') frame2: ModalDirective;
-  elements: any = [
-    {id: 1, first: 'Mark', last: 'Otto', handle: '@mdo'},
-    {id: 2, first: 'Jacob', last: 'Thornton', handle: '@fat'},
-    {id: 3, first: 'Larry', last: 'the Bird', handle: '@twitter'},
-  ];
+  totalPrice=[0];
   constructor(private changeDetectorRef: ChangeDetectorRef, private r: Router, private partnerService: PartnerService, private seriousnessService: seriousnessService, private formBuilder: FormBuilder) { }
   // Validators.compose([Validators.minLength(10)
   ngOnInit(): void {
@@ -55,23 +51,16 @@ export class SerialFormComponent implements OnInit {
   }
   save() {
     console.log(this.privateSeria.value);
-
     console.log(this.serialForm.value);
-
     alert("האם ברצונך לשמור את הנתונים")
     this.serialForm.reset();
     this.r.navigate(['./seriousness'])
     // if (this.serialForm.valid) {
     //   this.seriousnessService.addSeria(this.serialForm.value).subscribe(e => {
-
-
     //   })
-
     // }
-
   }
   onCloseMember() {
-
     this.changeDetectorRef.detectChanges();
   }
   close() {
@@ -98,15 +87,15 @@ export class SerialFormComponent implements OnInit {
   get partnersPercent() {
     return this.serialForm.get('partnersPercent');
   }
-
   get privateSeria(): FormArray {
     return this.serialForm.get('privateSeria') as FormArray
   }
-
-  get expensesArray():FormArray {
-    return this.serialForm.get("privateSeria").get('expensesArray')as FormArray;
+  // get expensesArray(): FormArray {
+  //   return this.serialForm.get("privateSeria").get('expensesArray') as FormArray;
+  // }
+  expensesArray(index: number): FormArray {
+    return this.privateSeria.at(index).get("expensesArray") as FormArray
   }
-
   get name() {
     return this.serialForm.get("privateSeria").get('name');
   }
@@ -116,29 +105,28 @@ export class SerialFormComponent implements OnInit {
       expensesArray: this.formBuilder.array([]),
     })
   }
-newExpenses():FormGroup{
-  return this.formBuilder.group({
-    exspensesName:'',
-    exspensesPrice:''
-  })
-}
-get exspensesName() {
-  return this.serialForm.get("privateSeria").get('expensesArray').get('exspensesName');
-}
-get exspensesPrice() {
-  return this.serialForm.get("privateSeria").get('expensesArray').get('exspensesPrice');
-}
+  newExpenses(): FormGroup {
+    return this.formBuilder.group({
+      exspensesName: '',
+      exspensesPrice: ''
+    })
+  }
+  get exspensesName() {
+    return this.serialForm.get("privateSeria").get('expensesArray').get('exspensesName');
+  }
+  get exspensesPrice() {
+    return this.serialForm.get("privateSeria").get('expensesArray').get('exspensesPrice');
+  }
   addPrivateSerial() {
-    console.log(this.privateSeria.value);
-
+    console.log('privateSeria:');
     this.privateSeria.push(this.newPrivateSerial());
     console.log(this.privateSeria.value);
-
   }
-  addExArrray(i:number) {
-
-    this.privateSeria[i].expensesArray.push(this.newExpenses());
-
+  addExArrray(i: number) {
+    console.log("i= " + i);
+    this.expensesArray(i).push(this.newExpenses())
+    console.log('privateSeria[i].expensesArray :  ');
+    console.log(this.expensesArray(i).value);
   }
   removePrivateSerial(i: number) {
     this.privateSeria.removeAt(i);
@@ -146,7 +134,6 @@ get exspensesPrice() {
   cancelPrivateSerial() {
     this.privateSeria.clear()
     this.frame2.hide()
-
   }
   savePrivateSerial() {
     console.log(this.privateSeria.value);
