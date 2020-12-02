@@ -14,14 +14,10 @@ export class ChecksComponent implements OnInit {
   checksForm: FormGroup;
   checksList: Array<Checks>;
   salesList: Array<Sale>;
+sales:Array<Sale>;
   //   pins: any[];
   // selectedRow: Number;
   // setClickedRow: Function;
-
-
-
-
-
 
   // displayedColumns = ['select', 'position', 'name', 'weight', 'symbol'];
   // dataSource = new ChecksService.();
@@ -41,31 +37,34 @@ export class ChecksComponent implements OnInit {
     // this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
-  constructor(private salesService: SalesService) { }
+  constructor(private salesService: SalesService,private checksService:ChecksService) { }
   // constructor(private proService: ChecksService) {
   // this.setClickedRow = function (index) {
   // this.selectedRow = index;
   // }
   // }
   ngOnInit() {
-    this.salesService.findAllSales("2r").subscribe(ans => (ans.map(sale => {
-      console.log("findaillsales not in");
-      console.log(sale.publicSerialName == "2r");
-      console.log(sale.publicSerialName);
+    this.salesService.getAllSales().subscribe(ans => this.sales = ans);
+    this.checksService.getAllChecks().subscribe(ans=>this.checksList=ans);
+    // this.checksServices.getAllChecks().subscribe(ans => this.checksList = ans);
+    this.salesService.findAllSales("2r").subscribe(ans => (ans.map(sale => {   
       
-      if (sale.publicSerialName == "2r") {
-        let i=0;
+       if (sale.publicSerialName == "2r") {//htmlבמקום 2ר לוקחים את מה שנכנס באינפוט מתוך  
+        // let i=0;
         console.log("findaillsales in");
         console.log(sale.publicSerialName == "2r");
         console.log(sale.publicSerialName);
         console.log(sale);
+        
         // this.salesList[i]=sale;
+        // i++;
         // this.salesList.push(sale);
         
+        console.log("salelist");
         
         console.log(this.salesList);
+      } 
       }
-    }
     )) )
     // here the table items are called from webapi
     console.log("function");

@@ -8,6 +8,9 @@ import { PartnersModule } from './partners/partners.module';
 import{ SalesModule}from './sales/sales.module'
 
 import { ExpensesModule } from './expenses/expenses.module';
+import { ChecksService } from './checks/checks.service';
+import { ChecksController } from './checks/checks.controller';
+import { ChecksModule } from './checks/checks.module';
 
 @Module({
   imports: [
@@ -15,8 +18,9 @@ import { ExpensesModule } from './expenses/expenses.module';
     MongooseModule.forRoot(
         'mongodb://localhost:27017/DiamondPartnership',{useNewUrlParser: true}),
     ExpensesModule,
+    ChecksModule,
   ],
-  controllers: [AppController,],
-  providers: [AppService, ],
+  controllers: [AppController, ChecksController,],
+  providers: [AppService, ChecksService, ],
 })
 export class AppModule {}

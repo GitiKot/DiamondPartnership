@@ -35,7 +35,7 @@
   <table id="salesTable" class="table table-hover">
     <thead>
     <tr class="header">
-      <th></th>
+      <th *ngIf="isSalesPage == 'true'"></th>
       <th>תאריך מכירה</th>
       <th>סך ימים</th>
       <th>תאריך קבלת הצ'ק</th>
@@ -51,7 +51,7 @@
   <tbody>
     
     <tr *ngFor="let s of salesList" >
-      <td>
+      <td *ngIf="isSalesPage == 'true'">
         <button class="delete" type="button" (click)="deleteSale(s)"> <i
             class="material-icons">&#xe5cd;</i></button>
       </td>
