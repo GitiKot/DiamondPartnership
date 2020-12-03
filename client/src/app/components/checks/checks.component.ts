@@ -14,22 +14,18 @@ export class ChecksComponent implements OnInit {
   checksForm: FormGroup;
   checksList: Array<Checks>;
   salesList: Array<Sale>;
-sales:Array<Sale>;
-  //   pins: any[];
-  // selectedRow: Number;
-  // setClickedRow: Function;
 
-  // displayedColumns = ['select', 'position', 'name', 'weight', 'symbol'];
-  // dataSource = new ChecksService.();
-  // selection = new SelectionModel<Checks>(true, []);
+selectedRowIds: Set<string> = new Set<string>();
 
-  // /** Whether the number of selected elements matches the total number of rows. */
-  // isAllSelected() {
-  //   const numSelected = this.selection.selected.length;
-  // const numRows = this.dataSource..length;
-  // return numSelected === numRows;
-  // }
+// allRows: any[] = [
+//   {id: 1, nom: 'A', prenom: 'X'},
+//   {id: 2, nom: 'B', prenom: 'Y'},
+//   {id: 3, nom: 'C', prenom: 'Z'},
+// ];
+// selectedId: string;
 
+
+  
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     // this.isAllSelected() ?
@@ -44,24 +40,20 @@ sales:Array<Sale>;
   // }
   // }
   ngOnInit() {
-    this.salesService.getAllSales().subscribe(ans => this.sales = ans);
+    this.salesService.getAllSales().subscribe(ans => this.salesList = ans);
     this.checksService.getAllChecks().subscribe(ans=>this.checksList=ans);
-    // this.checksServices.getAllChecks().subscribe(ans => this.checksList = ans);
+// find all sales according public name
     this.salesService.findAllSales("2r").subscribe(ans => (ans.map(sale => {   
-      
        if (sale.publicSerialName == "2r") {//htmlבמקום 2ר לוקחים את מה שנכנס באינפוט מתוך  
         // let i=0;
         console.log("findaillsales in");
         console.log(sale.publicSerialName == "2r");
         console.log(sale.publicSerialName);
-        console.log(sale);
-        
+        console.log(sale); 
         // this.salesList[i]=sale;
         // i++;
-        // this.salesList.push(sale);
-        
+        // this.salesList.push(sale);  
         console.log("salelist");
-        
         console.log(this.salesList);
       } 
       }
@@ -76,20 +68,47 @@ sales:Array<Sale>;
   keypressevt() {
 
   }
+
+
+  onRowClick(id: string) {
+    
+    if(this.selectedRowIds.has(id)) {
+     this.selectedRowIds.delete(id);
+    }
+    else {
+      this.selectedRowIds.add(id);
+    }
+  }
+  
+  rowIsSelected(id: string) {
+    return this.selectedRowIds.has(id);
+  }
+  
+  getSelectedRows(){
+     return this.salesList.filter(x => this.selectedRowIds.has(x.id));
+  }
+  
+  onLogClick() {
+    console.log(this.getSelectedRows());
+  }
+  searchPrivate() {
+
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("private");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("salesTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[4];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
 }
-// Pass the object as paramter to the function and assign the parameter to selectedRow
-// (click)="setClickedRow(pin )"
-// setClickedRow(pin ){
-// this.selectedRow = pin
-// }
-  // constructor() { }
-
-  // ngOnInit(): void {
-  //   this.checksForm=new FormGroup({
-
-  //   })
-  // }
-  // keypressevt(){
-
-  // }
-// }

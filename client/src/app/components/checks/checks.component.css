@@ -46,3 +46,6 @@ bottom: .5em;
     width: auto;
     min-width: 300px;   
 }
+.selectedRow {
+  background-color: skyblue;
+}
