@@ -12,6 +12,13 @@
     </svg>&nbsp;
     <input type="text" id="myInput" class="form-control form-control-sm ml-3" (keyup)="myFunction()"
       placeholder="מיון לפי שם סריה כללית" title="Type in a name">
+      <!-- <a class="btn btn-primary"  [routerLink]="['/expenses-form']">הוצאה חדשה</a> -->
+      <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
+      [routerLink]="['expenses-form']" mdbWavesEffect id="newexpenses">
+      הוצאה חדשה
+  </button>
+  
+  <router-outlet></router-outlet>
   </div>
   <table id="myTable">
     <thead>
@@ -58,7 +65,8 @@
             <!-- <i class="fas fa-trash"></i> -->
           </button> </td>
       </tr>
-
+    </tbody>
+  </table>
 
       <!-- -------model expenses------------------------------------ -->
 
@@ -106,5 +114,5 @@
           </div>
         </div>
       </div>
-    </tbody>
-   
+
+    </body>

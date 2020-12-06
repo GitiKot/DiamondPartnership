@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ChecksService } from 'src/app/services/checks.service';
 import { Checks } from 'src/app/data/checks';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -15,17 +15,18 @@ export class ChecksComponent implements OnInit {
   checksList: Array<Checks>;
   salesList: Array<Sale>;
 
-selectedRowIds: Set<string> = new Set<string>();
+  selectedRowIds: Set<string> = new Set<string>();
+  formBuilder: any;
 
-// allRows: any[] = [
-//   {id: 1, nom: 'A', prenom: 'X'},
-//   {id: 2, nom: 'B', prenom: 'Y'},
-//   {id: 3, nom: 'C', prenom: 'Z'},
-// ];
-// selectedId: string;
+  // allRows: any[] = [
+  //   {id: 1, nom: 'A', prenom: 'X'},
+  //   {id: 2, nom: 'B', prenom: 'Y'},
+  //   {id: 3, nom: 'C', prenom: 'Z'},
+  // ];
+  // selectedId: string;
 
 
-  
+
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     // this.isAllSelected() ?
@@ -33,31 +34,40 @@ selectedRowIds: Set<string> = new Set<string>();
     // this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
-  constructor(private salesService: SalesService,private checksService:ChecksService) { }
+  constructor(private salesService: SalesService, private checksService: ChecksService) { }
   // constructor(private proService: ChecksService) {
   // this.setClickedRow = function (index) {
   // this.selectedRow = index;
   // }
   // }
   ngOnInit() {
+
+    this.checksForm = new FormGroup({
+
+      date: new FormControl('', Validators.required),
+      numCheck: new FormControl('', Validators.required),
+      sum: new FormControl('', Validators.required),
+      ReceiptOrInvoice: new FormControl('', Validators.required),
+    })
+
     this.salesService.getAllSales().subscribe(ans => this.salesList = ans);
-    this.checksService.getAllChecks().subscribe(ans=>this.checksList=ans);
-// find all sales according public name
-    this.salesService.findAllSales("2r").subscribe(ans => (ans.map(sale => {   
-       if (sale.publicSerialName == "2r") {//htmlבמקום 2ר לוקחים את מה שנכנס באינפוט מתוך  
+    this.checksService.getAllChecks().subscribe(ans => this.checksList = ans);
+    // find all sales according public name
+    this.salesService.findAllSales("2r").subscribe(ans => (ans.map(sale => {
+      if (sale.publicSerialName == "2r") {//htmlבמקום 2ר לוקחים את מה שנכנס באינפוט מתוך  
         // let i=0;
         console.log("findaillsales in");
         console.log(sale.publicSerialName == "2r");
         console.log(sale.publicSerialName);
-        console.log(sale); 
+        console.log(sale);
         // this.salesList[i]=sale;
         // i++;
         // this.salesList.push(sale);  
         console.log("salelist");
         console.log(this.salesList);
-      } 
       }
-    )) )
+    }
+    )))
     // here the table items are called from webapi
     console.log("function");
 
@@ -69,26 +79,38 @@ selectedRowIds: Set<string> = new Set<string>();
 
   }
 
-
+  get date() {
+    return this.checksForm.get('date');
+  }
+  get numCheck() {
+    return this.checksForm.get('numCheck');
+  }
+  get sum() {
+    return this.checksForm.get('sum');
+  }
+  get ReceiptOrInvoice() {
+    return this.checksForm.get('ReceiptOrInvoice');
+  }
   onRowClick(id: string) {
-    
-    if(this.selectedRowIds.has(id)) {
-     this.selectedRowIds.delete(id);
+
+    if (this.selectedRowIds.has(id)) {
+      this.selectedRowIds.delete(id);
     }
     else {
       this.selectedRowIds.add(id);
     }
   }
-  
+
   rowIsSelected(id: string) {
     return this.selectedRowIds.has(id);
   }
-  
-  getSelectedRows(){
-     return this.salesList.filter(x => this.selectedRowIds.has(x.id));
+
+  getSelectedRows() {
+    return this.salesList.filter(x => this.selectedRowIds.has(x.id));
   }
-  
+
   onLogClick() {
+    // alert("השלם פרטי צ'ק");
     console.log(this.getSelectedRows());
   }
   searchPrivate() {
