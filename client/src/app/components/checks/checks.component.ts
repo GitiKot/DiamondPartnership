@@ -79,6 +79,10 @@ export class ChecksComponent implements OnInit {
 
   }
 
+  resetform(){
+    this.checksForm.reset();
+  }
+
   get date() {
     return this.checksForm.get('date');
   }
@@ -109,8 +113,9 @@ export class ChecksComponent implements OnInit {
     return this.salesList.filter(x => this.selectedRowIds.has(x.id));
   }
 
-  onLogClick() {
-    // alert("השלם פרטי צ'ק");
+  save() {
+     alert("האם הנך בטוח שברצונך לשמור פרטי צ'ק אלו??");
+     alert(this.getSelectedRows());
     console.log(this.getSelectedRows());
   }
   searchPrivate() {
@@ -121,7 +126,7 @@ export class ChecksComponent implements OnInit {
     table = document.getElementById("salesTable");
     tr = table.getElementsByTagName("tr");
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[4];
+      td = tr[i].getElementsByTagName("td")[5];
       if (td) {
         txtValue = td.textContent || td.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
