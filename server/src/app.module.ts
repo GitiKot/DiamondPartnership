@@ -6,11 +6,11 @@ import { AppService } from './app.service';
 
 import { PartnersModule } from './partners/partners.module';
 import{ SalesModule}from './sales/sales.module'
-
 import { ExpensesModule } from './expenses/expenses.module';
-import { ChecksService } from './checks/checks.service';
-import { ChecksController } from './checks/checks.controller';
 import { ChecksModule } from './checks/checks.module';
+
+// import { ChecksService } from './checks/checks.service';
+// import { ChecksController } from './checks/checks.controller';
 
 @Module({
   imports: [
@@ -20,7 +20,7 @@ import { ChecksModule } from './checks/checks.module';
     ExpensesModule,
     ChecksModule,
   ],
-  controllers: [AppController, ChecksController,],
-  providers: [AppService, ChecksService, ],
+  controllers: [AppController, ],//ChecksController,
+  providers: [AppService, ],//ChecksService, 
 })
 export class AppModule {}
