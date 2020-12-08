@@ -21,22 +21,20 @@ export class ChecksController {
         return this.checksService.getSingleCheck(chId);
     } 
 
-    // @Patch(':id')
-    // async updateChecks(
+    @Patch(':id')
+    async updateChecks(
 
-    //     @Param('id') exId: string,
-    //     @Body('PublicSerialName') exPublicSerialName: string,
-    //     @Body('date') exdate: Date,
-    //     @Body('getchack') exgetchack: string,
-    //     @Body('InvoiceNumber') exInvoiceNumber: number,
-    //     @Body('Remarks') exRemarks: string,
-    //     @Body('amount') examount: number,
-    //     @Body('amountPartner') examountPartner: number,
-    //     @Body('detail')exdetail:Array<{expenses:string,price:number}>,
-    // ) {
-    //     await this.checksService.update(exId,exPublicSerialName,exdate,exgetchack, exInvoiceNumber, exRemarks, examount, examountPartner,exdetail);
-    //     return null;
-    // }
+        @Param('id') chId: string,
+        @Body('IdSales') chIdSales: Array<string>,
+        @Body('numCheck') chnumCheck: number,
+        @Body('date') chdate: Date,
+        @Body('sum') chsum: number,
+        @Body('ReceiptOrInvoice') chReceiptOrInvoice: string,
+       
+    ) {
+        await this.checksService.updateCheck(chId,chIdSales,chnumCheck,chdate, chsum, chReceiptOrInvoice);
+        return null;
+    }
    
     @Delete(':id')
     async removeProduct(@Param('id') chId: string) {
