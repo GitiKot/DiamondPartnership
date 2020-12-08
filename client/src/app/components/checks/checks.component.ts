@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ChecksService } from 'src/app/services/checks.service';
 import { Checks } from 'src/app/data/checks';
-import { SelectionModel } from '@angular/cdk/collections';
+// import { SelectionModel } from '@angular/cdk/collections';
 import { SalesService } from 'src/app/services/sales.service';
 import { Sale } from 'src/app/data/sale';
 @Component({
@@ -16,24 +16,12 @@ export class ChecksComponent implements OnInit {
   salesList: Array<Sale>;
 
   selectedRowIds: Set<string> = new Set<string>();
-  formBuilder: any;
-
-  // allRows: any[] = [
-  //   {id: 1, nom: 'A', prenom: 'X'},
-  //   {id: 2, nom: 'B', prenom: 'Y'},
-  //   {id: 3, nom: 'C', prenom: 'Z'},
-  // ];
-  // selectedId: string;
-
-
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    // this.isAllSelected() ?
-    // this.selection.clear() :
-    // this.dataSource.data.forEach(row => this.selection.select(row));
-  }
-
+  // formBuilder: any;
+  // masterToggle() {
+  // this.isAllSelected() ?
+  // this.selection.clear() :
+  // this.dataSource.data.forEach(row => this.selection.select(row));
+  // }
   constructor(private salesService: SalesService, private checksService: ChecksService) { }
   // constructor(private proService: ChecksService) {
   // this.setClickedRow = function (index) {
@@ -43,58 +31,33 @@ export class ChecksComponent implements OnInit {
   ngOnInit() {
 
     this.checksForm = new FormGroup({
-
       date: new FormControl('', Validators.required),
       numCheck: new FormControl('', Validators.required),
       sum: new FormControl('', Validators.required),
       ReceiptOrInvoice: new FormControl('', Validators.required),
+      IdSales: new FormArray([]),
     })
 
     this.salesService.getAllSales().subscribe(ans => this.salesList = ans);
-    this.checksService.getAllChecks().subscribe(ans => this.checksList = ans);
+    // this.checksService.getAllChecks().subscribe(ans => this.checksList = ans);
     // find all sales according public name
     this.salesService.findAllSales("2r").subscribe(ans => (ans.map(sale => {
-      if (sale.publicSerialName == "2r") {//htmlבמקום 2ר לוקחים את מה שנכנס באינפוט מתוך  
-        // let i=0;
+      if (sale.publicSerialName == "2r") {//htmlבמקום 2ר לוקחים את מה שנכנס באינפוט מתוך    
         console.log("findaillsales in");
         console.log(sale.publicSerialName == "2r");
-        console.log(sale.publicSerialName);
-        console.log(sale);
-        // this.salesList[i]=sale;
-        // i++;
-        // this.salesList.push(sale);  
         console.log("salelist");
-        console.log(this.salesList);
       }
-    }
-    )))
+    })))
     // here the table items are called from webapi
     console.log("function");
-
-    // this.proService.getPinnedAlerts().subscribe(res => {
-    // this.pins = res;
-    // });
   }
   keypressevt() {
 
   }
-
-  resetform(){
+  resetform() {
     this.checksForm.reset();
   }
 
-  get date() {
-    return this.checksForm.get('date');
-  }
-  get numCheck() {
-    return this.checksForm.get('numCheck');
-  }
-  get sum() {
-    return this.checksForm.get('sum');
-  }
-  get ReceiptOrInvoice() {
-    return this.checksForm.get('ReceiptOrInvoice');
-  }
   onRowClick(id: string) {
 
     if (this.selectedRowIds.has(id)) {
@@ -114,9 +77,27 @@ export class ChecksComponent implements OnInit {
   }
 
   save() {
-     alert("האם הנך בטוח שברצונך לשמור פרטי צ'ק אלו??");
-     alert(this.getSelectedRows());
-    console.log(this.getSelectedRows());
+    alert("האם הנך בטוח שברצונך לשמור פרטי צ'ק אלו??");// alert("האם ברצונך לשמור את הנתונים") 
+    alert(this.getSelectedRows().length);
+    // console.log("this.getSelectedRows()");// console.log(this.getSelectedRows());
+    // console.log("this.checksForm.value.IdSales");// console.log(this.checksForm.value.IdSales); 
+    console.log(this.checksForm.value);
+    console.log(this.checksForm.valid);
+    // console.log(this.getSelectedRows().find(s=>{
+    //   if(this.rowIsSelected(s.id))
+    //  this.salesList.push(s);
+    // }));
+
+    if (this.checksForm.valid) {
+      for (let i = 0; i < this.getSelectedRows().length; i++) {
+        this.checksForm.value.IdSales.push(this.getSelectedRows()[i].id)
+      }
+      this.checksService.addChecks(this.checksForm.value).subscribe(c => {
+        this.checksList.push(c);
+
+      })// this.checksForm.reset();
+    }
+
   }
   searchPrivate() {
 
@@ -137,5 +118,23 @@ export class ChecksComponent implements OnInit {
       }
     }
   }
-
+  get date() {
+    return this.checksForm.get('date');
+  }
+  get numCheck() {
+    return this.checksForm.get('numCheck');
+  }
+  get sum() {
+    return this.checksForm.get('sum');
+  }
+  get ReceiptOrInvoice() {
+    return this.checksForm.get('ReceiptOrInvoice');
+  }
+  get IdSales(): FormArray {
+    return this.checksForm.get('IdSales') as FormArray;
+  }
+  // get IdSales(){
+  // return this.checksForm.get();
+  // this.salesList.find({_id:Array(this.IdSales)}).pretty()
+  // }
 }

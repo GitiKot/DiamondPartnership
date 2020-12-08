@@ -2,15 +2,15 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import{createChecksDto} from 'src/checks/dto/create-check.dto';
-import{Check} from 'src/checks/interface/check.interface';
+import{Checks} from 'src/checks/interface/check.interface';
 
 @Injectable()
 export class ChecksService {
 
     constructor(
-        @InjectModel('check') private readonly checkModel: Model<Check>,) { }
+        @InjectModel('checks') private readonly checkModel: Model<Checks>,) { }
 
-    async addChecks(createChecksDto: createChecksDto): Promise<Check> {
+    async addChecks(createChecksDto: createChecksDto): Promise<Checks> {
         const createCheck = new this.checkModel(createChecksDto);
         return createCheck.save();
     }
@@ -26,6 +26,18 @@ export class ChecksService {
         }));
     }
     
+    async getSingleCheck(checkId: string) {
+        const ch = await this.findCheck(checkId);
+        return {
+            id: ch.id,
+            ReceiptOrInvoice: ch.ReceiptOrInvoice,
+            date: ch.date,
+            IdSales: ch.IdSales,
+            numCheck:ch.numCheck,
+            sum: ch.sum,
+            
+        };
+    }
     
     async deleteChecks(exId: string) {
         const result = await this.checkModel.deleteOne({ _id: exId }).exec();
@@ -34,7 +46,7 @@ export class ChecksService {
         }
     }
 
-    private async findCheck(id: string): Promise<Check> {
+    private async findCheck(id: string): Promise<Checks> {
         let check;
         try {
             check = await this.checkModel.findById(id).exec();

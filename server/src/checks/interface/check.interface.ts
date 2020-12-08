@@ -1,9 +1,9 @@
-import { ObjectId } from "mongodb";
+// import { ObjectId } from "mongodb";
 import { Document } from 'mongoose';
 
-export interface Check extends Document {
+export interface Checks extends Document {
      id: string;
-    IdSales:{type:ObjectId,ref:'Sale'},  
+    IdSales:Array<string>,  
     //  IdSales: ObjectID;
      numCheck: number;
      date: Date;

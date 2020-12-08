@@ -42,14 +42,12 @@
 
             <div class="modal-header text-center">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="framec.hide()">
-                <!-- <span aria-hidden="true">×</span>  -->
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
 
             <!--Body-->
             <div class="modal-body">
-
               <table class="table table-hover">
                 <thead class="header">
                   <tr>
@@ -77,16 +75,12 @@
                   </tr>
                 </tbody>
               </table>
-
             </div>
-            <!-- <button (click)="enableSection(i, d.disabled)">{{ d.disabled ? 'Edit': 'Save' }}</button> -->
 
             <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
                 (click)="framec.hide()">ביטול</button>
               <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
                 (click)="framec.hide()">להדפסה</button>
-              <!-- <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
-              (click)="frame.hide()">שמירה</button> לאחר עדכון?-->
             </div>
 
           </div>
@@ -95,10 +89,8 @@
     </tbody>
   </table>
 
-
   <div>צ'קים פתוחים----------------------------------------------------------------------------</div>
   <hr>
-
   <br><br>
   <!-- <app-sales></app-sales> -->
   <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
@@ -135,8 +127,7 @@
           <td><input type="checkbox"></td>
           <!-- <td *ngIf="isSalesPage == 'true'">
           <button class="delete" type="button" (click)="deleteSale(s)"> <i
-              class="material-icons">&#xe5cd;</i></button>
-        </td> -->
+              class="material-icons">&#xe5cd;</i></button> </td> -->      
           <td>{{s.date | date: "shortDate"}}</td>
           <td>{{s.numOfDate}}</td>
           <td>לעשות פונקציה</td>
@@ -152,90 +143,14 @@
         </tr>
         <button type="button" class="btn btn-primary" (click)="framen.show()" data-toggle="modal"
           data-target="#modalCart">לסגירת צ'ק</button>
-        <!-- <button (click)="onLogClick()">לשמירה</button> -->
       </tbody>
     </table>
 
   </div>
   <div id="row">
     <span>סה"כ מכירות</span>&nbsp;<input mdbInput mdbValidate disabled placeholder="{{salesList.length}}">
-    <span>צ'קים סגורים</span>&nbsp;<input mdbInput mdbValidate>
+    <span>צ'קים סגורים</span>&nbsp;<input mdbInput mdbValidate >
     <span>סה"כ מכירות פתוחות</span><input mdbInput mdbValidate>
-  </div>
-
-  <!-- modal -->
-  <div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
-    aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">מלא את הפרטים עבור הוצאה חדשה</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true" (click)="frame.hide()">&times;</span>
-          </button>
-        </div>
-
-        <div class="modal-body mx-3">
-
-          <!-- <div class="row"> -->
-          <!-- <div class="col-8 col-sm-6 col-example"> -->
-          <div class="md-form mb-5">
-            <input type="text" id="form30" class="form-control" mdbInput mdbValidate [formControl]="sum">
-            <label for="form30">סכום צ'ק</label>
-            <mdb-error *ngIf="sum.invalid && (sum.dirty || sum.touched)">
-            </mdb-error>
-            <mdb-success *ngIf="sum.valid && (sum.dirty || sum.touched)">
-            </mdb-success>
-          </div>
-          <!-- </div> -->
-          <!-- <div class="col-4 col-sm-6 col-example"> -->
-          <div class="md-form mb-5">
-            <input type="text" id="form32" class="form-control" mdbInput mdbValidate [formControl]="numCheck">
-            <label for="form32">מספר צ'ק</label>
-            <mdb-error *ngIf="numCheck.invalid && (numCheck.dirty || numCheck.touched)">
-            </mdb-error>
-            <mdb-success *ngIf="numCheck.valid && (numCheck.dirty || numCheck.touched)">
-            </mdb-success>
-          </div>
-
-          <!-- </div> -->
-          <!-- </div> -->
-
-          <!-- <div class="row"> -->
-          <!-- <div class="col-8 col-sm-6 col-example"> -->
-          <div class="md-form mb-5">
-            <input type="date" id="form31" class="form-control" mdbInput mdbValidate [formControl]="date">
-            <label for="form31">תאריך</label>
-            <mdb-error *ngIf="date.invalid && (date.dirty || date.touched)">
-            </mdb-error>
-            <mdb-success *ngIf="date.valid && (date.dirty || date.touched)">
-            </mdb-success>
-          </div>
-
-          <!-- </div> -->
-          <!-- <div class="col-4 col-sm-6 col-example"> -->
-          <div class="md-form mb-5">
-            <!-- <select class="browser-default custom-select" > -->
-            <select class="form-control" mdbInput mdbValidate [formControl]="ReceiptOrInvoice">
-              <option selected>קבלה</option>
-              <option value="חשבונית">חשבונית</option>
-            </select>
-            <mdb-error *ngIf="ReceiptOrInvoice.invalid && (ReceiptOrInvoice.dirty || ReceiptOrInvoice.touched)">
-            </mdb-error>
-            <mdb-success *ngIf="ReceiptOrInvoice.valid && (ReceiptOrInvoice.dirty || ReceiptOrInvoice.touched)">
-            </mdb-success>
-          </div>
-          <!-- </div> -->
-          <!-- </div> -->
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="frame.hide()">ביטול</button>
-          <button type="button" class="btn btn-primary">שמירה</button>     
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- checks modal -->
@@ -245,7 +160,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header text-center">
-          <h4 class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור הוצאה חדשה</h4>
+          <h4 class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור סגירת צ'ק</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true" (click)="framen.hide()" (click)="resetform()">&times;</span>
           </button>
@@ -279,7 +194,7 @@
             </div>
 
             <div class="md-form mb-4">
-              <select class="browser-default custom-select" > 
+              <select class="browser-default custom-select" mdbInput mdbValidate [formControl]="ReceiptOrInvoice"> 
               <!-- <select class="form-control" mdbInput mdbValidate [formControl]="ReceiptOrInvoice"> -->
                 <option selected>קבלה</option>
                 <option value="חשבונית">חשבונית</option>
@@ -293,15 +208,102 @@
         
         <div class="modal-footer d-flex justify-content-center">
           <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="framen.hide()" (click)="resetform()">ביטול</button>
-          <button type="button" class="btn btn-primary" (click)="save()">שמירה</button>
+          <button type="button" class="btn btn-primary" (click)="save()" (click)="framen.hide()">שמירה</button>
         </div>
       </div>
     </div>
   </div>
-  <!-- <div class="text-center"> -->
+  
+</form>
+
+
+
+
+
+
+
+<!-- <div class="text-center"> -->
   <!-- <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalRegisterForm">Launch
   Modal Register Form</a> -->
   <!-- </div> -->
 
 
-</form>
+
+
+
+
+<!--  -->
+<!-- modal -->
+
+<div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
+aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">מלא את הפרטים עבור הוצאה חדשה</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true" (click)="frame.hide()">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body mx-3">
+
+      <!-- <div class="row"> -->
+      <!-- <div class="col-8 col-sm-6 col-example"> -->
+      <div class="md-form mb-5">
+        <input type="text" id="form30" class="form-control" mdbInput mdbValidate [formControl]="sum">
+        <label for="form30">סכום צ'ק</label>
+        <mdb-error *ngIf="sum.invalid && (sum.dirty || sum.touched)">
+        </mdb-error>
+        <mdb-success *ngIf="sum.valid && (sum.dirty || sum.touched)">
+        </mdb-success>
+      </div>
+      <!-- </div> -->
+      <!-- <div class="col-4 col-sm-6 col-example"> -->
+      <div class="md-form mb-5">
+        <input type="text" id="form32" class="form-control" mdbInput mdbValidate [formControl]="numCheck">
+        <label for="form32">מספר צ'ק</label>
+        <mdb-error *ngIf="numCheck.invalid && (numCheck.dirty || numCheck.touched)">
+        </mdb-error>
+        <mdb-success *ngIf="numCheck.valid && (numCheck.dirty || numCheck.touched)">
+        </mdb-success>
+      </div>
+
+      <!-- </div> -->
+      <!-- </div> -->
+      <!-- <div class="row"> -->
+      <!-- <div class="col-8 col-sm-6 col-example"> -->
+      <div class="md-form mb-5">
+        <input type="date" id="form31" class="form-control" mdbInput mdbValidate [formControl]="date">
+        <label for="form31">תאריך</label>
+        <mdb-error *ngIf="date.invalid && (date.dirty || date.touched)">
+        </mdb-error>
+        <mdb-success *ngIf="date.valid && (date.dirty || date.touched)">
+        </mdb-success>
+      </div>
+
+      <!-- </div> -->
+      <!-- <div class="col-4 col-sm-6 col-example"> -->
+      <div class="md-form mb-5">
+        <!-- <select class="browser-default custom-select" > -->
+        <select class="form-control" mdbInput mdbValidate [formControl]="ReceiptOrInvoice">
+          <option selected>קבלה</option>
+          <option value="חשבונית">חשבונית</option>
+        </select>
+        <mdb-error *ngIf="ReceiptOrInvoice.invalid && (ReceiptOrInvoice.dirty || ReceiptOrInvoice.touched)">
+        </mdb-error>
+        <mdb-success *ngIf="ReceiptOrInvoice.valid && (ReceiptOrInvoice.dirty || ReceiptOrInvoice.touched)">
+        </mdb-success>
+      </div>
+      <!-- </div> -->
+      <!-- </div> -->
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="frame.hide()">ביטול</button>
+      <button type="button" class="btn btn-primary">שמירה</button>     
+    </div>
+  </div>
+</div>
+</div>

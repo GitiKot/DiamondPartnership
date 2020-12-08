@@ -6,7 +6,7 @@ import { ChecksService } from './checks.service';
 
 @Module({
     imports:[
-        MongooseModule.forFeature([{ name: 'Seriousness', schema: CheckSchema }]),
+        MongooseModule.forFeature([{ name: 'checks', schema: CheckSchema }]),
     ],
     controllers:[ChecksController],
     providers:[ChecksService],
