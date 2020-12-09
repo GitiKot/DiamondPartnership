@@ -46,7 +46,7 @@ export class SalesFormComponent implements OnInit {
       rawOrPolished: new FormControl('', Validators.required),
       date2: new FormControl(''),
       num: new FormControl(''),
-
+      isOpen:new FormControl(''),
     });
     
 
@@ -87,6 +87,8 @@ export class SalesFormComponent implements OnInit {
         this.salesForm.controls['stoneName'].setValue(sale.stoneName)
         this.salesForm.controls['weight'].setValue(sale.w)
         this.salesForm.controls['pricePerCarat'].setValue(sale.pricePerCarat)
+
+        this.salesForm.controls['isOpen'].setValue('true')
 
         console.log("form:");
 

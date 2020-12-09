@@ -35,6 +35,7 @@ export class SalesController {
     @Body('fax') partfax: string,
     @Body('pel') partpel: string,
     @Body('Remarks') partRemarks: string,
+    @Body('isOpen')sisOpen:boolean,
   ) {
     // await this.salesService.updatePartner(partId, partname, partcontact, partemail,parttel,partfax,partpel,partRemarks);
     // return null;

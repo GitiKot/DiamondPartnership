@@ -10,4 +10,5 @@ export interface Partner extends Document {
     weight: Number;
     pricePerCarat: Number;
     rawOrPolished: string;
+    isOpen:Boolean;
 }

@@ -32,6 +32,7 @@ export class SalesService {
             pricePerCarat: sale.pricePerCarat,
             // TotalPrice: sale.TotalPrice,
             rawOrPolished: sale.rawOrPolished,
+            isOpen:sale.isOpen,
         }));
     }
 
@@ -94,6 +95,7 @@ export class SalesService {
             pricePerCarat: sale.pricePerCarat,
             // TotalPrice: sale.TotalPrice,
             rawOrPolished: sale.rawOrPolished,
+            isOpen:sale.isOpen,
         })});
     }
     private async findSale(id: string): Promise<Sales> {

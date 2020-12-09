@@ -14,7 +14,7 @@ export class Sale {
     pricePerCarat: Number;
     rawOrPolished: string;
     numOfDate:number;
-
+    isOpen:Boolean;
 // invoiceNumber: new FormControl('', Validators.required),
 // publicSerialName: new FormControl('', Validators.required),
 // privateSerialName: new FormControl('', Validators.required),
@@ -32,7 +32,8 @@ export class Sale {
         w?: Number,
         pricePerCarat?: Number,
         numOfDate?:number,
-        rawOrPolished?: string,)
+        rawOrPolished?: string,
+        isOpen?:boolean)
          {
         this.date = d;
         this.weight = w;
@@ -44,8 +45,8 @@ export class Sale {
         
         this.privateSerialName = privateSerial;
         this.pricePerCarat = pricePerCarat;
-        this.invoiceNumber = invoice
-       
+        this.invoiceNumber = invoice;
+       this.isOpen=isOpen;
         
     }
   

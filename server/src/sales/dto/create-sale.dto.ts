@@ -9,4 +9,5 @@ export declare class createSaleDto {
     readonly weight: Number;
     readonly pricePerCarat: Number;
     readonly rawOrPolished: string;
+    readonly isOpen:Boolean;
 }

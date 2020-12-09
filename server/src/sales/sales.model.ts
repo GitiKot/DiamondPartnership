@@ -13,7 +13,7 @@ export const SaleSchema = new mongoose.Schema({
     pricePerCarat: { type: Number, required: true },
     // TotalPrice: { type: Number, required: true },
     rawOrPolished: { type: String, required: true },
-
+    isOpen:{type:Boolean,required:true},
 });
 // date: "2020-10-17"
 // dateOfPayment: "01/11/202"
@@ -35,4 +35,5 @@ export interface Sales extends mongoose.Document {
     weight: Number;
     pricePerCarat: Number;
     rawOrPolished: string;
+    isOpen:Boolean;
 }
