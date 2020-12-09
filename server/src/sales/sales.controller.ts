@@ -25,20 +25,23 @@ export class SalesController {
     return sale;
   }
   @Patch(':id')
-  async updatePartner(
-
-    @Param('id') partId: string,
-    @Body('name') partname: string,
-    @Body('contact') partcontact: string,
-    @Body('email') partemail: string,
-    @Body('phone') parttel: string,
-    @Body('fax') partfax: string,
-    @Body('pel') partpel: string,
-    @Body('Remarks') partRemarks: string,
+  async updateSale(
+    
+    @Param('id') sId: string,
+    @Body('date') sdate: Date,
+    @Body('numOfDate') snumOfDate: number,
+    @Body('invoiceNumber') sinvoiceNumber: number,
+    @Body('publicSerialName') spublicSerialName: string,
+    @Body('privateSerialName') sprivateSerialName: string,
+    @Body('stoneName') sstoneName: string,
+    @Body('weight') sweight: number,
+    @Body('pricePerCarat') spricePerCarat: number,
+    @Body('rawOrPolished') srawOrPolished: string,
     @Body('isOpen')sisOpen:boolean,
   ) {
-    // await this.salesService.updatePartner(partId, partname, partcontact, partemail,parttel,partfax,partpel,partRemarks);
-    // return null;
+    await this.salesService.updateSale(sId, sdate, snumOfDate, sinvoiceNumber,spublicSerialName,
+      sprivateSerialName,sstoneName,sweight,spricePerCarat,srawOrPolished,sisOpen);
+    return null;
   }
   @Delete(':id')
   async removeProduct(@Param('id') saleId: string) {

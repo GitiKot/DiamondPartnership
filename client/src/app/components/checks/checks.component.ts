@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { asNativeElements, Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ChecksService } from 'src/app/services/checks.service';
 import { Checks } from 'src/app/data/checks';
@@ -13,7 +13,8 @@ import { Sale } from 'src/app/data/sale';
 export class ChecksComponent implements OnInit {
   checksForm: FormGroup;
   checksList: Array<Checks>;
-  salesList: Array<Sale>;
+  OpenSalesList: Array<Sale>;
+  ClosedSalesList: Array<Sale>;
   indexC = 0;
 
   selectedRowIds: Set<string> = new Set<string>();
@@ -39,8 +40,19 @@ export class ChecksComponent implements OnInit {
       IdSales: new FormArray([]),
     })
 
-    this.salesService.getAllSales().subscribe(ans => this.salesList = ans);
-    this.checksService.getAllChecks().subscribe(ans => this.checksList = ans);
+    this.salesService.getAllSales().subscribe(ans =>
+      ans.find(s => {
+        if (s.isOpen = true)
+          this.OpenSalesList = ans;
+        else
+          this.ClosedSalesList = ans;
+        console.log(this.OpenSalesList);
+        console.log("this.ClosedSalesList");
+
+        console.log(this.ClosedSalesList);
+      }))
+
+    // this.checksService.getAllChecks().subscribe(ans => this.checksList = ans);
     // find all sales according public name
     this.salesService.findAllSales("2r").subscribe(ans => (ans.map(sale => {
       if (sale.publicSerialName == "2r") {//htmlבמקום 2ר לוקחים את מה שנכנס באינפוט מתוך    
@@ -76,7 +88,7 @@ export class ChecksComponent implements OnInit {
   }
 
   getSelectedRows() {
-    return this.salesList.filter(x => this.selectedRowIds.has(x.id));
+    return this.OpenSalesList.filter(x => this.selectedRowIds.has(x.id));
   }
 
   save() {
@@ -88,6 +100,38 @@ export class ChecksComponent implements OnInit {
       for (let i = 0; i < this.getSelectedRows().length; i++) {
         this.checksForm.value.IdSales.push(this.getSelectedRows()[i].id)
       }
+      // עובר על כל השורות איפה שאי די שווה הוא מעדכן שדה איזאופן לפולס
+      // this.OpenSalesList.(s=>s.id=this.selectedRowIds,)
+     
+      for (let i = 0; i < this.getSelectedRows().length; i++) {
+        const result = this.OpenSalesList.filter(s =>
+          // this.getSelectedRows().some(() => s.id == this.IdSales.value[i]));
+
+          this.getSelectedRows()[i].id.includes(s.id));
+
+        console.log("result");
+        for(let j=0;j<this.OpenSalesList.length;j++){
+          console.log("result[0].id");
+          
+          console.log(result[0].id);
+          console.log("this.OpenSalesList[j].id");
+          
+          console.log(this.OpenSalesList[j].id);
+          console.log(result[0].id==this.OpenSalesList[j].id);
+          
+          if(result[0].id==this.OpenSalesList[j].id)
+          // this.salesService.updateSale()
+         this.OpenSalesList[j].isOpen=false;
+        }
+        
+        console.log(result);
+       
+      }
+
+      // const s = this.OpenSalesList.some((val) => this.getSelectedRows().indexOf(val) !== -1);
+      // console.log("sssssssssssss=========");
+      // console.log(s);
+
       this.checksService.addChecks(this.checksForm.value).subscribe(c => {
         this.checksList.push(c);
 

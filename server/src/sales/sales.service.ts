@@ -36,40 +36,51 @@ export class SalesService {
         }));
     }
 
-    // no good!
-    // async updatePartner(
-    //     id: string,
-    //     name: string,
-    //     contact: string,
-    //     email: string,
-    //     phone: string,
-    //     fax: string,
-    //     pel: string,
-    //     Remarks: string,
-    // ) {
-    //     const updatedPartner = await this.findSale(id);
-    //     if (name) {
-    //         updatedPartner.name = name;
-    //     }
-    //     if (contact) {
-    //         updatedPartner.contact = contact;
-    //     }
-    //     if (email) {
-    //         updatedPartner.email = email;
-    //     } if (phone) {
-    //         updatedPartner.phone = phone;
-    //     }
-    //     if (fax) {
-    //         updatedPartner.fax = fax;
-    //     }
-    //     if (pel) {
-    //         updatedPartner.pel = pel;
-    //     }
-    //     if (Remarks) {
-    //         updatedPartner.Remarks = Remarks;
-    //     }
-    //     updatedPartner.save();
-    // }
+    async updateSale(
+        id: string,
+        date: Date,
+        numOfDate:number,
+        invoiceNumber: Number,
+        publicSerialName: String,
+        privateSerialName: String,
+        stoneName: string,
+        weight: Number,
+        pricePerCarat: Number,
+        rawOrPolished: string,
+        isOpen:Boolean,
+    ) {
+        const updatedSale = await this.findSale(id);
+        if (date) {
+            updatedSale.date = date;
+        }
+        if (numOfDate) {
+            updatedSale.numOfDate = numOfDate;
+        }
+        if (invoiceNumber) {
+            updatedSale.invoiceNumber = invoiceNumber;
+        } if (publicSerialName) {
+            updatedSale.publicSerialName = publicSerialName;
+        }
+        if (privateSerialName) {
+            updatedSale.privateSerialName = privateSerialName;
+        }
+        if (stoneName) {
+            updatedSale.stoneName = stoneName;
+        }
+        if (weight) {
+            updatedSale.weight = weight;
+        }
+        if (pricePerCarat) {
+            updatedSale.pricePerCarat = pricePerCarat;
+        }
+        if (rawOrPolished) {
+            updatedSale.rawOrPolished = rawOrPolished;
+        }
+        if (isOpen) {
+            updatedSale.isOpen = isOpen;
+        }
+        updatedSale.save();
+    }
     async deleteSale(saleId: string) {
         const result = await this.salesModel.deleteOne({ _id: saleId }).exec();
         if (result.n === 0) {
