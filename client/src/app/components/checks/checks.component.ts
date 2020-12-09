@@ -14,6 +14,7 @@ export class ChecksComponent implements OnInit {
   checksForm: FormGroup;
   checksList: Array<Checks>;
   salesList: Array<Sale>;
+  indexC = 0;
 
   selectedRowIds: Set<string> = new Set<string>();
   // formBuilder: any;
@@ -39,7 +40,7 @@ export class ChecksComponent implements OnInit {
     })
 
     this.salesService.getAllSales().subscribe(ans => this.salesList = ans);
-    // this.checksService.getAllChecks().subscribe(ans => this.checksList = ans);
+    this.checksService.getAllChecks().subscribe(ans => this.checksList = ans);
     // find all sales according public name
     this.salesService.findAllSales("2r").subscribe(ans => (ans.map(sale => {
       if (sale.publicSerialName == "2r") {//htmlבמקום 2ר לוקחים את מה שנכנס באינפוט מתוך    
@@ -57,7 +58,9 @@ export class ChecksComponent implements OnInit {
   resetform() {
     this.checksForm.reset();
   }
-
+  updateCi(i: number) {
+    this.indexC = i;
+  }
   onRowClick(id: string) {
 
     if (this.selectedRowIds.has(id)) {
@@ -79,15 +82,8 @@ export class ChecksComponent implements OnInit {
   save() {
     alert("האם הנך בטוח שברצונך לשמור פרטי צ'ק אלו??");// alert("האם ברצונך לשמור את הנתונים") 
     alert(this.getSelectedRows().length);
-    // console.log("this.getSelectedRows()");// console.log(this.getSelectedRows());
-    // console.log("this.checksForm.value.IdSales");// console.log(this.checksForm.value.IdSales); 
-    console.log(this.checksForm.value);
-    console.log(this.checksForm.valid);
-    // console.log(this.getSelectedRows().find(s=>{
-    //   if(this.rowIsSelected(s.id))
-    //  this.salesList.push(s);
-    // }));
-
+    // console.log(this.checksForm.value);
+    // console.log(this.checksForm.valid);
     if (this.checksForm.valid) {
       for (let i = 0; i < this.getSelectedRows().length; i++) {
         this.checksForm.value.IdSales.push(this.getSelectedRows()[i].id)

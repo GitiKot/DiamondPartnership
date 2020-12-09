@@ -22,15 +22,14 @@
       <th>מספר צ'ק</th>
       <th>+/-</th>
     </tr>
-    <!-- *ngIf="checksList!=undefined" *ngIf="let c of checksList;let i=index"-->
     <tbody>
-      <tr>
-        <td>1/11/2011</td>
-        <td>3213</td>
-        <td>32344</td>
-        <td>6543</td>
-        <td><button type="button" class="btn btn-primary" (click)="framec.show()" data-toggle="modal"
-            data-target="#modalCart">+</button></td>
+      <tr *ngFor="let c of checksList;let ci=index">
+        <td>{{c.date|date:"shortDate"}}</td>
+        <td>{{c.sum}}</td>
+        <td>{{c.ReceiptOrInvoice}}</td>
+        <td>{{c.numCheck}}</td>
+        <td><button type="button" class="btn btn-primary" (click)="updateCi(ci)" (click)="framec.show()"
+            data-toggle="modal" data-target="#modalCart">+</button></td>
       </tr>
 
       <!-- modal -->
@@ -63,15 +62,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let s of salesList;let i=index">
-                    <td>{{i}}</td>
-                    <td>{{s.date| date: "shortDate"}}</td>
+                  <!-- <tr *ngFor="let s of salesList;let i=index" *ngIf="s.id=checksList[indexC].idsales">  -->
+                  <tr *ngFor="let c of checksList[indexC].IdSales;let i=index">
+                    <!-- <div *ngIf="let s of salesList;let is=index" ></div> -->
+                    <td>{{c}}</td>
+                    <!--   <td>{{s.date| date: "shortDate"}}</td>
                     <td>{{s.privateSerialName}}</td>
                     <td>{{s.stoneName}}</td>
                     <td>{{s.w}}</td>
                     <td>{{s.pricePerCarat}}</td>
                     <td> {{s.weight*s.pricePerCarat | currency:"USD":true}}</td>
-                    <td>אחוזים לשותף????</td>
+                    <td>אחוזים לשותף????</td>-->
                   </tr>
                 </tbody>
               </table>
@@ -127,7 +128,7 @@
           <td><input type="checkbox"></td>
           <!-- <td *ngIf="isSalesPage == 'true'">
           <button class="delete" type="button" (click)="deleteSale(s)"> <i
-              class="material-icons">&#xe5cd;</i></button> </td> -->      
+              class="material-icons">&#xe5cd;</i></button> </td> -->
           <td>{{s.date | date: "shortDate"}}</td>
           <td>{{s.numOfDate}}</td>
           <td>לעשות פונקציה</td>
@@ -149,7 +150,7 @@
   </div>
   <div id="row">
     <span>סה"כ מכירות</span>&nbsp;<input mdbInput mdbValidate disabled placeholder="{{salesList.length}}">
-    <span>צ'קים סגורים</span>&nbsp;<input mdbInput mdbValidate >
+    <span>צ'קים סגורים</span>&nbsp;<input mdbInput mdbValidate disabled placeholder="{{checksList.length}}">
     <span>סה"כ מכירות פתוחות</span><input mdbInput mdbValidate>
   </div>
 
@@ -183,37 +184,38 @@
             <mdb-success *ngIf="numCheck.valid && (numCheck.dirty || numCheck.touched)">
             </mdb-success>
           </div>
-          
-            <div class="md-form mb-4">
-              <input type="date" id="form31" class="form-control" mdbInput mdbValidate [formControl]="date">
-              <label for="form31">תאריך</label>
-              <mdb-error *ngIf="date.invalid && (date.dirty || date.touched)">
-              </mdb-error>
-              <mdb-success *ngIf="date.valid && (date.dirty || date.touched)">
-              </mdb-success>
-            </div>
 
-            <div class="md-form mb-4">
-              <select class="browser-default custom-select" mdbInput mdbValidate [formControl]="ReceiptOrInvoice"> 
+          <div class="md-form mb-4">
+            <input type="date" id="form31" class="form-control" mdbInput mdbValidate [formControl]="date">
+            <label for="form31">תאריך</label>
+            <mdb-error *ngIf="date.invalid && (date.dirty || date.touched)">
+            </mdb-error>
+            <mdb-success *ngIf="date.valid && (date.dirty || date.touched)">
+            </mdb-success>
+          </div>
+
+          <div class="md-form mb-4">
+            <select class="browser-default custom-select" mdbInput mdbValidate [formControl]="ReceiptOrInvoice">
               <!-- <select class="form-control" mdbInput mdbValidate [formControl]="ReceiptOrInvoice"> -->
-                <option selected>קבלה</option>
-                <option value="חשבונית">חשבונית</option>
-              </select>
-              <mdb-error *ngIf="ReceiptOrInvoice.invalid && (ReceiptOrInvoice.dirty || ReceiptOrInvoice.touched)">
-              </mdb-error>
-              <mdb-success *ngIf="ReceiptOrInvoice.valid && (ReceiptOrInvoice.dirty || ReceiptOrInvoice.touched)">
-              </mdb-success>
-            </div>      
+              <option selected>קבלה</option>
+              <option value="חשבונית">חשבונית</option>
+            </select>
+            <mdb-error *ngIf="ReceiptOrInvoice.invalid && (ReceiptOrInvoice.dirty || ReceiptOrInvoice.touched)">
+            </mdb-error>
+            <mdb-success *ngIf="ReceiptOrInvoice.valid && (ReceiptOrInvoice.dirty || ReceiptOrInvoice.touched)">
+            </mdb-success>
+          </div>
         </div>
-        
+
         <div class="modal-footer d-flex justify-content-center">
-          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="framen.hide()" (click)="resetform()">ביטול</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="framen.hide()"
+            (click)="resetform()">ביטול</button>
           <button type="button" class="btn btn-primary" (click)="save()" (click)="framen.hide()">שמירה</button>
         </div>
       </div>
     </div>
   </div>
-  
+
 </form>
 
 
@@ -223,9 +225,9 @@
 
 
 <!-- <div class="text-center"> -->
-  <!-- <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalRegisterForm">Launch
+<!-- <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalRegisterForm">Launch
   Modal Register Form</a> -->
-  <!-- </div> -->
+<!-- </div> -->
 
 
 
@@ -236,74 +238,74 @@
 <!-- modal -->
 
 <div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
-aria-labelledby="myModalLabel" aria-hidden="true">
-<div class="modal-dialog" role="document">
-  <div class="modal-content">
+  aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
 
-    <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">מלא את הפרטים עבור הוצאה חדשה</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true" (click)="frame.hide()">&times;</span>
-      </button>
-    </div>
-
-    <div class="modal-body mx-3">
-
-      <!-- <div class="row"> -->
-      <!-- <div class="col-8 col-sm-6 col-example"> -->
-      <div class="md-form mb-5">
-        <input type="text" id="form30" class="form-control" mdbInput mdbValidate [formControl]="sum">
-        <label for="form30">סכום צ'ק</label>
-        <mdb-error *ngIf="sum.invalid && (sum.dirty || sum.touched)">
-        </mdb-error>
-        <mdb-success *ngIf="sum.valid && (sum.dirty || sum.touched)">
-        </mdb-success>
-      </div>
-      <!-- </div> -->
-      <!-- <div class="col-4 col-sm-6 col-example"> -->
-      <div class="md-form mb-5">
-        <input type="text" id="form32" class="form-control" mdbInput mdbValidate [formControl]="numCheck">
-        <label for="form32">מספר צ'ק</label>
-        <mdb-error *ngIf="numCheck.invalid && (numCheck.dirty || numCheck.touched)">
-        </mdb-error>
-        <mdb-success *ngIf="numCheck.valid && (numCheck.dirty || numCheck.touched)">
-        </mdb-success>
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">מלא את הפרטים עבור הוצאה חדשה</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" (click)="frame.hide()">&times;</span>
+        </button>
       </div>
 
-      <!-- </div> -->
-      <!-- </div> -->
-      <!-- <div class="row"> -->
-      <!-- <div class="col-8 col-sm-6 col-example"> -->
-      <div class="md-form mb-5">
-        <input type="date" id="form31" class="form-control" mdbInput mdbValidate [formControl]="date">
-        <label for="form31">תאריך</label>
-        <mdb-error *ngIf="date.invalid && (date.dirty || date.touched)">
-        </mdb-error>
-        <mdb-success *ngIf="date.valid && (date.dirty || date.touched)">
-        </mdb-success>
+      <div class="modal-body mx-3">
+
+        <!-- <div class="row"> -->
+        <!-- <div class="col-8 col-sm-6 col-example"> -->
+        <div class="md-form mb-5">
+          <input type="text" id="form30" class="form-control" mdbInput mdbValidate [formControl]="sum">
+          <label for="form30">סכום צ'ק</label>
+          <mdb-error *ngIf="sum.invalid && (sum.dirty || sum.touched)">
+          </mdb-error>
+          <mdb-success *ngIf="sum.valid && (sum.dirty || sum.touched)">
+          </mdb-success>
+        </div>
+        <!-- </div> -->
+        <!-- <div class="col-4 col-sm-6 col-example"> -->
+        <div class="md-form mb-5">
+          <input type="text" id="form32" class="form-control" mdbInput mdbValidate [formControl]="numCheck">
+          <label for="form32">מספר צ'ק</label>
+          <mdb-error *ngIf="numCheck.invalid && (numCheck.dirty || numCheck.touched)">
+          </mdb-error>
+          <mdb-success *ngIf="numCheck.valid && (numCheck.dirty || numCheck.touched)">
+          </mdb-success>
+        </div>
+
+        <!-- </div> -->
+        <!-- </div> -->
+        <!-- <div class="row"> -->
+        <!-- <div class="col-8 col-sm-6 col-example"> -->
+        <div class="md-form mb-5">
+          <input type="date" id="form31" class="form-control" mdbInput mdbValidate [formControl]="date">
+          <label for="form31">תאריך</label>
+          <mdb-error *ngIf="date.invalid && (date.dirty || date.touched)">
+          </mdb-error>
+          <mdb-success *ngIf="date.valid && (date.dirty || date.touched)">
+          </mdb-success>
+        </div>
+
+        <!-- </div> -->
+        <!-- <div class="col-4 col-sm-6 col-example"> -->
+        <div class="md-form mb-5">
+          <!-- <select class="browser-default custom-select" > -->
+          <select class="form-control" mdbInput mdbValidate [formControl]="ReceiptOrInvoice">
+            <option selected>קבלה</option>
+            <option value="חשבונית">חשבונית</option>
+          </select>
+          <mdb-error *ngIf="ReceiptOrInvoice.invalid && (ReceiptOrInvoice.dirty || ReceiptOrInvoice.touched)">
+          </mdb-error>
+          <mdb-success *ngIf="ReceiptOrInvoice.valid && (ReceiptOrInvoice.dirty || ReceiptOrInvoice.touched)">
+          </mdb-success>
+        </div>
+        <!-- </div> -->
+        <!-- </div> -->
       </div>
 
-      <!-- </div> -->
-      <!-- <div class="col-4 col-sm-6 col-example"> -->
-      <div class="md-form mb-5">
-        <!-- <select class="browser-default custom-select" > -->
-        <select class="form-control" mdbInput mdbValidate [formControl]="ReceiptOrInvoice">
-          <option selected>קבלה</option>
-          <option value="חשבונית">חשבונית</option>
-        </select>
-        <mdb-error *ngIf="ReceiptOrInvoice.invalid && (ReceiptOrInvoice.dirty || ReceiptOrInvoice.touched)">
-        </mdb-error>
-        <mdb-success *ngIf="ReceiptOrInvoice.valid && (ReceiptOrInvoice.dirty || ReceiptOrInvoice.touched)">
-        </mdb-success>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="frame.hide()">ביטול</button>
+        <button type="button" class="btn btn-primary">שמירה</button>
       </div>
-      <!-- </div> -->
-      <!-- </div> -->
-    </div>
-
-    <div class="modal-footer">
-      <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="frame.hide()">ביטול</button>
-      <button type="button" class="btn btn-primary">שמירה</button>     
     </div>
   </div>
-</div>
 </div>
