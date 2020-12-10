@@ -19,7 +19,8 @@ export class SerialFormComponent implements OnInit {
   partnerList: Array<Partner>;
   @ViewChild('frame1') frame1: ModalDirective;
   @ViewChild('frame2') frame2: ModalDirective;
-  totalPrice=[0];
+  totalPrice=[];
+
   constructor(private changeDetectorRef: ChangeDetectorRef, private r: Router, private partnerService: PartnerService, private seriousnessService: seriousnessService, private formBuilder: FormBuilder) { }
   // Validators.compose([Validators.minLength(10)
   ngOnInit(): void {
@@ -34,6 +35,7 @@ export class SerialFormComponent implements OnInit {
       privateSeria: this.formBuilder.array([]),
       partner: ['', [Validators.required]],
     });
+    this.totalPrice['לחץ לפרטים']
 
   }
   ngAfterViewInit() {
