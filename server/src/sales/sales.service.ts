@@ -35,7 +35,11 @@ export class SalesService {
             isOpen:sale.isOpen,
         }));
     }
-
+    // async update(id: string, article: UpdateArticleDto) {
+    //     const updatedArticle = this.articleModel.findByIdAndUpdate(id, article, { new: true });
+    //     console.log(updatedArticle);
+    //     return updatedArticle;
+    //   }
     async updateSale(
         id: string,
         date: Date,
@@ -49,6 +53,8 @@ export class SalesService {
         rawOrPolished: string,
         isOpen:Boolean,
     ) {
+        console.log("sales service update");
+        
         const updatedSale = await this.findSale(id);
         if (date) {
             updatedSale.date = date;
@@ -79,7 +85,9 @@ export class SalesService {
         if (isOpen) {
             updatedSale.isOpen = isOpen;
         }
+        
         updatedSale.save();
+        return updatedSale;
     }
     async deleteSale(saleId: string) {
         const result = await this.salesModel.deleteOne({ _id: saleId }).exec();
