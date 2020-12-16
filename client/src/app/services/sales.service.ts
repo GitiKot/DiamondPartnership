@@ -24,15 +24,18 @@ export class SalesService {
   }
   updateSale(saleId, sale: Sale) {
     console.log("update");
-    
     const urlupdate = `${this.salesUrl}/${sale.id}`;
-    console.log("pach");
     console.log("url"+urlupdate);
-    console.log(sale.id);
-    
-    
+    // console.log(saleId);
+    // console.log(sale.id);
     // return this.http.put<Sale>(fullUrl, sale, this.options);
-    return this.http.patch<Sale>(urlupdate, sale, this.options);
+    return this.http.patch<Sale>(urlupdate, sale, this.options)
+    .subscribe((s: Sale) => {
+      console.log(s, "suecces");
+    }, () => {
+      console.log("error");
+    }
+    );
   }
 
   deleteSale(s: Sale) {

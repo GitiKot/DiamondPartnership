@@ -42,13 +42,18 @@ export class ChecksComponent implements OnInit {
 
     this.salesService.getAllSales().subscribe(ans =>
       ans.find(s => {
-        if (s.isOpen = true)
-          this.OpenSalesList = ans;
-        else
-          this.ClosedSalesList = ans;
+        if (s.isOpen = true) {
+          console.log(s);
+          
+          this.OpenSalesList.push(s);
+          // this.OpenSalesList.push(s);
+        }
+        else {
+          // this.ClosedSalesList.push(s);
+        }
+        console.log("this.OpenSalesList");
         console.log(this.OpenSalesList);
         console.log("this.ClosedSalesList");
-
         console.log(this.ClosedSalesList);
       }))
 
@@ -93,42 +98,33 @@ export class ChecksComponent implements OnInit {
 
   save() {
     alert("האם הנך בטוח שברצונך לשמור פרטי צ'ק אלו??");// alert("האם ברצונך לשמור את הנתונים") 
-    alert(this.getSelectedRows().length);
-    // console.log(this.checksForm.value);
-    // console.log(this.checksForm.valid);
     if (this.checksForm.valid) {
       for (let i = 0; i < this.getSelectedRows().length; i++) {
         this.checksForm.value.IdSales.push(this.getSelectedRows()[i].id)
       }
       // עובר על כל השורות איפה שאי די שווה הוא מעדכן שדה איזאופן לפולס
       // this.OpenSalesList.(s=>s.id=this.selectedRowIds,)
-
+      let sale: Sale;
       for (let i = 0; i < this.getSelectedRows().length; i++) {
         const result = this.OpenSalesList.filter(s =>
           // this.getSelectedRows().some(() => s.id == this.IdSales.value[i]));
-
           this.getSelectedRows()[i].id.includes(s.id));
-
         for (let j = 0; j < this.OpenSalesList.length; j++) {
-          // console.log("result[0].id");
-          // console.log(result[0].id);
-          // console.log("this.OpenSalesList[j].id");
-          // console.log(this.OpenSalesList[j].id);
-          // console.log(result[0].id == this.OpenSalesList[j].id);
 
           if (result[0].id == this.OpenSalesList[j].id) {
             // this.salesService.updateSale(this.OpenSalesList[j].id, {this.OpenSalesList[j].id,});
-
-            this.OpenSalesList[j].isOpen = false;
+            // this.OpenSalesList[j].isOpen = false;
             console.log("isopen");
-
             console.log(this.OpenSalesList[j].isOpen);
             console.log(this.OpenSalesList[j]);
+            sale = this.OpenSalesList[j];
+            console.log(sale);
+            sale.isOpen = false;
+            console.log(sale);
 
-            this.salesService.updateSale(this.OpenSalesList[j].id, this.OpenSalesList[j]);
+            this.salesService.updateSale(this.OpenSalesList[j].id, sale);
 
             console.log(this.OpenSalesList);
-
           }
 
         }

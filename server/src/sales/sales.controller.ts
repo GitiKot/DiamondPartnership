@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
-import { Patch } from '@nestjs/common/decorators/http/request-mapping.decorator';
+import { Body, Controller, Delete, Get, Param, Post ,Patch} from '@nestjs/common';
+// import { Patch } from '@nestjs/common/decorators/http/request-mapping.decorator';
 
 
 import { createSaleDto } from './dto/create-sale.dto';
@@ -24,6 +24,12 @@ export class SalesController {
     const sale = await this.salesService.findSales(pn);
     return sale;
   }
+
+//   @Patch(':id')
+//   async update(@Param('id') id: string, @Body() articleDto: ) {
+//   return this.salesService.updateSale(id, articleDto);
+// }
+
   @Patch(':id')
   async updateSale(
     
@@ -40,12 +46,17 @@ export class SalesController {
     @Body('isOpen')sisOpen:boolean,
   ) {
     console.log("uupdate controller");
+    console.log("sisopen:");
     
-    await this.salesService.updateSale(sId, sdate, snumOfDate, sinvoiceNumber,spublicSerialName,
+    console.log(sisOpen);
+    
+    
+  const sale= await this.salesService.updateSale(sId, sdate, snumOfDate, sinvoiceNumber,spublicSerialName,
       sprivateSerialName,sstoneName,sweight,spricePerCarat,srawOrPolished,sisOpen);
       console.log("update controller");
-      
-    return null;
+      return sale;
+      // return this.salesService.updateSale(id, sale);
+    // return null;
   }
   
   @Delete(':id')
