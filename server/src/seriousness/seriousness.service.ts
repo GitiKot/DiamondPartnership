@@ -5,7 +5,7 @@ import { Model } from 'mongoose';
 import { Seriousness } from './interfaces/seriousness.interface';
 import { createSeriousnessDto } from './dto/create-seriousness.dto';
 import e from 'express';
-import { ObjectId, ObjectID } from 'mongodb';
+import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class seriousnessService {
@@ -63,50 +63,50 @@ export class seriousnessService {
     // }
 
     
-    // async updateSeriousness(
+    async updateSeriousness(
 
-    //       id:string,
-    //     serialName: string,
-    //     dateBuy: Date,
-    //     cost:number,
-    //     amountReceived: number,
-    //     partnersPercent:number,
-    //     AmountReceivedPartner: number,
-    //     finishDate:Date,
-    //     privateSeria:Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,price:number}>}>,
-    //     partner:ObjectId
+          id:string,
+        serialName: string,
+        dateBuy: Date,
+        cost:number,
+        amountReceived: number,
+        partnersPercent:number,
+        AmountReceivedPartner: number,
+        finishDate:Date,
+        privateSeria:Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,price:number}>}>,
+        partner:ObjectId
         
-    //   )  {
-    //     const updatedSeriousness = await this.findSeriousness(id);
-    //     if (serialName) {
-    //         updatedSeriousness.serialName = serialName;
-    //     }
-    //     if (dateBuy) {
-    //         updatedSeriousness.dateBuy = dateBuy;
-    //     }
-    //     if (cost) {
-    //         updatedSeriousness.cost = cost;
-    //     } if (amountReceived) {
-    //         updatedSeriousness.amountReceived = amountReceived;
-    //     }
-    //     if (partnersPercent) {
-    //         updatedSeriousness.partnersPercent = partnersPercent;
-    //     }
-    //     if (AmountReceivedPartner) {
-    //         updatedSeriousness.AmountReceivedPartner = AmountReceivedPartner;
-    //     }
-    //     if (finishDate) {
-    //         updatedSeriousness.finishDate = finishDate;
-    //     }
-    //     if (privateSeria) {
-    //         updatedSeriousness.privateSeria = privateSeria;
-    //     }
-    //     if (partner) {
-    //         updatedSeriousness.partner = partner;
-    //     }
-    //     updatedSeriousness.save();
-    // }
-// 
+      )  {
+        const updatedSeriousness = await this.findSeriousness(id);
+        if (serialName) {
+            updatedSeriousness.serialName = serialName;
+        }
+        if (dateBuy) {
+            updatedSeriousness.dateBuy = dateBuy;
+        }
+        if (cost) {
+            updatedSeriousness.cost = cost;
+        } if (amountReceived) {
+            updatedSeriousness.amountReceived = amountReceived;
+        }
+        if (partnersPercent) {
+            updatedSeriousness.partnersPercent = partnersPercent;
+        }
+        if (AmountReceivedPartner) {
+            updatedSeriousness.AmountReceivedPartner = AmountReceivedPartner;
+        }
+        if (finishDate) {
+            updatedSeriousness.finishDate = finishDate;
+        }
+        if (privateSeria) {
+            updatedSeriousness.privateSeria = privateSeria;
+        }
+        if (partner) {
+            updatedSeriousness.partner = partner;
+        }
+        updatedSeriousness.save();
+    }
+
     async deleteSeriousness(exId: string) {
         const result = await this.seriousnessModel.deleteOne({ _id: exId }).exec();
         if (result.n === 0) {

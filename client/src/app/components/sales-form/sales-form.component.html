@@ -37,8 +37,8 @@
   <div>
     <label class="form-check-label">
       <label>
-        <input type="radio"  (input)="tableKeyPresent()" class="form-check-input"tabindex="4" formControlName="rawOrPolished" value="raw"
-          [checked]="false">&nbsp;גלם
+        <input type="radio"   id="raw" (input)="tableKeyPresent()" class="form-check-input"tabindex="4" formControlName="rawOrPolished" value="raw"
+          >&nbsp;גלם
       </label>
     <label>
       &nbsp;
@@ -92,9 +92,9 @@
 
          <td><input 
           formControlName="privateSerialName" type="text" class="input" 
-          tabindex={{i*5+7}} > </td> 
+          tabindex={{i*5+7}}    [(ngModel)]="sale.privateSerial"> </td> 
 
-        <td><input  [(ngModel)]="sale.privateSerial" 
+        <td><input  [(ngModel)]="sale.stoneName" 
           formControlName="stoneName"type="text" class="input"  
           [(ngModel)]="tableContent[i].stoneName" tabindex={{i*5+8}} > </td>
 
