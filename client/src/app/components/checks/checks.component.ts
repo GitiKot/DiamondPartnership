@@ -52,7 +52,7 @@ export class ChecksComponent implements OnInit {
         console.log(this.ClosedSalesList);
       }))
 
-    // this.checksService.getAllChecks().subscribe(ans => this.checksList = ans);
+    this.checksService.getAllChecks().subscribe(ans => this.checksList = ans);
     // find all sales according public name
     this.salesService.findAllSales("2r").subscribe(ans => (ans.map(sale => {
       if (sale.publicSerialName == "2r") {//htmlבמקום 2ר לוקחים את מה שנכנס באינפוט מתוך    
@@ -102,30 +102,39 @@ export class ChecksComponent implements OnInit {
       }
       // עובר על כל השורות איפה שאי די שווה הוא מעדכן שדה איזאופן לפולס
       // this.OpenSalesList.(s=>s.id=this.selectedRowIds,)
-     
+
       for (let i = 0; i < this.getSelectedRows().length; i++) {
         const result = this.OpenSalesList.filter(s =>
           // this.getSelectedRows().some(() => s.id == this.IdSales.value[i]));
 
           this.getSelectedRows()[i].id.includes(s.id));
 
-        console.log("result");
-        for(let j=0;j<this.OpenSalesList.length;j++){
-          console.log("result[0].id");
-          
-          console.log(result[0].id);
-          console.log("this.OpenSalesList[j].id");
-          
-          console.log(this.OpenSalesList[j].id);
-          console.log(result[0].id==this.OpenSalesList[j].id);
-          
-          if(result[0].id==this.OpenSalesList[j].id)
-          // this.salesService.updateSale()
-         this.OpenSalesList[j].isOpen=false;
+        for (let j = 0; j < this.OpenSalesList.length; j++) {
+          // console.log("result[0].id");
+          // console.log(result[0].id);
+          // console.log("this.OpenSalesList[j].id");
+          // console.log(this.OpenSalesList[j].id);
+          // console.log(result[0].id == this.OpenSalesList[j].id);
+
+          if (result[0].id == this.OpenSalesList[j].id) {
+            // this.salesService.updateSale(this.OpenSalesList[j].id, {this.OpenSalesList[j].id,});
+
+            this.OpenSalesList[j].isOpen = false;
+            console.log("isopen");
+
+            console.log(this.OpenSalesList[j].isOpen);
+            console.log(this.OpenSalesList[j]);
+
+            this.salesService.updateSale(this.OpenSalesList[j].id, this.OpenSalesList[j]);
+
+            console.log(this.OpenSalesList);
+
+          }
+
         }
-        
+        console.log("result");
         console.log(result);
-       
+
       }
 
       // const s = this.OpenSalesList.some((val) => this.getSelectedRows().indexOf(val) !== -1);

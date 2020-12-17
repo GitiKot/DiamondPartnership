@@ -39,10 +39,15 @@ export class SalesController {
     @Body('rawOrPolished') srawOrPolished: string,
     @Body('isOpen')sisOpen:boolean,
   ) {
+    console.log("uupdate controller");
+    
     await this.salesService.updateSale(sId, sdate, snumOfDate, sinvoiceNumber,spublicSerialName,
       sprivateSerialName,sstoneName,sweight,spricePerCarat,srawOrPolished,sisOpen);
+      console.log("update controller");
+      
     return null;
   }
+  
   @Delete(':id')
   async removeProduct(@Param('id') saleId: string) {
     await this.salesService.deleteSale(saleId);

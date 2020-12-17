@@ -25,7 +25,7 @@ export class SalesComponent implements OnInit {
 
   }
   deleteSale(sale){
-    var tt= this.saleService.deletePartner(sale);
+    var tt= this.saleService.deleteSale(sale);
     console.log( tt);
     this.saleService.getAllSales().subscribe(ans => this.salesList = ans);
   }

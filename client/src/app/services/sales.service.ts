@@ -22,7 +22,20 @@ export class SalesService {
 
     return this.http.post<Sale>(this.salesUrl, s);
   }
-  deletePartner(s: Sale) {
+  updateSale(saleId, sale: Sale) {
+    console.log("update");
+    
+    const urlupdate = `${this.salesUrl}/${sale.id}`;
+    console.log("pach");
+    console.log("url"+urlupdate);
+    console.log(sale.id);
+    
+    
+    // return this.http.put<Sale>(fullUrl, sale, this.options);
+    return this.http.patch<Sale>(urlupdate, sale, this.options);
+  }
+
+  deleteSale(s: Sale) {
     var ttt = `${this.salesUrl}/${s.id}`;
     console.log("url=" + ttt);
 
