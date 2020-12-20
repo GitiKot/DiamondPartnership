@@ -88,13 +88,22 @@ finishDate:Date; -->
                                 </div>
                             </div>
                         </div>
+                        <!-- <fieldset class="form-group">
+                            <label>שותף בחר</label><br/><br/>
+                            <select [(ngModel)]="selectedPartner" class="form-control">
+                                    <option *ngFor="let partner of partnerList" [value]="partner">{{partner.name}}</option>
+                             </select>
+                            </fieldset> -->
                         <div class="row">
                             <div class="col-4 col-sm-6 col-example">
                                 <div class="md-form mb-5">
-                                    <select id="selectPart" placeholder="בחר" class="browser-default custom-select"
-                                        mdbInput mdbValidate [formControl]="partner">
-                                      
-                                        <option *ngFor="let p of partnerList" selected> {{p.name}}</option>
+                                    <select id="selectPart" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedPartner" placeholder="בחר" class="browser-default custom-select"
+                                        mdbInput mdbValidate
+                                         >
+                                        <option disabled>--בחר--</option>
+
+                                        <option  *ngFor="let p of partnerList" [value]="p.id" (change)="pp()"> 
+                                            {{p.name}}</option>
                                     </select>
                                     <label> בחר שותף</label>
 
@@ -149,7 +158,10 @@ finishDate:Date; -->
                                                 <input mdbInput class="inputS" type="text" formControlName="name"
                                                     placeholder="שם סריה">
                                             </td>
-
+                                            <td class="md-form mb-5">
+                                                <input mdbInput class="inputS" type="number" formControlName="serialPrice"
+                                                    placeholder="מחיר סריה">
+                                            </td>
                                             <td class="md-form mb-5">
                                                 <input mdbInput class="inputS" type="text" (click)="test.toggle()"
                                                     placeholder="הוצאות לחץ לפרטים">

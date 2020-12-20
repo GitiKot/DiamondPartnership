@@ -1,23 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { Sales } from './sales.model';
-import{createSaleDto}from 'src/sales/dto/create-sale.dto'
+import { createSaleDto } from 'src/sales/dto/create-sale.dto'
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { NotFoundException } from '@nestjs/common/exceptions/not-found.exception';
+import { StreamState } from 'http2';
 @Injectable()
 export class SalesService {
     constructor(
-        @InjectModel('Sale') private readonly salesModel: Model<Sales>,){}
-        
+        @InjectModel('Sale') private readonly salesModel: Model<Sales>,) { }
+
     async addSale(createSaleDto: createSaleDto): Promise<Sales> {
         const createSale = new this.salesModel(createSaleDto);
         return createSale.save();
     }
-    
-      getAllSales(): Sales[] {
+
+    getAllSales(): Sales[] {
         return this.getAllSales();
-      }
-      async getSales() {
+    }
+
+    async getSales() {
         const Sales = await this.salesModel.find().exec();
         return Sales.map(sale => ({
             id: sale.id,
@@ -32,7 +34,29 @@ export class SalesService {
             pricePerCarat: sale.pricePerCarat,
             // TotalPrice: sale.TotalPrice,
             rawOrPolished: sale.rawOrPolished,
-            isOpen:sale.isOpen,
+            isOpen: sale.isOpen,
+        }));
+    }
+    
+    async findBySerailName(serialName: string) {      
+         console.log("from sale server");
+        const SaleBySerailName = await this.salesModel.find({ publicSerialName: serialName }).exec();
+       console.log("22222222");
+       
+        return SaleBySerailName.map(sale => ({
+            id: sale.id,
+            date: sale.date,
+            numOfDate: sale.numOfDate,
+            // getchack: sale.getchack,
+            invoiceNumber: sale.invoiceNumber,
+            publicSerialName: sale.publicSerialName,
+            privateSerialName: sale.privateSerialName,
+            stoneName: sale.stoneName,
+            weight: sale.weight,
+            pricePerCarat: sale.pricePerCarat,
+            // TotalPrice: sale.TotalPrice,
+            rawOrPolished: sale.rawOrPolished,
+            isOpen: sale.isOpen,
         }));
     }
     // async update(id: string, article: UpdateArticleDto) {
@@ -50,7 +74,7 @@ export class SalesService {
     async updateSale(
         id: string,
         date: Date,
-        numOfDate:number,
+        numOfDate: number,
         invoiceNumber: Number,
         publicSerialName: String,
         privateSerialName: String,
@@ -58,10 +82,10 @@ export class SalesService {
         weight: Number,
         pricePerCarat: Number,
         rawOrPolished: string,
-        isOpen:Boolean,
+        isOpen: Boolean,
     ) {
         console.log("sales service update");
-        
+
         const updatedSale = await this.findSale(id);
         if (date) {
             updatedSale.date = date;
@@ -99,7 +123,7 @@ export class SalesService {
             
             updatedSale.isOpen = isOpen;
         }
-        
+
         updatedSale.save();
         console.log("updatesale");
         
@@ -113,28 +137,30 @@ export class SalesService {
             throw new NotFoundException('Could not find Partner.');
         }
     }
-    
-    findAllSales(pn:string): Sales[] {
-        return this.findAllSales(pn);
-      }
-      async findSales(pn:string) {
-        const Sales = await this.salesModel.find().exec();
-        return Sales.map(sale => {if(sale.publicSerialName==pn)({
-            id: sale.id,
-            date: sale.date,
-            numOfDate: sale.numOfDate,
-            // getchack: sale.getchack,
-            invoiceNumber: sale.invoiceNumber,
-            publicSerialName: sale.publicSerialName,
-            privateSerialName: sale.privateSerialName,
-            stoneName: sale.stoneName,
-            weight: sale.weight,
-            pricePerCarat: sale.pricePerCarat,
-            // TotalPrice: sale.TotalPrice,
-            rawOrPolished: sale.rawOrPolished,
-            isOpen:sale.isOpen,
-        })});
-    }
+
+    // findAllSales(pn: string): Sales[] {
+    //     return this.findAllSales(pn);
+    // }
+    // async findSales(pn: string) {
+    //     const Sales = await this.salesModel.find().exec();
+    //     return Sales.map(sale => {
+    //         if (sale.publicSerialName == pn) ({
+    //             id: sale.id,
+    //             date: sale.date,
+    //             numOfDate: sale.numOfDate,
+    //             // getchack: sale.getchack,
+    //             invoiceNumber: sale.invoiceNumber,
+    //             publicSerialName: sale.publicSerialName,
+    //             privateSerialName: sale.privateSerialName,
+    //             stoneName: sale.stoneName,
+    //             weight: sale.weight,
+    //             pricePerCarat: sale.pricePerCarat,
+    //             // TotalPrice: sale.TotalPrice,
+    //             rawOrPolished: sale.rawOrPolished,
+    //             isOpen: sale.isOpen,
+    //         })
+    //     });
+    // }
     private async findSale(id: string): Promise<Sales> {
         let sale;
         try {

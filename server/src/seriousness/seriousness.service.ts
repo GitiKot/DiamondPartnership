@@ -6,6 +6,7 @@ import { Seriousness } from './interfaces/seriousness.interface';
 import { createSeriousnessDto } from './dto/create-seriousness.dto';
 import e from 'express';
 import { ObjectId } from 'mongodb';
+import { findSourceMap } from 'module';
 
 @Injectable()
 export class seriousnessService {
@@ -16,6 +17,7 @@ export class seriousnessService {
         const createSeriousness = new this.seriousnessModel(createSeriousnessDto);
         return createSeriousness.save();
     }
+    
     async getSeriousness() {
         const Seriousness = await this.seriousnessModel.find().exec();
         return Seriousness.map(ex => ({
@@ -102,7 +104,6 @@ export class seriousnessService {
             updatedSeriousness.privateSeria = privateSeria;
         }
         if (partner) {
-            updatedSeriousness.partner = partner;
         }
         updatedSeriousness.save();
     }
