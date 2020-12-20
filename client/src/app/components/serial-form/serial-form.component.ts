@@ -3,12 +3,14 @@ import { FormArray, FormControl, FormGroup, FormBuilder, Validators } from '@ang
 import { Router } from '@angular/router';
 import { ModalModule } from 'angular-bootstrap-md';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
+import { from } from 'rxjs';
 import { Expenses } from 'src/app/data/expenses';
 import { Partner } from 'src/app/data/partner';
 import { ExpensesService } from 'src/app/services/expenses.service'
 import { PartnerService } from 'src/app/services/partner.service';
 import { seriousnessService } from 'src/app/services/seriousness.service';
 import { ModalFormComponent } from '../modal-form/modal-form.component';
+
 @Component({
   selector: 'app-serial-form',
   templateUrl: './serial-form.component.html',
@@ -20,12 +22,12 @@ export class SerialFormComponent implements OnInit {
   @ViewChild('frame1') frame1: ModalDirective;
   @ViewChild('frame2') frame2: ModalDirective;
   totalPrice=[];
-
-  constructor(private changeDetectorRef: ChangeDetectorRef, private r: Router, private partnerService: PartnerService, private seriousnessService: seriousnessService, private formBuilder: FormBuilder) { }
+  selectedPartner:Partner;
+  constructor(private changeDetectorRef: ChangeDetectorRef,private r: Router, private partnerService: PartnerService, private seriousnessService: seriousnessService, private formBuilder: FormBuilder) { }
   // Validators.compose([Validators.minLength(10)
   ngOnInit(): void {
-    this.partnerService.getAllPartners().subscribe(ans => { this.partnerList = ans; console.log("fghj"); })
-
+    this.partnerService.getAllPartners().subscribe(ans => { this.partnerList = ans; })
+    
     this.serialForm = this.formBuilder.group({
       serialName: ['', [Validators.required]],
       dateBuy: ['', [Validators.required]],
@@ -38,7 +40,20 @@ export class SerialFormComponent implements OnInit {
     this.totalPrice['לחץ לפרטים']
 
   }
+  // ngAfterContentChecked() {
+
+  //   this.changeDetectorRef.detectChanges();
+  //   // console.log(" detece chande");
+    
+
+  // }
+  
+  // onCloseMember() {
+    // this.changeDetectorRef.detectChanges();
+  // }
   ngAfterViewInit() {
+    this.changeDetectorRef.detectChanges();
+
     this.frame1.show();
   }
   Table2() {
@@ -52,19 +67,22 @@ export class SerialFormComponent implements OnInit {
     }
   }
   save() {
+    this.serialForm.get('partner').setValue(this.selectedPartner)
     // console.log(this.privateSeria.value);
-    console.log(this.serialForm.controls['partner'].value);
-    // alert("האם ברצונך לשמור את הנתונים")
-    // this.serialForm.reset();
-    // this.r.navigate(['./seriousness'])
-    // if (this.serialForm.valid) {
-    //   this.seriousnessService.addSeria(this.serialForm.value).subscribe(e => {
-    //   })
-    // }
+    console.log(this.serialForm.value);
+    alert("האם ברצונך לשמור את הנתונים")
+   
+    if (this.serialForm.valid) {
+      this.seriousnessService.addSeria(this.serialForm.value).subscribe(e => {
+      })
+    }
+    else{
+      alert("חסרים נתונים")
+    }
+     this.serialForm.reset();
+    this.r.navigate(['./seriousness'])
   }
-  onCloseMember() {
-    this.changeDetectorRef.detectChanges();
-  }
+ 
   close() {
     this.r.navigate(['seriousness']);
   }
@@ -102,10 +120,13 @@ export class SerialFormComponent implements OnInit {
   }
   get name() {
     return this.serialForm.get("privateSeria").get('name');
+  }get serialPrice() {
+    return this.serialForm.get("privateSeria").get('serialPrice');
   }
   newPrivateSerial(): FormGroup {
     return this.formBuilder.group({
       name: '',
+      serialPrice:'',
       expensesArray: this.formBuilder.array([]),
     })
   }
@@ -141,5 +162,6 @@ export class SerialFormComponent implements OnInit {
   }
   savePrivateSerial() {
     console.log(this.privateSeria.value);
+    this.frame2.hide()
   }
 }
