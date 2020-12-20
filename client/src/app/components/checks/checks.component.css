@@ -49,3 +49,11 @@ bottom: .5em;
 .selectedRow {
   background-color: skyblue;
 }
+.del{
+  text-align: center;
+  border: none;
+  display: none;
+  visibility: hidden;
+  /* background-position: center;  */
+  object-position: center;
+}
