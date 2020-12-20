@@ -14,7 +14,13 @@ export class SalesService {
   getAllSales(): Observable<Sale[]> {
     return this.http.get<Sale[]>(this.salesUrl);
   }
-  findAllSales(pn:string): Observable<Sale[]> {
+
+  findBySerailName(serialName: string):Observable<Sale[]> {
+    const urlFindBy = `${this.salesUrl}/${serialName}`;
+    return this.http.get<Sale[]>(urlFindBy)
+  }
+
+  findAllSales(pn: string): Observable<Sale[]> {
     return this.http.get<Sale[]>(this.salesUrl);
   }
   addSale(s: Sale): Observable<Sale> {
@@ -24,17 +30,13 @@ export class SalesService {
   }
   updateSale(saleId, sale: Sale) {
     console.log("update");
-    
+
     const urlupdate = `${this.salesUrl}/${sale.id}`;
-    console.log("pach");
-    console.log("url"+urlupdate);
-    console.log(sale.id);
-    
-    
     // return this.http.put<Sale>(fullUrl, sale, this.options);
     return this.http.patch<Sale>(urlupdate, sale, this.options);
   }
 
+ 
   deleteSale(s: Sale) {
     var ttt = `${this.salesUrl}/${s.id}`;
     console.log("url=" + ttt);
