@@ -18,8 +18,6 @@ export class seriousnessService {
        } 
  
    addSeria(s:Seriousness):Observable<Seriousness>{
-     console.log(s+"serial");
-     
      console.log("service", this.seriousnessUrl);
  
     return this.http.post<Seriousness>(this.seriousnessUrl,s);

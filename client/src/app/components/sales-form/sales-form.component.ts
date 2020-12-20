@@ -194,11 +194,11 @@ export class SalesFormComponent implements OnInit {
     }
 
   }
-  // ngAfterContentChecked() {
+  ngAfterContentChecked() {
 
-  //   this.cdRef.detectChanges()
+    this.cdRef.detectChanges()
 
-  // }
+  }
 
   // addrow2() {
 

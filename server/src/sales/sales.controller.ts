@@ -13,21 +13,23 @@ export class SalesController {
   async addSale(@Body() createSaleDto: createSaleDto) {
     return this.salesService.addSale(createSaleDto);
   }
-@Get()
-async findBySerailName(serialName:string){
-  const sale = await this.salesService.findBySerailName(serialName);
-    return sale;
-}
+
   @Get()
   async getAllSales() {
     const sale = await this.salesService.getSales();
     return sale;
   }
   @Get()
-  // async findAllSales(pn:string) {
-  //   const sale = await this.salesService.findSales(pn);
-  //   return sale;
-  // }
+  async findAllSales(pn:string) {
+    const sale = await this.salesService.findSales(pn);
+    return sale;
+  }
+
+//   @Patch(':id')
+//   async update(@Param('id') id: string, @Body() articleDto: ) {
+//   return this.salesService.updateSale(id, articleDto);
+// }
+
   @Patch(':id')
   async updateSale(
     
