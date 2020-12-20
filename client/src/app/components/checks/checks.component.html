@@ -62,9 +62,14 @@
                   </tr>
                 </thead>
                 <tbody>
+                  
+                  <!-- <tr *ngFor="let s of getSalesFromId([indexC]);let i=index">
+                    <td>{{s}}</td>
+                  </tr> -->
+                  <!-- </tr> -->
                   <!-- <tr *ngFor="let s of salesList;let i=index" *ngIf="s.id=checksList[indexC].idsales">  -->
                   <tr *ngFor="let c of checksList[indexC].IdSales;let i=index">
-                    <!-- <div *ngIf="let s of salesList;let is=index" ></div> -->
+                   
                     <td>{{c}}</td>
                     <!--   <td>{{s.date| date: "shortDate"}}</td>
                     <td>{{s.privateSerialName}}</td>
@@ -123,8 +128,7 @@
       </thead>
       <tbody>
 
-        <tr *ngFor="let s of OpenSalesList" [class.selectedRow]="rowIsSelected(s.id)" 
-          style="cursor: pointer;">
+        <tr *ngFor="let s of OpenSalesList" [class.selectedRow]="rowIsSelected(s.id)" style="cursor: pointer;">
           <td><input type="checkbox" (click)="onRowClick(s.id)"></td>
           <!-- <td *ngIf="isSalesPage == 'true'">
           <button class="delete" type="button" (click)="deleteSale(s)"> <i
@@ -149,9 +153,10 @@
 
   </div>
   <div id="row">
-    <span>סה"כ מכירות</span>&nbsp;<input mdbInput mdbValidate disabled placeholder="{{OpenSalesList.length+ClosedSalesList.length}}">
+    <span>סה"כ מכירות</span>&nbsp;<input mdbInput mdbValidate disabled
+      placeholder="{{OpenSalesList.length+ClosedSalesList.length}}">
     <span>צ'קים סגורים</span>&nbsp;<input mdbInput mdbValidate disabled placeholder="{{checksList.length}}">
-    <span>סה"כ מכירות פתוחות</span><input mdbInput mdbValidate disabled placeholder="{{OpenSalesList.length}}"> 
+    <span>סה"כ מכירות פתוחות</span><input mdbInput mdbValidate disabled placeholder="{{OpenSalesList.length}}">
   </div>
 
   <!-- checks modal -->

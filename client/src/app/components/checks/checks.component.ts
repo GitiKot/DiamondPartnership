@@ -40,16 +40,21 @@ export class ChecksComponent implements OnInit {
       IdSales: new FormArray([]),
     })
 
+this.OpenSalesList=new Array();
+this.ClosedSalesList=new Array();
+
     this.salesService.getAllSales().subscribe(ans =>
       ans.find(s => {
-        if (s.isOpen = true) {
-          console.log(s);
-          
+        console.log("s");
+        console.log(s);
+        // this.OpenSalesList = ans;//לשנות להכנסת נתונים נכונים
+        // this.ClosedSalesList = ans;//לשנות להכנסת נתונים נכונים
+        if (s.isOpen == true) {
+
           this.OpenSalesList.push(s);
-          // this.OpenSalesList.push(s);
         }
         else {
-          // this.ClosedSalesList.push(s);
+          this.ClosedSalesList.push(s);
         }
         console.log("this.OpenSalesList");
         console.log(this.OpenSalesList);
@@ -77,6 +82,9 @@ export class ChecksComponent implements OnInit {
   }
   updateCi(i: number) {
     this.indexC = i;
+    console.log("updateci");
+    console.log(this.indexC);
+    
   }
   onRowClick(id: string) {
 
@@ -95,7 +103,22 @@ export class ChecksComponent implements OnInit {
   getSelectedRows() {
     return this.OpenSalesList.filter(x => this.selectedRowIds.has(x.id));
   }
-
+  getSalesFromId(Cid: string) {
+    console.log("cid");
+    console.log(Cid);
+    let arr: Array<Sale>;
+    for (let c = 0; c < this.checksList.length; c++) {
+      if (Cid==this.checksList[c].id) {
+        let s = 0;
+        for (let i = 0; i < this.ClosedSalesList.length; i++) {
+          if (this.checksList[c].IdSales[s] == this.ClosedSalesList[i].id) {
+            arr.push(this.ClosedSalesList[i]);
+          }
+        }
+      }
+    }
+    return arr;
+  }
   save() {
     alert("האם הנך בטוח שברצונך לשמור פרטי צ'ק אלו??");// alert("האם ברצונך לשמור את הנתונים") 
     if (this.checksForm.valid) {
@@ -121,28 +144,20 @@ export class ChecksComponent implements OnInit {
             console.log(sale);
             sale.isOpen = false;
             console.log(sale);
-
             this.salesService.updateSale(this.OpenSalesList[j].id, sale);
-
             console.log(this.OpenSalesList);
           }
-
         }
         console.log("result");
         console.log(result);
-
       }
-
       // const s = this.OpenSalesList.some((val) => this.getSelectedRows().indexOf(val) !== -1);
-      // console.log("sssssssssssss=========");
       // console.log(s);
-
       this.checksService.addChecks(this.checksForm.value).subscribe(c => {
         this.checksList.push(c);
 
       })// this.checksForm.reset();
     }
-
   }
   searchPrivate() {
 
