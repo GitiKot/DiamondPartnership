@@ -54,6 +54,9 @@ export class ChecksComponent implements OnInit {
 
     this.checksService.getAllChecks().subscribe(ans => this.checksList = ans);
     // find all sales according public name
+    let PublicSerialName=document.getElementById("publicSerialName");
+    console.log(PublicSerialName);
+    
     this.salesService.findAllSales("2r").subscribe(ans => (ans.map(sale => {
       if (sale.publicSerialName == "2r") {//htmlבמקום 2ר לוקחים את מה שנכנס באינפוט מתוך    
         console.log("findaillsales in");
@@ -65,7 +68,8 @@ export class ChecksComponent implements OnInit {
     console.log("function");
   }
   keypressevt() {
-
+    
+    
   }
   resetform() {
     this.checksForm.reset();
@@ -105,7 +109,6 @@ export class ChecksComponent implements OnInit {
           }
           s++;
         }
-
       }
     }
     return arr;
@@ -117,7 +120,6 @@ export class ChecksComponent implements OnInit {
         this.checksForm.value.IdSales.push(this.getSelectedRows()[i].id)
       }
       // עובר על כל השורות איפה שאי די שווה הוא מעדכן שדה איזאופן לפולס
-      // this.OpenSalesList.(s=>s.id=this.selectedRowIds,)
       let sale: Sale;
       for (let i = 0; i < this.getSelectedRows().length; i++) {
         // this.getSelectedRows().some(() => s.id == this.IdSales.value[i]));
@@ -130,6 +132,7 @@ export class ChecksComponent implements OnInit {
             sale = this.OpenSalesList[j];
             sale.isOpen = false;
             this.salesService.updateSale(this.OpenSalesList[j].id, sale);
+           
           }
         }
       }
@@ -138,7 +141,9 @@ export class ChecksComponent implements OnInit {
       this.checksService.addChecks(this.checksForm.value).subscribe(c => {
         this.checksList.push(c);
 
-      })// this.checksForm.reset();
+      })
+      // this.checksForm.reset();
+
     }
   }
 
@@ -153,18 +158,14 @@ export class ChecksComponent implements OnInit {
         // this.OpenSalesList[j].isOpen = false;
         sale = this.ClosedSalesList[j];
         sale.isOpen = true;
-        console.log(sale);
-        
         this.salesService.updateSale(this.ClosedSalesList[j].id, sale);
-      }
-      
+      }     
     }s++;
   }
     var ch = this.checksService.deleteChecks(c);
-    console.log("update isopen to true");
-
     console.log(ch);
     this.checksService.getAllChecks().subscribe(ans => this.checksList = ans);
+    
   }
   toolbar(i: number) {
 
@@ -174,8 +175,6 @@ export class ChecksComponent implements OnInit {
     row.style.borderColor = " #f1f1f1";
     del.style.display = "inline";
     del.style.visibility = "visible";
-
-
   }
   toolbar1(i: number) {
 
@@ -220,8 +219,4 @@ export class ChecksComponent implements OnInit {
   get IdSales(): FormArray {
     return this.checksForm.get('IdSales') as FormArray;
   }
-  // get IdSales(){
-  // return this.checksForm.get();
-  // this.salesList.find({_id:Array(this.IdSales)}).pretty()
-  // }
 }

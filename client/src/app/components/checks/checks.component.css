@@ -54,6 +54,5 @@ bottom: .5em;
   border: none;
   display: none;
   visibility: hidden;
-  /* background-position: center;  */
   object-position: center;
 }

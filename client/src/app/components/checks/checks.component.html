@@ -10,8 +10,8 @@
         d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
     </svg>&nbsp;
 
-    <input type="text" id="public" class="form-control form-control-sm ml-3 " (keyup.enter)="keypressevt()"
-      placeholder="חיפוש לפי שם סריה כללית" title="Type in a name">
+    <input type="text" id="publicSerialName" class="form-control form-control-sm ml-3 " (keyup.enter)="keypressevt()"
+      placeholder="חיפוש לפי שם סריה כללית" >
   </div>
   <table id="myTable">
     <!--mdbTable class="z-depth-1" -->
@@ -20,7 +20,7 @@
       <th>סכום צ'ק</th>
       <th>קבלה/חשבונית</th>
       <th>מספר צ'ק</th>
-      <th>+/-</th>
+      <th>פרטי מכירות</th>
     </tr>
     <tbody>
       <tr *ngFor="let c of checksList;let ci=index"(mouseenter)="toolbar(ci)" (mouseleave)="toolbar1(ci)"id="row{{ci}}">
@@ -29,16 +29,15 @@
         <td>{{c.ReceiptOrInvoice}}</td>
         <td>{{c.numCheck}}</td>
         <td><button type="button" class="btn btn-primary" (click)="updateCi(ci)" (click)="framec.show()"
-            data-toggle="modal" data-target="#modalCart">+</button></td>
+            data-toggle="modal" data-target="#modalCart" title="פרטי מכירות">+</button></td>
         <td style="visibility: hidden;">
-          <button id="del{{ci}}" class="del" (click)="deleteCheck(c)"><svg width="1.5em" height="1.5em"
+          <button id="del{{ci}}" class="del" (click)="deleteCheck(c)" title="מחיקה"><svg width="1.5em" height="1.5em"
               viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
               <path fill-rule="evenodd"
                 d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
             </svg>
-
           </button> </td>
       </tr>
 
@@ -48,8 +47,8 @@
         <div class="modal-dialog modal-side modal-top-right" role="document">
           <!-- <div class="modal-dialog modal-fluid" role="document"> -->
           <div class="modal-content">
-
             <div class="modal-header text-center">
+              <h4 class="modal-title w-100 font-weight-bold">פרטי מכירות</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="framec.hide()">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -81,31 +80,15 @@
                     <td>{{s.pricePerCarat}}</td>
                     <td>{{s.weight*s.pricePerCarat}}</td>
                     <td>אחוזים לשותף</td>
-
                   </tr>
-                  <!-- </tr> -->
-                  <!-- <tr *ngFor="let s of salesList;let i=index" *ngIf="s.id=checksList[indexC].idsales">  -->
-                  <!-- <tr *ngFor="let c of checksList[indexC].IdSales;let i=index"> -->
-
-                  <!-- <td>{{c}}</td> -->
-                  <!--   <td>{{s.date| date: "shortDate"}}</td>
-                    <td>{{s.privateSerialName}}</td>
-                    <td>{{s.stoneName}}</td>
-                    <td>{{s.w}}</td>
-                    <td>{{s.pricePerCarat}}</td>
-                    <td> {{s.weight*s.pricePerCarat | currency:"USD":true}}</td>
-                    <td>אחוזים לשותף????</td>-->
-                  <!-- </tr> -->
                 </tbody>
               </table>
             </div>
-
             <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
                 (click)="framec.hide()">ביטול</button>
               <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
                 (click)="framec.hide()">להדפסה</button>
             </div>
-
           </div>
         </div>
       </div>
@@ -124,7 +107,7 @@
       d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
   </svg>&nbsp;
   <input type="text" id="private" class="form-control form-control-sm ml-3 " (keyup)="searchPrivate()"
-    placeholder="חיפוש לפי שם סריה פרטית" title="Type in a name11">
+    placeholder="חיפוש לפי שם סריה פרטית">
   <div class="container">
     <table id="salesTable" class="table table-hover">
       <thead>
@@ -163,7 +146,8 @@
           <td>{{s.rawOrPolished}}</td>
           <td *ngIf="s.admin==false" class="row-right"></td>
         </tr>
-        <button type="button" class="btn btn-primary" (click)="framen.show()" data-toggle="modal"
+        <button *ngIf="OpenSalesList.length>0"
+        type="button" class="btn btn-primary" (click)="framen.show()" data-toggle="modal"
           data-target="#modalCart">לסגירת צ'ק</button>
       </tbody>
     </table>
@@ -241,22 +225,6 @@
 </form>
 
 
-
-
-
-
-
-<!-- <div class="text-center"> -->
-<!-- <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalRegisterForm">Launch
-  Modal Register Form</a> -->
-<!-- </div> -->
-
-
-
-
-
-
-<!--  -->
 <!-- modal -->
 
 <div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
