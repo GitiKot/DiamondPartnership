@@ -32,7 +32,7 @@ export class SalesComponent implements OnInit {
   keypressevt(e) {
     console.log( "esult"+e.target.value);
     
-   this.saleService.findBySerailName(e.target.value).subscribe(ans => this.salesList = ans);
+  //  this.saleService.findBySerailName(e.target.value).subscribe(ans => this.salesList = ans);
   }
   rawOrPolishedFunc(sale:Sale):string{
 return sale.rawOrPolished == 'raw'?'גלם':'מלוטש'
