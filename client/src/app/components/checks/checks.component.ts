@@ -40,20 +40,23 @@ export class ChecksComponent implements OnInit {
       IdSales: new FormArray([]),
     })
 
+    this.OpenSalesList = new Array();
+    this.ClosedSalesList = new Array();
     this.salesService.getAllSales().subscribe(ans =>
       ans.find(s => {
-        if (s.isOpen = true)
-          this.OpenSalesList = ans;
-        else
-          this.ClosedSalesList = ans;
-        console.log(this.OpenSalesList);
-        console.log("this.ClosedSalesList");
-
-        console.log(this.ClosedSalesList);
+        if (s.isOpen == true) {
+          this.OpenSalesList.push(s);
+        }
+        else {
+          this.ClosedSalesList.push(s);
+        }
       }))
 
     this.checksService.getAllChecks().subscribe(ans => this.checksList = ans);
     // find all sales according public name
+    let PublicSerialName=document.getElementById("publicSerialName");
+    console.log(PublicSerialName);
+    
     this.salesService.findAllSales("2r").subscribe(ans => (ans.map(sale => {
       if (sale.publicSerialName == "2r") {//htmlבמקום 2ר לוקחים את מה שנכנס באינפוט מתוך    
         console.log("findaillsales in");
@@ -65,7 +68,8 @@ export class ChecksComponent implements OnInit {
     console.log("function");
   }
   keypressevt() {
-
+    
+    
   }
   resetform() {
     this.checksForm.reset();
@@ -90,63 +94,96 @@ export class ChecksComponent implements OnInit {
   getSelectedRows() {
     return this.OpenSalesList.filter(x => this.selectedRowIds.has(x.id));
   }
-
+  getSalesFromId(Cid: number) {
+    let arr: Array<Sale>;
+    arr = new Array();
+    for (let c = 0; c < this.checksList.length; c++) {
+      if (this.checksList[Cid].id == this.checksList[c].id) {
+        //  אולי אפשר לעשות פונ אחרת 
+        let s = 0;
+        while (this.checksList[c].IdSales[s]) {
+          for (let i = 0; i < this.ClosedSalesList.length; i++) {
+            if (this.checksList[c].IdSales[s] == this.ClosedSalesList[i].id) {
+              arr.push(this.ClosedSalesList[i]);
+            }
+          }
+          s++;
+        }
+      }
+    }
+    return arr;
+  }
   save() {
     alert("האם הנך בטוח שברצונך לשמור פרטי צ'ק אלו??");// alert("האם ברצונך לשמור את הנתונים") 
-    alert(this.getSelectedRows().length);
-    // console.log(this.checksForm.value);
-    // console.log(this.checksForm.valid);
     if (this.checksForm.valid) {
       for (let i = 0; i < this.getSelectedRows().length; i++) {
         this.checksForm.value.IdSales.push(this.getSelectedRows()[i].id)
       }
       // עובר על כל השורות איפה שאי די שווה הוא מעדכן שדה איזאופן לפולס
-      // this.OpenSalesList.(s=>s.id=this.selectedRowIds,)
-
+      let sale: Sale;
       for (let i = 0; i < this.getSelectedRows().length; i++) {
+        // this.getSelectedRows().some(() => s.id == this.IdSales.value[i]));
         const result = this.OpenSalesList.filter(s =>
-          // this.getSelectedRows().some(() => s.id == this.IdSales.value[i]));
-
           this.getSelectedRows()[i].id.includes(s.id));
-
         for (let j = 0; j < this.OpenSalesList.length; j++) {
-          // console.log("result[0].id");
-          // console.log(result[0].id);
-          // console.log("this.OpenSalesList[j].id");
-          // console.log(this.OpenSalesList[j].id);
-          // console.log(result[0].id == this.OpenSalesList[j].id);
-
           if (result[0].id == this.OpenSalesList[j].id) {
             // this.salesService.updateSale(this.OpenSalesList[j].id, {this.OpenSalesList[j].id,});
-
-            this.OpenSalesList[j].isOpen = false;
-            console.log("isopen");
-
-            console.log(this.OpenSalesList[j].isOpen);
-            console.log(this.OpenSalesList[j]);
-
-            this.salesService.updateSale(this.OpenSalesList[j].id, this.OpenSalesList[j]);
-
-            console.log(this.OpenSalesList);
-
+            // this.OpenSalesList[j].isOpen = false;
+            sale = this.OpenSalesList[j];
+            sale.isOpen = false;
+            this.salesService.updateSale(this.OpenSalesList[j].id, sale);
+           
           }
-
         }
-        console.log("result");
-        console.log(result);
-
       }
-
       // const s = this.OpenSalesList.some((val) => this.getSelectedRows().indexOf(val) !== -1);
-      // console.log("sssssssssssss=========");
       // console.log(s);
-
       this.checksService.addChecks(this.checksForm.value).subscribe(c => {
         this.checksList.push(c);
 
-      })// this.checksForm.reset();
-    }
+      })
+      // this.checksForm.reset();
 
+    }
+  }
+
+  deleteCheck(c: Checks) {
+    console.log(c);
+    let s=0;
+    let sale;
+    while(c.IdSales[s]){
+    for (let j = 0; j < this.ClosedSalesList.length; j++) {
+      if (c.IdSales[s] == this.ClosedSalesList[j].id) {
+        // this.salesService.updateSale(this.OpenSalesList[j].id, {this.OpenSalesList[j].id,});
+        // this.OpenSalesList[j].isOpen = false;
+        sale = this.ClosedSalesList[j];
+        sale.isOpen = true;
+        this.salesService.updateSale(this.ClosedSalesList[j].id, sale);
+      }     
+    }s++;
+  }
+    var ch = this.checksService.deleteChecks(c);
+    console.log(ch);
+    this.checksService.getAllChecks().subscribe(ans => this.checksList = ans);
+    
+  }
+  toolbar(i: number) {
+
+    let row = document.getElementById("row" + i);
+    let del = document.getElementById("del" + i);
+
+    row.style.borderColor = " #f1f1f1";
+    del.style.display = "inline";
+    del.style.visibility = "visible";
+  }
+  toolbar1(i: number) {
+
+    let row = document.getElementById("row" + i);
+    let del = document.getElementById("del" + i);
+
+    row.style.borderColor = "none";
+    del.style.display = "none";
+    del.style.visibility = "hidden";
   }
   searchPrivate() {
 
@@ -182,8 +219,4 @@ export class ChecksComponent implements OnInit {
   get IdSales(): FormArray {
     return this.checksForm.get('IdSales') as FormArray;
   }
-  // get IdSales(){
-  // return this.checksForm.get();
-  // this.salesList.find({_id:Array(this.IdSales)}).pretty()
-  // }
 }

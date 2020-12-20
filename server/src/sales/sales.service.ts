@@ -64,6 +64,13 @@ export class SalesService {
     //     console.log(updatedArticle);
     //     return updatedArticle;
     //   }
+
+
+
+    // async updateSale(id: string, createSaleDto: createSaleDto): Promise<Article> {
+    //     return await this.saleModel.findByIdAndUpdate(id, createSaleDto);
+    //   }
+
     async updateSale(
         id: string,
         date: Date,
@@ -106,11 +113,22 @@ export class SalesService {
         if (rawOrPolished) {
             updatedSale.rawOrPolished = rawOrPolished;
         }
-        if (isOpen) {
+        console.log("isopen");
+        console.log(isOpen);
+        
+        if (isOpen!=null) {
+            console.log("in open");
+            console.log(updatedSale.isOpen);
+            console.log(isOpen);
+            
             updatedSale.isOpen = isOpen;
         }
 
         updatedSale.save();
+        console.log("updatesale");
+        
+        console.log(updatedSale);
+        
         return updatedSale;
     }
     async deleteSale(saleId: string) {
