@@ -91,11 +91,13 @@ finishDate:Date; -->
                         <div class="row">
                             <div class="col-4 col-sm-6 col-example">
                                 <div class="md-form mb-5">
-                                    <select class="browser-default custom-select" mdbInput mdbValidate
-                                        [formControl]="partner">
-                                        <option *ngFor="let p of partnerList" selected>{{p.name}}</option>
-
+                                    <select id="selectPart" placeholder="בחר" class="browser-default custom-select"
+                                        mdbInput mdbValidate [formControl]="partner">
+                                      
+                                        <option *ngFor="let p of partnerList" selected> {{p.name}}</option>
                                     </select>
+                                    <label> בחר שותף</label>
+
                                     <mdb-error *ngIf="partner.invalid && (partner.dirty || partner.touched)">
                                     </mdb-error>
                                     <mdb-success *ngIf="partner.valid && (partner.dirty ||  partner.touched)">
@@ -112,7 +114,7 @@ finishDate:Date; -->
                                 data-target="#basicExample" (click)="save()" mdbWavesEffect id="newexpenses">
                                 שמירה </button>
                             <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal"
-                                data-target="#basicExample" (click)="frame1.hide()" mdbWavesEffect id="newexpenses">
+                                data-target="#basicExample" (click)="cancelex()" mdbWavesEffect id="newexpenses">
                                 ביטול </button>
                         </div>
                     </div>
@@ -130,19 +132,19 @@ finishDate:Date; -->
                     </button>
                 </div>
                 <div class="modal-body">
-                    <table  class="table table-dark">
+                    <table class="table table-dark">
                         <tbody>
                             <tr>
                                 <th scope="col">שם סריה פרטית </th>
                                 <th>מחיר</th>
-                                <th><i class="fa fa-plus" (click)="addPrivateSerial()" aria-hidden="true" ></i></th>
+                                <th><i class="fa fa-plus" (click)="addPrivateSerial()" aria-hidden="true"></i></th>
                             </tr>
                             <div formArrayName="privateSeria">
                                 <div class="form-group" *ngFor="let ps of privateSeria.controls; let i=index">
 
                                     <div class="form-group" [formGroupName]="i">
                                         <tr scope="row">
-                                       
+
                                             <td class="md-form mb-5">
                                                 <input mdbInput class="inputS" type="text" formControlName="name"
                                                     placeholder="שם סריה">
@@ -152,7 +154,7 @@ finishDate:Date; -->
                                                 <input mdbInput class="inputS" type="text" (click)="test.toggle()"
                                                     placeholder="הוצאות לחץ לפרטים">
                                                 <div mdbCollapse #test="bs-collapse">
-                                                    <table  class="table-dark ">
+                                                    <table class="table-dark ">
                                                         <tbody>
                                                             <div formArrayName="expensesArray">
                                                                 <tr>
@@ -160,7 +162,7 @@ finishDate:Date; -->
                                                                     <th>מחיר </th>
                                                                     <th><i class="fa fa-plus" (click)="addExArrray(i)"
                                                                             aria-hidden="true"></i></th>
-                                                                  
+
                                                                 </tr>
                                                                 <div
                                                                     *ngFor="let e of expensesArray(i).controls;let ip=index">
@@ -172,14 +174,14 @@ finishDate:Date; -->
                                                                             <td>
                                                                                 <input type="text" size="sm"
                                                                                     class="inputS form-control"
-                                                                                    formControlName="exspensesName">                                                     
+                                                                                    formControlName="exspensesName">
                                                                             </td>
                                                                             <td>
                                                                                 <input type="number" size="sm"
                                                                                     class="form-control inputS"
-                                                                                    formControlName="exspensesPrice" 
+                                                                                    formControlName="exspensesPrice"
                                                                                     #price
-                                                                                    (input) ="totalPrice[i] = price.value + totalPrice[i]">
+                                                                                    (input)="totalPrice[i] = price.value + totalPrice[i]">
                                                                             </td>
                                                                         </tr>
                                                                     </div>

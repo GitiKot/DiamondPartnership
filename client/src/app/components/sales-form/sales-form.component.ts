@@ -49,7 +49,8 @@ export class SalesFormComponent implements OnInit {
       isOpen:new FormControl(''),
     });
     
-
+  // var radioRaw= document.getElementById('raw');
+  document.getElementById('raw').setAttribute('checked','true')
   }
   numStonesFunc() {
 

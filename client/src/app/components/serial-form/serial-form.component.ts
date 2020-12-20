@@ -52,11 +52,11 @@ export class SerialFormComponent implements OnInit {
     }
   }
   save() {
-    console.log(this.privateSeria.value);
-    console.log(this.serialForm.value);
-    alert("האם ברצונך לשמור את הנתונים")
-    this.serialForm.reset();
-    this.r.navigate(['./seriousness'])
+    // console.log(this.privateSeria.value);
+    console.log(this.serialForm.controls['partner'].value);
+    // alert("האם ברצונך לשמור את הנתונים")
+    // this.serialForm.reset();
+    // this.r.navigate(['./seriousness'])
     // if (this.serialForm.valid) {
     //   this.seriousnessService.addSeria(this.serialForm.value).subscribe(e => {
     //   })
@@ -70,6 +70,8 @@ export class SerialFormComponent implements OnInit {
   }
   cancelex() {
     this.privateSeria.reset();
+    this.r.navigate(['seriousness']);
+
   } get serialName() {
     return this.serialForm.get('serialName');
   }
