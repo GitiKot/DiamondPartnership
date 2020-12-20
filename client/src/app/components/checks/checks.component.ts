@@ -40,26 +40,16 @@ export class ChecksComponent implements OnInit {
       IdSales: new FormArray([]),
     })
 
-this.OpenSalesList=new Array();
-this.ClosedSalesList=new Array();
-
+    this.OpenSalesList = new Array();
+    this.ClosedSalesList = new Array();
     this.salesService.getAllSales().subscribe(ans =>
       ans.find(s => {
-        console.log("s");
-        console.log(s);
-        // this.OpenSalesList = ans;//לשנות להכנסת נתונים נכונים
-        // this.ClosedSalesList = ans;//לשנות להכנסת נתונים נכונים
         if (s.isOpen == true) {
-
           this.OpenSalesList.push(s);
         }
         else {
           this.ClosedSalesList.push(s);
         }
-        console.log("this.OpenSalesList");
-        console.log(this.OpenSalesList);
-        console.log("this.ClosedSalesList");
-        console.log(this.ClosedSalesList);
       }))
 
     this.checksService.getAllChecks().subscribe(ans => this.checksList = ans);
@@ -82,9 +72,6 @@ this.ClosedSalesList=new Array();
   }
   updateCi(i: number) {
     this.indexC = i;
-    console.log("updateci");
-    console.log(this.indexC);
-    
   }
   onRowClick(id: string) {
 
@@ -103,20 +90,29 @@ this.ClosedSalesList=new Array();
   getSelectedRows() {
     return this.OpenSalesList.filter(x => this.selectedRowIds.has(x.id));
   }
-  getSalesFromId(Cid: string) {
-    console.log("cid");
-    console.log(Cid);
+  getSalesFromId(Cid: number) {
     let arr: Array<Sale>;
+    arr=new Array();
+    // console.log("cid");
+    // console.log(Cid);
     for (let c = 0; c < this.checksList.length; c++) {
-      if (Cid==this.checksList[c].id) {
+      // console.log("11111111111111111111111111");
+      if (this.checksList[Cid].id == this.checksList[c].id) {
+        //  אולי אפשר לעשות פונ אחרת 
         let s = 0;
-        for (let i = 0; i < this.ClosedSalesList.length; i++) {
-          if (this.checksList[c].IdSales[s] == this.ClosedSalesList[i].id) {
-            arr.push(this.ClosedSalesList[i]);
+        while (this.checksList[c].IdSales[s]) {
+          for (let i = 0; i < this.ClosedSalesList.length; i++) {
+            if (this.checksList[c].IdSales[s] == this.ClosedSalesList[i].id) {         
+              arr.push(this.ClosedSalesList[i]);
+              // console.log("getSalesFromId");
+            }
           }
+          s++;
         }
+
       }
-    }
+    } console.log(arr);
+
     return arr;
   }
   save() {

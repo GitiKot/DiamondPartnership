@@ -62,15 +62,20 @@
                   </tr>
                 </thead>
                 <tbody>
-                  
-                  <!-- <tr *ngFor="let s of getSalesFromId([indexC]);let i=index">
-                    <td>{{s}}</td>
-                  </tr> -->
+                  <tr *ngFor="let s of getSalesFromId([indexC]);let i=index">
+                    <td>{{s.id}}</td>
+                    <td>{{s.date|date:"shortDate"}}</td>
+                    <td>{{s.privateSerialName}}</td>
+                    <td>{{s.stoneName}}</td>
+                    <td>{{s.weight}}</td>
+                    <td>{{s.pricePerCarat}}</td>
+                    <td>{{s.weight*s.pricePerCarat}}</td>
+                  </tr>
                   <!-- </tr> -->
                   <!-- <tr *ngFor="let s of salesList;let i=index" *ngIf="s.id=checksList[indexC].idsales">  -->
-                  <tr *ngFor="let c of checksList[indexC].IdSales;let i=index">
+                  <!-- <tr *ngFor="let c of checksList[indexC].IdSales;let i=index"> -->
                    
-                    <td>{{c}}</td>
+                    <!-- <td>{{c}}</td> -->
                     <!--   <td>{{s.date| date: "shortDate"}}</td>
                     <td>{{s.privateSerialName}}</td>
                     <td>{{s.stoneName}}</td>
@@ -78,7 +83,7 @@
                     <td>{{s.pricePerCarat}}</td>
                     <td> {{s.weight*s.pricePerCarat | currency:"USD":true}}</td>
                     <td>אחוזים לשותף????</td>-->
-                  </tr>
+                  <!-- </tr> -->
                 </tbody>
               </table>
             </div>
