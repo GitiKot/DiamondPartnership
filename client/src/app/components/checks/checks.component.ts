@@ -67,10 +67,7 @@ export class ChecksComponent implements OnInit {
     // here the table items are called from webapi
     console.log("function");
   }
-  keypressevt() {
-    
-    
-  }
+  
   resetform() {
     this.checksForm.reset();
   }
