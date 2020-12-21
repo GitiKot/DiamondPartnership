@@ -54,16 +54,16 @@ export class ChecksComponent implements OnInit {
 
     this.checksService.getAllChecks().subscribe(ans => this.checksList = ans);
     // find all sales according public name
-    let PublicSerialName=document.getElementById("publicSerialName");
-    console.log(PublicSerialName);
+    // let PublicSerialName=document.getElementById("publicSerialName");
+    // console.log(PublicSerialName);
     
-    this.salesService.findAllSales("2r").subscribe(ans => (ans.map(sale => {
-      if (sale.publicSerialName == "2r") {//htmlבמקום 2ר לוקחים את מה שנכנס באינפוט מתוך    
-        console.log("findaillsales in");
-        console.log(sale.publicSerialName == "2r");
-        console.log("salelist");
-      }
-    })))
+    // this.salesService.findAllSales("2r").subscribe(ans => (ans.map(sale => {
+    //   if (sale.publicSerialName == "2r") {//htmlבמקום 2ר לוקחים את מה שנכנס באינפוט מתוך    
+    //     console.log("findaillsales in");
+    //     console.log(sale.publicSerialName == "2r");
+    //     console.log("salelist");
+    //   }
+    // })))
     // here the table items are called from webapi
     console.log("function");
   }
