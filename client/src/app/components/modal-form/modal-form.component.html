@@ -25,17 +25,14 @@
 </div> -->
 <!-- modal to save -->
 
-<button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
-  (click)="frame.show()" mdbWavesEffect>שמירה
-</button>
 
-<div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
+<div mdbModal #frame1="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
   aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
         <!-- <h4 class="modal-title w-100 font-weight-bold">Write to us</h4> -->
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame1.hide()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -47,7 +44,7 @@
       <button class="btn btn-primary" mdbWavesEffect>אישור
         <!-- <mdb-icon far icon="paper-plane" class="ml-1"></mdb-icon> -->
       </button>
-      <button  (click)="frame.hide()" class="btn btn-primary" mdbWavesEffect>ביטול
+      <button  (click)="frame1.hide()" class="btn btn-primary" mdbWavesEffect>ביטול
         <!-- <mdb-icon far icon="paper-plane" class="ml-1"></mdb-icon> -->
       </button>
     </div></div>

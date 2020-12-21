@@ -17,7 +17,7 @@ export class SalesComponent implements OnInit {
 
   constructor(private r: Router, private route: ActivatedRoute, private saleService: SalesService) { }
   salesList: Array<Sale>
-
+  nameSerial: string;
   ngOnInit(): void {
     this.salesForm = new FormGroup({});
     // this.saleService.getAllSales().subscribe(ans => this.salesList = ans);
@@ -29,11 +29,14 @@ export class SalesComponent implements OnInit {
     this.saleService.getAllSales().subscribe(ans => this.salesList = ans);
   }
   keypressevt(e) {
-    console.log("esult: " + e.target.value);
 
-    this.saleService.findBySerailName(e.target.value).subscribe(ans => this.salesList = ans);
-    console.log(this.salesList);
-    
+    this.saleService.findBySerailName(e.target.value).subscribe(ans => {
+      this.salesList = ans; 
+      if (this.salesList.length != 0)
+        this.nameSerial = e.target.value;
+      else
+        this.nameSerial = undefined;
+    });
   }
   rawOrPolishedFunc(sale: Sale): string {
     return sale.rawOrPolished == 'raw' ? 'גלם' : 'מלוטש'
