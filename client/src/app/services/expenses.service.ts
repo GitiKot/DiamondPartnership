@@ -20,7 +20,16 @@ export class ExpensesService {
     console.log("service", this.expensesUrl);
     return this.http.post<Expenses>(this.expensesUrl, e);
   }
-
+  updateExpenses(exId, expenses: Expenses) {
+    const urlupdate = `${this.expensesUrl}/${expenses.id}`;
+    return this.http.patch<Expenses>(urlupdate, expenses, this.options)
+    .subscribe((e: Expenses) => {
+      console.log(e, "suecces");
+    }, () => {
+      console.log("error");
+    }
+    );
+  }
   deleteExpenses(e: Expenses) {
     var ex = `${this.expensesUrl}/${e.id}`;
     console.log("url=" + ex);

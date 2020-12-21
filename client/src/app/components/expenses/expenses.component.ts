@@ -51,37 +51,39 @@ export class ExpensesComponent implements OnInit {
   updateEi(i: number) {
     this.indexE = i;
   }
+  updateExpenses(exid:string,expenses:Expenses){
+    this.expensesService.updateExpenses(exid, expenses);
+  }
   deleteExpe(e: Expenses) {
     var ex = this.expensesService.deleteExpenses(e);
     console.log(ex);
-
     this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
-
   }
-  // deleteSale(sale){
-  //   var tt= this.saleService.deletePartner(sale);
-  //   console.log( tt);
-  //   this.saleService.getAllSales().subscribe(ans => this.salesList = ans);
-  // }
+ 
   toolbar(i: number) {
    
     let row = document.getElementById("row"+i);
     let del = document.getElementById("del"+i);
-   
+   let update=document.getElementById("update"+i);
     row.style.borderColor = " #f1f1f1";
     del.style.display = "inline";
     del.style.visibility = "visible";
-    
+    update.style.visibility="visible";
+    update.style.display = "inline";
+
     
   }
   toolbar1(i: number) {
 
     let row = document.getElementById("row"+i);
     let del = document.getElementById("del"+i);
-   
+    let update=document.getElementById("update"+i);
+
     row.style.borderColor = "none";
     del.style.display = "none";
     del.style.visibility = "hidden";
+    update.style.display = "none";
+    update.style.visibility = "hidden";
   }
 }
 

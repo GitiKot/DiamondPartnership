@@ -52,7 +52,7 @@
     bottom: 25px; left: 25px;
     /* width: 100px; */
 }
-.del{
+.del.update{
   text-align: center;
   border: none;
   display: none;
