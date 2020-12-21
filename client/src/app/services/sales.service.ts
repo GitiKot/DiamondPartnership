@@ -15,14 +15,14 @@ export class SalesService {
     return this.http.get<Sale[]>(this.salesUrl);
   }
 
-  // findBySerailName(serialName: string):Observable<Sale[]> {
-  //   const urlFindBy = `${this.salesUrl}/${serialName}`;
-  //   return this.http.get<Sale[]>(urlFindBy)
-  // }
-
-  // findAllSales(pn: string): Observable<Sale[]> {
-  //   return this.http.get<Sale[]>(this.salesUrl);
-  // }
+  findBySerailName(serialName: string):Observable<Sale[]> {
+    const urlFindBy = `${this.salesUrl}/${serialName}`;
+    return this.http.get<Sale[]>(urlFindBy)
+  }
+//בשביל מחוק את זה צריך למחוק גם מהשקים
+  findAllSales(pn: string): Observable<Sale[]> {
+    return this.http.get<Sale[]>(this.salesUrl);
+  }
   addSale(s: Sale): Observable<Sale> {
     console.log("service", this.salesUrl);
 

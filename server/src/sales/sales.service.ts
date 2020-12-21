@@ -21,6 +21,7 @@ export class SalesService {
 
     async getSales() {
         const Sales = await this.salesModel.find().exec();
+        
         return Sales.map(sale => ({
             id: sale.id,
             date: sale.date,
@@ -38,23 +39,20 @@ export class SalesService {
         }));
     }
     
-    async findBySerailName(serialName: string) {      
-         console.log("from sale server");
-        const SaleBySerailName = await this.salesModel.find({ publicSerialName: serialName }).exec();
-       console.log("22222222");
+    async findBySerailName(serialName: string) {  
+            
+        const SaleBySerailName = await this.salesModel.find({ publicSerialName: serialName });
        
         return SaleBySerailName.map(sale => ({
             id: sale.id,
             date: sale.date,
             numOfDate: sale.numOfDate,
-            // getchack: sale.getchack,
             invoiceNumber: sale.invoiceNumber,
             publicSerialName: sale.publicSerialName,
             privateSerialName: sale.privateSerialName,
             stoneName: sale.stoneName,
             weight: sale.weight,
             pricePerCarat: sale.pricePerCarat,
-            // TotalPrice: sale.TotalPrice,
             rawOrPolished: sale.rawOrPolished,
             isOpen: sale.isOpen,
         }));
@@ -127,7 +125,6 @@ export class SalesService {
         updatedSale.save();
         console.log("updatesale");
         
-        console.log(updatedSale);
         
         return updatedSale;
     }

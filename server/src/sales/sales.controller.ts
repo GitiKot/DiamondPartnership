@@ -19,16 +19,14 @@ export class SalesController {
     const sale = await this.salesService.getSales();
     return sale;
   }
-  @Get()
-  async findBySerailName(serialName: string) {
-    const sale = await this.salesService.findBySerailName(serialName);
+
+  @Get(':serialName')
+  async findBySerailName(@Param('serialName') publicSerialName: string) {
+    
+    const sale = await this.salesService.findBySerailName(publicSerialName);
     return sale;
   }
-  // @Get()
-  // async findAllSales(pn:string) {
-  //   const sale = await this.salesService.findSales(pn);
-  //   return sale;
-  // }
+  
   @Patch(':id')
   async updateSale(
 
