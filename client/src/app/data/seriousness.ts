@@ -21,6 +21,7 @@ export class Seriousness {
     // AmountReceivedPartner:number
     // finishDate:Date;
 
+    
 constructor(s?: string, d?: Date, p?: Partner,
         ps?: Array<{
             namePrivate: string,price:number, expenses:

@@ -76,16 +76,15 @@ export class SerialFormComponent implements OnInit {
       this.seriousnessService.addSeria(this.serialForm.value).subscribe(sss => {
         this.r.navigate(['seriousness/serial-form/modal-form','סריה'])
       },()=>{
-        console.log("error");
-        
-      }
-      )
-    }
+        console.log("error");       
+      } )}
+     
+    
     else{
       alert("חסרים נתונים")
     }
      this.serialForm.reset();
-    this.r.navigate(['./seriousness'])
+    // this.r.navigate(['./seriousness'])
   }
  
   close() {
