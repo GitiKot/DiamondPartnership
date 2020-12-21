@@ -20,7 +20,7 @@ export class PartnersFormComponent implements OnInit {
   {
     var firstInput = document.getElementById('name');
     var allInput = document.querySelectorAll('input');
-  
+
 
 
     firstInput.focus();
@@ -30,25 +30,26 @@ export class PartnersFormComponent implements OnInit {
     var input = document.getElementById("name");
 
     allInput.forEach(a => a.addEventListener("keypress", function (event) {
-    
-      
+
+
       if (event.code === "Enter") {
         var current = (event.target as Element);
-          event.preventDefault();
+        event.preventDefault();
         var index = current.getAttribute('tabindex');
         var num = (Number(index));
         num += 1;
         // let nextInput= document.querySelector('[tabindex=num]');
         let nextInput = FindByAttributeValue("tabindex", num, "input");
-        if (nextInput != undefined) { 
+        if (nextInput != undefined) {
           // alert(nextInput);
-          nextInput.focus();}
-          else{
-            var save = document.getElementById('save');
-            save.focus();
-           alert("האם הנך בטוח במה שאתה עושה");
-          
-          }
+          nextInput.focus();
+        }
+        else {
+          var save = document.getElementById('save');
+          save.focus();
+          alert("האם הנך בטוח במה שאתה עושה");
+
+        }
         function FindByAttributeValue(attribute, value, element_type) {
           element_type = element_type || "*";
           var All = document.getElementsByTagName(element_type);
@@ -74,6 +75,7 @@ export class PartnersFormComponent implements OnInit {
   }
 
   save() {
+
     alert("האם הנך בטוח במה שאתה עושה");
     if (this.partnersForm.valid) {
       const p = new Partner();
@@ -86,21 +88,14 @@ export class PartnersFormComponent implements OnInit {
       // p.Remarks = this.partnersForm.controls.phone.value;
       this.partnerService.addPartner(this.partnersForm.value)
         .subscribe(a => {
-          this.partnersList.push(a);
+          this.router.navigate(['partners-form/modal-form', 'שותף'])
           this.partnersForm.reset();
+        }, () => {
+          console.log("error");
         });
     }
 
-    // let p = new Partner(this.partnersForm.controls.name.value,
-    //   this.partnersForm.controls.email.value
-
-    //   ,this.partnersForm.controls.phone.value);
-
-    // נרשמים לפונ שהיא מחזירה תשובה =האוביקט= רק כשגומרת ליצור אוביקט חדש 
-    // this.partnerService.addPartner(p).subscribe(a=>this.partnersForm.reset())     
-    // this.router.navigate(['']);
-
-    //אם י שפונקציית הצלחה נעשה אלרת עם:השותף נותר בהלחה
+ this.router.navigate(['partners-form']);
   }
   cancel() {
     this.router.navigate(['/partners']);

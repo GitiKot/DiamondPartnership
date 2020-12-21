@@ -25,21 +25,27 @@ const routes: Routes = [
       { path: 'modal-form', component:ModalFormComponent, }]
   },
   { path: 'sales/:isSales', component: SalesComponent },
-  { path: 'sales-form', component: SalesFormComponent },
+  { path: 'sales-form', component: SalesFormComponent,children:[
+    {path:'',redirectTo:'sales-form',pathMatch: 'full'}  ,
+   { path:'modal-form/:type',component:ModalFormComponent,}] ,
+
+
+   },
   {
     path: 'seriousness', component: SeriousnessComponent,
     children: [{ path: '', redirectTo: 'seriousness', pathMatch: 'full' }
       , {
         path: 'serial-form', component: SerialFormComponent, children:
          [{ path: '', redirectTo: 'serial-form', pathMatch: 'full' }       
-       ,  { path: 'modal-form', component:ModalFormComponent, }]
+       ,  { path: 'modal-form/:type', component:ModalFormComponent, }]
     },
     ]
   },
-  // { path: 'modal-form', component:ModalFormComponent, },
   { path: 'nav-bar', component: NavBarComponent },
   { path: 'partners', component: PartnersComponent },
-  { path: 'partners-form', component: PartnersFormComponent },
+  { path: 'partners-form', component: PartnersFormComponent,children:[
+    {path:'',redirectTo:'partners-form',pathMatch:'full'},
+    {path: 'modal-form/:type', component:ModalFormComponent,}] },
 
 ];
 

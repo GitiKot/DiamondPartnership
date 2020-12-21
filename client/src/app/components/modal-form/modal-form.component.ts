@@ -1,6 +1,7 @@
 import { ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'angular-bootstrap-md';
 
 @Component({
@@ -10,8 +11,9 @@ import { ModalDirective } from 'angular-bootstrap-md';
 })
 export class ModalFormComponent implements OnInit {
   validatingForm: FormGroup;
+  typeModel = this.route.snapshot.paramMap.get('type');
   @ViewChild('frame1') frame1: ModalDirective;
-  constructor() { }
+  constructor(private route:ActivatedRoute,private r:Router) { }
 
   // ngOnInit(): void {
   // }
@@ -27,7 +29,10 @@ export class ModalFormComponent implements OnInit {
   ngAfterViewInit() { 
     this.frame1.show();
   }
-
+  hideFrame1(){
+    this.frame1.hide();
+this.r.navigate(['']);
+  }
 
 // import { Component } from '@angular/core';
 
