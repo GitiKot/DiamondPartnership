@@ -20,22 +20,23 @@ export class SalesComponent implements OnInit {
 
   ngOnInit(): void {
     this.salesForm = new FormGroup({});
-    this.saleService.getAllSales().subscribe(ans => this.salesList = ans);
-    // this.partnerService.getAllPartners().subscribe(ans => this.partnersList = ans);
+    // this.saleService.getAllSales().subscribe(ans => this.salesList = ans);
 
   }
-  deleteSale(sale){
-    var tt= this.saleService.deleteSale(sale);
-    console.log( tt);
+  deleteSale(sale) {
+    var tt = this.saleService.deleteSale(sale);
+    // console.log(tt);
     this.saleService.getAllSales().subscribe(ans => this.salesList = ans);
   }
   keypressevt(e) {
-    console.log( "esult"+e.target.value);
+    console.log("esult: " + e.target.value);
+
+    this.saleService.findBySerailName(e.target.value).subscribe(ans => this.salesList = ans);
+    console.log(this.salesList);
     
-  //  this.saleService.findBySerailName(e.target.value).subscribe(ans => this.salesList = ans);
   }
-  rawOrPolishedFunc(sale:Sale):string{
-return sale.rawOrPolished == 'raw'?'גלם':'מלוטש'
+  rawOrPolishedFunc(sale: Sale): string {
+    return sale.rawOrPolished == 'raw' ? 'גלם' : 'מלוטש'
   }
   searchPrivate() {
 
