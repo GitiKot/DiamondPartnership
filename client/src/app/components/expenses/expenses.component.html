@@ -1,116 +1,146 @@
 <!-- <form [formGroup]='expensesForm' class="form-inline d-flex justify-content-center md-form form-sm mt-0"> -->
+  <form *ngIf="newexpensesForm" [formGroup]="newexpensesForm">
 
-<body>
-  <h3>טבלת הוצאות</h3>
-  <div class="form-inline d-flex justify-content-center md-form form-sm mt-0">
-    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
-      xmlns="http://www.w3.org/2000/svg">
-      <path fill-rule="evenodd"
-        d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
-      <path fill-rule="evenodd"
-        d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
-    </svg>&nbsp;
-    <input type="text" id="myInput" class="form-control form-control-sm ml-3" (keyup)="myFunction()"
-      placeholder="מיון לפי שם סריה כללית" title="Type in a name">
-    <!-- <a class="btn btn-primary"  [routerLink]="['/expenses-form']">הוצאה חדשה</a> -->
-    <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
-      [routerLink]="['expenses-form']" mdbWavesEffect id="newexpenses">
-      הוצאה חדשה
-    </button>
-
-    <router-outlet></router-outlet>
-  </div>
-  <table id="myTable">
-    <thead>
-      <tr class="header">
-        <th style="width: 150px;">שם סריה כללית</th>
-        <th>תאריך</th>
-        <th style="width: 270px;">האם קיבלתי צ'ק או לקזז הצ'ק הבא</th>
-        <th style="width: 125px;">מספר חשבונית</th>
-        <th>הערות</th>
-        <th>סכום</th>
-        <th>פרוט</th>
-        <th style="width: 100px;">סכום לשותף</th>
-        <th style="visibility: hidden;"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let e of expensesList;let ei=index" (mouseenter)="toolbar(ei)" (mouseleave)="toolbar1(ei)"
-        id="row{{ei}}">
-        <td>{{e.PublicSerialName}}</td>
-        <td>{{e.date| date: "shortDate"}}</td>
-        <td>{{e.getchack}}</td>
-        <td>{{e.InvoiceNumber}}</td>
-        <td>{{e.Remarks}}</td>
-        <td>{{e.amount|currency}}</td>
-        <td><button type="button" class="btn btn-primary" (click)="updateEi(ei)" (click)="frame.show()"
-            data-toggle="modal" data-target="#modalCart">+</button></td>
-        <td>{{e.amountPartner}}</td>
-        <td style="visibility: hidden;">
-          <button id="del{{ei}}" class="del" (click)="deleteExpe(e)" title="מחיקה"><svg width="1.5em" height="1.5em"
-              viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-              <path fill-rule="evenodd"
-                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-            </svg>
-            <!-- <i class="fas fa-trash"></i> -->
-          </button> </td>
-        <td style="visibility: hidden;">
-          <button id="update{{ei}}" class="update" (click)="updateExpenses(e)" title="עדכון">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-brush-fill" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M15.825.12a.5.5 0 0 1 .132.584c-1.53 3.43-4.743 8.17-7.095 10.64a6.067 6.067 0 0 1-2.373 1.534c-.018.227-.06.538-.16.868-.201.659-.667 1.479-1.708 1.74a8.117 8.117 0 0 1-3.078.132 3.658 3.658 0 0 1-.563-.135 1.382 1.382 0 0 1-.465-.247.714.714 0 0 1-.204-.288.622.622 0 0 1 .004-.443c.095-.245.316-.38.461-.452.393-.197.625-.453.867-.826.094-.144.184-.297.287-.472l.117-.198c.151-.255.326-.54.546-.848.528-.739 1.2-.925 1.746-.896.126.007.243.025.348.048.062-.172.142-.38.238-.608.261-.619.658-1.419 1.187-2.069 2.175-2.67 6.18-6.206 9.117-8.104a.5.5 0 0 1 .596.04z"/>
-          </svg>
-          </button> </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- -------model expenses------------------------------------ -->
-
-  <div mdbModal #frame="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-side modal-top-right" role="document">
-      <!-- <div class="modal-dialog modal-fluid" role="document"> -->
-      <div class="modal-content">
-
-        <div class="modal-header text-center">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
-            <!-- <span aria-hidden="true">×</span>  -->
-            <span aria-hidden="true">&times;</span>
-          </button>
+    <body>
+      <h3>טבלת הוצאות</h3>
+      <div class="form-inline d-flex justify-content-center md-form form-sm mt-0">
+        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd"
+            d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
+          <path fill-rule="evenodd"
+            d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+        </svg>&nbsp;
+        <input type="text" id="myInput" class="form-control form-control-sm ml-3" (keyup)="myFunction()"
+          placeholder="מיון לפי שם סריה כללית" title="Type in a name">
+        <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
+          [routerLink]="['expenses-form']" mdbWavesEffect id="newexpenses">
+          הוצאה חדשה
+        </button>
+    
+        <router-outlet></router-outlet>
+      </div>
+      <table id="myTable">
+        <thead>
+          <tr class="header">
+            <th style="width: 150px;">שם סריה כללית</th>
+            <th>תאריך</th>
+            <th style="width: 270px;">האם קיבלתי צ'ק או לקזז הצ'ק הבא</th>
+            <th style="width: 125px;">מספר חשבונית</th>
+            <th>הערות</th>
+            <th>סכום</th>
+            <th>פרוט</th>
+            <th style="width: 100px;">סכום לשותף</th>
+            <th style="visibility: hidden;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let e of expensesList;let ei=index" (mouseenter)="toolbar(ei)" (mouseleave)="toolbar1(ei)"
+            id="row{{ei}}">
+            <td>{{e.PublicSerialName}}</td>
+            <td>{{e.date| date: "shortDate"}}</td>
+            <td>{{e.getchack}}</td>
+            <td>{{e.InvoiceNumber}}</td>
+            <td>{{e.Remarks}}</td>
+            <td>{{e.amount|currency}}</td>
+            <td><button type="button" class="btn btn-primary" (click)="updateEi(ei)" (click)="frame.show()"
+                data-toggle="modal" data-target="#modalCart">+</button></td>
+            <td>{{e.amountPartner}}</td>
+            <td style="visibility: hidden;">
+              <button id="del{{ei}}" class="del" (click)="deleteExpe(e)" title="מחיקה"><svg width="1.5em" height="1.5em"
+                  viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                  <path fill-rule="evenodd"
+                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                </svg>
+                <!-- <i class="fas fa-trash"></i> -->
+              </button> </td>
+            <td style="visibility: hidden;">
+              <button id="update{{ei}}" class="update" (click)="updateExpenses(e)" title="עדכון">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-brush-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15.825.12a.5.5 0 0 1 .132.584c-1.53 3.43-4.743 8.17-7.095 10.64a6.067 6.067 0 0 1-2.373 1.534c-.018.227-.06.538-.16.868-.201.659-.667 1.479-1.708 1.74a8.117 8.117 0 0 1-3.078.132 3.658 3.658 0 0 1-.563-.135 1.382 1.382 0 0 1-.465-.247.714.714 0 0 1-.204-.288.622.622 0 0 1 .004-.443c.095-.245.316-.38.461-.452.393-.197.625-.453.867-.826.094-.144.184-.297.287-.472l.117-.198c.151-.255.326-.54.546-.848.528-.739 1.2-.925 1.746-.896.126.007.243.025.348.048.062-.172.142-.38.238-.608.261-.619.658-1.419 1.187-2.069 2.175-2.67 6.18-6.206 9.117-8.104a.5.5 0 0 1 .596.04z"/>
+              </svg>
+              </button>
+              <!-- <button (click)="enableSection(ei, expenses.disabled)">{{ expenses.disabled ? 'Edit': 'Save' }}</button> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    
+      <!-- -------model expenses------------------------------------ -->
+    
+      <div mdbModal #frame="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-side modal-top-right" role="document">
+          <!-- <div class="modal-dialog modal-fluid" role="document"> -->
+          <div class="modal-content">
+    
+            <div class="modal-header text-center">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+                <!-- <span aria-hidden="true">×</span>  -->
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+    
+            <!--Body-->
+            <div class="modal-body">
+              <table class="table table-hover">
+                <thead>
+                  <tr class="header">
+                    <th>שם הוצאה</th>
+                    <th>מחיר</th>
+                    <!-- <th *ngIf="">Remove</th> -->
+                  </tr>
+                </thead>
+                <!-- צריך לעשות ngif  רק אם יש נתונים בטבלה *ngIf="expensesList.detail"-->
+                <tbody>
+                  <tr *ngFor="let e of expensesList[indexE].detail;let i=index">
+                    <td>{{e.expenses}}</td>
+                    <td>{{e.price}}</td>
+                </tbody>
+    
+              </table>
+            </div>
+            <!-- <button (click)="enableSection(i, d.disabled)">{{ d.disabled ? 'Edit': 'Save' }}</button> -->
+    
+            <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
+                (click)="frame.hide()">ביטול</button>
+    
+              <!-- <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
+                  (click)="frame.hide()">שמירה</button> לאחר עדכון?-->
+            </div>
+    
+          </div>
         </div>
+      </div>
+    
+    </body>
 
-        <!--Body-->
-        <div class="modal-body">
-          <table class="table table-hover">
-            <thead>
-              <tr class="header">
-                <th>שם הוצאה</th>
-                <th>מחיר</th>
-                <!-- <th *ngIf="">Remove</th> -->
-              </tr>
-            </thead>
-            <!-- צריך לעשות ngif  רק אם יש נתונים בטבלה *ngIf="expensesList.detail"-->
-            <tbody>
-              <tr *ngFor="let e of expensesList[indexE].detail;let i=index">
-                <td>{{e.expenses}}</td>
-                <td>{{e.price}}</td>
-            </tbody>
 
-          </table>
-        </div>
-        <!-- <button (click)="enableSection(i, d.disabled)">{{ d.disabled ? 'Edit': 'Save' }}</button> -->
 
-        <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
-            (click)="frame.hide()">ביטול</button>
 
-          <!-- <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
-              (click)="frame.hide()">שמירה</button> לאחר עדכון?-->
-        </div>
 
+
+
+
+
+
+
+
+
+
+
+  <div formArrayName="expenses">
+    <div *ngFor="let expenses of newexpensesForm.controls['expenses'].controls; let i = index">
+      <div [formGroupName]="i">
+        <input type="text" formControlName="PublicSerialName">
+        <input type="date" formControlName="date">
+        <input type="text" formControlName="getchack">
+        <input type="text" formControlName="InvoiceNumber">
+        <button (click)="enableSection(i, expenses.disabled)">{{ expenses.disabled ? 'Edit': 'Save' }}</button>
       </div>
     </div>
   </div>
+</form>
 
-</body>

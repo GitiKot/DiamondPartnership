@@ -16,7 +16,7 @@ export class ExpensesComponent implements OnInit {
   expensesList: Array<Expenses>;
   @ViewChild('frame2') public showModalOnClick: ModalDirective;//model s
   @ViewChild('frame1') public showModalOnClick1: ModalDirective;//model big
-
+newexpensesForm:FormGroup;
   constructor(private r: Router, private expensesService: ExpensesService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -24,7 +24,29 @@ export class ExpensesComponent implements OnInit {
     this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
 
     // console.log(this.expensesList);
+    this.expensesService.getAllExpenses()
+    .subscribe((data: any[]) => {
+      this.newexpensesForm = this.formBuilder.group({
+        expenses: this.formBuilder.array(data.map(datum => this.aexpensesFormGroup(datum)))
+      });
+    });
+  }
 
+  enableSection(index, disabled) {
+    const expensesFormGroup = (<FormArray>this.newexpensesForm.get('expenses')).at(index);
+    disabled ? expensesFormGroup.enable() : expensesFormGroup.disable();
+this.updateExpenses(index,expensesFormGroup.value);
+  }
+
+  private aexpensesFormGroup(datum) {
+    console.log("datum");
+    console.log(datum);
+    return this.formBuilder.group({
+      PublicSerialName: this.formBuilder.control({ value: datum.PublicSerialName, disabled: true }),
+      date: this.formBuilder.control({ value: datum.date, disabled: true }),
+      getchack: this.formBuilder.control({ value: datum.getchack, disabled: true }),
+      InvoiceNumber: this.formBuilder.control({ value: datum.InvoiceNumber, disabled: true })
+    });
   }
 
   myFunction() {
@@ -52,7 +74,14 @@ export class ExpensesComponent implements OnInit {
     this.indexE = i;
   }
   updateExpenses(exid:string,expenses:Expenses){
-    this.expensesService.updateExpenses(exid, expenses);
+    console.log("updateExpenses");
+    
+    expenses.amountPartner=23;
+    expenses.amount=2345;
+    expenses.id=this.expensesList[exid].id;
+    expenses.Remarks="";
+    console.log(expenses);
+    this.expensesService.updateExpenses(this.expensesList[exid].id, expenses);
   }
   deleteExpe(e: Expenses) {
     var ex = this.expensesService.deleteExpenses(e);
