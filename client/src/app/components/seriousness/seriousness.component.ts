@@ -27,4 +27,9 @@ seriousnessList:Array<Seriousness>
     
     this.r.navigate(['/seriousness']);
   }
+  deleteSerial(s) {
+    var tt= this.seriousnessService.deleteSeria(s);
+   console.log( tt);
+   this.seriousnessService.getAllSeriousness().subscribe(ans => this.seriousnessList = ans);
+   }
 }

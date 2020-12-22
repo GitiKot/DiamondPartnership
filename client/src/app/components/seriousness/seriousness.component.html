@@ -30,50 +30,38 @@
                 <td>{{s.AmountReceivedPartner | currency:"USD":true}}</td>
                 <td>{{s.finishDate | date: "shortDate"}}</td>
                 <td (click)="test.toggle()"><i class="fa fa-hand-o-down" aria-hidden="true"></i>
-                לפרטים
-                <div   mdbCollapse #test="bs-collapse"  >
-                  
-                    <table >
-                        <tbody>                  
-                            <tr  *ngFor="let sp of s.privateSeria"> 
-                                <td>{{sp.namePrivate}}</td>  
-                                <td>{{sp.price}}</td>  
-                                <td (click)="expenses.toggle()"(click)="test.toggle()"><i class="fa fa-hand-o-down" aria-hidden="true"></i>
-                              הוצאות
-                              <div   mdbCollapse #expenses="bs-collapse"  >
-                                <table >
-                                    <tbody>                  
-                                        <tr  *ngFor="let expense of sp.expenses"> 
-                                            <td>{{expense.nameExpenses}}</td>  
-                                            <td>{{expense.exspensesPrice}}</td>  
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div> 
-                             </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </td>
+                    לפרטים
+                    <div mdbCollapse #test="bs-collapse">
 
-             
-
-              
-            <!-- <td *ngFor="let sp of s.privateSeria">
-                <p>{{sp.namePrivate}}</p>
-                <p>{{sp.price}}</p>
-                <p *ngFor="let e of sp">
-                    <a>{{e.nameExpenses}}</a>
-                    <a>{{e.exspensesPrice}}</a>
-                </p>
-            </td> -->
-                <!-- <td>
-                    <button class="delete" type="button" (click)="deletePartner(p)"> <i
+                        <table>
+                            <tbody>
+                                <tr *ngFor="let sp of s.privateSeria">
+                                    <td>{{sp.namePrivate}}</td>
+                                    <td>{{sp.price}}</td>
+                                    <td (click)="expenses.toggle()" (click)="test.toggle()"><i class="fa fa-hand-o-down"
+                                            aria-hidden="true"></i>
+                                        הוצאות
+                                        <div mdbCollapse #expenses="bs-collapse">
+                                            <table>
+                                                <tbody>
+                                                    <tr *ngFor="let expense of sp.expenses">
+                                                        <td>{{expense.nameExpenses}}</td>
+                                                        <td>{{expense.exspensesPrice}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>    
+                <td>
+                    <button class="delete" type="button" (click)="deleteSerial(s)"> <i
                             class="material-icons">&#xe5cd;</i></button>
-                </td> -->
-                <!-- <td> <button type="button" class="btn btn-primary"[indexSerial]={{i}} (click)="frame2.show()" data-toggle="modal"
-                        data-target="#modalCart">+</button></td> -->
+                </td>
+
             </tr>
         </tbody>
     </table>
@@ -123,10 +111,11 @@
                 </table>
 
             </div>
-            <div>
+            <!-- <div>
                 <button type="button" class="btn btn-primary" data-dismiss="modal"
                     (click)="frame2.hide()">ביטול</button>
-                <button class="btn btn-primary">שמירה</button></div>
+                <button class="btn btn-primary">שמירה</button>
+            </div> -->
         </div>
     </div>
 </div>
