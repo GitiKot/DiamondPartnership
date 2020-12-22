@@ -16,7 +16,7 @@ export class ExpensesComponent implements OnInit {
   expensesList: Array<Expenses>;
   @ViewChild('frame2') public showModalOnClick: ModalDirective;//model s
   @ViewChild('frame1') public showModalOnClick1: ModalDirective;//model big
-newexpensesForm:FormGroup;
+  newexpensesForm: FormGroup;
   constructor(private r: Router, private expensesService: ExpensesService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -25,17 +25,17 @@ newexpensesForm:FormGroup;
 
     // console.log(this.expensesList);
     this.expensesService.getAllExpenses()
-    .subscribe((data: any[]) => {
-      this.newexpensesForm = this.formBuilder.group({
-        expenses: this.formBuilder.array(data.map(datum => this.aexpensesFormGroup(datum)))
+      .subscribe((data: any[]) => {
+        this.newexpensesForm = this.formBuilder.group({
+          expenses: this.formBuilder.array(data.map(datum => this.aexpensesFormGroup(datum)))
+        });
       });
-    });
   }
 
   enableSection(index, disabled) {
     const expensesFormGroup = (<FormArray>this.newexpensesForm.get('expenses')).at(index);
     disabled ? expensesFormGroup.enable() : expensesFormGroup.disable();
-this.updateExpenses(index,expensesFormGroup.value);
+    this.updateExpenses(index, expensesFormGroup.value);
   }
 
   private aexpensesFormGroup(datum) {
@@ -45,7 +45,12 @@ this.updateExpenses(index,expensesFormGroup.value);
       PublicSerialName: this.formBuilder.control({ value: datum.PublicSerialName, disabled: true }),
       date: this.formBuilder.control({ value: datum.date, disabled: true }),
       getchack: this.formBuilder.control({ value: datum.getchack, disabled: true }),
-      InvoiceNumber: this.formBuilder.control({ value: datum.InvoiceNumber, disabled: true })
+      InvoiceNumber: this.formBuilder.control({ value: datum.InvoiceNumber, disabled: true }),
+      amount: this.formBuilder.control({ value: datum.amount, disabled: true }),
+      amountPartner: this.formBuilder.control({ value: datum.amountPartner, disabled: true }),
+      Remarks: this.formBuilder.control({ value: datum.Remarks, disabled: true }),
+      detail: this.formBuilder.control({ value: datum.detail, disabled: true }),
+
     });
   }
 
@@ -73,14 +78,11 @@ this.updateExpenses(index,expensesFormGroup.value);
   updateEi(i: number) {
     this.indexE = i;
   }
-  updateExpenses(exid:string,expenses:Expenses){
+  updateExpenses(exid: string, expenses: Expenses) {
     console.log("updateExpenses");
-    
-    expenses.amountPartner=23;
-    expenses.amount=2345;
-    expenses.id=this.expensesList[exid].id;
-    expenses.Remarks="";
     console.log(expenses);
+    console.log(this.expensesList[exid].id);
+    expenses.id=this.expensesList[exid].id;
     this.expensesService.updateExpenses(this.expensesList[exid].id, expenses);
   }
   deleteExpe(e: Expenses) {
@@ -88,25 +90,25 @@ this.updateExpenses(index,expensesFormGroup.value);
     console.log(ex);
     this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
   }
- 
+
   toolbar(i: number) {
-   
-    let row = document.getElementById("row"+i);
-    let del = document.getElementById("del"+i);
-   let update=document.getElementById("update"+i);
+
+    let row = document.getElementById("row" + i);
+    let del = document.getElementById("del" + i);
+    let update = document.getElementById("update" + i);
     row.style.borderColor = " #f1f1f1";
     del.style.display = "inline";
     del.style.visibility = "visible";
-    update.style.visibility="visible";
+    update.style.visibility = "visible";
     update.style.display = "inline";
 
-    
+
   }
   toolbar1(i: number) {
 
-    let row = document.getElementById("row"+i);
-    let del = document.getElementById("del"+i);
-    let update=document.getElementById("update"+i);
+    let row = document.getElementById("row" + i);
+    let del = document.getElementById("del" + i);
+    let update = document.getElementById("update" + i);
 
     row.style.borderColor = "none";
     del.style.display = "none";
