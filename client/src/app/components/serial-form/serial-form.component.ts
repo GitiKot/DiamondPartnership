@@ -70,17 +70,21 @@ export class SerialFormComponent implements OnInit {
     this.serialForm.get('partner').setValue(this.selectedPartner)
     // console.log(this.privateSeria.value);
     console.log(this.serialForm.value);
-    alert("האם ברצונך לשמור את הנתונים")
-   
+ 
+     
     if (this.serialForm.valid) {
-      this.seriousnessService.addSeria(this.serialForm.value).subscribe(e => {
-      })
-    }
+      this.seriousnessService.addSeria(this.serialForm.value).subscribe(sss => {
+        this.r.navigate(['seriousness/serial-form/modal-form','סריה'])
+      },()=>{
+        console.log("error");       
+      } )}
+     
+    
     else{
       alert("חסרים נתונים")
     }
      this.serialForm.reset();
-    this.r.navigate(['./seriousness'])
+    // this.r.navigate(['./seriousness'])
   }
  
   close() {

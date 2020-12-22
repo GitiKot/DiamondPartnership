@@ -22,7 +22,7 @@ export class SalesFormComponent implements OnInit {
   salesList: Array<Sale>;
   totalPrice = [];
   dateP: string;
-  
+
   constructor(private router: Router, private salesServise: SalesService, private cdRef: ChangeDetectorRef) {
 
   }
@@ -46,11 +46,11 @@ export class SalesFormComponent implements OnInit {
       rawOrPolished: new FormControl('', Validators.required),
       date2: new FormControl(''),
       num: new FormControl(''),
-      isOpen:new FormControl(''),
+      isOpen: new FormControl(''),
     });
-    
-  // var radioRaw= document.getElementById('raw');
-  document.getElementById('raw').setAttribute('checked','true')
+
+    // var radioRaw= document.getElementById('raw');
+    document.getElementById('raw').setAttribute('checked', 'true')
   }
   numStonesFunc() {
 
@@ -58,7 +58,7 @@ export class SalesFormComponent implements OnInit {
 
     this.numStones = Number((document.querySelector('#numStones') as HTMLInputElement).value);
     this.addrow();
-    
+
   }
 
   addEventCalcDate() {
@@ -69,9 +69,9 @@ export class SalesFormComponent implements OnInit {
 
     var num: number = +(document.querySelector('#numOfDate') as HTMLInputElement).value;
     dateSales.setDate(dateSales.getDate() + num);
-    
+
     (document.querySelector('#DueDate') as HTMLInputElement).value = dateSales.toLocaleDateString();
-    
+
 
 
   }
@@ -90,18 +90,12 @@ export class SalesFormComponent implements OnInit {
         this.salesForm.controls['pricePerCarat'].setValue(sale.pricePerCarat)
 
         this.salesForm.controls['isOpen'].setValue('true')
-
-        console.log("form:");
-
-        console.log(this.salesForm.value);
         if (this.salesForm.valid) {
 
           this.salesServise.addSale(this.salesForm.value)
             .subscribe(a => {
-              console.log("sss");
-              
-
-              // this.salesList.push(sale);
+              this.router.navigate(['sales-form/modal-form', 'מכירה'])
+              this.router.navigate(['sales-form'])
             });
         }
 
@@ -190,7 +184,7 @@ export class SalesFormComponent implements OnInit {
         pricePerCarat: null
 
       })
-     
+
     }
 
   }

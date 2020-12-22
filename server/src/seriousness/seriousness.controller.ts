@@ -3,11 +3,13 @@ import { seriousnessService } from './seriousness.service';
 import { createSeriousnessDto } from './dto/create-seriousness.dto';
 import { ObjectId } from 'mongodb';
 
-@Controller('expenses')
+@Controller('seriousness')
 export class SeriousnessController {
     constructor(private readonly seriousnessService: seriousnessService) { }
     @Post()
     async addSeriousness(@Body() createSeriousnessDto: createSeriousnessDto) {
+        console.log("from post");
+        
         return this.seriousnessService.addSeriousness(createSeriousnessDto);
     }
 
@@ -37,6 +39,7 @@ export class SeriousnessController {
         @Body('privateSeria') privateSeria: Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,price:number}>}>,
         
     ) {
+
         await this.seriousnessService.updateSeriousness(seId,serialName,
             dateBuy,cost, amountReceived, partnersPercent, AmountReceivedPartner, finishDate ,privateSeria,partner);
         return null;

@@ -23,6 +23,10 @@ export class Sale {
 // pricePerCarat: new FormControl('', Validators.required),
 // rawOrPolished: new FormControl('', Validators.required)
 
+
+
+
+
     constructor(d?: Date, 
       
         invoice?: Number,
