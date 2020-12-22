@@ -8,7 +8,6 @@ export class SeriousnessController {
     constructor(private readonly seriousnessService: seriousnessService) { }
     @Post()
     async addSeriousness(@Body() createSeriousnessDto: createSeriousnessDto) {
-        console.log("from post");
         
         return this.seriousnessService.addSeriousness(createSeriousnessDto);
     }
@@ -36,7 +35,7 @@ export class SeriousnessController {
         @Body('partnersPercent') partnersPercent: number,
         @Body('AmountReceivedPartner') AmountReceivedPartner: number,
         @Body('finishDate') finishDate: Date,
-        @Body('privateSeria') privateSeria: Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,price:number}>}>,
+        @Body('privateSeria') privateSeria: Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,exspensesPrice:number}>}>,
         
     ) {
 

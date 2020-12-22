@@ -39,7 +39,7 @@
                         <div class="row">
                             <div class="col-8 col-sm-6 col-example">
                                 <div class="md-form mb-5">
-                                    <input type="number" id="form32" class="form-control" mdbInput mdbValidate
+                                    <input min="0" type="number" id="form32" class="form-control" mdbInput mdbValidate
                                         [formControl]="cost">
                                     <label for="form32">סכום קוסט </label>
                                     <mdb-error *ngIf="cost.invalid && (cost.dirty || cost.touched)">
@@ -131,11 +131,11 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <table class="table ">
+                <div >
+                    <table class="table">
                         <tbody>
                             <tr>
-                                <th scope="col">שם סריה פרטית </th>
+                                <th>שם סריה פרטית </th>
                                 <th>מחיר</th>
                                 <th><i class="fa fa-plus" (click)="addPrivateSerial()" aria-hidden="true"></i></th>
                             </tr>
@@ -143,47 +143,45 @@
                                 <div class="form-group" *ngFor="let ps of privateSeria.controls; let i=index">
 
                                     <div class="form-group" [formGroupName]="i">
-                                        <tr scope="row">
+                                        <tr>
 
-                                            <td class="md-form mb-5">
-                                                <input mdbInput class="inputS" type="text" formControlName="name"
+                                            <td >
+                                                <input  class="form-control inputS" type="text"  size="sm" formControlName="namePrivate"
                                                     placeholder="שם סריה">
                                             </td>
-                                            <td class="md-form mb-5">
-                                                <input mdbInput class="inputS" type="number" formControlName="serialPrice"
+                                            <td >
+                                                <input mdbInput class="form-control inputS" size="sm" type="number" formControlName="price"
                                                     placeholder="מחיר סריה">
                                             </td>
-                                            <td class="md-form mb-5">
-                                                <input mdbInput class="inputS" type="text" (click)="test.toggle()"
-                                                    placeholder="הוצאות לחץ לפרטים">
+                                            <td scope="role">                                             
+                                                <input  class="form-control inputS" type="text" size="sm" (click)="test.toggle()"
+                                                    placeholder=" לחץ ">
                                                 <div mdbCollapse #test="bs-collapse">
                                                     <table class="table-hover ">
                                                         <tbody>
-                                                            <div formArrayName="expensesArray">
+                                                            <div formArrayName="expenses">
                                                                 <tr>
                                                                     <th>הוצאה </th><br><br><br>
                                                                     <th>מחיר </th>
                                                                     <th><i class="fa fa-plus" (click)="addExArrray(i)"
                                                                             aria-hidden="true"></i></th>
-
                                                                 </tr>
                                                                 <div
-                                                                    *ngFor="let e of expensesArray(i).controls;let ip=index">
-
+                                                                    *ngFor="let e of expenses(i).controls;let ip=index">
                                                                     <div [formGroupName]="ip">
-
-
                                                                         <tr>
                                                                             <td>
                                                                                 <input type="text" size="sm"
                                                                                     class="inputS form-control"
-                                                                                    formControlName="exspensesName">
+                                                                                    formControlName="nameExpenses"
+                                                                                    placeholder="שם">
                                                                             </td>
                                                                             <td>
                                                                                 <input type="number" size="sm"
                                                                                     class="form-control inputS"
                                                                                     formControlName="exspensesPrice"
                                                                                     #price
+                                                                                    placeholder="מחיר"
                                                                                     (input)="totalPrice[i] = price.value + totalPrice[i]">
                                                                             </td>
                                                                         </tr>

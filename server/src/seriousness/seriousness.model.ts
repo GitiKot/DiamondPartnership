@@ -18,7 +18,7 @@ export interface Seriousness extends mongoose.Document {
     serialName:  String,
     dateBuy:Date;
     partner:{type:mongoose.Schema.Types.ObjectId,ref:'Partner'},
-    privateSeria:Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,price:number}>}>;
+    privateSeria:Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,exspensesPrice:number}>}>;
     cost:number;
     amountReceived:number;
     partnersPercent:number;

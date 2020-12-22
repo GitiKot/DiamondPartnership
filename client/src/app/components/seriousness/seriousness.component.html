@@ -1,5 +1,6 @@
 <br>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <div class="container">
 
@@ -20,44 +21,57 @@
         </thead>
         <tbody>
             <tr *ngFor="let s of seriousnessList;let i=index">
+                <td>{{s.serialName}}</td>
+                <td>{{s.dateBuy | date: "shortDate"}}</td>
+                <td>{{s.partner.name}}</td>
+                <td>{{s.partnersPercent}}%</td>
+                <td>{{s.cost  | currency:"USD":true}}</td>
+                <td>{{s.amountReceived | currency:"USD":true}}</td>
+                <td>{{s.AmountReceivedPartner | currency:"USD":true}}</td>
+                <td>{{s.finishDate | date: "shortDate"}}</td>
+                <td *ngIf="s.privateSeria.length>0" (click)="test.toggle()"><i class="fa fa-hand-o-down" aria-hidden="true"></i>
+                    לפרטים
+                    <div mdbCollapse #test="bs-collapse">
+
+                        <table>
+                            <tbody>
+                                <tr *ngFor="let sp of s.privateSeria">
+                                    <td>{{sp.namePrivate}}</td>
+                                    <td>{{sp.price| currency:"USD":true}}</td>
+                                    <td *ngIf="sp.expenses.length>0" (click)="expenses.toggle()" (click)="test.toggle()"><i class="fa fa-hand-o-down"
+                                            aria-hidden="true"></i>
+                                        הוצאות
+                                        <div mdbCollapse #expenses="bs-collapse">
+                                            <table>
+                                                <tbody>
+                                                    <tr *ngFor="let expense of sp.expenses">
+                                                        <td>{{expense.nameExpenses }}</td>
+                                                        <td>{{expense.exspensesPrice | currency:"USD":true}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>  
+                <td *ngIf="s.privateSeria.length == 0"></td>  
                 <td>
-                    <button class="delete" type="button" (click)="deletePartner(p)"> <i
+                    <button class="delete" type="button" (click)="deleteSerial(s)"> <i
                             class="material-icons">&#xe5cd;</i></button>
                 </td>
-                <td>{{s.serialName}}</td>
-                <td>{{s.dateBuy}}</td>
-                <td>{{s.partner}}</td>
-                <td>{{s.partnersPercent}}</td>
-                <td>{{s.cost}}</td>
-                <td>{{s.amountReceived}}</td>
 
-                <td>{{s.AmountReceivedPartner}}</td>
-                <td>{{s.finishDate}}</td>
-                <td *ngFor="let sp of s.privateSeria">
-                    <p>sp.namePrivate</p>
-                    <p>sp.price</p>
-                    <p *ngFor="let e of sp">
-                        <a>e.nameExpenses</a>
-                        <a>e.price</a>
-                    </p>
-
-                </td>
-                <!-- <td> <button type="button" class="btn btn-primary"[indexSerial]={{i}} (click)="frame2.show()" data-toggle="modal"
-                        data-target="#modalCart">+</button></td> -->
             </tr>
-
-
-
         </tbody>
     </table>
 </div>
 
-
 <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
-    [routerLink]="['serial-form']" mdbWavesEffect id="newexpenses">
+    [routerLink]="['serial-form']" mdbWavesEffect id="newSerial" class="waves-light">
     סריה חדשה
 </button>
-
 <router-outlet></router-outlet>
 
 
@@ -98,10 +112,11 @@
                 </table>
 
             </div>
-            <div>
+            <!-- <div>
                 <button type="button" class="btn btn-primary" data-dismiss="modal"
                     (click)="frame2.hide()">ביטול</button>
-                <button class="btn btn-primary">שמירה</button></div>
+                <button class="btn btn-primary">שמירה</button>
+            </div> -->
         </div>
     </div>
 </div>

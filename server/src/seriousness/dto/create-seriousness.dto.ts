@@ -6,7 +6,7 @@ export class createSeriousnessDto {
     readonly serialName: string;//Aששם סריה
     readonly partner:ObjectID ;//שם שותף
     readonly dateBuy: Date;//תאריךקניה
-   readonly privateSeria:Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,price:number}>}>;
+   readonly privateSeria:Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,exspensesPrice:number}>}>;
     readonly cost: number;//סה"כ מחיר קניה +הוצאות
     readonly amountReceived: number;//סכום שהתקבל
     readonly partnersPercent: number;//אחוזים לשותף
