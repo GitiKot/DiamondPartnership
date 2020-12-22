@@ -30,30 +30,44 @@
                 <td>{{s.AmountReceivedPartner | currency:"USD":true}}</td>
                 <td>{{s.finishDate | date: "shortDate"}}</td>
                 <td (click)="test.toggle()"><i class="fa fa-hand-o-down" aria-hidden="true"></i>
-                     לפרטים 
-
-              
-                <!-- <td *ngFor="let sp of s.privateSeria">
-                    <p>{{sp.namePrivate}}</p>
-                    <p>{{sp.price}}</p>
-                    <p *ngFor="let e of sp">
-                        <a>{{e.nameExpenses}}</a>
-                        <a>{{e.exspensesPrice}}</a>
-                    </p>
-                </td> -->
+                לפרטים
                 <div   mdbCollapse #test="bs-collapse"  >
                   
-                    <table ><td>שם</td>
-                        <td>מחיר</td>
+                    <table >
                         <tbody>                  
                             <tr  *ngFor="let sp of s.privateSeria"> 
-                               <!-- <td>{{ps.namePrivate}}</td>
-                                <td>{{ps.price}}</td>  -->
+                                <td>{{sp.namePrivate}}</td>  
+                                <td>{{sp.price}}</td>  
+                                <td (click)="expenses.toggle()"(click)="test.toggle()"><i class="fa fa-hand-o-down" aria-hidden="true"></i>
+                              הוצאות
+                              <div   mdbCollapse #expenses="bs-collapse"  >
+                                <table >
+                                    <tbody>                  
+                                        <tr  *ngFor="let expense of sp.expenses"> 
+                                            <td>{{expense.nameExpenses}}</td>  
+                                            <td>{{expense.exspensesPrice}}</td>  
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div> 
+                             </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </td>
+
+             
+
+              
+            <!-- <td *ngFor="let sp of s.privateSeria">
+                <p>{{sp.namePrivate}}</p>
+                <p>{{sp.price}}</p>
+                <p *ngFor="let e of sp">
+                    <a>{{e.nameExpenses}}</a>
+                    <a>{{e.exspensesPrice}}</a>
+                </p>
+            </td> -->
                 <!-- <td>
                     <button class="delete" type="button" (click)="deletePartner(p)"> <i
                             class="material-icons">&#xe5cd;</i></button>
