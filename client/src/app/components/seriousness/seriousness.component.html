@@ -1,5 +1,6 @@
 <br>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <div class="container">
 
@@ -20,44 +21,54 @@
         </thead>
         <tbody>
             <tr *ngFor="let s of seriousnessList;let i=index">
-                <td>
+                <td>{{s.serialName}}</td>
+                <td>{{s.dateBuy | date: "shortDate"}}</td>
+                <td>{{s.partner.name}}</td>
+                <td>{{s.partnersPercent}}%</td>
+                <td>{{s.cost  | currency:"USD":true}}</td>
+                <td>{{s.amountReceived | currency:"USD":true}}</td>
+                <td>{{s.AmountReceivedPartner | currency:"USD":true}}</td>
+                <td>{{s.finishDate | date: "shortDate"}}</td>
+                <td (click)="test.toggle()"><i class="fa fa-hand-o-down" aria-hidden="true"></i>
+                     לפרטים 
+
+              
+                <!-- <td *ngFor="let sp of s.privateSeria">
+                    <p>{{sp.namePrivate}}</p>
+                    <p>{{sp.price}}</p>
+                    <p *ngFor="let e of sp">
+                        <a>{{e.nameExpenses}}</a>
+                        <a>{{e.exspensesPrice}}</a>
+                    </p>
+                </td> -->
+                <div   mdbCollapse #test="bs-collapse"  >
+                  
+                    <table ><td>שם</td>
+                        <td>מחיר</td>
+                        <tbody>                  
+                            <tr  *ngFor="let sp of s.privateSeria"> 
+                               <!-- <td>{{ps.namePrivate}}</td>
+                                <td>{{ps.price}}</td>  -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </td>
+                <!-- <td>
                     <button class="delete" type="button" (click)="deletePartner(p)"> <i
                             class="material-icons">&#xe5cd;</i></button>
-                </td>
-                <td>{{s.serialName}}</td>
-                <td>{{s.dateBuy}}</td>
-                <td>{{s.partner}}</td>
-                <td>{{s.partnersPercent}}</td>
-                <td>{{s.cost}}</td>
-                <td>{{s.amountReceived}}</td>
-
-                <td>{{s.AmountReceivedPartner}}</td>
-                <td>{{s.finishDate}}</td>
-                <td *ngFor="let sp of s.privateSeria">
-                    <p>sp.namePrivate</p>
-                    <p>sp.price</p>
-                    <p *ngFor="let e of sp">
-                        <a>e.nameExpenses</a>
-                        <a>e.price</a>
-                    </p>
-
-                </td>
+                </td> -->
                 <!-- <td> <button type="button" class="btn btn-primary"[indexSerial]={{i}} (click)="frame2.show()" data-toggle="modal"
                         data-target="#modalCart">+</button></td> -->
             </tr>
-
-
-
         </tbody>
     </table>
 </div>
 
-
 <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
-    [routerLink]="['serial-form']" mdbWavesEffect id="newexpenses">
+    [routerLink]="['serial-form']" mdbWavesEffect id="newSerial" class="waves-light">
     סריה חדשה
 </button>
-
 <router-outlet></router-outlet>
 
 

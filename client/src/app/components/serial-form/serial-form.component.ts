@@ -33,7 +33,7 @@ export class SerialFormComponent implements OnInit {
       dateBuy: ['', [Validators.required]],
       cost: ['', [Validators.required]],
       partnersPercent: ['', [Validators.compose([Validators.required, Validators.pattern('[0-9]{2}')])]],
-      finishDate: ['', [Validators.required]],
+      finishDate: ['', ],
       privateSeria: this.formBuilder.array([]),
       partner: ['', [Validators.required]],
     });
@@ -119,32 +119,35 @@ export class SerialFormComponent implements OnInit {
   // get expensesArray(): FormArray {
   //   return this.serialForm.get("privateSeria").get('expensesArray') as FormArray;
   // }
-  expensesArray(index: number): FormArray {
-    return this.privateSeria.at(index).get("expensesArray") as FormArray
+  expenses(index: number): FormArray {
+    return this.privateSeria.at(index).get("expenses") as FormArray
   }
-  get name() {
-    return this.serialForm.get("privateSeria").get('name');
-  }get serialPrice() {
-    return this.serialForm.get("privateSeria").get('serialPrice');
+
+  //privateSeria:Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,price:number}>}>;
+
+  get namePrivate() {
+    return this.serialForm.get("privateSeria").get('namePrivate');
+  }get price() {
+    return this.serialForm.get("privateSeria").get('price');
   }
   newPrivateSerial(): FormGroup {
     return this.formBuilder.group({
-      name: '',
-      serialPrice:'',
-      expensesArray: this.formBuilder.array([]),
+      namePrivate: '',
+      price:'',
+      expenses: this.formBuilder.array([]),
     })
   }
   newExpenses(): FormGroup {
     return this.formBuilder.group({
-      exspensesName: '',
+      nameExpenses: '',
       exspensesPrice: ''
     })
   }
-  get exspensesName() {
-    return this.serialForm.get("privateSeria").get('expensesArray').get('exspensesName');
+  get nameExpenses() {
+    return this.serialForm.get("privateSeria").get('expenses').get('nameExpenses');
   }
   get exspensesPrice() {
-    return this.serialForm.get("privateSeria").get('expensesArray').get('exspensesPrice');
+    return this.serialForm.get("privateSeria").get('expenses').get('exspensesPrice');
   }
   addPrivateSerial() {
     console.log('privateSeria:');
@@ -153,9 +156,9 @@ export class SerialFormComponent implements OnInit {
   }
   addExArrray(i: number) {
     console.log("i= " + i);
-    this.expensesArray(i).push(this.newExpenses())
-    console.log('privateSeria[i].expensesArray :  ');
-    console.log(this.expensesArray(i).value);
+    this.expenses(i).push(this.newExpenses())
+    console.log('privateSeria[i].expenses :  ');
+    console.log(this.expenses(i).value);
   }
   removePrivateSerial(i: number) {
     this.privateSeria.removeAt(i);

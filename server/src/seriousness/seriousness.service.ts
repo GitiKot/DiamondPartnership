@@ -19,7 +19,8 @@ export class seriousnessService {
     }
     
     async getSeriousness() {
-        const Seriousness = await this.seriousnessModel.find().exec();
+        const Seriousness = await this.seriousnessModel.find().populate('partner').exec();
+
         return Seriousness.map(ex => ({
             partner:ex.partner,
             serialName: ex.serialName,
@@ -30,12 +31,14 @@ export class seriousnessService {
             partnersPercent: ex.partnersPercent,
             AmountReceivedPartner: ex.AmountReceivedPartner,
             finishDate: ex.finishDate,
+            //privateSeria:Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,price:number}>}>;
+
             privateSeria: ex.privateSeria.map(ps => ({
                 namePrivate: ps.namePrivate,
                 price: ps.price,
                 expenses:ps.expenses.map(e=>({
                     nameExpenses:e.nameExpenses,
-                    price:e.price
+                    exspensesPrice:e.exspensesPrice
                 }))
             }))
         }));
@@ -75,7 +78,7 @@ export class seriousnessService {
         partnersPercent:number,
         AmountReceivedPartner: number,
         finishDate:Date,
-        privateSeria:Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,price:number}>}>,
+        privateSeria:Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,exspensesPrice:number}>}>,
         partner:ObjectId
         
       )  {

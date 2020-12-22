@@ -6,7 +6,7 @@ export interface Seriousness extends Document {
     dateBuy:Date;
     parent:{type:ObjectId,ref:'Partner'},
     partner:string
-    privateSeria:Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,price:number}>}>;
+    privateSeria:Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,exspensesPrice:number}>}>;
     cost:number;
     amountReceived:number;
     partnersPercent:number;
