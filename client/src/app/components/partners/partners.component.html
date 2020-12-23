@@ -1,11 +1,13 @@
 <br>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <div class="container">
        
         <table class="table table-hover">
           <thead>
             <tr>
+              <th></th>
               <th>שם שותף</th>
               <th>איש קשר</th>
               <th>מייל</th>
@@ -16,11 +18,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let p of partnersList" >
-              <td>
-                <button class="delete" type="button" (click)="deletePartner(p)"> <i
-                    class="material-icons">&#xe5cd;</i></button>
-              </td>
+            <tr *ngFor="let p of partnersList;let i = index" (mouseenter)="toolbar(i)" (mouseleave)="toolbar1(i)" id="row{{i}}">
+              <td> <button id="del{{i}}" class="del" (click)="deletePartner(p)" title="מחיקה">
+                <i class="fa fa-trash"id="trash" aria-hidden="true"></i>
+            </button></td>
              
                 
             <td>{{p.name}}</td>  
@@ -139,4 +140,9 @@
       </div>
     </div>
   </div>
+</div>
+<div id="alert" class="alert alert-success">
+  <strong>   שים לב   </strong>בקשת למחוק שותף<button type="button" class="btn btn-outline-primary"
+  (click)="ok('ok')" >אישור</button>
+  <button type="button" class="btn btn-outline-primary" (click)="ok('')" >ביטול</button>
 </div>

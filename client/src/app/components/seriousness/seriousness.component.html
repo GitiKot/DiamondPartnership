@@ -1,12 +1,35 @@
 <br>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<form  class="form-inline d-flex justify-content-center md-form form-sm mt-0"><div>
+        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
+            <path fill-rule="evenodd"
+                d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+        </svg>&nbsp;
+        <input type="text" id="public" class="form-control form-control-sm ml-3 " (keyup)="filterNameSeria()"
+            placeholder="סריה כללית" title="Type in a name11">
+    </div>
+    <div>
+        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
+            <path fill-rule="evenodd"
+                d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+        </svg>&nbsp;
+        <input type="text" id="partner" class="form-control form-control-sm ml-3 " (keyup)="filterPartner()"
+            placeholder="שותף" title="Type in a name11">
+    </div>
+</form>
 
 <div class="container">
-
-    <table class="table table-hover">
+    <table id="seriuosnessTable" class="table table-hover">
         <thead>
             <tr>
+                <th style="width: 40px;"></th>
                 <th>שם סריה</th>
                 <th>תאריך קניה</th>
                 <th>שותף</th>
@@ -20,7 +43,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let s of seriousnessList;let i=index">
+            <tr *ngFor="let s of seriousnessList;let i=index" (mouseenter)="toolbar(i)" (mouseleave)="toolbar1(i)" id="row{{i}}">
+               <td> <button id="del{{i}}" class="del" (click)="deleteSerial(s)" title="מחיקה">
+                    <i class="fa fa-trash"id="trash" aria-hidden="true"></i>
+                </button></td>
                 <td>{{s.serialName}}</td>
                 <td>{{s.dateBuy | date: "shortDate"}}</td>
                 <td>{{s.partner.name}}</td>
@@ -29,17 +55,17 @@
                 <td>{{s.amountReceived | currency:"USD":true}}</td>
                 <td>{{s.AmountReceivedPartner | currency:"USD":true}}</td>
                 <td>{{s.finishDate | date: "shortDate"}}</td>
-                <td *ngIf="s.privateSeria.length>0" (click)="test.toggle()"><i class="fa fa-hand-o-down" aria-hidden="true"></i>
+                <td *ngIf="s.privateSeria.length>0" (click)="test.toggle()"><i class="fa fa-hand-o-down"
+                        aria-hidden="true"></i>
                     לפרטים
                     <div mdbCollapse #test="bs-collapse">
-
                         <table>
                             <tbody>
                                 <tr *ngFor="let sp of s.privateSeria">
                                     <td>{{sp.namePrivate}}</td>
                                     <td>{{sp.price| currency:"USD":true}}</td>
-                                    <td *ngIf="sp.expenses.length>0" (click)="expenses.toggle()" (click)="test.toggle()"><i class="fa fa-hand-o-down"
-                                            aria-hidden="true"></i>
+                                    <td *ngIf="sp.expenses.length>0" (click)="expenses.toggle()"
+                                        (click)="test.toggle()"><i class="fa fa-hand-o-down" aria-hidden="true"></i>
                                         הוצאות
                                         <div mdbCollapse #expenses="bs-collapse">
                                             <table>
@@ -56,20 +82,22 @@
                             </tbody>
                         </table>
                     </div>
-                </td>  
-                <td *ngIf="s.privateSeria.length == 0"></td>  
-                <td>
+                </td>
+                <td *ngIf="s.privateSeria.length == 0"></td>
+                <!-- <td>
                     <button class="delete" type="button" (click)="deleteSerial(s)"> <i
                             class="material-icons">&#xe5cd;</i></button>
-                </td>
+                </td> -->
 
             </tr>
         </tbody>
     </table>
 </div>
 
-<button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
-    [routerLink]="['serial-form']" mdbWavesEffect id="newSerial" class="waves-light">
+<button type="button" mdbBtn color="blue" rounded="true" data-toggle="modal" data-target="#basicExample"
+    [routerLink]="['serial-form']" mdbWavesEffect id="newSerial" class="waves-light"><i class="fa fa-diamond"
+        aria-hidden="true"></i>
+
     סריה חדשה
 </button>
 <router-outlet></router-outlet>
@@ -120,3 +148,9 @@
         </div>
     </div>
 </div>
+<div id="alert" class="alert alert-success">
+    <strong>   שים לב   </strong>בקשת למחוק שותף<button type="button" class="btn btn-outline-primary"
+    (click)="ok('ok')" >אישור</button>
+    <button type="button" class="btn btn-outline-primary" (click)="ok('')" >ביטול</button>
+  </div>
+  

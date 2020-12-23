@@ -78,9 +78,11 @@ export class SalesFormComponent implements OnInit {
 
   save() {
 
-
-    alert("האם הנך בטוח במה שאתה עושה");
+    let flag = 0;
+    // alert("האם הנך בטוח במה שאתה עושה");
     if (this.tableContent[0] != undefined) {
+      console.log(this.tableContent);
+      
       this.tableContent.forEach(sale => {
         this.salesForm.controls['publicSerialName'].setValue(sale.publicSerial);
 
@@ -91,23 +93,29 @@ export class SalesFormComponent implements OnInit {
 
         this.salesForm.controls['isOpen'].setValue('true')
         if (this.salesForm.valid) {
+          console.log("sale: " + sale.publicSerial);
+          console.log("טופס: " + this.salesForm.value);
 
           this.salesServise.addSale(this.salesForm.value)
             .subscribe(a => {
-              this.router.navigate(['sales-form/modal-form', 'מכירה'])
-              this.router.navigate(['sales-form'])
+              // this.router.navigate(['sales-form'])
             });
+
         }
 
-        else alert("הנתונים לא נכונים")
-        //  this.router.navigate(['/sales/true']);
-
+        else {
+          alert("חלק מהנתונים לא נכון");
+          flag = 1;
+        }
       });
+      if (!flag)
+        this.router.navigate(['sales-form/modal-form', 'מכירה'])
+      else;
     }
     else {
       alert("לא הוכנסו שורות לטבלה")
     }
-    this.salesForm.reset()
+
   }
   cancel() {
     this.router.navigate(['/sales/true']);

@@ -12,12 +12,14 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
   styleUrls: ['./partners.component.css']
 })
 export class PartnersComponent implements OnInit {
-partnersList:Array<Partner>;
-validatingForm: FormGroup;
+  partnersList: Array<Partner>;
+  validatingForm: FormGroup;
+  currectPartner: Partner;
   constructor(private r: Router, private partnerService: PartnerService) { }
 
   ngOnInit(): void {
-    this.partnerService.getAllPartners().subscribe(ans => {this.partnersList = ans;console.log("fghj");
+    this.partnerService.getAllPartners().subscribe(ans => {
+      this.partnersList = ans; console.log("fghj");
     });
 
 
@@ -44,8 +46,39 @@ validatingForm: FormGroup;
     return this.validatingForm.get('contactFormModalMessage');
   }
   deletePartner(p) {
-    var tt= this.partnerService.deletePartner(p);
-   console.log( tt);
-   this.partnerService.getAllPartners().subscribe(ans => this.partnersList = ans);
-   }
+    var div = document.getElementById('alert');
+    div.style.visibility = "visible";
+    this.currectPartner = p;
+
+  }
+  ok(s) {
+    console.log("ok");
+    
+    if (s != '') {
+      var tt = this.partnerService.deletePartner(this.currectPartner);
+      console.log(tt);
+      this.partnerService.getAllPartners().subscribe(ans => this.partnersList = ans);
+    }
+    this.currectPartner = null;
+    var div = document.getElementById('alert');
+    div.style.visibility = "hidden";
+  }
+  toolbar(i: number) {
+
+    let row = document.getElementById("row" + i);
+    let del = document.getElementById("del" + i);
+
+    row.style.borderColor = " #f1f1f1";
+    del.style.display = "inline";
+    del.style.visibility = "visible";
+  }
+  toolbar1(i: number) {
+
+    let row = document.getElementById("row" + i);
+    let del = document.getElementById("del" + i);
+
+    row.style.borderColor = "none";
+    del.style.display = "none";
+    del.style.visibility = "hidden";
+  }
 }
