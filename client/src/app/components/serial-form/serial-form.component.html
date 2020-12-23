@@ -1,122 +1,118 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <form [formGroup]="serialForm">
     <div mdbModal #frame1="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
         aria-hidden="true">
-        <div class="modal-header text-center">
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-           
-            <div class="modal-dialog modal-dialog-scrollable modal-l" role="document">
-                <div class="modal-content">
+
+
+        <div class="modal-dialog modal-dialog-scrollable modal-l" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
                     <button (click)="close()" type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">x</span>
                     </button>
                     <br>
                     <h4 class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור סריה חדשה</h4>
-                    <div class="modal-body mx-3">
-                        <div class="row">
-                            <div class="col-8 col-sm-6 col-example">
-                                <div class="md-form mb-5">
-                                    <input type="text" id="form34" class="form-control" mdbInput mdbValidate
-                                        [formControl]="serialName">
-                                    <label for="form34">שם סריה כללית</label>
-                                    <mdb-error *ngIf="serialName.invalid && (serialName.dirty || serialName.touched)">
-                                    </mdb-error>
-                                    <mdb-success *ngIf="serialName.valid && (serialName.dirty || serialName.touched)">
-                                    </mdb-success>
-                                </div>
-                            </div>
-                            <div class="col-4 col-sm-6 col-example">
-                                <div class="md-form mb-5">
-                                    <input type="date" id="form34" class="form-control" mdbInput mdbValidate
-                                        [formControl]="dateBuy">
-                                    <label for="form34"> תאריך קניה</label>
-                                    <mdb-error *ngIf="dateBuy.invalid && (dateBuy.dirty || dateBuy.touched)">
-                                    </mdb-error>
-                                    <mdb-success *ngIf="dateBuy.valid && (dateBuy.dirty || dateBuy.touched)">
-                                    </mdb-success>
-                                </div>
+                </div>
+                <div class="modal-body mx-3">
+                    <div class="row">
+                        <div class="col-8 col-sm-6 col-example">
+                            <div class="md-form mb-5">
+                                <input type="text" id="form34" class="form-control" mdbInput mdbValidate
+                                    [formControl]="serialName">
+                                <label for="form34">שם סריה כללית</label>
+                                <mdb-error *ngIf="serialName.invalid && (serialName.dirty || serialName.touched)">
+                                </mdb-error>
+                                <mdb-success *ngIf="serialName.valid && (serialName.dirty || serialName.touched)">
+                                </mdb-success>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-8 col-sm-6 col-example">
-                                <div class="md-form mb-5">
-                                    <input min="0" type="number" id="form32" class="form-control" mdbInput mdbValidate
-                                        [formControl]="cost">
-                                    <label for="form32">סכום קוסט </label>
-                                    <mdb-error *ngIf="cost.invalid && (cost.dirty || cost.touched)">
-                                    </mdb-error>
-                                    <mdb-success *ngIf="cost.valid && (cost.dirty || cost.touched)">
-                                    </mdb-success>
-                                </div>
-                            </div>
-                            <div class="col-8 col-sm-6 col-example">
-                                <div class="md-form mb-5">
-                                    <input class="form-control" type="number" mdbInput mdbValidate
-                                        [formControl]="partnersPercent">
-                                    <label> אחוזים לשותף </label>
-                                    <mdb-error
-                                        *ngIf="partnersPercent.invalid && (partnersPercent.dirty || partnersPercent.touched)">
-                                    </mdb-error>
-                                    <mdb-success
-                                        *ngIf="partnersPercent.valid && (partnersPercent.dirty || partnersPercent.touched)">
-                                    </mdb-success>
-                                </div>
+                        <div class="col-4 col-sm-6 col-example">
+                            <div class="md-form mb-5">
+                                <input type="date" id="form34" class="form-control" mdbInput mdbValidate
+                                    [formControl]="dateBuy">
+                                <label for="form34"> תאריך קניה</label>
+                                <mdb-error *ngIf="dateBuy.invalid && (dateBuy.dirty || dateBuy.touched)">
+                                </mdb-error>
+                                <mdb-success *ngIf="dateBuy.valid && (dateBuy.dirty || dateBuy.touched)">
+                                </mdb-success>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-8 col-sm-6 col-example">
-                                <div class="md-form mb-8 ">
-                                    <input type="checkbox" id="form3" #closeSerial mdbInput mdbValidate>
-                                    <label for="form3"> סריה סגורה </label>
-                                </div>
-                            </div>
-                            <div class="col-8 col-sm-6 col-example" *ngIf="closeSerial.checked">
-                                <div class="md-form mb-8 ">
-                                    <input type="date" id="form3" class="form-control" mdbInput mdbValidate
-                                        [formControl]="finishDate">
-                                    <label for="form3"> תאריך סגירת סריה </label>
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8 col-sm-6 col-example">
+                            <div class="md-form mb-5">
+                                <input min="0" type="number" id="form32" class="form-control" mdbInput mdbValidate
+                                    [formControl]="cost">
+                                <label for="form32">סכום קוסט </label>
+                                <mdb-error *ngIf="cost.invalid && (cost.dirty || cost.touched)">
+                                </mdb-error>
+                                <mdb-success *ngIf="cost.valid && (cost.dirty || cost.touched)">
+                                </mdb-success>
                             </div>
                         </div>
-                        <!-- <fieldset class="form-group">
-                            <label>שותף בחר</label><br/><br/>
-                            <select [(ngModel)]="selectedPartner" class="form-control">
-                                    <option *ngFor="let partner of partnerList" [value]="partner">{{partner.name}}</option>
-                             </select>
-                            </fieldset> -->
-                        <div class="row">
-                            <div class="col-4 col-sm-6 col-example">
-                                <div class="md-form mb-5">
-                                    <select id="selectPart" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedPartner" placeholder="בחר" class="browser-default custom-select"
-                                        mdbInput mdbValidate
-                                         >
-                                        <option disabled>--בחר--</option>
+                        <div class="col-8 col-sm-6 col-example">
+                            <div class="md-form mb-5">
+                                <input class="form-control" type="number" mdbInput mdbValidate
+                                    [formControl]="partnersPercent">
+                                <label> אחוזים לשותף </label>
+                                <mdb-error
+                                    *ngIf="partnersPercent.invalid && (partnersPercent.dirty || partnersPercent.touched)">
+                                </mdb-error>
+                                <mdb-success
+                                    *ngIf="partnersPercent.valid && (partnersPercent.dirty || partnersPercent.touched)">
+                                </mdb-success>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8 col-sm-6 col-example">
+                            <div class="md-form mb-8 ">
+                                <input type="checkbox" id="form3" #closeSerial mdbInput mdbValidate>
+                                <label for="form3"> סריה סגורה </label>
+                            </div>
+                        </div>
+                        <div class="col-8 col-sm-6 col-example" *ngIf="closeSerial.checked">
+                            <div class="md-form mb-8 ">
+                                <input type="date" id="form3" class="form-control" mdbInput mdbValidate
+                                    [formControl]="finishDate">
+                                <label for="form3"> תאריך סגירת סריה </label>
+                            </div>
+                        </div>
+                    </div>
 
-                                        <option  *ngFor="let p of partnerList" [value]="p.id" (change)="pp()"> 
-                                            {{p.name}}</option>
-                                    </select>
-                                    <label> בחר שותף</label>
+                    <div class="row">
+                        <div class="col-4 col-sm-6 col-example">
+                            <div class="md-form mb-5">
+                                <select id="selectPart" [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="selectedPartner" placeholder="בחר"
+                                    class="browser-default custom-select" mdbInput mdbValidate>
+                                    <option disabled>--בחר--</option>
 
-                                    <mdb-error *ngIf="partner.invalid && (partner.dirty || partner.touched)">
-                                    </mdb-error>
-                                    <mdb-success *ngIf="partner.valid && (partner.dirty ||  partner.touched)">
-                                    </mdb-success>
-                                </div>
+                                    <option *ngFor="let p of partnerList" [value]="p.id" (change)="pp()">
+                                        {{p.name}}</option>
+                                </select>
+                                <label> בחר שותף</label>
+
+                                <mdb-error *ngIf="partner.invalid && (partner.dirty || partner.touched)">
+                                </mdb-error>
+                                <mdb-success *ngIf="partner.valid && (partner.dirty ||  partner.touched)">
+                                </mdb-success>
                             </div>
                         </div>
-                        <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal"
-                            data-target="#basicExample" (click)="frame2.show()" mdbWavesEffect id="newexpenses">
-                            סריות פרטיות </button>
-                        <br>
-                        <div class="modal-footer d-flex">
-                            <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal"
-                                data-target="#basicExample" (click)="save()" mdbWavesEffect id="newexpenses">
-                                שמירה </button>
+                    </div>
+                    <button type="button" mdbBtn color="blue" rounded="true" data-toggle="modal"
+                        data-target="#basicExample" (click)="frame2.show()" mdbWavesEffect id="newexpenses">
+                        סריות פרטיות </button>
+                    <br>
+                    <div class="modal-footer d-flex">
+                        <button type="button" mdbBtn color="blue" rounded="true" data-toggle="modal"
+                            data-target="#basicExample" (click)="save()" mdbWavesEffect id="newexpenses">
+                            שמירה </button>
 
-                            <router-outlet></router-outlet>
-                            <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal"
-                                data-target="#basicExample" (click)="cancelex()" mdbWavesEffect id="newexpenses">
-                                ביטול </button>
-                        </div>
+                        <router-outlet></router-outlet>
+                        <button type="button" mdbBtn color="blue" rounded="true" data-toggle="modal"
+                            data-target="#basicExample" (click)="cancelex()" mdbWavesEffect id="newexpenses">
+                            ביטול </button>
                     </div>
                 </div>
             </div>
@@ -124,20 +120,22 @@
     </div>
     <div mdbModal #frame2="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-notify modal-side modal-top-right" role="document">
-            <div class="modal-content">
+        <div class="modal-dialog  modal-dialog-scrollable modal-l modal-side modal-top-right" role="document">
+            <div class="modal-content"  >
+
                 <div class="modal-header text-center">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame2.hide()">
                         <span aria-hidden="true">×</span>
                     </button>
+                    <h6 class="modal-title w-100 font-weight-bold"> סריות פרטיות</h6>
                 </div>
-                <div >
+                <div class="modal-body mx-3">
                     <table class="table">
-                        <tbody>
+                       
                             <tr>
                                 <th>שם סריה פרטית </th>
                                 <th>מחיר</th>
-                                <th><i class="fa fa-plus" (click)="addPrivateSerial()" aria-hidden="true"></i></th>
+                                <th><i class="fa fa-plus" (click)="addPrivateSerial()" title="הוספת סריה" aria-hidden="true"></i></th>
                             </tr>
                             <div formArrayName="privateSeria">
                                 <div class="form-group" *ngFor="let ps of privateSeria.controls; let i=index">
@@ -145,17 +143,17 @@
                                     <div class="form-group" [formGroupName]="i">
                                         <tr>
 
-                                            <td >
-                                                <input  class="form-control inputS" type="text"  size="sm" formControlName="namePrivate"
-                                                    placeholder="שם סריה">
+                                            <td>
+                                                <input class="form-control inputS" type="text" size="sm"
+                                                    formControlName="namePrivate" placeholder="שם סריה">
                                             </td>
-                                            <td >
-                                                <input mdbInput class="form-control inputS" size="sm" type="number" formControlName="price"
-                                                    placeholder="מחיר סריה">
+                                            <td>
+                                                <input mdbInput class="form-control inputS" size="sm" type="number"
+                                                    formControlName="price" placeholder="מחיר סריה">
                                             </td>
-                                            <td scope="role">                                             
-                                                <input  class="form-control inputS" type="text" size="sm" (click)="test.toggle()"
-                                                    placeholder=" לחץ ">
+                                            <td scope="role">
+                                                <input class="form-control inputS" type="text" size="sm"
+                                                    (click)="test.toggle()"title="פרטי הוצאה" placeholder=" לחץ ">
                                                 <div mdbCollapse #test="bs-collapse">
                                                     <table class="table-hover ">
                                                         <tbody>
@@ -180,8 +178,7 @@
                                                                                 <input type="number" size="sm"
                                                                                     class="form-control inputS"
                                                                                     formControlName="exspensesPrice"
-                                                                                    #price
-                                                                                    placeholder="מחיר"
+                                                                                    #price placeholder="מחיר"
                                                                                     (input)="totalPrice[i] = price.value + totalPrice[i]">
                                                                             </td>
                                                                         </tr>
@@ -192,44 +189,21 @@
                                                     </table>
                                                 </div>
                                             </td>
-                                            <!-- <div class="md-form mb-5"
-                                                </div> -->
-
-
-                                            <!-- <button (click)="removePrivateSerial(i)">x</button> -->
                                         </tr>
-
                                     </div>
                                 </div>
                             </div>
-                        </tbody>
                     </table>
-                    <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" color=defulte
-                        (click)="addPrivateSerial()">הוספה</button> -->
-                    <!-- <table class="table table-hover">
-       
-        <tbody>
-          <tr > -->
-                    <!-- <th scope="row">1</th> -->
-                    <!-- <div formGroupName="detail"> -->
-
-                    <!-- <div ">
-                <label for="expenses">expenses</label>
-                <input type="text" class="form-control" name="expenses" formControlName="expenses">
-              </div> -->
-
-
                 </div>
 
                 <div class="modal-footer">
-                    <div>
-                        <!-- <button class="btn btn-outline-primary" (click)="addPrivateSerial()">הוספה</button> -->
-                        <button type="button" class="btn btn-primary" data-dismiss="modal"
-                            (click)="cancelPrivateSerial()">ביטול</button>
-                        <button class="btn btn-primary" (click)="savePrivateSerial()">שמירה</button></div>
+
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        (click)="cancelPrivateSerial()">ביטול</button>
+                    <button class="btn btn-primary" (click)="savePrivateSerial()">שמירה</button>
                 </div>
             </div>
         </div>
+        <!-- </div> -->
     </div>
-
 </form>

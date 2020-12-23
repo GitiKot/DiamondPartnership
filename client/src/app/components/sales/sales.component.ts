@@ -12,6 +12,7 @@ import { SalesService } from 'src/app/services/sales.service';
 })
 export class SalesComponent implements OnInit {
   salesForm: FormGroup;
+  currectSale:Sale;
   isSalesPage = this.route.snapshot.paramMap.get('isSales');
   //  constructor(private r: Router, private saleService: SalesService,private route:ActivatedRoute) { }
 
@@ -24,11 +25,26 @@ export class SalesComponent implements OnInit {
 
   }
   deleteSale(sale) {
-    var tt = this.saleService.deleteSale(sale);
-    // console.log(tt);
-    this.saleService.getAllSales().subscribe(ans => this.salesList = ans);
+    var div = document.getElementById('alert');
+    div.style.visibility = "visible";
+    this.currectSale = sale;
   }
-  keypressevt(e) {
+  ok(s) {
+    console.log("ok");
+    
+    if (s != '') {
+      var tt,input,nameSeria;
+     tt = this.saleService.deleteSale(this.currectSale);
+    // console.log(tt);
+    input = document.getElementById("public");
+    nameSeria = input.value;
+    this.saleService.findBySerailName(nameSeria).subscribe(ans => this.salesList = ans);
+    }
+    this.currectSale = null;
+    var div = document.getElementById('alert');
+    div.style.visibility = "hidden";
+  }
+  getSaleBySeria(e) {
 
     this.saleService.findBySerailName(e.target.value).subscribe(ans => {
       this.salesList = ans; 
@@ -41,10 +57,29 @@ export class SalesComponent implements OnInit {
   rawOrPolishedFunc(sale: Sale): string {
     return sale.rawOrPolished == 'raw' ? 'גלם' : 'מלוטש'
   }
+  toolbar(i: number) {
+
+    let row = document.getElementById("row" + i);
+    let del = document.getElementById("del" + i);
+
+    row.style.borderColor = " #f1f1f1";
+    del.style.display = "inline";
+    del.style.visibility = "visible";
+  }
+  toolbar1(i: number) {
+
+    let row = document.getElementById("row" + i);
+    let del = document.getElementById("del" + i);
+
+    row.style.borderColor = "none";
+    del.style.display = "none";
+    del.style.visibility = "hidden";
+  }
   searchPrivate() {
 
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("private");
+  
     filter = input.value.toUpperCase();
     table = document.getElementById("salesTable");
     tr = table.getElementsByTagName("tr");
@@ -60,9 +95,6 @@ export class SalesComponent implements OnInit {
       }
     }
   }
-
-
-
 }
 
 

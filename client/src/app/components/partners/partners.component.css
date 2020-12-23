@@ -3,3 +3,16 @@
     bottom: 25px; left: 25px;
     /* width: 100px; */
 }
+.del{
+    text-align: center;
+    border: none;
+    display: none;
+    /* visibility: hidden; */
+    object-position: center; font-size: 18px;
+    color: blue;
+  }
+  #alert{
+    visibility:hidden;
+    bottom: 50px;
+     left: 25px;
+  }

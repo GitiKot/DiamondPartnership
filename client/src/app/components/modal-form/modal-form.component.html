@@ -25,20 +25,21 @@
 </div> -->
 <!-- modal to save -->
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <div mdbModal #frame1="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
   aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h2>בורא נפשות אחרי </h2>
+        <h2>   ה{{typeModel}}  נקלט בהצלחה!</h2>
         <!-- <h4 class="modal-title w-100 font-weight-bold">Write to us</h4> -->
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hideFrame1()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ה{{typeModel}}  נקלט בהצלחה!
+     
        
         <i class="fa fa-check-square-o animated flip infinite slow"
          style='font-size:48px;color:green'></i>
