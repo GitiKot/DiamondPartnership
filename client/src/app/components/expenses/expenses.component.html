@@ -22,7 +22,10 @@
     </div>
     <table id="myTable">
       <thead>
-        <tr class="header">
+        <tr class="header"> 
+          <th  ></th>
+         
+          <th ></th>
           <th style="width: 150px;">שם סריה כללית</th>
           <th>תאריך</th>
           <th style="width: 270px;">האם קיבלתי צ'ק או לקזז הצ'ק הבא</th>
@@ -32,26 +35,12 @@
           <th>פרוט</th>
           <th style="width: 100px;">סכום לשותף</th>
         <th>update</th>
-          <th style="visibility: hidden;"></th>
-          <th style="visibility: hidden;"></th>
+         
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let e of expensesList;let ei=index" (mouseenter)="toolbar(ei)" (mouseleave)="toolbar1(ei)"
           id="row{{ei}}">
-          <td>{{e.PublicSerialName}}</td>
-          <td>{{e.date| date: "shortDate"}}</td>
-          <td>{{e.getchack}}</td>
-          <td>{{e.InvoiceNumber}}</td>
-          <td>{{e.Remarks}}</td>
-          <td>{{e.amount|currency}}</td>
-          <td><button type="button" class="btn btn-primary" (click)="updateEi(ei)" (click)="frame.show()"
-              data-toggle="modal" data-target="#modalCart">+</button></td>
-          <td>{{e.amountPartner}}</td>
-          <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
-        [routerLink]="['expenses-form']" mdbWavesEffect id="expenses">
-        הוצאה חדשה
-      </button>
           <td style="visibility: hidden;">
             <button id="del{{ei}}" class="del" (click)="deleteExpe(e)" title="מחיקה"><svg width="1.5em" height="1.5em"
                 viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -63,8 +52,9 @@
               <!-- <i class="fas fa-trash"></i> -->
             </button>
           </td>
-          <td style="visibility: hidden;">
-            <button id="update{{ei}}" class="update" (click)="updateExpenses(e)" title="עדכון">
+          <td >
+            <!-- style="visibility: hidden;" -->
+            <button id="update{{ei}}" class="update" (click)="updateflag(e)" title="עדכון">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                 class="bi bi-brush-fill" viewBox="0 0 16 16">
                 <path fill-rule="evenodd"
@@ -73,9 +63,30 @@
             </button>
             <!-- <button (click)="enableSection(ei, expenses.disabled)">{{ expenses.disabled ? 'Edit': 'Save' }}</button> -->
           </td>
+          <td>{{e.PublicSerialName}}</td>
+          <td>{{e.date| date:'dd/MM/yy'}}</td>
+          <td>{{e.getchack}}</td>
+          <td>{{e.InvoiceNumber}}</td>
+          <td>{{e.Remarks}}</td>
+          <td>{{e.amount|currency}}</td>
+          <td><button type="button" class="btn btn-primary" (click)="updateEi(ei)" (click)="frame.show()"
+              data-toggle="modal" data-target="#modalCart">+</button></td>
+          <td>{{e.amountPartner}}</td>
+          <!-- <td><button type="button"  (click)="updateflag(e)" >
+             עדכון הוצאה 
+          </button></td> -->
+          <!-- <button  type="button"[updateEx]="e" mdbBtn color="blue"(click)="loggg(e)" rounded="true" data-toggle="modal" data-target="#basicExample"
+        [routerLink]="['expenses-form']" mdbWavesEffect id="expenses">
+         עדכון הוצאה 
+      </button> -->
+         
         </tr>
       </tbody>
     </table>
+      <app-expenses-form *ngIf="flagupdate" [updateEx]="e"></app-expenses-form>
+
+
+
 
     <!-- -------model expenses------------------------------------ -->
 
@@ -127,7 +138,7 @@
   </body>
 
 
-  <table>
+  <!-- <table>
     <thead>
       <tr class="header">
         <th style="width: 150px;">שם סריה כללית</th>
@@ -148,13 +159,13 @@
         <td><input type="number" formControlName="InvoiceNumber"></td>
         <td> <input type="text" formControlName="Remarks"></td>
         <td> <input type="number" formControlName="amount"></td>
-        <!-- id: string;
+         id: string;
         detail: Array<{ expenses: string, price: number }>; -->
-        <td> <input type="number" formControlName="amountPartner"></td>
+       <!-- <td> <input type="number" formControlName="amountPartner"></td>
         <button (click)="enableSection(ei, e.disabled)">{{ e.disabled ? 'Edit': 'Save' }}</button>
       </tr>
     </tbody>
-  </table>
+  </table> -->
   <!-- <div formArrayName="expenses">
     <div *ngFor="let expenses of newexpensesForm.controls['expenses'].controls; let i = index">
       <div [formGroupName]="i">

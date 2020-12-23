@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { Expenses } from 'src/app/data/expenses';
 import { ExpensesService } from 'src/app/services/expenses.service';
+import { DatePipe } from '@angular/common'
 
 @Component({
   selector: 'app-expenses-form',
@@ -17,12 +18,13 @@ export class ExpensesFormComponent implements OnInit {
   expensesForm: FormGroup;
   expensesList: Array<Expenses>;
 
+  @Input() updateEx: Expenses;
+
   constructor(private r: Router, private expensesService: ExpensesService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
 
-    // this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
-
+    this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
     this.expensesForm = this.formBuilder.group({
       PublicSerialName: ['', [Validators.required]],
       date: ['', [Validators.required]],
@@ -33,15 +35,51 @@ export class ExpensesFormComponent implements OnInit {
       detail: this.formBuilder.array([]),
       Remarks: [''],
     })
-  }
+    // this.expensesForm.controls['PublicSerialName'].setValue(this.updateEx.PublicSerialName);
+    if (this.updateEx != undefined) {
+      console.log("iibfuuuuuuuuuu");
+      console.log(this.updateEx.date);
 
+     
+      
+      this.expensesForm.setValue({
+
+        PublicSerialName: this.updateEx.PublicSerialName,
+        date: this.updateEx.date,
+        getchack: this.updateEx.getchack,
+        InvoiceNumber: this.updateEx.InvoiceNumber,
+        amountPartner: this.updateEx.amountPartner,
+        amount: this.updateEx.amount,
+
+        Remarks: this.updateEx.Remarks, 
+        detail: this.updateEx.detail,
+      })
+      console.log("tfffffffffffff");
+      console.log(this.expensesForm.controls.date);
+
+    }
+
+    console.log("uuuuuuuuuuuuu");
+    //  console.log(this.updateEx.detail);
+    console.log(this.updateEx);
+
+  }
+//   setTimeout(() => {
+//     this.deviceForm.setValue({
+//      name: this.editedDevice.name,
+//      platform: this.editedDevice.platform,
+//      type: this.editedDevice.type,
+//      udid: this.editedDevice.frame
+//    });
+//  }, );
   ngAfterViewInit() {
     this.showModalOnClick1.show();
   }
 
   close() {
 
-    this.r.navigate(['expenses']);
+    this.r.navigate(['']);
+    // this.r.navigate(['expenses']);
   }
 
   save() {
@@ -71,7 +109,8 @@ export class ExpensesFormComponent implements OnInit {
     this.showModalOnClick.hide();
     this.showModalOnClick1.hide();
     // צריך פה לעשות רפרש לטבלה
-    this.r.navigate(['expenses']);
+    // this.r.navigate(['expenses']);
+    this.r.navigate(['']);
   }
 
 
@@ -143,9 +182,9 @@ export class ExpensesFormComponent implements OnInit {
     this.detail.removeAt(i);
   }
 
-getaDetail(i: number) {
-  console.log(this.expensesForm[i].detail.length);
-}
+  getaDetail(i: number) {
+    console.log(this.expensesForm[i].detail.length);
+  }
 }
 
 

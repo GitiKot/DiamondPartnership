@@ -20,7 +20,7 @@
                             <div class="col-8 col-sm-6 col-example">
                                 <div class="md-form mb-5">
                                     <input type="text" id="form34" class="form-control" mdbInput mdbValidate
-                                        [formControl]="PublicSerialName">
+                                      [formControl]="PublicSerialName">
                                     <label for="form34">שם סריה כללית</label>
                                     <mdb-error
                                         *ngIf="PublicSerialName.invalid && (PublicSerialName.dirty || PublicSerialName.touched)">
@@ -33,8 +33,8 @@
                             </div>
                             <div class="col-4 col-sm-6 col-example">
                                 <div class="md-form mb-5">
-                                    <input type="date" id="form31" class="form-control" mdbInput mdbValidate
-                                        [formControl]="date">
+                                    <input   type="date" id="form31" class="form-control" mdbInput mdbValidate
+                                        [formControl]="date"   [ngModel]="updateEx.date | date:'yyyy-MM-dd'" >
                                     <label for="form31">תאריך</label>
                                     <mdb-error *ngIf="date.invalid && (date.dirty || date.touched)">
                                     </mdb-error>
