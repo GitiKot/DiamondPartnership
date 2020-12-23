@@ -12,6 +12,7 @@ import { ExpensesService } from 'src/app/services/expenses.service'
 })
 export class ExpensesComponent implements OnInit {
   indexE = 0;
+  currentExpenses:Expenses;
   e:Expenses;
   expensesForm: FormGroup;
   expensesList: Array<Expenses>;
@@ -103,12 +104,26 @@ console.log("giti:  ",ex);
     
     this.expensesService.updateExpenses(this.expensesList[exid].id, expenses);
   }
-  deleteExpe(e: Expenses) {
-    var ex = this.expensesService.deleteExpenses(e);
-    console.log(ex);
-    this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
-  }
+  deleteExpe(e) {
+    var div = document.getElementById('alert');
+    div.style.visibility = "visible";
+    this.currentExpenses = e;
 
+    // var ex = this.expensesService.deleteExpenses(e);
+    // console.log(ex);
+    // this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
+  }
+  ok(s) {
+    console.log("ok");
+
+    if (s != '') {
+      var ex= this.expensesService.deleteExpenses(this.currentExpenses);
+      this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
+    }
+    this.currentExpenses = null;
+    var div = document.getElementById('alert');
+    div.style.visibility = "hidden";
+  }
   toolbar(i: number) {
 
     let row = document.getElementById("row" + i);

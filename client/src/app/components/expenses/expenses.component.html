@@ -1,3 +1,6 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <!-- <form [formGroup]='expensesForm' class="form-inline d-flex justify-content-center md-form form-sm mt-0"> -->
 <form *ngIf="newexpensesForm" [formGroup]="newexpensesForm">
 
@@ -23,9 +26,8 @@
     <table id="myTable">
       <thead>
         <tr class="header"> 
-          <th  ></th>
-         
-          <th ></th>
+          <th>מחיקה</th>
+          <th>עדכון</th>
           <th style="width: 150px;">שם סריה כללית</th>
           <th>תאריך</th>
           <th style="width: 270px;">האם קיבלתי צ'ק או לקזז הצ'ק הבא</th>
@@ -34,23 +36,23 @@
           <th>סכום</th>
           <th>פרוט</th>
           <th style="width: 100px;">סכום לשותף</th>
-        <th>update</th>
-         
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let e of expensesList;let ei=index" (mouseenter)="toolbar(ei)" (mouseleave)="toolbar1(ei)"
           id="row{{ei}}">
-          <td style="visibility: hidden;">
-            <button id="del{{ei}}" class="del" (click)="deleteExpe(e)" title="מחיקה"><svg width="1.5em" height="1.5em"
+          <td>
+            <button id="del{{ei}}" class="del" (click)="deleteExpe(e)" title="מחיקה">
+              <i class="fa fa-trash" id="trash" aria-hidden="true"></i></button>
+            <!-- <button id="del{{ei}}" class="del" (click)="deleteExpe(e)" title="מחיקה"><svg width="1.5em" height="1.5em"
                 viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                 <path fill-rule="evenodd"
                   d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-              </svg>
+              </svg> -->
               <!-- <i class="fas fa-trash"></i> -->
-            </button>
+            <!-- </button> -->
           </td>
           <td >
             <!-- style="visibility: hidden;" -->
@@ -86,7 +88,12 @@
       <app-expenses-form *ngIf="flagupdate" [updateEx]="e"></app-expenses-form>
 
 
-
+      <div id="alert" class="alert alert-success">
+        <strong>   שים לב   </strong>בקשת למחוק שותף<button type="button" class="btn btn-outline-primary"
+        (click)="ok('ok')" >אישור</button>
+        <button type="button" class="btn btn-outline-primary" (click)="ok('')" >ביטול</button>
+      </div>
+      
 
     <!-- -------model expenses------------------------------------ -->
 
@@ -114,7 +121,7 @@
                 </tr>
               </thead>
               <!-- צריך לעשות ngif  רק אם יש נתונים בטבלה *ngIf="expensesList.detail"-->
-              <tbody>
+              <tbody *ngIf="expensesList[indexE]">
                 <tr *ngFor="let e of expensesList[indexE].detail;let i=index">
                   <td>{{e.expenses}}</td>
                   <td>{{e.price}}</td>
