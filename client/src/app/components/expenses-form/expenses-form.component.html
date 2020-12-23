@@ -33,8 +33,10 @@
                             </div>
                             <div class="col-4 col-sm-6 col-example">
                                 <div class="md-form mb-5">
-                                    <input   type="date" id="form31" class="form-control" mdbInput mdbValidate
-                                        [formControl]="date"   [ngModel]="updateEx.date | date:'yyyy-MM-dd'" >
+                                    <input *ngIf="!(updateEx)"  type="date" id="form31" class="form-control" mdbInput mdbValidate
+                                        [formControl]="date" >
+                                        <input  *ngIf="updateEx" type="date" id="form31" class="form-control" mdbInput mdbValidate
+                                        [formControl]="date" [ngModel]="updateEx.date | date:'yyyy-MM-dd'" >
                                     <label for="form31">תאריך</label>
                                     <mdb-error *ngIf="date.invalid && (date.dirty || date.touched)">
                                     </mdb-error>
@@ -110,7 +112,8 @@
                             <!-- <div class="modal-footer"> -->
                             <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
                                     (click)="close()">ביטול</button>
-                                <button class="btn btn-primary" (click)=save() (click)="close()">שמירה</button></div>
+                                <button *ngIf="!(updateEx)" class="btn btn-primary" (click)=save() (click)="close()">שמירה</button>
+                                <button *ngIf="updateEx" class="btn btn-primary" (click)=update() (click)="close()">שמירה</button></div>
                         </div>
 
                         <!-- <button type="button" class="btn btn-primary" (click)="frame2.show()" data-toggle="modal"

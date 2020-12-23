@@ -21,7 +21,7 @@ export class ExpensesService {
     return this.http.post<Expenses>(this.expensesUrl, e);
   }
   updateExpenses(exId, expenses: Expenses) {
-    const urlupdate = `${this.expensesUrl}/${expenses.id}`;
+    const urlupdate = `${this.expensesUrl}/${exId}`;
     return this.http.patch<Expenses>(urlupdate, expenses, this.options)
     .subscribe((e: Expenses) => {
       console.log(e, "suecces");

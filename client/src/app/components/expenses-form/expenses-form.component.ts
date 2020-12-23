@@ -24,7 +24,7 @@ export class ExpensesFormComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
+    // this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
     this.expensesForm = this.formBuilder.group({
       PublicSerialName: ['', [Validators.required]],
       date: ['', [Validators.required]],
@@ -38,40 +38,25 @@ export class ExpensesFormComponent implements OnInit {
     // this.expensesForm.controls['PublicSerialName'].setValue(this.updateEx.PublicSerialName);
     if (this.updateEx != undefined) {
       console.log("iibfuuuuuuuuuu");
-      console.log(this.updateEx.date);
+      console.log(this.updateEx.detail);
 
-     
-      
       this.expensesForm.setValue({
-
         PublicSerialName: this.updateEx.PublicSerialName,
         date: this.updateEx.date,
         getchack: this.updateEx.getchack,
         InvoiceNumber: this.updateEx.InvoiceNumber,
         amountPartner: this.updateEx.amountPartner,
         amount: this.updateEx.amount,
-
         Remarks: this.updateEx.Remarks, 
         detail: this.updateEx.detail,
       })
-      console.log("tfffffffffffff");
-      console.log(this.expensesForm.controls.date);
-
     }
 
     console.log("uuuuuuuuuuuuu");
-    //  console.log(this.updateEx.detail);
+    console.log(this.updateEx.detail);
     console.log(this.updateEx);
 
   }
-//   setTimeout(() => {
-//     this.deviceForm.setValue({
-//      name: this.editedDevice.name,
-//      platform: this.editedDevice.platform,
-//      type: this.editedDevice.type,
-//      udid: this.editedDevice.frame
-//    });
-//  }, );
   ngAfterViewInit() {
     this.showModalOnClick1.show();
   }
@@ -113,7 +98,28 @@ export class ExpensesFormComponent implements OnInit {
     this.r.navigate(['']);
   }
 
+  update(){
+    console.log("updateeeeeeeeee");
+    console.log(this.updateEx.id);
+    console.log(this.expensesForm.value);
+      
+      alert("האם ברצונך לשמור את הנתונים")
+      if (this.expensesForm.valid) {
+  
+        this.expensesForm.value.amount = this.expensesForm.value.detail
+          .reduce((prev, curr) => prev + Number(curr.price), 0);
+       
+        this.expensesService.updateExpenses(this.updateEx.id,this.expensesForm.value);
+          this.expensesForm.reset();
 
+      }
+      this.showModalOnClick.hide();
+      this.showModalOnClick1.hide();
+      // צריך פה לעשות רפרש לטבלה
+      // this.r.navigate(['expenses']);
+      this.r.navigate(['']);
+    
+  }
   savemodal() {
     // console.log(this.expensesForm.value.detail);
     this.showModalOnClick.hide();
