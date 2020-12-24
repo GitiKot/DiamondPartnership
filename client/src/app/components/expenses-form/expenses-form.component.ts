@@ -52,18 +52,27 @@ export class ExpensesFormComponent implements OnInit {
       // let d=[];
       // this.updateEx.detail.forEach(detail=>this.detail.push(this.formBuilder.array({[{detail.expenses:detail.expenses},{detail.price:detail.price}]})));
     //        this.expensesForm.setControl('detail',this.formBuilder.array(this.updateEx.detail||[]));
+     //{[{detail.expenses:detail.expenses},{detail.price:detail.price}]}
+    //  this.updateEx.detail.forEach(
+    //   d => {
+    //        this.detail.push(this.formBuilder.group(d));
+    //        });
 
-      this.expensesForm.setControl('detail',this.formBuilder.array(this.updateEx.detail||[]));
-     
+      this.expensesForm.setControl('detail',this.formBuilder.array(this.updateEx.detail));
+      console.log("this.detail");
+    console.log(this.expensesForm.value.detail);
+
+// let dd=this.expensesForm.get('detail') as FormArray;
+      this.expensesForm.value.detail.forEach(d => {
+        this.detail.push(this.formBuilder.group(d)); 
+         console.log("d",d);
+      });  
     }
     // var tagsArray = [];
     // this.product.tags.forEach(product => tagsArray.push(this.fb.group({tag: [product.tag, [Validators.required]]})));
     // this.productForm.setControl('tags', this.fb.array(tagsArray || []));
-    // console.log("uuuuu/uuuuuuuu");
     console.log("this.detail");
     console.log(this.expensesForm.value.detail);
-    // console.log(this.updateEx.detail);
-    // console.log(this.updateEx);
 
   }
   ngAfterViewInit() {
