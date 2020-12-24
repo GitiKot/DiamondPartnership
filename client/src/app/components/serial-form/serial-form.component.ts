@@ -6,6 +6,7 @@ import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.direc
 import { from } from 'rxjs';
 import { Expenses } from 'src/app/data/expenses';
 import { Partner } from 'src/app/data/partner';
+import { Seriousness } from 'src/app/data/seriousness';
 import { ExpensesService } from 'src/app/services/expenses.service'
 import { PartnerService } from 'src/app/services/partner.service';
 import { seriousnessService } from 'src/app/services/seriousness.service';
@@ -19,6 +20,7 @@ import { ModalFormComponent } from '../modal-form/modal-form.component';
 export class SerialFormComponent implements OnInit {
   serialForm: FormGroup;
   partnerList: Array<Partner>;
+
   @ViewChild('frame1') frame1: ModalDirective;
   @ViewChild('frame2') frame2: ModalDirective;
   totalPrice=[];
@@ -27,7 +29,7 @@ export class SerialFormComponent implements OnInit {
   // Validators.compose([Validators.minLength(10)
   ngOnInit(): void {
     this.partnerService.getAllPartners().subscribe(ans => { this.partnerList = ans; })
-    
+
     this.serialForm = this.formBuilder.group({
       serialName: ['', [Validators.required]],
       dateBuy: ['', [Validators.required]],
@@ -170,5 +172,12 @@ export class SerialFormComponent implements OnInit {
   savePrivateSerial() {
     console.log(this.privateSeria.value);
     this.frame2.hide()
+  }
+  removePrivate(i:number){
+    this.privateSeria.removeAt(i)  ; 
+
+  }
+  removeExpPrivate(i:number,ip:number){
+this.expenses(i).removeAt(ip)
   }
 }

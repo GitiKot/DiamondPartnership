@@ -135,14 +135,13 @@
                             <tr>
                                 <th>שם סריה פרטית </th>
                                 <th>מחיר</th>
-                                <th><i class="fa fa-plus" (click)="addPrivateSerial()" title="הוספת סריה" aria-hidden="true"></i></th>
+                                <th><i class="fa fa-plus"title="הוספה" (click)="addPrivateSerial()" title="הוספת סריה" aria-hidden="true"></i></th>
                             </tr>
                             <div formArrayName="privateSeria">
                                 <div class="form-group" *ngFor="let ps of privateSeria.controls; let i=index">
 
                                     <div class="form-group" [formGroupName]="i">
                                         <tr>
-
                                             <td>
                                                 <input class="form-control inputS" type="text" size="sm"
                                                     formControlName="namePrivate" placeholder="שם סריה">
@@ -161,7 +160,7 @@
                                                                 <tr>
                                                                     <th>הוצאה </th><br><br><br>
                                                                     <th>מחיר </th>
-                                                                    <th><i class="fa fa-plus" (click)="addExArrray(i)"
+                                                                    <th><i title="הוספה" class="fa fa-plus" (click)="addExArrray(i)"
                                                                             aria-hidden="true"></i></th>
                                                                 </tr>
                                                                 <div
@@ -181,6 +180,9 @@
                                                                                     #price placeholder="מחיר"
                                                                                     (input)="totalPrice[i] = price.value + totalPrice[i]">
                                                                             </td>
+                                                                            <td><i title="מחיקה" (click)="removeExpPrivate(i,ip)"class="fa fa-times" aria-hidden="false"></i>
+
+                                                                            </td>
                                                                         </tr>
                                                                     </div>
                                                                 </div>
@@ -189,6 +191,10 @@
                                                     </table>
                                                 </div>
                                             </td>
+                                            <td><i title="מחיקה" (click)="removePrivate(i)"class="fa fa-times" aria-hidden="false"></i>
+
+                                            </td>
+
                                         </tr>
                                     </div>
                                 </div>

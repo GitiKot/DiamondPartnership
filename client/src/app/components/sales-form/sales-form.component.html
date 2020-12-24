@@ -86,11 +86,33 @@
     <path fill-rule="evenodd"
       d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z" />
   </svg></td> -->
-      <td> <input   
+      <td>
+         <!-- <input   
           type="text" class="input" formControlName="publicSerialName" tabindex={{i*5+6}}
-       [(ngModel)]="sale.publicSerial"  (input)="tableKeyPresent()"></td>
+       [(ngModel)]="sale.publicSerial"  (input)="tableKeyPresent()"> -->
 
-         <td><input 
+       <!-- <div class="col-4 col-sm-6 col-example">
+        <div class="md-form mb-5"> -->
+            <select id="selectSeri" [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="selectedSerial" placeholder="בחר"
+                class="browser-default custom-select" mdbInput mdbValidate>
+                <option disabled>--בחר--</option>
+
+                <option *ngFor="let s of seriousnessList " [value]="s.id" (change)="pp()">
+                    {{s.serialName}}</option>
+            </select>
+            <!-- <label> בחר שותף</label> -->
+            
+            <mdb-error *ngIf="salesForm.controls['publicSerialName'].errors!=null&&salesForm.controls['publicSerialName'].dirty">
+            </mdb-error>
+            <!-- <mdb-success *ngIf="partner.valid && (partner.dirty ||  partner.touched)">
+            </mdb-success> -->
+        <!-- </div>
+    </div> -->
+      </td>
+
+         <td>
+           <input 
           formControlName="privateSerialName" type="text" class="input" 
           tabindex={{i*5+7}}    [(ngModel)]="sale.privateSerial"> </td> 
 

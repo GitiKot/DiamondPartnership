@@ -1,9 +1,11 @@
+import { ObjectID } from "mongodb";
+
 export declare class createSaleDto {
     readonly id: string;
     readonly date: Date;
     readonly  numOfDate:number;
     readonly invoiceNumber: Number;
-    readonly publicSerialName: Number;
+    readonly publicSerialName: ObjectID;
     readonly privateSerialName: Number;
     readonly stoneName: string;
     readonly weight: Number;

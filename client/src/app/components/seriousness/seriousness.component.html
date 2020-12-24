@@ -48,13 +48,13 @@
                     <i class="fa fa-trash"id="trash" aria-hidden="true"></i>
                 </button></td>
                 <td>{{s.serialName}}</td>
-                <td>{{s.dateBuy | date: "shortDate"}}</td>
+                <td>{{s.dateBuy | date:'dd/MM/yy'}}</td>
                 <td>{{s.partner.name}}</td>
                 <td>{{s.partnersPercent}}%</td>
                 <td>{{s.cost  | currency:"USD":true}}</td>
                 <td>{{s.amountReceived | currency:"USD":true}}</td>
                 <td>{{s.AmountReceivedPartner | currency:"USD":true}}</td>
-                <td>{{s.finishDate | date: "shortDate"}}</td>
+                <td>{{s.finishDate  | date:'dd/MM/yy'}}</td>
                 <td *ngIf="s.privateSeria.length>0" (click)="test.toggle()"><i class="fa fa-hand-o-down"
                         aria-hidden="true"></i>
                     לפרטים

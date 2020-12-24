@@ -4,7 +4,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Sale } from 'src/app/data/sale';
+import { Seriousness } from 'src/app/data/seriousness';
 import { SalesService } from 'src/app/services/sales.service'
+import { seriousnessService } from 'src/app/services/seriousness.service';
 // import { SalesService } from 'src/app/services/sales.service';
 
 @Component({
@@ -15,20 +17,25 @@ import { SalesService } from 'src/app/services/sales.service'
 
 })
 export class SalesFormComponent implements OnInit {
-
+  selectedSerial:Seriousness;
   numStones: number;
   tableContent = []
   salesForm: FormGroup;
   salesList: Array<Sale>;
   totalPrice = [];
   dateP: string;
-
-  constructor(private router: Router, private salesServise: SalesService, private cdRef: ChangeDetectorRef) {
+  seriousnessList:Array<Seriousness>;
+  constructor(private router: Router, private seriousnessService: seriousnessService, private salesServise: SalesService, private cdRef: ChangeDetectorRef) {
 
   }
 
   ngOnInit(): void {
+    this.seriousnessService.getAllSeriousness().subscribe(ans => {this.seriousnessList = ans});
 
+    this.seriousnessService.getAllSeriousness().subscribe(ans => {this.seriousnessList = ans;
+    console.log(ans);
+    });
+// console.log( "list: ",this.seriousnessList);
 
     this.keypressEnter();
     this.addEventCalcDate();
@@ -77,14 +84,15 @@ export class SalesFormComponent implements OnInit {
   }
 
   save() {
+    this.salesForm.controls['publicSerialName'].setValue(this.selectedSerial)
 
     let flag = 0;
     // alert("האם הנך בטוח במה שאתה עושה");
     if (this.tableContent[0] != undefined) {
       console.log(this.tableContent);
-      
+
       this.tableContent.forEach(sale => {
-        this.salesForm.controls['publicSerialName'].setValue(sale.publicSerial);
+        // this.salesForm.controls['publicSerialName'].setValue(sale.publicSerial);
 
         this.salesForm.controls['privateSerialName'].setValue(sale.privateSerial)
         this.salesForm.controls['stoneName'].setValue(sale.stoneName)
@@ -98,15 +106,15 @@ export class SalesFormComponent implements OnInit {
 
           this.salesServise.addSale(this.salesForm.value)
             .subscribe(a => {
-              // this.router.navigate(['sales-form'])
+              // this.seriousnessService.updateSerial(this.salesForm.controls['publicSerialName'])
             });
 
-        }
+            }
 
         else {
-          alert("חלק מהנתונים לא נכון");
+                alert("חלק מהנתונים לא נכון");
           flag = 1;
-        }
+              }
       });
       if (!flag)
         this.router.navigate(['sales-form/modal-form', 'מכירה'])
