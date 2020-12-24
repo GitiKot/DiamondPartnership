@@ -113,10 +113,10 @@ console.log("giti:  ",ex);
     // console.log(ex);
     // this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
   }
-  ok(s) {
+  ok(e) {
     console.log("ok");
 
-    if (s != '') {
+    if (e != '') {
       var ex= this.expensesService.deleteExpenses(this.currentExpenses);
       this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
     }

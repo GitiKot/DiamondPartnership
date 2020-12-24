@@ -16,7 +16,7 @@ export class ChecksComponent implements OnInit {
   OpenSalesList: Array<Sale>;
   ClosedSalesList: Array<Sale>;
   indexC = 0;
-
+  currentChecks: Checks;
   selectedRowIds: Set<string> = new Set<string>();
   // formBuilder: any;
   // masterToggle() {
@@ -56,7 +56,7 @@ export class ChecksComponent implements OnInit {
     // find all sales according public name
     // let PublicSerialName=document.getElementById("publicSerialName");
     // console.log(PublicSerialName);
-    
+
     // this.salesService.findAllSales("2r").subscribe(ans => (ans.map(sale => {
     //   if (sale.publicSerialName == "2r") {//htmlבמקום 2ר לוקחים את מה שנכנס באינפוט מתוך    
     //     console.log("findaillsales in");
@@ -67,7 +67,7 @@ export class ChecksComponent implements OnInit {
     // here the table items are called from webapi
     console.log("function");
   }
-  
+
   resetform() {
     this.checksForm.reset();
   }
@@ -129,7 +129,7 @@ export class ChecksComponent implements OnInit {
             sale = this.OpenSalesList[j];
             sale.isOpen = false;
             this.salesService.updateSale(this.OpenSalesList[j].id, sale);
-           
+
           }
         }
       }
@@ -145,24 +145,35 @@ export class ChecksComponent implements OnInit {
   }
 
   deleteCheck(c: Checks) {
-    console.log(c);
-    let s=0;
-    let sale;
-    while(c.IdSales[s]){
-    for (let j = 0; j < this.ClosedSalesList.length; j++) {
-      if (c.IdSales[s] == this.ClosedSalesList[j].id) {
-        // this.salesService.updateSale(this.OpenSalesList[j].id, {this.OpenSalesList[j].id,});
-        // this.OpenSalesList[j].isOpen = false;
-        sale = this.ClosedSalesList[j];
-        sale.isOpen = true;
-        this.salesService.updateSale(this.ClosedSalesList[j].id, sale);
-      }     
-    }s++;
+
+    var div = document.getElementById('alert');
+    div.style.visibility = "visible";
+    this.currentChecks = c;
   }
-    var ch = this.checksService.deleteChecks(c);
-    console.log(ch);
-    this.checksService.getAllChecks().subscribe(ans => this.checksList = ans);
-    
+
+  ok(c) {
+let s = 0;
+      let sale;
+    if (c != '') {
+      
+      while (this.currentChecks.IdSales[s]) {
+        for (let j = 0; j < this.ClosedSalesList.length; j++) {
+          if (this.currentChecks.IdSales[s] == this.ClosedSalesList[j].id) {
+            // this.salesService.updateSale(this.OpenSalesList[j].id, {this.OpenSalesList[j].id,});
+            // this.OpenSalesList[j].isOpen = false;
+            sale = this.ClosedSalesList[j];
+            sale.isOpen = true;
+            this.salesService.updateSale(this.ClosedSalesList[j].id, sale);
+          }
+        } s++;
+      }
+      var ch = this.checksService.deleteChecks(this.currentChecks);
+      console.log("ch:", ch);
+      this.checksService.getAllChecks().subscribe(ans => this.checksList = ans);
+    }
+    this.currentChecks = null;
+    var div = document.getElementById('alert');
+    div.style.visibility = "hidden";
   }
   toolbar(i: number) {
 

@@ -56,3 +56,8 @@ bottom: .5em;
   visibility: hidden;
   object-position: center;
 }
+#alert{
+  visibility:hidden;
+  bottom: 50px;
+   left: 25px;
+}
