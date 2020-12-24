@@ -5,10 +5,14 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { NotFoundException } from '@nestjs/common/exceptions/not-found.exception';
 import { StreamState } from 'http2';
+import { pathToFileURL } from 'url';
+import { match } from 'assert';
+import { Seriousness } from 'src/seriousness/seriousness.model';
 @Injectable()
 export class SalesService {
     constructor(
-        @InjectModel('Sale') private readonly salesModel: Model<Sales>,) { }
+        @InjectModel('Sale') private readonly salesModel: Model<Sales>,
+        @InjectModel('Seriousness') private readonly seriousnessModel: Model<Seriousness>) { }
 
     async addSale(createSaleDto: createSaleDto): Promise<Sales> {
         const createSale = new this.salesModel(createSaleDto);
@@ -20,7 +24,7 @@ export class SalesService {
     }
 
     async getSales() {
-        const Sales = await this.salesModel.find().exec();
+        const Sales = await this.salesModel.find().populate('publicSerialName').exec();
         
         return Sales.map(sale => ({
             id: sale.id,
@@ -39,10 +43,23 @@ export class SalesService {
         }));
     }
     
-    async findBySerailName(serialName: string) {  
-            
-        const SaleBySerailName = await this.salesModel.find({ publicSerialName: serialName });
-       
+    async findBySerailName(serialNameIs: string) { 
+        const seriousnessOne =  this.seriousnessModel.findOne({serialName:serialNameIs}).select(['_id']).exec();
+     console.log(seriousnessOne);
+     const v = (await seriousnessOne)._id;
+     console.log(v);
+     
+        const SaleBySerailName = await this.salesModel.find({publicSerialName:v}).populate('publicSerialName').exec();
+        // Chat.find({participants: user_id})
+        // .populate('participants', {
+        //     select: 'profile.firstname',
+        //     match: { _id: {$ne: user_id}}
+        // })
+        // .exec(function (err, chats) { });
+        // const SaleBySerailName = await this.salesModel.find({publicSerialName:serialNameIs})
+        // .populate('publicSerialName',{match: {'serialName':{$ne:serialNameIs}}}).exec();
+        // const books = await Book.find({ author: authors.map(author => author._id) });
+
         return SaleBySerailName.map(sale => ({
             id: sale.id,
             date: sale.date,
@@ -93,8 +110,8 @@ export class SalesService {
         }
         if (invoiceNumber) {
             updatedSale.invoiceNumber = invoiceNumber;
-        } if (publicSerialName) {
-            updatedSale.publicSerialName = publicSerialName;
+        // } if (publicSerialName) {
+        //     updatedSale.publicSerialName = publicSerialName;
         }
         if (privateSerialName) {
             updatedSale.privateSerialName = privateSerialName;

@@ -24,8 +24,7 @@ seriousnessList:Array<Seriousness>
   }
  
   cancel() {
-    console.log("ertyui");
-    
+    console.log("ertyui"); 
     this.r.navigate(['/seriousness']);
   }
 
@@ -36,7 +35,7 @@ seriousnessList:Array<Seriousness>
     table = document.getElementById("seriuosnessTable");
     tr = table.getElementsByTagName("tr");
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[0];
+      td = tr[i].getElementsByTagName("td")[1];
       if (td) {
         txtValue = td.textContent || td.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -47,6 +46,25 @@ seriousnessList:Array<Seriousness>
       }
     }
   }
+ 
+  filterPartner() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("partner");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("seriuosnessTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[3];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  } 
   toolbar(i: number) {
 
     let row = document.getElementById("row" + i);
@@ -65,33 +83,15 @@ seriousnessList:Array<Seriousness>
     del.style.display = "none";
     del.style.visibility = "hidden";
   }
-  filterPartner() {
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("partner");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("seriuosnessTable");
-    tr = table.getElementsByTagName("tr");
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[2];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
-        }
-      }
-    }
-  }
   deleteSerial(s) {
     var div = document.getElementById('alert');
     div.style.visibility = "visible";
     this.currectSeria = s;
    }
-   ok(s) {
+   ok(messsege) {
     console.log("ok");
     
-    if (s != '') {
+    if ( messsege!= '') {
       var tt= this.seriousnessService.deleteSeria(this.currectSeria);
       // console.log( tt);
       this.seriousnessService.getAllSeriousness().subscribe(ans => this.seriousnessList = ans);

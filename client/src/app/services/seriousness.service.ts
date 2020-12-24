@@ -13,6 +13,8 @@ export class seriousnessService {
 
 
   getAllSeriousness(): Observable<Seriousness[]> {
+    console.log("now");
+    
     return this.http.get<Seriousness[]>(this.seriousnessUrl);
 
   }
@@ -36,8 +38,18 @@ export class seriousnessService {
         console.log("error");
       }
       );
-
-
   }
+  updateSerial(serial: Seriousness) {
+    console.log("update");
 
+    const urlupdate = `${this.seriousnessUrl}/${serial.id}`;
+    // return this.http.put<Sale>(fullUrl, sale, this.options);
+    return this.http.patch<Seriousness>(urlupdate, serial, this.options)
+    .subscribe((s: Seriousness) => {
+      console.log(s, "suecces");
+    }, () => {
+      console.log("error");
+    }
+    );
+  }
 }

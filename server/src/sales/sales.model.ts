@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 
 export const SaleSchema = new mongoose.Schema({
 
-    publicSerialName: { type: String, required: true },
+    publicSerialName:{type:mongoose.Schema.Types.ObjectId,ref:'Seriousness'},
     privateSerialName: { type: String, required: true },
     stoneName: { type: String, required: true },
     date: { type: Date, required: true },
@@ -29,7 +29,7 @@ export interface Sales extends mongoose.Document {
     date: Date;
     numOfDate:number;
     invoiceNumber: Number;//מספר חשבונית
-    publicSerialName: String;
+    publicSerialName:{type:mongoose.Schema.Types.ObjectId,ref:'Seriousness'},
     privateSerialName: String;
     stoneName: string;
     weight: Number;
