@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
@@ -12,11 +12,16 @@ import { ExpensesService } from 'src/app/services/expenses.service'
 })
 export class ExpensesComponent implements OnInit {
   indexE = 0;
+  currentExpenses:Expenses;
+  e:Expenses;
   expensesForm: FormGroup;
   expensesList: Array<Expenses>;
   @ViewChild('frame2') public showModalOnClick: ModalDirective;//model s
   @ViewChild('frame1') public showModalOnClick1: ModalDirective;//model big
   newexpensesForm: FormGroup;
+
+ flagupdate=0;
+
   constructor(private r: Router, private expensesService: ExpensesService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -32,6 +37,12 @@ export class ExpensesComponent implements OnInit {
       });
   }
 
+
+
+  loggg(e){
+    console.log(`ךםםaaaaaaaaaa   ${e}`);
+    
+  }
   enableSection(index, disabled) {
     const expensesFormGroup = (<FormArray>this.newexpensesForm.get('expenses')).at(index);
     disabled ? expensesFormGroup.enable() : expensesFormGroup.disable();
@@ -39,8 +50,8 @@ export class ExpensesComponent implements OnInit {
   }
 
   private aexpensesFormGroup(datum) {
-    console.log("datum");
-    console.log(datum);
+    // console.log("datum");
+    // console.log(datum);
     return this.formBuilder.group({
       PublicSerialName: this.formBuilder.control({ value: datum.PublicSerialName, disabled: true }),
       date: this.formBuilder.control({ value: datum.date, disabled: true }),
@@ -63,7 +74,7 @@ export class ExpensesComponent implements OnInit {
     table = document.getElementById("myTable");
     tr = table.getElementsByTagName("tr");
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[0];
+      td = tr[i].getElementsByTagName("td")[2];
       if (td) {
         txtValue = td.textContent || td.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -74,7 +85,14 @@ export class ExpensesComponent implements OnInit {
       }
     }
   }
+  updateflag(ex){
 
+    this.e = ex;
+
+console.log("giti:  ",ex);
+    this.flagupdate=1;
+
+  }
   updateEi(i: number) {
     this.indexE = i;
   }
@@ -83,14 +101,29 @@ export class ExpensesComponent implements OnInit {
     console.log(expenses);
     console.log(this.expensesList[exid].id);
     expenses.id=this.expensesList[exid].id;
+    
     this.expensesService.updateExpenses(this.expensesList[exid].id, expenses);
   }
-  deleteExpe(e: Expenses) {
-    var ex = this.expensesService.deleteExpenses(e);
-    console.log(ex);
-    this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
-  }
+  deleteExpe(e) {
+    var div = document.getElementById('alert');
+    div.style.visibility = "visible";
+    this.currentExpenses = e;
 
+    // var ex = this.expensesService.deleteExpenses(e);
+    // console.log(ex);
+    // this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
+  }
+  ok(e) {
+    console.log("ok");
+
+    if (e != '') {
+      var ex= this.expensesService.deleteExpenses(this.currentExpenses);
+      this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
+    }
+    this.currentExpenses = null;
+    var div = document.getElementById('alert');
+    div.style.visibility = "hidden";
+  }
   toolbar(i: number) {
 
     let row = document.getElementById("row" + i);

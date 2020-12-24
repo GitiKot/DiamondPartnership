@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { Expenses } from 'src/app/data/expenses';
 import { ExpensesService } from 'src/app/services/expenses.service';
+import { DatePipe } from '@angular/common'
 
 @Component({
   selector: 'app-expenses-form',
@@ -17,12 +18,13 @@ export class ExpensesFormComponent implements OnInit {
   expensesForm: FormGroup;
   expensesList: Array<Expenses>;
 
+  @Input() updateEx: Expenses;
+
   constructor(private r: Router, private expensesService: ExpensesService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
 
     // this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
-
     this.expensesForm = this.formBuilder.group({
       PublicSerialName: ['', [Validators.required]],
       date: ['', [Validators.required]],
@@ -33,15 +35,54 @@ export class ExpensesFormComponent implements OnInit {
       detail: this.formBuilder.array([]),
       Remarks: [''],
     })
-  }
+    // this.expensesForm.controls['PublicSerialName'].setValue(this.updateEx.PublicSerialName);
+    if (this.updateEx != undefined) {
+      console.log("iibfuuuuuuuuuu");
+      console.log(this.updateEx.detail);
 
+      this.expensesForm.patchValue({
+        PublicSerialName: this.updateEx.PublicSerialName,
+        date: this.updateEx.date,
+        getchack: this.updateEx.getchack,
+        InvoiceNumber: this.updateEx.InvoiceNumber,
+        amountPartner: this.updateEx.amountPartner,
+        amount: this.updateEx.amount,
+        Remarks: this.updateEx.Remarks,
+      });
+      // let d=[];
+      // this.updateEx.detail.forEach(detail=>this.detail.push(this.formBuilder.array({[{detail.expenses:detail.expenses},{detail.price:detail.price}]})));
+    //        this.expensesForm.setControl('detail',this.formBuilder.array(this.updateEx.detail||[]));
+     //{[{detail.expenses:detail.expenses},{detail.price:detail.price}]}
+    //  this.updateEx.detail.forEach(
+    //   d => {
+    //        this.detail.push(this.formBuilder.group(d));
+    //        });
+
+      this.expensesForm.setControl('detail',this.formBuilder.array(this.updateEx.detail));
+      console.log("this.detail");
+    console.log(this.expensesForm.value.detail);
+
+// let dd=this.expensesForm.get('detail') as FormArray;
+      this.expensesForm.value.detail.forEach(d => {
+        this.detail.push(this.formBuilder.group(d)); 
+         console.log("d",d);
+      });  
+    }
+    // var tagsArray = [];
+    // this.product.tags.forEach(product => tagsArray.push(this.fb.group({tag: [product.tag, [Validators.required]]})));
+    // this.productForm.setControl('tags', this.fb.array(tagsArray || []));
+    console.log("this.detail");
+    console.log(this.expensesForm.value.detail);
+
+  }
   ngAfterViewInit() {
     this.showModalOnClick1.show();
   }
 
   close() {
 
-    this.r.navigate(['expenses']);
+    this.r.navigate(['']);
+    // this.r.navigate(['expenses']);
   }
 
   save() {
@@ -71,10 +112,32 @@ export class ExpensesFormComponent implements OnInit {
     this.showModalOnClick.hide();
     this.showModalOnClick1.hide();
     // צריך פה לעשות רפרש לטבלה
-    this.r.navigate(['expenses']);
+    // this.r.navigate(['expenses']);
+    this.r.navigate(['']);
   }
 
+  update() {
+    console.log("updateeeeeeeeee");
+    console.log(this.updateEx.id);
+    console.log(this.expensesForm.value);
 
+    alert("האם ברצונך לשמור את הנתונים")
+    if (this.expensesForm.valid) {
+
+      this.expensesForm.value.amount = this.expensesForm.value.detail
+        .reduce((prev, curr) => prev + Number(curr.price), 0);
+
+      this.expensesService.updateExpenses(this.updateEx.id, this.expensesForm.value);
+      this.expensesForm.reset();
+
+    }
+    this.showModalOnClick.hide();
+    this.showModalOnClick1.hide();
+    // צריך פה לעשות רפרש לטבלה
+    // this.r.navigate(['expenses']);
+    this.r.navigate(['']);
+
+  }
   savemodal() {
     // console.log(this.expensesForm.value.detail);
     this.showModalOnClick.hide();
@@ -143,9 +206,9 @@ export class ExpensesFormComponent implements OnInit {
     this.detail.removeAt(i);
   }
 
-getaDetail(i: number) {
-  console.log(this.expensesForm[i].detail.length);
-}
+  getaDetail(i: number) {
+    console.log(this.expensesForm[i].detail.length);
+  }
 }
 
 
