@@ -40,21 +40,30 @@ export class ExpensesFormComponent implements OnInit {
       console.log("iibfuuuuuuuuuu");
       console.log(this.updateEx.detail);
 
-      this.expensesForm.setValue({
+      this.expensesForm.patchValue({
         PublicSerialName: this.updateEx.PublicSerialName,
         date: this.updateEx.date,
         getchack: this.updateEx.getchack,
         InvoiceNumber: this.updateEx.InvoiceNumber,
         amountPartner: this.updateEx.amountPartner,
         amount: this.updateEx.amount,
-        Remarks: this.updateEx.Remarks, 
-        detail: this.updateEx.detail,
-      })
-    }
+        Remarks: this.updateEx.Remarks,
+      });
+      // let d=[];
+      // this.updateEx.detail.forEach(detail=>this.detail.push(this.formBuilder.array({[{detail.expenses:detail.expenses},{detail.price:detail.price}]})));
+    //        this.expensesForm.setControl('detail',this.formBuilder.array(this.updateEx.detail||[]));
 
-    console.log("uuuuuuuuuuuuu");
-    console.log(this.updateEx.detail);
-    console.log(this.updateEx);
+      this.expensesForm.setControl('detail',this.formBuilder.array(this.updateEx.detail||[]));
+     
+    }
+    // var tagsArray = [];
+    // this.product.tags.forEach(product => tagsArray.push(this.fb.group({tag: [product.tag, [Validators.required]]})));
+    // this.productForm.setControl('tags', this.fb.array(tagsArray || []));
+    // console.log("uuuuu/uuuuuuuu");
+    console.log("this.detail");
+    console.log(this.expensesForm.value.detail);
+    // console.log(this.updateEx.detail);
+    // console.log(this.updateEx);
 
   }
   ngAfterViewInit() {
@@ -98,27 +107,27 @@ export class ExpensesFormComponent implements OnInit {
     this.r.navigate(['']);
   }
 
-  update(){
+  update() {
     console.log("updateeeeeeeeee");
     console.log(this.updateEx.id);
     console.log(this.expensesForm.value);
-      
-      alert("האם ברצונך לשמור את הנתונים")
-      if (this.expensesForm.valid) {
-  
-        this.expensesForm.value.amount = this.expensesForm.value.detail
-          .reduce((prev, curr) => prev + Number(curr.price), 0);
-       
-        this.expensesService.updateExpenses(this.updateEx.id,this.expensesForm.value);
-          this.expensesForm.reset();
 
-      }
-      this.showModalOnClick.hide();
-      this.showModalOnClick1.hide();
-      // צריך פה לעשות רפרש לטבלה
-      // this.r.navigate(['expenses']);
-      this.r.navigate(['']);
-    
+    alert("האם ברצונך לשמור את הנתונים")
+    if (this.expensesForm.valid) {
+
+      this.expensesForm.value.amount = this.expensesForm.value.detail
+        .reduce((prev, curr) => prev + Number(curr.price), 0);
+
+      this.expensesService.updateExpenses(this.updateEx.id, this.expensesForm.value);
+      this.expensesForm.reset();
+
+    }
+    this.showModalOnClick.hide();
+    this.showModalOnClick1.hide();
+    // צריך פה לעשות רפרש לטבלה
+    // this.r.navigate(['expenses']);
+    this.r.navigate(['']);
+
   }
   savemodal() {
     // console.log(this.expensesForm.value.detail);

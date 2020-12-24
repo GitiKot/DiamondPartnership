@@ -7,7 +7,9 @@
                 <div class="modal-body mx-3">
 
                     <div class="modal-header text-center">
-                        <h4 class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור הוצאה חדשה</h4>
+                        <h4 *ngIf="!(updateEx)" class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור הוצאה חדשה</h4>
+                        <h4 *ngIf="updateEx" class="modal-title w-100 font-weight-bold"> עדכן פרטים עבור הוצאה זו</h4>
+
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
                             <span aria-hidden="true">&times;</span>
                             <!-- <span aria-hidden="true">x</span> -->
@@ -143,8 +145,10 @@
                             <table id="myTable" class="table table-hover">
                                 <tbody>
                                     <div formArrayName="detail">
-                                        <div *ngFor="let d of detail.controls; let i=index">
+                                        <div *ngFor="let d of detail.controls; let i=index" >
+                                            <!-- [formGroup]="detail.controls[i]" -->
                                             <div [formGroupName]="i">
+                                                
                                                 <tr class="header" *ngIf="i=='0'">
                                                     <th>#</th>
                                                     <th>שם הוצאה</th>
