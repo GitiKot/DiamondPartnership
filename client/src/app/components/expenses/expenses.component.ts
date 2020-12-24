@@ -27,7 +27,6 @@ export class ExpensesComponent implements OnInit {
   ngOnInit(): void {
 
     this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
-
     // console.log(this.expensesList);
     this.expensesService.getAllExpenses()
       .subscribe((data: any[]) => {
@@ -35,18 +34,6 @@ export class ExpensesComponent implements OnInit {
           expenses: this.formBuilder.array(data.map(datum => this.aexpensesFormGroup(datum)))
         });
       });
-  }
-
-
-
-  loggg(e){
-    console.log(`ךםםaaaaaaaaaa   ${e}`);
-    
-  }
-  enableSection(index, disabled) {
-    const expensesFormGroup = (<FormArray>this.newexpensesForm.get('expenses')).at(index);
-    disabled ? expensesFormGroup.enable() : expensesFormGroup.disable();
-    this.updateExpenses(index, expensesFormGroup.value);
   }
 
   private aexpensesFormGroup(datum) {
@@ -86,10 +73,8 @@ export class ExpensesComponent implements OnInit {
     }
   }
   updateflag(ex){
-
     this.e = ex;
-
-console.log("giti:  ",ex);
+    console.log("giti:  ",ex);
     this.flagupdate=1;
 
   }
@@ -108,13 +93,8 @@ console.log("giti:  ",ex);
     var div = document.getElementById('alert');
     div.style.visibility = "visible";
     this.currentExpenses = e;
-
-    // var ex = this.expensesService.deleteExpenses(e);
-    // console.log(ex);
-    // this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
   }
   ok(e) {
-    console.log("ok");
 
     if (e != '') {
       var ex= this.expensesService.deleteExpenses(this.currentExpenses);

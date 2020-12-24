@@ -58,6 +58,8 @@ export class ExpensesService {
         detail:Array<{expenses:string,price:number}>
     ) {
         const updatedExpenses = await this.findExpenses(id);
+        console.log("serv",amount);
+        
         if (PublicSerialName) {
             updatedExpenses.PublicSerialName = PublicSerialName;
         }
@@ -72,7 +74,7 @@ export class ExpensesService {
         if (Remarks) {
             updatedExpenses.Remarks = Remarks;
         }
-        if (amount) {
+        if (amount!=undefined) {
             updatedExpenses.amount = amount;
         }
         if (amountPartner) {

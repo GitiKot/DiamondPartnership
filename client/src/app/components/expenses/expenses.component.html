@@ -1,6 +1,5 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
 <!-- <form [formGroup]='expensesForm' class="form-inline d-flex justify-content-center md-form form-sm mt-0"> -->
 <form *ngIf="newexpensesForm" [formGroup]="newexpensesForm">
 
@@ -23,7 +22,8 @@
 
       <router-outlet></router-outlet>
     </div>
-    <table id="myTable">
+    <!-- id="myTable" -->
+    <table class="table table-hover">
       <thead>
         <tr class="header"> 
           <th>מחיקה</th>
@@ -54,7 +54,6 @@
                   d="M15.825.12a.5.5 0 0 1 .132.584c-1.53 3.43-4.743 8.17-7.095 10.64a6.067 6.067 0 0 1-2.373 1.534c-.018.227-.06.538-.16.868-.201.659-.667 1.479-1.708 1.74a8.117 8.117 0 0 1-3.078.132 3.658 3.658 0 0 1-.563-.135 1.382 1.382 0 0 1-.465-.247.714.714 0 0 1-.204-.288.622.622 0 0 1 .004-.443c.095-.245.316-.38.461-.452.393-.197.625-.453.867-.826.094-.144.184-.297.287-.472l.117-.198c.151-.255.326-.54.546-.848.528-.739 1.2-.925 1.746-.896.126.007.243.025.348.048.062-.172.142-.38.238-.608.261-.619.658-1.419 1.187-2.069 2.175-2.67 6.18-6.206 9.117-8.104a.5.5 0 0 1 .596.04z" />
               </svg>
             </button>
-            <!-- <button (click)="enableSection(ei, expenses.disabled)">{{ expenses.disabled ? 'Edit': 'Save' }}</button> -->
           </td>
           <td>{{e.PublicSerialName}}</td>
           <td>{{e.date| date:'dd/MM/yy'}}</td>
@@ -65,14 +64,6 @@
           <td><button type="button" class="btn btn-primary" (click)="updateEi(ei)" (click)="frame.show()"
               data-toggle="modal" data-target="#modalCart">+</button></td>
           <td>{{e.amountPartner}}</td>
-          <!-- <td><button type="button"  (click)="updateflag(e)" >
-             עדכון הוצאה 
-          </button></td> -->
-          <!-- <button  type="button"[updateEx]="e" mdbBtn color="blue"(click)="loggg(e)" rounded="true" data-toggle="modal" data-target="#basicExample"
-        [routerLink]="['expenses-form']" mdbWavesEffect id="expenses">
-         עדכון הוצאה 
-      </button> -->
-         
         </tr>
       </tbody>
     </table>
@@ -84,7 +75,6 @@
         <button type="button" class="btn btn-outline-primary" (click)="ok('')" >ביטול</button>
       </div>
       
-
     <!-- -------model expenses------------------------------------ -->
 
     <div mdbModal #frame="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
@@ -112,14 +102,11 @@
                   <td>{{e.expenses}}</td>
                   <td>{{e.price}}</td>
               </tbody>
-
             </table>
           </div>
           <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
               (click)="frame.hide()">ביטול</button>
-
           </div>
-
         </div>
       </div>
     </div>
