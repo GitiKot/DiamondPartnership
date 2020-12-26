@@ -13,8 +13,8 @@
         <path fill-rule="evenodd"
           d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
       </svg>&nbsp;
-      <input type="text" id="myInput" class="form-control form-control-sm ml-3" (keyup)="myFunction()"
-        placeholder="מיון לפי שם סריה כללית" title="Type in a name">
+      <input type="text" id="publicSerialName" class="form-control form-control-sm ml-3" 
+      (keyup)="filterNameSeria()"  placeholder="סריה כללית" title="חיפוש לפי שם סריה כללית">
       <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
         [routerLink]="['expenses-form']" mdbWavesEffect id="newexpenses">
         הוצאה חדשה
@@ -22,7 +22,7 @@
 
       <router-outlet></router-outlet>
     </div>
-    <table class="table table-hover">
+    <table id="expensesTable" class="table table-hover">
       <thead>
         <tr class="header"> 
           <th>מחיקה</th>

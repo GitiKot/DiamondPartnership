@@ -51,14 +51,11 @@ export class ExpensesComponent implements OnInit {
 
     });
   }
-
-  myFunction() {
-    console.log(this.expensesList);
-
+  filterNameSeria() {
     var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("myInput");
+    input = document.getElementById("publicSerialName");
     filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
+    table = document.getElementById("expensesTable");
     tr = table.getElementsByTagName("tr");
     for (i = 0; i < tr.length; i++) {
       td = tr[i].getElementsByTagName("td")[2];
@@ -72,6 +69,7 @@ export class ExpensesComponent implements OnInit {
       }
     }
   }
+  
   updateflag(ex){
     this.e = ex;
     console.log("giti:  ",ex);
