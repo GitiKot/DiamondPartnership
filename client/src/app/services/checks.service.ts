@@ -19,7 +19,18 @@ export class ChecksService {
     console.log("service", this.checksUrl);
     return this.http.post<Checks>(this.checksUrl, c);
   }
+  updateCheck(chId, check: Checks) {
+    console.log("check",check);
 
+    const urlupdate = `${this.checksUrl}/${chId}`;
+    return this.http.patch<Checks>(urlupdate, check, this.options)
+    .subscribe((c: Checks) => {
+      console.log(c, "suecces");
+    }, () => {
+      console.log("error");
+    }
+    );
+  }
   deleteChecks(c: Checks) {
     var ch = `${this.checksUrl}/${c.id}`;
     console.log("url=" + ch);

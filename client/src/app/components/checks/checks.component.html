@@ -12,13 +12,14 @@
         d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
     </svg>&nbsp;
 
-    <input type="text" id="publicSerialName" class="form-control form-control-sm ml-3 " 
-      placeholder="סריה כללית" title="חיפוש לפי שם סריה כללית">
+    <input type="text" id="publicSerialName" class="form-control form-control-sm ml-3 " placeholder="סריה כללית"
+      title="חיפוש לפי שם סריה כללית">
   </div>
   <table id="checksTable" class="table table-hover">
     <!--mdbTable class="z-depth-1"id="myTable" -->
     <tr class="header">
       <th>delete</th>
+      <th>update</th>
       <th class="th-sm">תאריך צ'ק</th>
       <th>סכום צ'ק</th>
       <th>קבלה/חשבונית</th>
@@ -26,9 +27,17 @@
       <th>פרטי מכירות</th>
     </tr>
     <tbody>
-      <tr *ngFor="let c of checksList;let ci=index"(mouseenter)="toolbar(ci)" (mouseleave)="toolbar1(ci)"id="row{{ci}}">
+      <tr *ngFor="let c of checksList;let ci=index" (mouseenter)="toolbar(ci)" (mouseleave)="toolbar1(ci)"
+        id="row{{ci}}">
         <td> <button id="del{{ci}}" class="del" (click)="deleteCheck(c)" title="מחיקה">
             <i class="fa fa-trash" id="trash" aria-hidden="true"></i></button> </td>
+        <td> <button id="update{{ci}}" class="update" (click)="updateModal(c)" title="עדכון">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-brush-fill"
+              viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M15.825.12a.5.5 0 0 1 .132.584c-1.53 3.43-4.743 8.17-7.095 10.64a6.067 6.067 0 0 1-2.373 1.534c-.018.227-.06.538-.16.868-.201.659-.667 1.479-1.708 1.74a8.117 8.117 0 0 1-3.078.132 3.658 3.658 0 0 1-.563-.135 1.382 1.382 0 0 1-.465-.247.714.714 0 0 1-.204-.288.622.622 0 0 1 .004-.443c.095-.245.316-.38.461-.452.393-.197.625-.453.867-.826.094-.144.184-.297.287-.472l.117-.198c.151-.255.326-.54.546-.848.528-.739 1.2-.925 1.746-.896.126.007.243.025.348.048.062-.172.142-.38.238-.608.261-.619.658-1.419 1.187-2.069 2.175-2.67 6.18-6.206 9.117-8.104a.5.5 0 0 1 .596.04z" />
+            </svg></button>
+        </td>
         <td>{{c.date|date:"shortDate"}}</td>
         <td>{{c.sum}}</td>
         <td>{{c.ReceiptOrInvoice}}</td>
@@ -92,9 +101,9 @@
   </table>
 
   <div id="alert" class="alert alert-success">
-    <strong>   שים לב   </strong>בקשת למחוק צ'ק<button type="button" class="btn btn-outline-primary"
-    (click)="ok('ok')" >אישור</button>
-    <button type="button" class="btn btn-outline-primary" (click)="ok('')" >ביטול</button>
+    <strong> שים לב </strong>בקשת למחוק צ'ק<button type="button" class="btn btn-outline-primary"
+      (click)="ok('ok')">אישור</button>
+    <button type="button" class="btn btn-outline-primary" (click)="ok('')">ביטול</button>
   </div>
 
   <div>צ'קים פתוחים----------------------------------------------------------------------------</div>
@@ -146,9 +155,8 @@
           <td>{{s.rawOrPolished}}</td>
           <td *ngIf="s.admin==false" class="row-right"></td>
         </tr>
-        <button *ngIf="OpenSalesList.length>0"
-        type="button" class="btn btn-primary" (click)="framen.show()" data-toggle="modal"
-          data-target="#modalCart">לסגירת צ'ק</button>
+        <button *ngIf="OpenSalesList.length>0" type="button" class="btn btn-primary" (click)="framen.show()"
+          data-toggle="modal" data-target="#modalCart">לסגירת צ'ק</button>
       </tbody>
     </table>
 
@@ -167,21 +175,24 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header text-center">
-          <h4 class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור סגירת צ'ק</h4>
+          <h4 *ngIf="!(updateCheck)" class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור סגירת צ'ק</h4>
+          <h4 *ngIf="updateCheck" class="modal-title w-100 font-weight-bold"> עדכן פרטים עבור צ'ק זה</h4>
+
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true" (click)="framen.hide()" (click)="resetform()">&times;</span>
           </button>
         </div>
         <div class="modal-body mx-3">
 
-          <div class="md-form mb-5">
+          <!-- <div class="md-form mb-5">
             <input type="text" id="form30" class="form-control" mdbInput mdbValidate [formControl]="sum">
             <label for="form30">סכום צ'ק</label>
             <mdb-error *ngIf="sum.invalid && (sum.dirty || sum.touched)">
             </mdb-error>
             <mdb-success *ngIf="sum.valid && (sum.dirty || sum.touched)">
             </mdb-success>
-          </div>
+          </div> -->
+          
           <div class="md-form mb-5">
             <input type="text" id="form32" class="form-control" mdbInput mdbValidate [formControl]="numCheck">
             <label for="form32">מספר צ'ק</label>
@@ -192,7 +203,10 @@
           </div>
 
           <div class="md-form mb-4">
-            <input type="date" id="form31" class="form-control" mdbInput mdbValidate [formControl]="date">
+            <input *ngIf="updateCheck" type="date" id="form31" class="form-control" mdbInput mdbValidate
+              [formControl]="date" [ngModel]="updateCheck.date | date:'yyyy-MM-dd'">
+            <input *ngIf="!(updateCheck)" type="date" id="form31" class="form-control" mdbInput mdbValidate
+              [formControl]="date">
             <label for="form31">תאריך</label>
             <mdb-error *ngIf="date.invalid && (date.dirty || date.touched)">
             </mdb-error>
@@ -216,13 +230,23 @@
         <div class="modal-footer d-flex justify-content-center">
           <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="framen.hide()"
             (click)="resetform()">ביטול</button>
-          <button type="button" class="btn btn-primary" (click)="save()" (click)="framen.hide()">שמירה</button>
+          <button *ngIf="!(updateCheck)"type="button" class="btn btn-primary" (click)="save()" (click)="framen.hide()">שמירה</button>
+        <button *ngIf="updateCheck" class="btn btn-primary" (click)=update() (click)="framen.hide()">שמירה</button>
         </div>
       </div>
     </div>
   </div>
 
 </form>
+
+
+
+
+
+
+
+
+
 
 
 <!-- modal -->
@@ -234,6 +258,7 @@
 
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">מלא את הפרטים עבור הוצאה חדשה</h5>
+
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true" (click)="frame.hide()">&times;</span>
         </button>
@@ -241,15 +266,15 @@
 
       <div class="modal-body mx-3">
 
-        <div class="md-form mb-5">
+        <!-- <div class="md-form mb-5">
           <input type="text" id="form30" class="form-control" mdbInput mdbValidate [formControl]="sum">
           <label for="form30">סכום צ'ק</label>
           <mdb-error *ngIf="sum.invalid && (sum.dirty || sum.touched)">
           </mdb-error>
           <mdb-success *ngIf="sum.valid && (sum.dirty || sum.touched)">
           </mdb-success>
-        </div>
-        
+        </div> -->
+
         <div class="md-form mb-5">
           <input type="text" id="form32" class="form-control" mdbInput mdbValidate [formControl]="numCheck">
           <label for="form32">מספר צ'ק</label>
@@ -283,7 +308,8 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="frame.hide()">ביטול</button>
-        <button type="button" class="btn btn-primary">שמירה</button>
+        <button *ngIf="!(updateCheck)" type="button" class="btn btn-primary">שמירה</button>
+        <button *ngIf="updateCheck" class="btn btn-primary" (click)=update() (click)="close()">שמירה</button>
       </div>
     </div>
   </div>

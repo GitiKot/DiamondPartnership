@@ -7,7 +7,8 @@
                 <div class="modal-body mx-3">
 
                     <div class="modal-header text-center">
-                        <h4 *ngIf="!(updateEx)" class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור הוצאה חדשה</h4>
+                        <h4 *ngIf="!(updateEx)" class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור הוצאה חדשה
+                        </h4>
                         <h4 *ngIf="updateEx" class="modal-title w-100 font-weight-bold"> עדכן פרטים עבור הוצאה זו</h4>
 
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
@@ -22,7 +23,7 @@
                             <div class="col-8 col-sm-6 col-example">
                                 <div class="md-form mb-5">
                                     <input type="text" id="form34" class="form-control" mdbInput mdbValidate
-                                      [formControl]="PublicSerialName">
+                                        [formControl]="PublicSerialName">
                                     <label for="form34">שם סריה כללית</label>
                                     <mdb-error
                                         *ngIf="PublicSerialName.invalid && (PublicSerialName.dirty || PublicSerialName.touched)">
@@ -35,10 +36,10 @@
                             </div>
                             <div class="col-4 col-sm-6 col-example">
                                 <div class="md-form mb-5">
-                                    <input *ngIf="!(updateEx)"  type="date" id="form31" class="form-control" mdbInput mdbValidate
-                                        [formControl]="date" >
-                                        <input  *ngIf="updateEx" type="date" id="form31" class="form-control" mdbInput mdbValidate
-                                        [formControl]="date" [ngModel]="updateEx.date | date:'yyyy-MM-dd'" >
+                                    <input *ngIf="!(updateEx)" type="date" id="form31" class="form-control" mdbInput
+                                        mdbValidate [formControl]="date">
+                                    <input *ngIf="updateEx" type="date" id="form31" class="form-control" mdbInput
+                                        mdbValidate [formControl]="date" [ngModel]="updateEx.date | date:'yyyy-MM-dd'">
                                     <label for="form31">תאריך</label>
                                     <mdb-error *ngIf="date.invalid && (date.dirty || date.touched)">
                                     </mdb-error>
@@ -76,7 +77,7 @@
                                     </mdb-success>
                                 </div>
                             </div>
-                           
+
                             <div class="row">
                                 <div class="col-8 col-sm-6 col-example">
                                     <div class="md-form mb-5">
@@ -106,7 +107,7 @@
                                 </div>
                             </div>
                             <button type="button" class="btn btn-primary" (click)="frame2.show()" data-toggle="modal"
-                                data-target="#modalCart">+</button>
+                                data-target="#modalCart" title="פרטי הוצאות">+</button>
                         </div>
 
                         <div class="modal-footer d-flex justify-content-center">
@@ -114,8 +115,11 @@
                             <!-- <div class="modal-footer"> -->
                             <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
                                     (click)="close()">ביטול</button>
-                                <button *ngIf="!(updateEx)" class="btn btn-primary" (click)=save() (click)="close()">שמירה</button>
-                                <button *ngIf="updateEx" class="btn btn-primary" (click)=update() (click)="close()">שמירה</button></div>
+                                <button *ngIf="!(updateEx)" class="btn btn-primary" (click)=save()
+                                    (click)="close()">שמירה</button>
+                                <button *ngIf="updateEx" class="btn btn-primary" (click)=update()
+                                    (click)="close()">שמירה</button>
+                            </div>
                         </div>
 
                         <!-- <button type="button" class="btn btn-primary" (click)="frame2.show()" data-toggle="modal"
@@ -145,18 +149,17 @@
                             <table id="myTable" class="table table-hover">
                                 <tbody>
                                     <div formArrayName="detail">
-                                        <div *ngFor="let d of detail.controls; let i=index" >
+                                        <div *ngFor="let d of detail.controls; let i=index">
                                             <!-- [formGroup]="detail.controls[i]" -->
                                             <div [formGroupName]="i">
-                                                
                                                 <tr class="header" *ngIf="i=='0'">
-                                                    <th>#</th>
+                                                    <!-- <th>#</th> -->
                                                     <th>שם הוצאה</th>
                                                     <th>מחיר</th>
                                                     <th>מחיקה</th>
                                                 </tr>
                                                 <tr>
-                                                    <td>{{i}}</td>
+                                                    <!-- <td>{{i}}</td> -->
                                                     <td><input type="text" formControlName="expenses" class="input">
                                                     </td>
                                                     <td><input type="text" formControlName="price" class="input"></td>
@@ -173,7 +176,8 @@
 
 
                         <!-- <div class="modal-footer"> -->
-                        <div> <button class="btn btn-outline-primary" (click)="addDetail()">הוספה</button>
+                        <div> <button class="btn btn-outline-primary" (click)="addDetail()"
+                                title="הוסף פרטי הוצאה">הוספה</button>
                             <button type="button" class="btn btn-primary" data-dismiss="modal"
                                 (click)="cancelex()">ביטול</button>
                             <button class="btn btn-primary" (click)="savemodal()">שמירה</button>

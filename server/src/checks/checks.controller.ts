@@ -22,7 +22,7 @@ export class ChecksController {
     } 
 
     @Patch(':id')
-    async updateChecks(
+    async updateCheck(
 
         @Param('id') chId: string,
         @Body('IdSales') chIdSales: Array<string>,
