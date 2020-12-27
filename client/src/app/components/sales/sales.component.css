@@ -8,7 +8,7 @@
 #salesTable {
   border-collapse: collapse;
   width: 100%;
-  border: 1px solid #ddd;
+  /* border: 1px solid #ddd; */
   /* font-size: 18px; */
 }
 
@@ -21,7 +21,7 @@
   border-bottom: 1px solid #ddd;
 }
 
-#salesTable tr.header, #salesTable tr:hover {
+ #salesTable tr:hover {
   background-color: #f1f1f1;
 } 
 .del{
