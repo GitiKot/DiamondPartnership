@@ -39,7 +39,6 @@ export class ExpensesFormComponent implements OnInit {
     if (this.updateEx != undefined) {
       console.log("iibfuuuuuuuuuu");
       console.log(this.updateEx.detail);
-
       this.expensesForm.patchValue({
         PublicSerialName: this.updateEx.PublicSerialName,
         date: this.updateEx.date,
@@ -49,24 +48,26 @@ export class ExpensesFormComponent implements OnInit {
         amount: this.updateEx.amount,
         Remarks: this.updateEx.Remarks,
       });
+      console.log("amount:",this.amount.value);
+      
       // let d=[];
       // this.updateEx.detail.forEach(detail=>this.detail.push(this.formBuilder.array({[{detail.expenses:detail.expenses},{detail.price:detail.price}]})));
-    //        this.expensesForm.setControl('detail',this.formBuilder.array(this.updateEx.detail||[]));
-     //{[{detail.expenses:detail.expenses},{detail.price:detail.price}]}
-    //  this.updateEx.detail.forEach(
-    //   d => {
-    //        this.detail.push(this.formBuilder.group(d));
-    //        });
+      //        this.expensesForm.setControl('detail',this.formBuilder.array(this.updateEx.detail||[]));
+      //{[{detail.expenses:detail.expenses},{detail.price:detail.price}]}
+      //  this.updateEx.detail.forEach(
+      //   d => {
+      //        this.detail.push(this.formBuilder.group(d));
+      //        });
 
-      this.expensesForm.setControl('detail',this.formBuilder.array(this.updateEx.detail));
+      this.expensesForm.setControl('detail', this.formBuilder.array(this.updateEx.detail));
       console.log("this.detail");
-    console.log(this.expensesForm.value.detail);
+      console.log(this.expensesForm.value.detail);
 
-// let dd=this.expensesForm.get('detail') as FormArray;
+      // let dd=this.expensesForm.get('detail') as FormArray;
       this.expensesForm.value.detail.forEach(d => {
-        this.detail.push(this.formBuilder.group(d)); 
-         console.log("d",d);
-      });  
+        this.detail.push(this.formBuilder.group(d));
+        console.log("d", d);
+      });
     }
     // var tagsArray = [];
     // this.product.tags.forEach(product => tagsArray.push(this.fb.group({tag: [product.tag, [Validators.required]]})));
@@ -87,9 +88,8 @@ export class ExpensesFormComponent implements OnInit {
 
   save() {
     // console.log(this.expensesForm.value);
-    alert("האם ברצונך לשמור את הנתונים")
-    if (this.expensesForm.valid) {
-
+    // alert("האם ברצונך לשמור את הנתונים")
+    if (this.expensesForm.valid) {      
       this.expensesForm.value.amount = this.expensesForm.value.detail
         .reduce((prev, curr) => prev + Number(curr.price), 0);
       // if (this.expensesForm.value.detail) {
@@ -104,10 +104,16 @@ export class ExpensesFormComponent implements OnInit {
       // console.log(this.expensesForm.value.detail.length);
       // }
       this.expensesService.addExpenses(this.expensesForm.value).subscribe(e => {
-        this.expensesList.push(e);
+        // this.expensesList.push(e);
+        this.r.navigate(['modal-form', 'הוצאה'])
+      }, () => {
+        console.log("error");
         this.expensesForm.reset();
       })
 
+    }
+    else {
+      alert("חסרים נתונים");
     }
     this.showModalOnClick.hide();
     this.showModalOnClick1.hide();
@@ -117,16 +123,21 @@ export class ExpensesFormComponent implements OnInit {
   }
 
   update() {
-    console.log("updateeeeeeeeee");
+    console.log("updateeeeee");
     console.log(this.updateEx.id);
     console.log(this.expensesForm.value);
-
     alert("האם ברצונך לשמור את הנתונים")
     if (this.expensesForm.valid) {
-
+      // console.log("aaaaaaaaaaaaaaaa:",this.amount);
+console.log("d",this.expensesForm.value.detail.length!=0);
+if(this.expensesForm.value.detail.length!=0){
       this.expensesForm.value.amount = this.expensesForm.value.detail
         .reduce((prev, curr) => prev + Number(curr.price), 0);
-
+}
+else{
+    this.expensesForm.value.amount=0;
+  console.log("sss",this.expensesForm.value.amount);
+}
       this.expensesService.updateExpenses(this.updateEx.id, this.expensesForm.value);
       this.expensesForm.reset();
 
@@ -146,6 +157,12 @@ export class ExpensesFormComponent implements OnInit {
   }
 
   cancelex() {
+    // if (this.updateEx != undefined) {
+    //   console.log("amount");
+      
+    //   this.expensesForm.patchValue({
+    //     amount: 0,})
+    //   }
     // console.log(this.expensesForm.controls);
     this.detail.reset();
     this.detail.clear();
@@ -205,7 +222,7 @@ export class ExpensesFormComponent implements OnInit {
   removeDetail(i: number) {
     this.detail.removeAt(i);
   }
-
+  // delete this rows????
   getaDetail(i: number) {
     console.log(this.expensesForm[i].detail.length);
   }

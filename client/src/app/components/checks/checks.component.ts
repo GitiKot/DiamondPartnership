@@ -1,21 +1,25 @@
-import { asNativeElements, Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { asNativeElements, Component, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ChecksService } from 'src/app/services/checks.service';
 import { Checks } from 'src/app/data/checks';
-// import { SelectionModel } from '@angular/cdk/collections';
 import { SalesService } from 'src/app/services/sales.service';
 import { Sale } from 'src/app/data/sale';
+import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 @Component({
   selector: 'app-checks',
   templateUrl: './checks.component.html',
   styleUrls: ['./checks.component.css']
 })
 export class ChecksComponent implements OnInit {
+  @ViewChild('framen') public showModalOnClick: ModalDirective;
+  
   checksForm: FormGroup;
   checksList: Array<Checks>;
   OpenSalesList: Array<Sale>;
   ClosedSalesList: Array<Sale>;
+  c:Checks;
   indexC = 0;
+  updateCheck:Checks;
   currentChecks: Checks;
   selectedRowIds: Set<string> = new Set<string>();
   // formBuilder: any;
@@ -24,32 +28,29 @@ export class ChecksComponent implements OnInit {
   // this.selection.clear() :
   // this.dataSource.data.forEach(row => this.selection.select(row));
   // }
-  constructor(private salesService: SalesService, private checksService: ChecksService) { }
   // constructor(private proService: ChecksService) {
   // this.setClickedRow = function (index) {
   // this.selectedRow = index;
   // }
   // }
+  constructor(private salesService: SalesService, private checksService: ChecksService, private formBuilder: FormBuilder) { }
+    
   ngOnInit() {
 
-    this.checksForm = new FormGroup({
-      date: new FormControl('', Validators.required),
-      numCheck: new FormControl('', Validators.required),
-      sum: new FormControl('', Validators.required),
-      ReceiptOrInvoice: new FormControl('', Validators.required),
-      IdSales: new FormArray([]),
+    this.checksForm = this.formBuilder.group({
+      date: ['', [Validators.required]],
+      numCheck: ['', Validators.required],
+      sum: [''],
+      ReceiptOrInvoice: ['', Validators.required],
+      IdSales: this.formBuilder.array([]),
     })
 
     this.OpenSalesList = new Array();
     this.ClosedSalesList = new Array();
     this.salesService.getAllSales().subscribe(ans =>
       ans.find(s => {
-        if (s.isOpen == true) {
-          this.OpenSalesList.push(s);
-        }
-        else {
-          this.ClosedSalesList.push(s);
-        }
+        if (s.isOpen == true) {  this.OpenSalesList.push(s);    }
+        else {   this.ClosedSalesList.push(s);  }
       }))
 
     this.checksService.getAllChecks().subscribe(ans => this.checksList = ans);
@@ -66,6 +67,24 @@ export class ChecksComponent implements OnInit {
     // })))
     // here the table items are called from webapi
     console.log("function");
+    console.log("updateCheck",this.updateCheck);
+    if (this.updateCheck != undefined) {
+      console.log("updatecheck");
+      this.checksForm.patchValue({
+        ReceiptOrInvoice: this.updateCheck.ReceiptOrInvoice,
+        date: this.updateCheck.date,
+        numCheck: this.updateCheck.numCheck,
+        sum:this.updateCheck.sum,
+      });}
+   
+      this.checksForm.setControl('IdSales', this.formBuilder.array(this.updateCheck.IdSales));
+      console.log("this.IdSales");
+      console.log(this.checksForm.value.IdSales)
+      this.checksForm.value.IdSales.forEach(s => {
+        this.IdSales.push(this.formBuilder.group(s));
+        console.log("s", s);
+      });
+
   }
 
   resetform() {
@@ -74,6 +93,36 @@ export class ChecksComponent implements OnInit {
   updateCi(i: number) {
     this.indexC = i;
   }
+  updateModal(ch){
+    this.updateCheck = ch; console.log("flag ",ch);
+    this.showModalOnClick.show();
+  }
+  update() {
+    console.log("updateeeeee");
+    console.log(this.updateCheck.id);
+    console.log(this.checksForm.value);
+    alert("האם ברצונך לשמור את הנתונים")
+    if (this.checksForm.valid) {
+      // console.log("aaaaaaaaaaaaaaaa:",this.sum);
+// console.log("d",this.checksForm.value.detail.length!=0);
+// if(this.checksForm.value.detail.length!=0){
+//       this.checksForm.value.amount = this.checksForm.value.detail
+//         .reduce((prev, curr) => prev + Number(curr.price), 0);
+// }
+// else{
+//     this.checksForm.value.sum=0;
+//   console.log("sss",this.checksForm.value.sum);
+// }
+      this.checksService.updateCheck(this.updateCheck.id, this.checksForm.value);
+      this.checksForm.reset();
+    }
+    // this.showModalOnClick.hide();
+    // this.showModalOnClick1.hide();
+    // צריך פה לעשות רפרש לטבלה
+    // this.r.navigate(['']);
+
+  }
+  
   onRowClick(id: string) {
 
     if (this.selectedRowIds.has(id)) {
@@ -118,6 +167,7 @@ export class ChecksComponent implements OnInit {
       }
       // עובר על כל השורות איפה שאי די שווה הוא מעדכן שדה איזאופן לפולס
       let sale: Sale;
+      let sumAllSales=0;
       for (let i = 0; i < this.getSelectedRows().length; i++) {
         // this.getSelectedRows().some(() => s.id == this.IdSales.value[i]));
         const result = this.OpenSalesList.filter(s =>
@@ -128,13 +178,19 @@ export class ChecksComponent implements OnInit {
             // this.OpenSalesList[j].isOpen = false;
             sale = this.OpenSalesList[j];
             sale.isOpen = false;
+            let w=Number(this.OpenSalesList[j].weight);
+            let p=Number(this.OpenSalesList[j].pricePerCarat);
+            sumAllSales+=(p*w);
             this.salesService.updateSale(this.OpenSalesList[j].id, sale);
 
           }
         }
       }
+      console.log("save sum",sumAllSales);
+      
       // const s = this.OpenSalesList.some((val) => this.getSelectedRows().indexOf(val) !== -1);
       // console.log(s);
+      this.checksForm.value.sum=sumAllSales;
       this.checksService.addChecks(this.checksForm.value).subscribe(c => {
         this.checksList.push(c);
 
@@ -179,19 +235,42 @@ let s = 0;
 
     let row = document.getElementById("row" + i);
     let del = document.getElementById("del" + i);
-
+    let update = document.getElementById("update" + i);
     row.style.borderColor = " #f1f1f1";
     del.style.display = "inline";
     del.style.visibility = "visible";
+    update.style.visibility = "visible";
+    update.style.display = "inline";
+
   }
   toolbar1(i: number) {
 
     let row = document.getElementById("row" + i);
     let del = document.getElementById("del" + i);
-
+    let update = document.getElementById("update" + i);
     row.style.borderColor = "none";
     del.style.display = "none";
     del.style.visibility = "hidden";
+    update.style.display = "none";
+    update.style.visibility = "hidden";
+  }
+  filterNameSeria() {
+    // var input, filter, table, tr, td, i, txtValue;
+    // input = document.getElementById("publicSerialName");
+    // filter = input.value.toUpperCase();
+    // table = document.getElementById("checksTable");
+    // tr = table.getElementsByTagName("tr");
+    // for (i = 0; i < tr.length; i++) {
+    //   td = tr[i].getElementsByTagName("td")[2];
+    //   if (td) {
+    //     txtValue = td.textContent || td.innerText;
+    //     if (txtValue.toUpperCase().indexOf(filter) > -1) {
+    //       tr[i].style.display = "";
+    //     } else {
+    //       tr[i].style.display = "none";
+    //     }
+    //   }
+    // }
   }
   searchPrivate() {
 
