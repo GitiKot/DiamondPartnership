@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Patch } from '@nestjs/common';
+import { ObjectID } from 'mongodb';
 // import { Patch } from '@nestjs/common/decorators/http/request-mapping.decorator';
 
 
@@ -21,9 +22,9 @@ export class SalesController {
   }
 
   @Get(':serialName')
-  async findBySerailName(@Param('serialName') publicSerialName: string) {
+  async findBySerailName(@Param('serialName') seria: string) {
     
-    const sale = await this.salesService.findBySerailName(publicSerialName);
+    const sale = await this.salesService.findBySerailName(seria);
     return sale;
   }
   
@@ -34,7 +35,7 @@ export class SalesController {
     @Body('date') sdate: Date,
     @Body('numOfDate') snumOfDate: number,
     @Body('invoiceNumber') sinvoiceNumber: number,
-    @Body('publicSerialName') spublicSerialName: string,
+    @Body('publicSerialName') spublicSerialName: ObjectID,
     @Body('privateSerialName') sprivateSerialName: string,
     @Body('stoneName') sstoneName: string,
     @Body('weight') sweight: number,

@@ -13,7 +13,6 @@ export class seriousnessService {
 
 
   getAllSeriousness(): Observable<Seriousness[]> {
-    console.log("now");
     
     return this.http.get<Seriousness[]>(this.seriousnessUrl);
 
