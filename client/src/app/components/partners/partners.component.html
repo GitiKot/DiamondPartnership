@@ -1,13 +1,14 @@
-<br>
-<form [formGroup]='partnersForm' >
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<br>
+<form [formGroup]='partnersForm' *ngIf="partnersForm">
 
     <div class="container">
         <table class="table table-hover">
           <thead>
             <tr>
-              <th></th>
+              <th style="width: 53px;"></th>
+              <th style="width: 53px;"></th>
               <th>שם שותף</th>
               <th>איש קשר</th>
               <th>מייל</th>
@@ -22,6 +23,15 @@
               <td> <button id="del{{i}}" class="del" (click)="deletePartner(p)" title="מחיקה">
                 <i class="fa fa-trash"id="trash" aria-hidden="true"></i>
             </button></td>
+            <td> <button id="update{{i}}" class="update" (click)="updateModal(p)" title="עדכון">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-brush-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                  d="M15.825.12a.5.5 0 0 1 .132.584c-1.53 3.43-4.743 8.17-7.095 10.64a6.067 6.067 0 0 1-2.373 1.534c-.018.227-.06.538-.16.868-.201.659-.667 1.479-1.708 1.74a8.117 8.117 0 0 1-3.078.132 3.658 3.658 0 0 1-.563-.135 1.382 1.382 0 0 1-.465-.247.714.714 0 0 1-.204-.288.622.622 0 0 1 .004-.443c.095-.245.316-.38.461-.452.393-.197.625-.453.867-.826.094-.144.184-.297.287-.472l.117-.198c.151-.255.326-.54.546-.848.528-.739 1.2-.925 1.746-.896.126.007.243.025.348.048.062-.172.142-.38.238-.608.261-.619.658-1.419 1.187-2.069 2.175-2.67 6.18-6.206 9.117-8.104a.5.5 0 0 1 .596.04z" />
+              </svg> 
+              <i class="fas fa-marker" id="marker" aria-hidden="true"></i>
+            </button>
+            </td>
             <td>{{p.name}}</td>  
             <td>{{p.contact}}</td> 
             <td>{{p.email}}</td>  
@@ -33,9 +43,10 @@
           </tbody>
         </table>
       </div>
-  <!-- <a class="btn btn-primary" [routerLink]="['/partners-form']" id="newpartner0"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <a class="btn btn-primary" [routerLink]="['/partners-form']" style=" position: fixed; 
+  bottom: 100px; left: 25px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
     <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-  </svg> שותף חדש</a>  -->
+  </svg> שותף חדש</a> 
   <button type="button" id="newpartner" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
         (click)="frame.show()" mdbWavesEffect><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
@@ -49,7 +60,8 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור שותף חדש</h4>
+        <h4 *ngIf="!(updatePartner)" class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור שותף חדש</h4>
+        <h4 *ngIf="updatePartner" class="modal-title w-100 font-weight-bold">עדכן פרטים עבור שותף זה</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -82,7 +94,7 @@
           <mdb-success *ngIf="email.valid && (email.dirty || email.touched)">  </mdb-success>
         </div>
         <div class="md-form mb-5">
-          <!-- <mdb-icon fas icon="tag" class="prefix grey-text"></mdb-icon> -->
+          <!-- <i class="fas fa-phone" id="phone" aria-hidden="true"></i> -->
           <input type="tel" id="form32" class="form-control" mdbInput mdbValidate
                  [formControl]="phone">
           <label for="form32">טלפון</label>
@@ -91,11 +103,11 @@
         </div>
 
         <div class="md-form mb-5">
-          <!-- <mdb-icon fas icon="pencil-alt" class="prefix grey-text"></mdb-icon> -->
+          <!-- <mdb-icon fas icon="tag" class="prefix grey-text"></mdb-icon> -->
           <input type="text" id="form32" class="form-control" mdbInput mdbValidate
-          [formControl]="fax">
-          <label for="form8">פקס</label>
-          <mdb-error *ngIf="fax.invalid && (fax.dirty || fax.touched)"></mdb-error>
+                 [formControl]="fax">
+          <label for="form32">פקס</label>
+          <mdb-error *ngIf="fax.invalid && (fax.dirty || fax.touched)"> </mdb-error>
           <mdb-success *ngIf="fax.valid && (fax.dirty || fax.touched)"></mdb-success>
         </div>
         <div class="md-form mb-5">
@@ -117,12 +129,8 @@
       </div>
       <div class="modal-footer d-flex justify-content-center">
         <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="resetform()" (click)="frame.hide()">ביטול</button>
-      <button type="button" class="btn btn-primary" (click)="save()" (click)="frame.hide()">שמירה</button>
-    <!-- <button class="btn btn-primary"  (click)="frame.hide()">שמירה</button> -->
-        <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="frame.hide()"
-        (click)="resetform()">ביטול</button>
-      <button *ngIf="!(updateP)"type="button" class="btn btn-primary" (click)="save()" (click)="framen.hide()">שמירה</button>
-    <button *ngIf="updateP" class="btn btn-primary" (click)=update() (click)="framen.hide()">שמירה</button> -->
+      <button *ngIf="!(updatePartner)" type="button" class="btn btn-primary" (click)="save()" (click)="frame.hide()">שמירה</button>
+    <button class="btn btn-primary"  *ngIf="updatePartner"(click)="update()" (click)="frame.hide()">שמירה</button>
       </div>
     </div>
   </div>

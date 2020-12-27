@@ -23,6 +23,18 @@ export class PartnerService {
 
    return this.http.post<Partner>(this.partnerUrl,p);
   }
+  updatePartner(pId, partner: Partner) {
+    console.log("partner",partner);
+
+    const urlupdate = `${this.partnerUrl}/${pId}`;
+    return this.http.patch<Partner>(urlupdate, partner, this.options)
+    .subscribe((p: Partner) => {
+      console.log(p, "suecces");
+    }, () => {
+      console.log("error");
+    }
+    );
+  }
   deletePartner(p:Partner){
     var ttt=`${this.partnerUrl}/${p.id}`;
     console.log("url="+ttt);

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { PartnerService } from 'src/app/services/partner.service';
 import { from } from 'rxjs';
@@ -7,6 +7,7 @@ import { Partner } from 'src/app/data/partner';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { ContactNumberValidator } from 'src/app/validtors/contact.validator';
 import { phoneValidator } from 'src/app/validtors/phone.validator';
+import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 
 @Component({
   selector: 'app-partners',
@@ -14,6 +15,8 @@ import { phoneValidator } from 'src/app/validtors/phone.validator';
   styleUrls: ['./partners.component.css']
 })
 export class PartnersComponent implements OnInit {
+  @ViewChild('frame') public showModalOnClick: ModalDirective;
+  updatePartner: Partner;
   partnersList: Array<Partner>;
   partnersForm: FormGroup;
   currectPartner: Partner;
@@ -34,7 +37,20 @@ export class PartnersComponent implements OnInit {
       Remarks: new FormControl(''),
 
     }, ContactNumberValidator(['phone', 'pel', 'email'])); console.log(this.partnersForm.controls.email.value);
-  
+
+    console.log("updatePartner", this.updatePartner);
+    if (this.updatePartner != undefined) {
+      console.log("updatePartner");
+      this.partnersForm.patchValue({
+        name: this.updatePartner.name,
+        email: this.updatePartner.email,
+        contact: this.updatePartner.contact,
+        phone: this.updatePartner.phone,
+        pel: this.updatePartner.pel,
+        fax: this.updatePartner.fax,
+        Remarks: this.updatePartner.Remarks,
+      });
+    }
   }
   get name() {
     return this.partnersForm.get('name');
@@ -57,7 +73,7 @@ export class PartnersComponent implements OnInit {
   get Remarks() {
     return this.partnersForm.get('Remarks');
   }
-  save(){
+  save() {
     // alert("האם הנך בטוח במה שאתה עושה");
     if (this.partnersForm.valid) {
       // const p = new Partner();
@@ -69,8 +85,53 @@ export class PartnersComponent implements OnInit {
           console.log("error");
         });
     }
+  }
+  updateModal(p) {
+    this.updatePartner = p;
+    console.log("p ", p);
+    console.log(this.updatePartner);
+    this.partnersForm.patchValue({
+      name: this.updatePartner.name,
+      email: this.updatePartner.email,
+      contact: this.updatePartner.contact,
+      phone: this.updatePartner.phone,
+      pel: this.updatePartner.pel,
+      fax: this.updatePartner.fax,
+      Remarks: this.updatePartner.Remarks,
+    });
+   
+    this.showModalOnClick.show();
 
   }
+  update() {
+    console.log("updatee");
+    console.log(this.updatePartner.id);
+    console.log(this.partnersForm.value);
+    alert("האם ברצונך לשמור את הנתונים")
+    // if (this.updatePartner.Remarks) {
+    //   this.partnersForm.patchValue({
+    //     Remarks: this.updatePartner.Remarks,
+    //   });
+    // }
+    // else {
+    //   this.partnersForm.patchValue({
+    //     Remarks: '',
+    //   });
+    // }
+    console.log(this.partnersForm.value.Remarks);
+    if (this.partnersForm.valid) {
+      console.log("is valid");
+
+
+      this.partnerService.updatePartner(this.updatePartner.id, this.partnersForm.value);
+      // this.partnersForm.reset();
+    }
+    // this.showModalOnClick.hide();
+    // צריך פה לעשות רפרש לטבלה
+    // this.r.navigate(['']);
+
+  }
+
   resetform() {
     this.partnersForm.reset();
   }
@@ -82,7 +143,7 @@ export class PartnersComponent implements OnInit {
   }
   ok(s) {
     console.log("ok");
-    
+
     if (s != '') {
       var tt = this.partnerService.deletePartner(this.currectPartner);
       console.log(tt);
@@ -96,18 +157,22 @@ export class PartnersComponent implements OnInit {
 
     let row = document.getElementById("row" + i);
     let del = document.getElementById("del" + i);
-
+    let update = document.getElementById("update" + i);
     row.style.borderColor = " #f1f1f1";
     del.style.display = "inline";
     del.style.visibility = "visible";
+    update.style.display = "inline";
+    update.style.visibility = "visible";
   }
   toolbar1(i: number) {
 
     let row = document.getElementById("row" + i);
     let del = document.getElementById("del" + i);
-
+    let update = document.getElementById("update" + i);
     row.style.borderColor = "none";
     del.style.display = "none";
     del.style.visibility = "hidden";
+    update.style.display = "none";
+    update.style.visibility = "hidden";
   }
 }

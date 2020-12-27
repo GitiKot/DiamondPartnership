@@ -1,4 +1,4 @@
-<form [formGroup]='partnersForm' (submit)="save()">
+<!-- <form [formGroup]='partnersForm' (submit)="save()">
 
   <div class="form-group row">
     <label for="name">שם שותף:</label>
@@ -21,8 +21,8 @@
     <input  tabindex="3" type="tel" class="form-control" formControlName="phone" placeholder=" הכנס טלפון" id="phone">
     <label class="error" *ngIf="partnersForm.controls['phone'].errors!=null&&partnersForm.controls['phone'].dirty">
       המספר אינו תקין </label> 
-    <!-- <br> -->
-    <label class="error" *ngIf="partnersForm.controls['phone'].errors?.minlength!=null">
+     <br> -->
+   <!-- <label class="error" *ngIf="partnersForm.controls['phone'].errors?.minlength!=null">
       הקשת {{partnersForm.controls['phone'].errors?.minlength.actualLength}} ספרות<br>
       יש להקיש מינימום {{partnersForm.controls['phone'].errors?.minlength.requiredLength}} ספרות.
     </label>
@@ -35,8 +35,8 @@
     <label for="pel">פלאפון:</label>
     <input tabindex="5" type="tel" class="form-control" formControlName="pel" placeholder="הכנס פלאפון" id="pel">
     <label class="error" *ngIf="partnersForm.controls['pel'].errors!=null&&partnersForm.controls['pel'].dirty">
-      <!-- הספרה במקום ה- {{partnersForm.controls['pel'].errors?.phoneError.requiredValue}} אינה תקינה. -->
-      המספר אינו תקין
+       הספרה במקום ה- {{partnersForm.controls['pel'].errors?.phoneError.requiredValue}} אינה תקינה. -->
+     <!-- המספר אינו תקין
     </label>
     <label class="error" *ngIf="partnersForm.controls['pel'].errors?.minlength!=null">
       הקשת {{partnersForm.controls['pel'].errors?.minlength.actualLength}} ספרות<br>
@@ -51,19 +51,163 @@
 
     <input tabindex="6" type="text" class="form-control" formControlName="Remarks" placeholder="הערות" id="Remarks">
   </div>
-  <!-- <input type="submit" class="btn btn-primary" value="שמירה"> -->
+   <input type="submit" class="btn btn-primary" value="שמירה"> -->
  
-  <button type="submit" class="btn btn-primary" id="save">שמירה</button>&nbsp; &nbsp;
+<!--  <button type="submit" class="btn btn-primary" id="save">שמירה</button>&nbsp; &nbsp;
   <button (click)="cancel()" class="btn btn-primary" id="cancel"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
   <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
   <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
 </svg> ביטול</button>
 <router-outlet></router-outlet>
-
-
 </form>
-
-
- <!-- tabindex="{{item.tabIndex}}"
+  tabindex="{{item.tabIndex}}"
     ng-keydown="onKeydown(item, $event)" ng-focus="onFocus(item)"" -->
-    <!-- (keyup.uparrow)="keypressevt()" -->
+  <!--  (keyup.uparrow)="keypressevt()" -->
+  <br>
+<form [formGroup]='partnersForm' >
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <div class="container">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th style="width: 53px;"></th>
+              <th style="width: 53px;"></th>
+              <th>שם שותף</th>
+              <th>איש קשר</th>
+              <th>מייל</th>
+              <th>טלפון</th>
+              <th>פקס</th>
+              <th>פלאפון</th>
+              <th>הערות</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of partnersList;let i = index" (mouseenter)="toolbar(i)" (mouseleave)="toolbar1(i)" id="row{{i}}">
+              <td> <button id="del{{i}}" class="del" (click)="deletePartner(p)" title="מחיקה">
+                <i class="fa fa-trash"id="trash" aria-hidden="true"></i>
+            </button></td>
+            <td> <button id="update{{i}}" class="update" (click)="updateflag(p)" title="עדכון">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-brush-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                  d="M15.825.12a.5.5 0 0 1 .132.584c-1.53 3.43-4.743 8.17-7.095 10.64a6.067 6.067 0 0 1-2.373 1.534c-.018.227-.06.538-.16.868-.201.659-.667 1.479-1.708 1.74a8.117 8.117 0 0 1-3.078.132 3.658 3.658 0 0 1-.563-.135 1.382 1.382 0 0 1-.465-.247.714.714 0 0 1-.204-.288.622.622 0 0 1 .004-.443c.095-.245.316-.38.461-.452.393-.197.625-.453.867-.826.094-.144.184-.297.287-.472l.117-.198c.151-.255.326-.54.546-.848.528-.739 1.2-.925 1.746-.896.126.007.243.025.348.048.062-.172.142-.38.238-.608.261-.619.658-1.419 1.187-2.069 2.175-2.67 6.18-6.206 9.117-8.104a.5.5 0 0 1 .596.04z" />
+              </svg> 
+              <i class="fas fa-marker" id="marker" aria-hidden="true"></i>
+              <!-- <i class='fas fa-pen-alt'></i>	 -->
+            </button>
+             
+            </td>
+            <td>{{p.name}}</td>  
+            <td>{{p.contact}}</td> 
+            <td>{{p.email}}</td>  
+            <td>{{p.phone}}</td> 
+            <td>{{p.fax}}</td> 
+            <td>{{p.pel}}</td> 
+            <td>{{p.Remarks}}</td>
+           </tr>                           
+          </tbody>
+        </table>
+      </div>
+  <!-- <a class="btn btn-primary" [routerLink]="['/partners-form']" id="newpartner0"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+  </svg> שותף חדש</a>  -->
+  <button type="button" id="newpartner" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
+        (click)="frame.show()" mdbWavesEffect><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+        </svg>
+        <!-- <i class="fas fa-user-plus"></i> -->
+        שותף חדש
+</button> 
+<!-- modal new & update partner -->
+ <div style="overflow-y: auto" mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור שותף חדש</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+         <!-- <mdb-icon fas icon="user" class="prefix grey-text"></mdb-icon>  -->
+          <input type="text" id="form34" class="form-control" mdbInput mdbValidate [formControl]="name">
+          <label for="form34"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+          </svg>שם שותף</label>
+          <mdb-error *ngIf="name.invalid && (name.dirty || name.touched)"> </mdb-error>
+          <mdb-success *ngIf="name.valid && (name.dirty || name.touched)"></mdb-success>
+        </div>
+        <div class="md-form mb-5">
+           <!-- <mdb-icon fas icon="user" class="prefix grey-text"></mdb-icon>  -->
+          <input type="text" id="form34" class="form-control" mdbInput mdbValidate [formControl]="contact">
+          <label for="form34"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+          </svg>איש קשר</label>
+          <mdb-error *ngIf="contact.invalid && (contact.dirty || contact.touched)"></mdb-error>
+          <mdb-success *ngIf="contact.valid && (contact.dirty || contact.touched)"></mdb-success>
+        </div>
+        <div class="md-form mb-5">
+          <!-- <mdb-icon fas icon="envelope" class="prefix grey-text"></mdb-icon> -->
+          <input type="email" id="form29" class="form-control" mdbInput mdbValidate
+                 [formControl]="email">
+          <label for="form29">כתובת מייל</label>
+          <mdb-error *ngIf="email.invalid && (email.dirty || email.touched)">  </mdb-error>
+          <mdb-success *ngIf="email.valid && (email.dirty || email.touched)">  </mdb-success>
+        </div>
+        <div class="md-form mb-5">
+          <!-- <mdb-icon fas icon="tag" class="prefix grey-text"></mdb-icon> -->
+          <input type="tel" id="form32" class="form-control" mdbInput mdbValidate
+                 [formControl]="phone">
+          <label for="form32">טלפון</label>
+          <mdb-error *ngIf="phone.invalid && (phone.dirty || phone.touched)"> </mdb-error>
+          <mdb-success *ngIf="phone.valid && (phone.dirty || phone.touched)"></mdb-success>
+        </div>
+
+        <div class="md-form mb-5">
+          <!-- <mdb-icon fas icon="tag" class="prefix grey-text"></mdb-icon> -->
+          <input type="text" id="form32" class="form-control" mdbInput mdbValidate
+                 [formControl]="fax">
+          <label for="form32">פקס</label>
+          <mdb-error *ngIf="fax.invalid && (fax.dirty || fax.touched)"> </mdb-error>
+          <mdb-success *ngIf="fax.valid && (fax.dirty || fax.touched)"></mdb-success>
+        </div>
+        <div class="md-form mb-5">
+          <input type="tel" id="form32" class="form-control" mdbInput mdbValidate
+          [formControl]="pel">
+          <label for="form8">פלאפון</label>
+          <mdb-error *ngIf="pel.invalid && (pel.dirty || pel.touched)"></mdb-error>
+          <mdb-success *ngIf="pel.valid && (pel.dirty || pel.touched)"></mdb-success>
+        </div>
+        
+          <div class="md-form mb-5">
+            <textarea type="text" id="form8" class="md-textarea form-control" rows="1"
+                mdbInput mdbValidate [formControl]="Remarks"></textarea>
+            <label for="form8">הערות</label>
+            <mdb-success *ngIf="Remarks.valid && (Remarks.dirty || Remarks.touched)">
+            </mdb-success>
+        </div>
+
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="resetform()" (click)="frame.hide()">ביטול</button>
+      <button type="button" class="btn btn-primary" (click)="save()" (click)="frame.hide()">שמירה</button>
+    <!-- <button class="btn btn-primary"  (click)="frame.hide()">שמירה</button> -->
+        <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="frame.hide()"
+        (click)="resetform()">ביטול</button>
+      <button *ngIf="!(updateP)"type="button" class="btn btn-primary" (click)="save()" (click)="framen.hide()">שמירה</button>
+    <button *ngIf="updateP" class="btn btn-primary" (click)=update() (click)="framen.hide()">שמירה</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="alert" class="alert alert-success">
+  <strong>   שים לב   </strong>בקשת למחוק שותף<button type="button" class="btn btn-outline-primary"
+  (click)="ok('ok')" >אישור</button>
+  <button type="button" class="btn btn-outline-primary" (click)="ok('')" >ביטול</button>
+</div>
+</form>

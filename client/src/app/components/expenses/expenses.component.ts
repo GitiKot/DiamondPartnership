@@ -112,8 +112,6 @@ export class ExpensesComponent implements OnInit {
     del.style.visibility = "visible";
     update.style.visibility = "visible";
     update.style.display = "inline";
-
-
   }
   toolbar1(i: number) {
 

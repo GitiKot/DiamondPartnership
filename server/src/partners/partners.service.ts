@@ -120,7 +120,7 @@ export class PartnersService {
         if (pel) {
             updatedPartner.pel = pel;
         }
-        if (Remarks) {
+        if (Remarks!=undefined) {
             updatedPartner.Remarks = Remarks;
         }
         updatedPartner.save();

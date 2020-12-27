@@ -43,9 +43,11 @@ const routes: Routes = [
   },
   { path: 'nav-bar', component: NavBarComponent },
   
-  { path: 'partners', component: PartnersComponent ,children:[
+  { path: 'partners', component: PartnersComponent 
+  ,children:[
     {path:'',redirectTo:'partners',pathMatch:'full'},
-    {path: 'modal-form/:type', component:ModalFormComponent,}] },
+    {path: 'modal-form/:type', component:ModalFormComponent,}] 
+  },
     
   { path: 'partners-form', component: PartnersFormComponent,children:[
     {path:'',redirectTo:'partners-form',pathMatch:'full'},
