@@ -82,6 +82,8 @@ export class seriousnessService {
         partner:ObjectId
         
       )  {
+          console.log("update dvory");
+          
         const updatedSeriousness = await this.findSeriousness(id);
         if (serialName) {
             updatedSeriousness.serialName = serialName;

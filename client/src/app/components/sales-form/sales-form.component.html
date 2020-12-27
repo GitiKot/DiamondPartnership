@@ -7,7 +7,7 @@
   
   <span>
 
-    <label for="datesale"> להכניס מראש מספר אבנים אחרת ימחקו שורות:</label>
+    <label for="datesale">מספר אבנים</label>
     <input type="number" min="0" formControlName="num"  class="form-control" tabindex="0" (change) ="numStonesFunc()"id="numStones">
     <!-- <label  *ngIf="salesForm.controls['datesale'].error!=null">גדול </label> -->
   </span>&nbsp; &nbsp;
@@ -37,12 +37,12 @@
   <div>
     <label class="form-check-label">
       <label>
-        <input type="radio"   id="raw" (input)="tableKeyPresent()" class="form-check-input"tabindex="4" formControlName="rawOrPolished" value="raw"
+        <input type="radio" (input)="tableKeyPresent()"  id="raw"  class="form-check-input"tabindex="4" formControlName="rawOrPolished" value="raw"
           >&nbsp;גלם
       </label>
     <label>
       &nbsp;
-      <input type="radio"  (input)="tableKeyPresent()" class="form-check-input"tabindex="5" value="polished" formControlName="rawOrPolished"
+      <input type="radio"(input)="tableKeyPresent()"  class="form-check-input"tabindex="5" value="polished" formControlName="rawOrPolished"
         [checked]="false">&nbsp;מלוטש
       </label>
     </label>
@@ -85,33 +85,24 @@
     <path d="M9.5 3V0L14 4.5h-3A1.5 1.5 0 0 1 9.5 3z" />
     <path fill-rule="evenodd"
       d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z" />
-  </svg></td> -->
-      <td>
-         <!-- <input   
+  </svg></td> tabindex={{i*5+6}}-->  <!-- <input   
           type="text" class="input" formControlName="publicSerialName" tabindex={{i*5+6}}
-       [(ngModel)]="sale.publicSerial"  (input)="tableKeyPresent()"> -->
-
-       <!-- <div class="col-4 col-sm-6 col-example">
-        <div class="md-form mb-5"> -->
-            <select id="selectSeri" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="selectedSerial" placeholder="בחר"
+       [(ngModel)]="sale.publicSerial" > -->
+      <td>   
+       
+            <select id="selectSeri"  tabindex={{i*5+6}} class="input" [ngModelOptions]="{standalone: true}"
+        
+            [(ngModel)]="selectedSerial" placeholder="בחר"
                 class="browser-default custom-select" mdbInput mdbValidate>
                 <option disabled>--בחר--</option>
 
-                <option *ngFor="let s of seriousnessList " [value]="s.id" (change)="pp()">
+                <option *ngFor="let s of seriousnessList " [ngValue]='s'>
                     {{s.serialName}}</option>
             </select>
-            <!-- <label> בחר שותף</label> -->
-            
-            <mdb-error *ngIf="salesForm.controls['publicSerialName'].errors!=null&&salesForm.controls['publicSerialName'].dirty">
-            </mdb-error>
-            <!-- <mdb-success *ngIf="partner.valid && (partner.dirty ||  partner.touched)">
-            </mdb-success> -->
-        <!-- </div>
-    </div> -->
+        
       </td>
-
-         <td>
+<td>
+     
            <input 
           formControlName="privateSerialName" type="text" class="input" 
           tabindex={{i*5+7}}    [(ngModel)]="sale.privateSerial"> </td> 
@@ -136,10 +127,9 @@
  <label class="error" *ngIf="salesForm.controls.dirty">נא למלא את כל הפרטים.</label>
   <br>
   <button type="submit" class="btn btn-primary" id="save">שמירה</button>&nbsp; &nbsp; 
-  <!-- icon -->
-  <!-- <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-square-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+   <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-square-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
     <path fill-rule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
-  </svg> -->
+  </svg>
   <button (click)="cancel()" class="btn btn-primary" id="cancel">ביטול</button>
 </form>
 <router-outlet></router-outlet>

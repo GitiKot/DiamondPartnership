@@ -17,25 +17,23 @@ import { seriousnessService } from 'src/app/services/seriousness.service';
 
 })
 export class SalesFormComponent implements OnInit {
-  selectedSerial:Seriousness;
+  selectedSerial: Seriousness;
   numStones: number;
   tableContent = []
   salesForm: FormGroup;
   salesList: Array<Sale>;
   totalPrice = [];
   dateP: string;
-  seriousnessList:Array<Seriousness>;
+  seriousnessList: Array<Seriousness>;
   constructor(private router: Router, private seriousnessService: seriousnessService, private salesServise: SalesService, private cdRef: ChangeDetectorRef) {
 
   }
 
   ngOnInit(): void {
-    this.seriousnessService.getAllSeriousness().subscribe(ans => {this.seriousnessList = ans});
 
-    this.seriousnessService.getAllSeriousness().subscribe(ans => {this.seriousnessList = ans;
-    console.log(ans);
+    this.seriousnessService.getAllSeriousness().subscribe(ans => {
+      this.seriousnessList = ans;
     });
-// console.log( "list: ",this.seriousnessList);
 
     this.keypressEnter();
     this.addEventCalcDate();
@@ -84,15 +82,17 @@ export class SalesFormComponent implements OnInit {
   }
 
   save() {
-    this.salesForm.controls['publicSerialName'].setValue(this.selectedSerial)
+
 
     let flag = 0;
     // alert("האם הנך בטוח במה שאתה עושה");
     if (this.tableContent[0] != undefined) {
-      console.log(this.tableContent);
-
+      // console.log(this.tableContent);
+      let i = 0;
       this.tableContent.forEach(sale => {
+
         // this.salesForm.controls['publicSerialName'].setValue(sale.publicSerial);
+        this.salesForm.controls['publicSerialName'].setValue(this.selectedSerial.id)
 
         this.salesForm.controls['privateSerialName'].setValue(sale.privateSerial)
         this.salesForm.controls['stoneName'].setValue(sale.stoneName)
@@ -100,21 +100,26 @@ export class SalesFormComponent implements OnInit {
         this.salesForm.controls['pricePerCarat'].setValue(sale.pricePerCarat)
 
         this.salesForm.controls['isOpen'].setValue('true')
+
         if (this.salesForm.valid) {
-          console.log("sale: " + sale.publicSerial);
-          console.log("טופס: " + this.salesForm.value);
+
+
 
           this.salesServise.addSale(this.salesForm.value)
             .subscribe(a => {
-              // this.seriousnessService.updateSerial(this.salesForm.controls['publicSerialName'])
-            });
+              this.selectedSerial.amountReceived = this.salesForm.controls['weight'].value *
+                this.salesForm.controls['pricePerCarat'].value;
 
-            }
+              this.seriousnessService.updateSerial(this.selectedSerial)
+
+            });
+          i++;
+        }
 
         else {
-                alert("חלק מהנתונים לא נכון");
+          alert("חלק מהנתונים לא נכון");
           flag = 1;
-              }
+        }
       });
       if (!flag)
         this.router.navigate(['sales-form/modal-form', 'מכירה'])
@@ -136,16 +141,26 @@ export class SalesFormComponent implements OnInit {
     allInput.forEach(a => a.addEventListener("keypress", function (event) {
       if ((event as KeyboardEvent)
         .code === "Enter") {
+
         var current = (event.target as Element);
         event.preventDefault();
         var index = current.getAttribute('tabindex');
         var num = (Number(index));
         num++;
-        let nextInput = FindByAttributeValue("tabindex", num, "input");
+        let nextInput;
+        if(num==6){
+           nextInput = FindByAttributeValue("tabindex", num, "select");
+
+        }
+      else{
+         nextInput = FindByAttributeValue("tabindex", num, "input");
+
+      }
         if (nextInput != undefined) {
           nextInput.focus();
         }
         else {
+
           var save = document.getElementById('save');
           save.focus();
 
@@ -161,11 +176,20 @@ export class SalesFormComponent implements OnInit {
     }, false))
   }
   tableKeyPresent() {
-    var allInput = document.querySelectorAll('td input');
+    var i = document.querySelector('select');
+
+    var allInputSimple = document.querySelectorAll('td input');
+    
+    const allInput = Array.from(allInputSimple);
+    allInput.push(i);
+   
     allInput.forEach(a => a.addEventListener("keypress", function (event) {
       if ((event as KeyboardEvent)
         .code === "Enter") {
+        
+
         var current = (event.target as Element);
+
         event.preventDefault();
         var index = current.getAttribute('tabindex');
         var num = (Number(index));
