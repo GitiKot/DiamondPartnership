@@ -67,8 +67,6 @@ export class SalesFormComponent implements OnInit {
   }
 
   addEventCalcDate() {
-
-
     var d = (document.querySelector('#datesale') as HTMLInputElement).value;
     var dateSales = new Date(d)
 
@@ -76,9 +74,6 @@ export class SalesFormComponent implements OnInit {
     dateSales.setDate(dateSales.getDate() + num);
 
     (document.querySelector('#DueDate') as HTMLInputElement).value = dateSales.toLocaleDateString();
-
-
-
   }
 
   save() {
@@ -102,9 +97,6 @@ export class SalesFormComponent implements OnInit {
         this.salesForm.controls['isOpen'].setValue('true')
 
         if (this.salesForm.valid) {
-
-
-
           this.salesServise.addSale(this.salesForm.value)
             .subscribe(a => {
               this.selectedSerial.amountReceived = this.salesForm.controls['weight'].value *

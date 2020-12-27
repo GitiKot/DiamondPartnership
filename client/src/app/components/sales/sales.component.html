@@ -1,9 +1,9 @@
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <br>
 <h6 *ngIf="nameSerial != undefined">סריה {{nameSerial}}</h6>
-<h6 *ngIf="nameSerial == undefined" style="color: red;"> סריה לא נמצאה</h6>
+<h6 *ngIf="nameSerial == undefined" style="color:chartreuse;"> סריה לא נמצאה</h6>
 <form [formGroup]='salesForm' class="form-inline d-flex justify-content-center md-form form-sm mt-0">
   <div *ngIf="isSalesPage == 'true'">
     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
