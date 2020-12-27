@@ -52,7 +52,7 @@
                         <div class="row">
                             <div class="col-8 col-sm-6 col-example">
                                 <div class="md-form mb-5">
-                                    <input type="text" id="form32" class="form-control" mdbInput mdbValidate
+                                    <input type="number" id="form32" class="form-control" mdbInput mdbValidate
                                         [formControl]="InvoiceNumber">
                                     <label for="form32">מספר חשבונית</label>
                                     <mdb-error
@@ -81,7 +81,7 @@
                             <div class="row">
                                 <div class="col-8 col-sm-6 col-example">
                                     <div class="md-form mb-5">
-                                        <input type="text" id="form30" class="form-control" mdbInput mdbValidate
+                                        <input type="number" id="form30" class="form-control" mdbInput mdbValidate
                                             [formControl]="amountPartner">
                                         <label for="form30">סכום לשותף</label>
                                         <mdb-error
@@ -162,7 +162,7 @@
                                                     <!-- <td>{{i}}</td> -->
                                                     <td><input type="text" formControlName="expenses" class="input">
                                                     </td>
-                                                    <td><input type="text" formControlName="price" class="input"></td>
+                                                    <td><input type="number" formControlName="price" class="input"></td>
                                                     <td><button (click)="removeDetail(i)">x</button></td>
                                                 </tr>
                                             </div>

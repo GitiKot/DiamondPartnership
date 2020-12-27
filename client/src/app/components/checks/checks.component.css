@@ -62,3 +62,7 @@ bottom: .5em;
   bottom: 50px;
    left: 25px;
 }
+.input{
+  border: none;
+  background-color: white;
+}

@@ -12,14 +12,14 @@ import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.direc
 })
 export class ChecksComponent implements OnInit {
   @ViewChild('framen') public showModalOnClick: ModalDirective;
-  
+
   checksForm: FormGroup;
   checksList: Array<Checks>;
   OpenSalesList: Array<Sale>;
   ClosedSalesList: Array<Sale>;
-  c:Checks;
+  c: Checks;
   indexC = 0;
-  updateCheck:Checks;
+  updateCheck: Checks;
   currentChecks: Checks;
   selectedRowIds: Set<string> = new Set<string>();
   // formBuilder: any;
@@ -34,7 +34,7 @@ export class ChecksComponent implements OnInit {
   // }
   // }
   constructor(private salesService: SalesService, private checksService: ChecksService, private formBuilder: FormBuilder) { }
-    
+
   ngOnInit() {
 
     this.checksForm = this.formBuilder.group({
@@ -49,8 +49,8 @@ export class ChecksComponent implements OnInit {
     this.ClosedSalesList = new Array();
     this.salesService.getAllSales().subscribe(ans =>
       ans.find(s => {
-        if (s.isOpen == true) {  this.OpenSalesList.push(s);    }
-        else {   this.ClosedSalesList.push(s);  }
+        if (s.isOpen == true) { this.OpenSalesList.push(s); }
+        else { this.ClosedSalesList.push(s); }
       }))
 
     this.checksService.getAllChecks().subscribe(ans => this.checksList = ans);
@@ -66,17 +66,17 @@ export class ChecksComponent implements OnInit {
     //   }
     // })))
     // here the table items are called from webapi
-    console.log("function");
-    console.log("updateCheck",this.updateCheck);
-    if (this.updateCheck != undefined) {
-      console.log("updatecheck");
+    // console.log("function");
+    
+    if (this.updateCheck != undefined) {console.log("updateCheck", this.updateCheck);
+      // console.log("updatecheck");
       this.checksForm.patchValue({
         ReceiptOrInvoice: this.updateCheck.ReceiptOrInvoice,
         date: this.updateCheck.date,
         numCheck: this.updateCheck.numCheck,
-        sum:this.updateCheck.sum,
-      });}
-   
+        sum: this.updateCheck.sum,
+      });
+
       this.checksForm.setControl('IdSales', this.formBuilder.array(this.updateCheck.IdSales));
       console.log("this.IdSales");
       console.log(this.checksForm.value.IdSales)
@@ -84,7 +84,7 @@ export class ChecksComponent implements OnInit {
         this.IdSales.push(this.formBuilder.group(s));
         console.log("s", s);
       });
-
+    }
   }
 
   resetform() {
@@ -93,8 +93,8 @@ export class ChecksComponent implements OnInit {
   updateCi(i: number) {
     this.indexC = i;
   }
-  updateModal(ch){
-    this.updateCheck = ch; console.log("flag ",ch);
+  updateModal(ch) {
+    this.updateCheck = ch; console.log("flag ", ch);
     this.showModalOnClick.show();
   }
   update() {
@@ -104,15 +104,15 @@ export class ChecksComponent implements OnInit {
     alert("האם ברצונך לשמור את הנתונים")
     if (this.checksForm.valid) {
       // console.log("aaaaaaaaaaaaaaaa:",this.sum);
-// console.log("d",this.checksForm.value.detail.length!=0);
-// if(this.checksForm.value.detail.length!=0){
-//       this.checksForm.value.amount = this.checksForm.value.detail
-//         .reduce((prev, curr) => prev + Number(curr.price), 0);
-// }
-// else{
-//     this.checksForm.value.sum=0;
-//   console.log("sss",this.checksForm.value.sum);
-// }
+      // console.log("d",this.checksForm.value.detail.length!=0);
+      // if(this.checksForm.value.detail.length!=0){
+      //       this.checksForm.value.amount = this.checksForm.value.detail
+      //         .reduce((prev, curr) => prev + Number(curr.price), 0);
+      // }
+      // else{
+      //     this.checksForm.value.sum=0;
+      //   console.log("sss",this.checksForm.value.sum);
+      // }
       this.checksService.updateCheck(this.updateCheck.id, this.checksForm.value);
       this.checksForm.reset();
     }
@@ -122,7 +122,7 @@ export class ChecksComponent implements OnInit {
     // this.r.navigate(['']);
 
   }
-  
+
   onRowClick(id: string) {
 
     if (this.selectedRowIds.has(id)) {
@@ -165,11 +165,9 @@ export class ChecksComponent implements OnInit {
       for (let i = 0; i < this.getSelectedRows().length; i++) {
         this.checksForm.value.IdSales.push(this.getSelectedRows()[i].id)
       }
-      // עובר על כל השורות איפה שאי די שווה הוא מעדכן שדה איזאופן לפולס
       let sale: Sale;
-      let sumAllSales=0;
+      let sumAllSales = 0;
       for (let i = 0; i < this.getSelectedRows().length; i++) {
-        // this.getSelectedRows().some(() => s.id == this.IdSales.value[i]));
         const result = this.OpenSalesList.filter(s =>
           this.getSelectedRows()[i].id.includes(s.id));
         for (let j = 0; j < this.OpenSalesList.length; j++) {
@@ -178,19 +176,19 @@ export class ChecksComponent implements OnInit {
             // this.OpenSalesList[j].isOpen = false;
             sale = this.OpenSalesList[j];
             sale.isOpen = false;
-            let w=Number(this.OpenSalesList[j].weight);
-            let p=Number(this.OpenSalesList[j].pricePerCarat);
-            sumAllSales+=(p*w);
+            let w = Number(this.OpenSalesList[j].weight);
+            let p = Number(this.OpenSalesList[j].pricePerCarat);
+            sumAllSales += (p * w);
             this.salesService.updateSale(this.OpenSalesList[j].id, sale);
 
           }
         }
       }
-      console.log("save sum",sumAllSales);
-      
+      console.log("save sum", sumAllSales);
+
       // const s = this.OpenSalesList.some((val) => this.getSelectedRows().indexOf(val) !== -1);
       // console.log(s);
-      this.checksForm.value.sum=sumAllSales;
+      this.checksForm.value.sum = sumAllSales;
       this.checksService.addChecks(this.checksForm.value).subscribe(c => {
         this.checksList.push(c);
 
@@ -208,10 +206,10 @@ export class ChecksComponent implements OnInit {
   }
 
   ok(c) {
-let s = 0;
-      let sale;
+    let s = 0;
+    let sale;
     if (c != '') {
-      
+
       while (this.currentChecks.IdSales[s]) {
         for (let j = 0; j < this.ClosedSalesList.length; j++) {
           if (this.currentChecks.IdSales[s] == this.ClosedSalesList[j].id) {
