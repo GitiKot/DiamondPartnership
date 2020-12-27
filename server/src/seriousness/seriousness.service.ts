@@ -17,12 +17,12 @@ export class seriousnessService {
         const createSeriousness = new this.seriousnessModel(createSeriousnessDto);
         return createSeriousness.save();
     }
-    
+
     async getSeriousness() {
         const Seriousness = await this.seriousnessModel.find().populate('partner').exec();
 
         return Seriousness.map(ex => ({
-            partner:ex.partner,
+            partner: ex.partner,
             serialName: ex.serialName,
             id: ex.id,
             dateBuy: ex.dateBuy,
@@ -36,14 +36,14 @@ export class seriousnessService {
             privateSeria: ex.privateSeria.map(ps => ({
                 namePrivate: ps.namePrivate,
                 price: ps.price,
-                expenses:ps.expenses.map(e=>({
-                    nameExpenses:e.nameExpenses,
-                    exspensesPrice:e.exspensesPrice
+                expenses: ps.expenses.map(e => ({
+                    nameExpenses: e.nameExpenses,
+                    exspensesPrice: e.exspensesPrice
                 }))
             }))
         }));
     }
-    
+
     // async getSingleSeriousness(SeriousnessId: string) {
     //     const ex = await this.findSeriousness(SeriousnessId);
     //     return {
@@ -63,27 +63,27 @@ export class seriousnessService {
     //                 price:e.price
     //             }))
     //         }))
-            
+
     //     };
     // }
 
-    
+
     async updateSeriousness(
 
-          id:string,
+        id: string,
         serialName: string,
         dateBuy: Date,
-        cost:number,
+        cost: number,
         amountReceived: number,
-        partnersPercent:number,
+        partnersPercent: number,
         AmountReceivedPartner: number,
-        finishDate:Date,
-        privateSeria:Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,exspensesPrice:number}>}>,
-        partner:ObjectId
-        
-      )  {
-          console.log("update dvory");
-          
+        finishDate: Date,
+        privateSeria: Array<{ namePrivate: string, price: number, expenses: Array<{ nameExpenses: string, exspensesPrice: number }> }>,
+        partner: ObjectId
+
+    ) {
+        console.log("update dvory");
+
         const updatedSeriousness = await this.findSeriousness(id);
         if (serialName) {
             updatedSeriousness.serialName = serialName;
@@ -94,13 +94,13 @@ export class seriousnessService {
         if (cost) {
             updatedSeriousness.cost = cost;
         } if (amountReceived) {
-            updatedSeriousness.amountReceived = amountReceived;
+            updatedSeriousness.amountReceived += amountReceived;
         }
         if (partnersPercent) {
             updatedSeriousness.partnersPercent = partnersPercent;
         }
         if (AmountReceivedPartner) {
-            updatedSeriousness.AmountReceivedPartner = AmountReceivedPartner;
+            updatedSeriousness.AmountReceivedPartner += AmountReceivedPartner;
         }
         if (finishDate) {
             updatedSeriousness.finishDate = finishDate;
@@ -132,101 +132,101 @@ export class seriousnessService {
         }
         return Seriousness;
     }
-// import { Model } from 'mongoose';
-// import { Expenses } from './interfaces/seriousness.interface';
-// import { createExpensesDto } from './dto/create-expenses.dto';
+    // import { Model } from 'mongoose';
+    // import { Expenses } from './interfaces/seriousness.interface';
+    // import { createExpensesDto } from './dto/create-expenses.dto';
 
-// @Injectable()
-// export class ExpensesService {
-//     constructor(
-//         @InjectModel('Expenses') private readonly expensesModel: Model<Expenses>,) { }
+    // @Injectable()
+    // export class ExpensesService {
+    //     constructor(
+    //         @InjectModel('Expenses') private readonly expensesModel: Model<Expenses>,) { }
 
-//     async addExpenses(createExpensesDto: createExpensesDto): Promise<Expenses> {
-//         const createExpenses = new this.expensesModel(createExpensesDto);
-//         return createExpenses.save();
-//     }
-//     async getExpenses() {
-//         const Expenses = await this.expensesModel.find().exec();
-//         return Expenses.map(ex => ({
-//             id: ex.id,
-//             PublicSerialName: ex.PublicSerialName,
-//             date: ex.date,
-//             getchack: ex.getchack,
-//             InvoiceNumber: ex.InvoiceNumber,
-//             Remarks: ex.Remarks,
-//             amount: ex.amount,
-//             amountPartner: ex.amountPartner,
-//         }));
-//     }
+    //     async addExpenses(createExpensesDto: createExpensesDto): Promise<Expenses> {
+    //         const createExpenses = new this.expensesModel(createExpensesDto);
+    //         return createExpenses.save();
+    //     }
+    //     async getExpenses() {
+    //         const Expenses = await this.expensesModel.find().exec();
+    //         return Expenses.map(ex => ({
+    //             id: ex.id,
+    //             PublicSerialName: ex.PublicSerialName,
+    //             date: ex.date,
+    //             getchack: ex.getchack,
+    //             InvoiceNumber: ex.InvoiceNumber,
+    //             Remarks: ex.Remarks,
+    //             amount: ex.amount,
+    //             amountPartner: ex.amountPartner,
+    //         }));
+    //     }
 
-//     async getSingleExpenses(ExpensesId: string) {
-//         const ex = await this.findExpenses(ExpensesId);
-//         return {
-//             id: ex.id,
-//             PublicSerialName: ex.PublicSerialName,
-//             date: ex.date,
-//             getchack: ex.getchack,
-//             InvoiceNumber: ex.InvoiceNumber,
-//             Remarks: ex.Remarks,
-//             amount: ex.amount,
-//             amountPartner: ex.amountPartner,
-//         };
-//     }
+    //     async getSingleExpenses(ExpensesId: string) {
+    //         const ex = await this.findExpenses(ExpensesId);
+    //         return {
+    //             id: ex.id,
+    //             PublicSerialName: ex.PublicSerialName,
+    //             date: ex.date,
+    //             getchack: ex.getchack,
+    //             InvoiceNumber: ex.InvoiceNumber,
+    //             Remarks: ex.Remarks,
+    //             amount: ex.amount,
+    //             amountPartner: ex.amountPartner,
+    //         };
+    //     }
 
-//     async updateExpenses(
-//         id: string,
-//         PublicSerialName: string,
-//         date: Date,
-//         getchack: string,
-//         InvoiceNumber: number,
-//         Remarks: string,
-//         amount: number,
-//         amountPartner: number,
-//     ) {
-//         const updatedExpenses = await this.findExpenses(id);
-//         if (PublicSerialName) {
-//             updatedExpenses.PublicSerialName = PublicSerialName;
-//         }
-//         if (date) {
-//             updatedExpenses.date = date;
-//         }
-//         if (getchack) {
-//             updatedExpenses.getchack = getchack;
-//         } if (InvoiceNumber) {
-//             updatedExpenses.InvoiceNumber = InvoiceNumber;
-//         }
-//         if (Remarks) {
-//             updatedExpenses.Remarks = Remarks;
-//         }
-//         if (amount) {
-//             updatedExpenses.amount = amount;
-//         }
-//         if (amountPartner) {
-//             updatedExpenses.amountPartner = amountPartner;
-//         }
-        
-//         updatedExpenses.save();
-//     }
+    //     async updateExpenses(
+    //         id: string,
+    //         PublicSerialName: string,
+    //         date: Date,
+    //         getchack: string,
+    //         InvoiceNumber: number,
+    //         Remarks: string,
+    //         amount: number,
+    //         amountPartner: number,
+    //     ) {
+    //         const updatedExpenses = await this.findExpenses(id);
+    //         if (PublicSerialName) {
+    //             updatedExpenses.PublicSerialName = PublicSerialName;
+    //         }
+    //         if (date) {
+    //             updatedExpenses.date = date;
+    //         }
+    //         if (getchack) {
+    //             updatedExpenses.getchack = getchack;
+    //         } if (InvoiceNumber) {
+    //             updatedExpenses.InvoiceNumber = InvoiceNumber;
+    //         }
+    //         if (Remarks) {
+    //             updatedExpenses.Remarks = Remarks;
+    //         }
+    //         if (amount) {
+    //             updatedExpenses.amount = amount;
+    //         }
+    //         if (amountPartner) {
+    //             updatedExpenses.amountPartner = amountPartner;
+    //         }
 
-//     async deleteExpenses(exId: string) {
-//         const result = await this.expensesModel.deleteOne({ _id: exId }).exec();
-//         if (result.n === 0) {
-//             throw new NotFoundException('Could not find expenses.');
-//         }
-//     }
+    //         updatedExpenses.save();
+    //     }
 
-//     private async findExpenses(id: string): Promise<Expenses> {
-//         let expenses;
-//         try {
-//             expenses = await this.expensesModel.findById(id).exec();
-//         } catch (error) {
-//             throw new NotFoundException('Could not find expenses.');
-//         }
-//         if (!expenses) {
-//             throw new NotFoundException('Could not find expenses.');
-//         }
-//         return expenses;
-//     }
+    //     async deleteExpenses(exId: string) {
+    //         const result = await this.expensesModel.deleteOne({ _id: exId }).exec();
+    //         if (result.n === 0) {
+    //             throw new NotFoundException('Could not find expenses.');
+    //         }
+    //     }
+
+    //     private async findExpenses(id: string): Promise<Expenses> {
+    //         let expenses;
+    //         try {
+    //             expenses = await this.expensesModel.findById(id).exec();
+    //         } catch (error) {
+    //             throw new NotFoundException('Could not find expenses.');
+    //         }
+    //         if (!expenses) {
+    //             throw new NotFoundException('Could not find expenses.');
+    //         }
+    //         return expenses;
+    //     }
 
 
 }

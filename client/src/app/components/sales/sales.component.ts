@@ -12,8 +12,9 @@ import { SalesService } from 'src/app/services/sales.service';
 })
 export class SalesComponent implements OnInit {
   salesForm: FormGroup;
-  currectSale:Sale;
+  currectSale: Sale;
   isSalesPage = this.route.snapshot.paramMap.get('isSales');
+  dateper = [];
   //  constructor(private r: Router, private saleService: SalesService,private route:ActivatedRoute) { }
 
   constructor(private r: Router, private route: ActivatedRoute, private saleService: SalesService) { }
@@ -21,9 +22,17 @@ export class SalesComponent implements OnInit {
   nameSerial: string;
   ngOnInit(): void {
     this.salesForm = new FormGroup({});
-    // this.saleService.getAllSales().subscribe(ans => this.salesList = ans);
 
   }
+
+
+  // var d = (document.querySelector('#datesale') as HTMLInputElement).value;
+  //   var dateSales = new Date(d)
+
+  //   var num: number = +(document.querySelector('#numOfDate') as HTMLInputElement).value;
+  //   dateSales.setDate(dateSales.getDate() + num);
+
+  //   (document.querySelector('#DueDate') as HTMLInputElement).value = dateSales.toLocaleDateString();
   deleteSale(sale) {
     var div = document.getElementById('alert');
     div.style.visibility = "visible";
@@ -31,14 +40,14 @@ export class SalesComponent implements OnInit {
   }
   ok(s) {
     console.log("ok");
-    
+
     if (s != '') {
-      var tt,input,nameSeria;
-     tt = this.saleService.deleteSale(this.currectSale);
-    // console.log(tt);
-    input = document.getElementById("public");
-    nameSeria = input.value;
-    this.saleService.findBySerailName(nameSeria).subscribe(ans => this.salesList = ans);
+      var tt, input, nameSeria;
+      tt = this.saleService.deleteSale(this.currectSale);
+      // console.log(tt);
+      input = document.getElementById("public");
+      nameSeria = input.value;
+      this.saleService.findBySerailName(nameSeria).subscribe(ans => this.salesList = ans);
     }
     this.currectSale = null;
     var div = document.getElementById('alert');
@@ -47,7 +56,15 @@ export class SalesComponent implements OnInit {
   getSaleBySeria(e) {
 
     this.saleService.findBySerailName(e.target.value).subscribe(ans => {
-      this.salesList = ans; 
+      this.salesList = ans;
+      let i = 0;
+      this.salesList.forEach(sale => {
+        let saleDate = new Date(sale.date);
+        let d = new Date();
+        d.setDate(saleDate.getDate() + sale.numOfDate);
+        this.dateper[i] = d;
+        i++;
+      })
       if (this.salesList.length != 0)
         this.nameSerial = e.target.value;
       else
@@ -79,7 +96,7 @@ export class SalesComponent implements OnInit {
 
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("private");
-  
+
     filter = input.value.toUpperCase();
     table = document.getElementById("salesTable");
     tr = table.getElementsByTagName("tr");
