@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { from } from 'rxjs';
 import { Sale } from 'src/app/data/sale';
 import { SalesService } from 'src/app/services/sales.service';
 
@@ -15,6 +14,7 @@ export class SalesComponent implements OnInit {
   currectSale: Sale;
   isSalesPage = this.route.snapshot.paramMap.get('isSales');
   dateper = [];
+  updateSale:Sale;
   //  constructor(private r: Router, private saleService: SalesService,private route:ActivatedRoute) { }
 
   constructor(private r: Router, private route: ActivatedRoute, private saleService: SalesService) { }
@@ -33,6 +33,24 @@ export class SalesComponent implements OnInit {
   //   dateSales.setDate(dateSales.getDate() + num);
 
   //   (document.querySelector('#DueDate') as HTMLInputElement).value = dateSales.toLocaleDateString();
+  updateModal(s) {
+    this.updateSale = s;
+    console.log("s ", s);
+    console.log(this.updateSale);
+    this.r.navigate(['sales-form'])
+    // this.salesForm.patchValue({
+      // name: this.updateSale.name,
+      // email: this.updateSale.email,
+      // contact: this.updateSale.contact,
+      // phone: this.updatePartner.phone,
+      // pel: this.updatePartner.pel,
+      // fax: this.updatePartner.fax,
+      // Remarks: this.updatePartner.Remarks,
+    // });
+   
+    // this.showModalOnClick.show();
+
+  }
   deleteSale(sale) {
     var div = document.getElementById('alert');
     div.style.visibility = "visible";
@@ -78,19 +96,24 @@ export class SalesComponent implements OnInit {
 
     let row = document.getElementById("row" + i);
     let del = document.getElementById("del" + i);
-
+    let update = document.getElementById("update" + i);
     row.style.borderColor = " #f1f1f1";
     del.style.display = "inline";
     del.style.visibility = "visible";
+    update.style.display = "inline";
+    update.style.visibility = "visible";
   }
   toolbar1(i: number) {
 
     let row = document.getElementById("row" + i);
     let del = document.getElementById("del" + i);
-
+    let update = document.getElementById("update" + i);
     row.style.borderColor = "none";
     del.style.display = "none";
     del.style.visibility = "hidden";
+    update.style.display = "none";
+    update.style.visibility = "hidden";
+
   }
   searchPrivate() {
 

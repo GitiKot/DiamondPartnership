@@ -7,12 +7,10 @@ import { Sale } from 'src/app/data/sale';
 import { Seriousness } from 'src/app/data/seriousness';
 import { SalesService } from 'src/app/services/sales.service'
 import { seriousnessService } from 'src/app/services/seriousness.service';
-// import { SalesService } from 'src/app/services/sales.service';
 
 @Component({
   selector: 'app-sales-form',
   templateUrl: './sales-form.component.html',
-
   styleUrls: ['./sales-form.component.css']
 
 })

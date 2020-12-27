@@ -24,7 +24,7 @@
  #salesTable tr:hover {
   background-color: #f1f1f1;
 } 
-.del{
+.del,.update{
   text-align: center;
   border: none;
   display:none;

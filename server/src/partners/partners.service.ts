@@ -1,9 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-
 import { Model } from 'mongoose';
 import { createPartnerDto } from './dto/create-partner.dto';
-// import { Partner } from './partners.model';
 import { Partner } from './interfaces/partners.interface';
 
 @Injectable()
