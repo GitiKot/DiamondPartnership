@@ -5,6 +5,8 @@ import { from } from 'rxjs';
 import { Partner } from 'src/app/data/partner';
 
 import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { ContactNumberValidator } from 'src/app/validtors/contact.validator';
+import { phoneValidator } from 'src/app/validtors/phone.validator';
 
 @Component({
   selector: 'app-partners',
@@ -13,37 +15,64 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 })
 export class PartnersComponent implements OnInit {
   partnersList: Array<Partner>;
-  validatingForm: FormGroup;
+  partnersForm: FormGroup;
   currectPartner: Partner;
   constructor(private r: Router, private partnerService: PartnerService) { }
 
   ngOnInit(): void {
     this.partnerService.getAllPartners().subscribe(ans => {
-      this.partnersList = ans; console.log("fghj");
+      this.partnersList = ans; console.log("partner");
     });
 
+    this.partnersForm = new FormGroup({
+      name: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
+      contact: new FormControl('', Validators.required),
+      phone: new FormControl('', Validators.compose([Validators.minLength(9), Validators.pattern('[0][2,3,4,8,9][0-9]{7}')])),
+      pel: new FormControl('', Validators.compose([Validators.minLength(10), Validators.pattern('[0][5][0-9]{8}'), phoneValidator()])),
+      fax: new FormControl('', Validators.required),
+      Remarks: new FormControl(''),
 
-    this.validatingForm = new FormGroup({
-      contactFormModalName: new FormControl('', Validators.required),
-      contactFormModalEmail: new FormControl('', Validators.email),
-      contactFormModalSubject: new FormControl('', Validators.required),
-      contactFormModalMessage: new FormControl('', Validators.required)
-    });
+    }, ContactNumberValidator(['phone', 'pel', 'email'])); console.log(this.partnersForm.controls.email.value);
+  
   }
-  get contactFormModalName() {
-    return this.validatingForm.get('contactFormModalName');
+  get name() {
+    return this.partnersForm.get('name');
   }
+  get email() {
+    return this.partnersForm.get('email');
+  }
+  get contact() {
+    return this.partnersForm.get('contact');
+  }
+  get phone() {
+    return this.partnersForm.get('phone');
+  }
+  get pel() {
+    return this.partnersForm.get('pel');
+  }
+  get fax() {
+    return this.partnersForm.get('fax');
+  }
+  get Remarks() {
+    return this.partnersForm.get('Remarks');
+  }
+  save(){
+    // alert("האם הנך בטוח במה שאתה עושה");
+    if (this.partnersForm.valid) {
+      // const p = new Partner();
+      this.partnerService.addPartner(this.partnersForm.value)
+        .subscribe(a => {
+          this.r.navigate(['partners/modal-form', 'שותף'])
+          this.partnersForm.reset();
+        }, () => {
+          console.log("error");
+        });
+    }
 
-  get contactFormModalEmail() {
-    return this.validatingForm.get('contactFormModalEmail');
   }
-
-  get contactFormModalSubject() {
-    return this.validatingForm.get('contactFormModalSubject');
-  }
-
-  get contactFormModalMessage() {
-    return this.validatingForm.get('contactFormModalMessage');
+  resetform() {
+    this.partnersForm.reset();
   }
   deletePartner(p) {
     var div = document.getElementById('alert');

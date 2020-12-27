@@ -58,7 +58,7 @@
           <td>{{e.date| date:'dd/MM/yy'}}</td>
           <td>{{e.getchack}}</td>
           <td>{{e.InvoiceNumber}}</td>
-          <td>{{e.Remarks}}</td>
+          <td style="overflow-y:scroll;height: 10px;">{{e.Remarks}}</td>
           <td>{{e.amount|currency}}</td>
           <td><button type="button" class="btn btn-primary" (click)="updateEi(ei)" (click)="frame.show()"
               data-toggle="modal" data-target="#modalCart">+</button></td>

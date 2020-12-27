@@ -79,13 +79,6 @@ export class PartnersFormComponent implements OnInit {
     alert("האם הנך בטוח במה שאתה עושה");
     if (this.partnersForm.valid) {
       const p = new Partner();
-      // p.name = this.partnersForm.controls.name.value.trim();
-      // p.email = this.partnersForm.controls.email.value;
-      // p.contact = this.partnersForm.controls.phone.value;
-      // p.pel = this.partnersForm.controls.phone.value;
-      // p.phone = this.partnersForm.controls.phone.value;
-      // p.fax = this.partnersForm.controls.phone.value;
-      // p.Remarks = this.partnersForm.controls.phone.value;
       this.partnerService.addPartner(this.partnersForm.value)
         .subscribe(a => {
           this.router.navigate(['partners-form/modal-form', 'שותף'])
@@ -100,32 +93,6 @@ export class PartnersFormComponent implements OnInit {
   cancel() {
     this.router.navigate(['/partners']);
   }
-  // keypressevt(event) {
-  //  alert(event);
-
-
-  // var body = document.body,
-  //   btn = document.getElementById('name');
-  // body.addEventListener('keyup', function (event) {
-  //   console.log(event.currentTarget === body);
-  //   console.log(event.target === btn);
-  //   alert(event.currentTarget);
-  //   alert(event.target);
-  // }, false);
-
-  // var gg = document.querySelector('[tabindex="1"]');
-  // var ggg = document.getElementById('contact');
-  // alert(gg.getAttribute('tabindex'));
-  // ggg.focus();
-  // e => console.log((e.target as Element).id)
-
-
-  // }
-  // When the user clicks on div, open the popup
-  // myFunction() {
-  //   var popup = document.getElementById("myPopup");
-  //   popup.toggle("show");
-  // }
-
+ 
 }
 

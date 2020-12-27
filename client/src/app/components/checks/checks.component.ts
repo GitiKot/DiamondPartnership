@@ -176,9 +176,7 @@ export class ChecksComponent implements OnInit {
             // this.OpenSalesList[j].isOpen = false;
             sale = this.OpenSalesList[j];
             sale.isOpen = false;
-            let w = Number(this.OpenSalesList[j].weight);
-            let p = Number(this.OpenSalesList[j].pricePerCarat);
-            sumAllSales += (p * w);
+            sumAllSales += (Number(this.OpenSalesList[j].pricePerCarat) * Number(this.OpenSalesList[j].weight));
             this.salesService.updateSale(this.OpenSalesList[j].id, sale);
 
           }

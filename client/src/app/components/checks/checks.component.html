@@ -178,7 +178,7 @@
         <div class="modal-body mx-3">
           
           <div class="md-form mb-5">
-            <input type="number" id="form32" class="form-control" mdbInput mdbValidate [formControl]="numCheck">
+            <input type="number" min="0" id="form32" class="form-control" mdbInput mdbValidate [formControl]="numCheck">
             <label for="form32">מספר צ'ק</label>
             <mdb-error *ngIf="numCheck.invalid && (numCheck.dirty || numCheck.touched)">
             </mdb-error>
