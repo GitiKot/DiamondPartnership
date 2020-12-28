@@ -52,7 +52,7 @@
                         </div>
                         <div class="col-8 col-sm-6 col-example">
                             <div class="md-form mb-5">
-                                <input class="form-control" type="number" mdbInput mdbValidate
+                                <input class="form-control" type="number" min="0"mdbInput mdbValidate
                                     [formControl]="partnersPercent">
                                 <label> אחוזים לשותף </label>
                                 <mdb-error
@@ -147,7 +147,7 @@
                                                     formControlName="namePrivate" placeholder="שם סריה">
                                             </td>
                                             <td>
-                                                <input mdbInput class="form-control inputS" size="sm" type="number"
+                                                <input mdbInput class="form-control inputS" size="sm" min="0" type="number"
                                                     formControlName="price" placeholder="מחיר סריה">
                                             </td>
                                             <td scope="role">
@@ -174,7 +174,7 @@
                                                                                     placeholder="שם">
                                                                             </td>
                                                                             <td>
-                                                                                <input type="number" size="sm"
+                                                                                <input type="number" min="0" size="sm"
                                                                                     class="form-control inputS"
                                                                                     formControlName="exspensesPrice"
                                                                                     #price placeholder="מחיר"

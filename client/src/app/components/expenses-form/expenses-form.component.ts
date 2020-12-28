@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { Expenses } from 'src/app/data/expenses';
 import { ExpensesService } from 'src/app/services/expenses.service';
-import { DatePipe } from '@angular/common'
 
 @Component({
   selector: 'app-expenses-form',

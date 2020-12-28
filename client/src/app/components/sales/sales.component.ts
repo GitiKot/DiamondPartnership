@@ -35,17 +35,7 @@ export class SalesComponent implements OnInit {
     console.log("s ", s);
     console.log(this.updateSale);
     this.r.navigate(['sales-form'],{state:this.updateSale})
-    // this.r.navigate(['sales-form',this.updateSale])
-    // this.salesForm.patchValue({
-      // name: this.updateSale.name,
-      // email: this.updateSale.email,
-      // contact: this.updateSale.contact,
-      // phone: this.updatePartner.phone,
-      // pel: this.updatePartner.pel,
-      // fax: this.updatePartner.fax,
-      // Remarks: this.updatePartner.Remarks,
-    // });
-
+  
   }
   deleteSale(sale) {
     var div = document.getElementById('alert');

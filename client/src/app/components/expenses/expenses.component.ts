@@ -72,7 +72,7 @@ export class ExpensesComponent implements OnInit {
   
   updateflag(ex){
     this.e = ex;
-    console.log("giti:  ",ex);
+    console.log("giti: ",ex);
     this.flagupdate=1;
 
   }
