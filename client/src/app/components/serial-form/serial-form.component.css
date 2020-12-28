@@ -5,3 +5,10 @@
     width: 50px;
     height: 25px;
 }
+.modal .modal-side {
+    bottom: 10px;
+    margin: 0;
+    min-width: 700px;
+    position: absolute;
+}
+/* .modal .modal-side {max-width:100%;} */
