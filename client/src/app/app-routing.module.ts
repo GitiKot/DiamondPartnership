@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { ModalFormComponent } from './components/modal-form/modal-form.component'
 import { SerialFormComponent } from './components/serial-form/serial-form.component';
 import { ExpensesFormComponent } from './components/expenses-form/expenses-form.component';
+import { Sale } from './data/sale';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -25,7 +26,10 @@ const routes: Routes = [
       { path: 'modal-form', component:ModalFormComponent, }]
   },
   { path: 'sales/:isSales', component: SalesComponent },
-  { path: 'sales-form', component: SalesFormComponent,children:[
+  { path: 'sales-form', component: SalesFormComponent,data:{
+    sale:Sale
+  },
+  children:[
     {path:'',redirectTo:'sales-form',pathMatch: 'full'}  ,
    { path:'modal-form/:type',component:ModalFormComponent,}] ,
 

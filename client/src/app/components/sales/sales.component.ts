@@ -16,7 +16,6 @@ export class SalesComponent implements OnInit {
   dateper = [];
   updateSale:Sale;
   //  constructor(private r: Router, private saleService: SalesService,private route:ActivatedRoute) { }
-
   constructor(private r: Router, private route: ActivatedRoute, private saleService: SalesService) { }
   salesList: Array<Sale>
   nameSerial: string;
@@ -24,9 +23,7 @@ export class SalesComponent implements OnInit {
     this.salesForm = new FormGroup({});
 
   }
-
-
-  // var d = (document.querySelector('#datesale') as HTMLInputElement).value;
+ // var d = (document.querySelector('#datesale') as HTMLInputElement).value;
   //   var dateSales = new Date(d)
 
   //   var num: number = +(document.querySelector('#numOfDate') as HTMLInputElement).value;
@@ -37,7 +34,8 @@ export class SalesComponent implements OnInit {
     this.updateSale = s;
     console.log("s ", s);
     console.log(this.updateSale);
-    this.r.navigate(['sales-form'])
+    this.r.navigate(['sales-form'],{state:this.updateSale})
+    // this.r.navigate(['sales-form',this.updateSale])
     // this.salesForm.patchValue({
       // name: this.updateSale.name,
       // email: this.updateSale.email,
@@ -47,8 +45,6 @@ export class SalesComponent implements OnInit {
       // fax: this.updatePartner.fax,
       // Remarks: this.updatePartner.Remarks,
     // });
-   
-    // this.showModalOnClick.show();
 
   }
   deleteSale(sale) {

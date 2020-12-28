@@ -12,8 +12,16 @@
     <!-- <label  *ngIf="salesForm.controls['datesale'].error!=null">גדול </label> -->
   </span>&nbsp; &nbsp;
   <span>
+    <!-- <input *ngIf="updateCheck" type="date" id="form31" class="form-control" mdbInput mdbValidate
+    [formControl]="date" [ngModel]="updateCheck.date | date:'yyyy-MM-dd'">
+  <input *ngIf="!(updateCheck)" type="date" id="form31" class="form-control" mdbInput mdbValidate
+    [formControl]="date"> -->
+
+
     <label for="datesale"> תאריך מכירה:</label>
-    <input type="date"  (input) ="addEventCalcDate()"  class="form-control" formControlName="date"tabindex="1" id="datesale">
+    <!-- <input [ngModel]="updateSale.date | date:'yyyy-MM-dd'" type="date" (input) ="addEventCalcDate()"  class="form-control" formControlName="date"tabindex="1" id="datesale"> -->
+    <input  type="date" (input) ="addEventCalcDate()"  class="form-control" formControlName="date"tabindex="1" id="datesale">
+
     <!-- <label  *ngIf="salesForm.controls['datesale'].error!=null">גדול </label> -->
   </span>&nbsp; &nbsp;
   <!-- PaymentsNumber -->
