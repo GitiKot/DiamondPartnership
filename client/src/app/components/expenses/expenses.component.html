@@ -25,8 +25,8 @@
     <table id="expensesTable" class="table table-hover">
       <thead>
         <tr class="header"> 
-          <th>מחיקה</th>
-          <th>עדכון</th>
+          <th></th>
+          <th></th>
           <th style="width: 150px;">שם סריה כללית</th>
           <th>תאריך</th>
           <th style="width: 270px;">האם קיבלתי צ'ק או לקזז הצ'ק הבא</th>
@@ -57,7 +57,8 @@
           <td>{{e.date| date:'dd/MM/yy'}}</td>
           <td>{{e.getchack}}</td>
           <td>{{e.InvoiceNumber}}</td>
-          <td style="max-height: 81.11px; overflow-y:scroll;">{{e.Remarks}}</td>
+          <!-- style="overflow-y:scroll;" -->
+          <td >{{e.Remarks}}</td>
           <td>{{e.amount|currency}}</td>
           <td><button type="button" class="btn btn-primary" (click)="updateEi(ei)" (click)="frame.show()"
               data-toggle="modal" data-target="#modalCart">+</button></td>

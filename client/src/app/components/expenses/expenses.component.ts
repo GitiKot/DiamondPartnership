@@ -79,6 +79,7 @@ export class ExpensesComponent implements OnInit {
   updateEi(i: number) {
     this.indexE = i;
   }
+  // נראה לי שאפשר למחוק פונ' זו
   updateExpenses(exid: string, expenses: Expenses) {
     console.log("updateExpenses");
     console.log(expenses);

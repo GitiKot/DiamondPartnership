@@ -8,7 +8,6 @@
 .modal .modal-side {
     bottom: 10px;
     margin: 0;
-    min-width: 700px;
+    min-width: 580px;
     position: absolute;
 }
-/* .modal .modal-side {max-width:100%;} */

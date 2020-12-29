@@ -47,12 +47,12 @@ export class ExpensesFormComponent implements OnInit {
         amount: this.updateEx.amount,
         Remarks: this.updateEx.Remarks,
       });
-      console.log("amount:",this.amount.value);
-      
-      // let d=[];
-      // this.updateEx.detail.forEach(detail=>this.detail.push(this.formBuilder.array({[{detail.expenses:detail.expenses},{detail.price:detail.price}]})));
-      //        this.expensesForm.setControl('detail',this.formBuilder.array(this.updateEx.detail||[]));
-      //{[{detail.expenses:detail.expenses},{detail.price:detail.price}]}
+      console.log("amount:", this.amount.value);
+
+      //  // let d=[];
+      // // this.updateEx.detail.forEach(detail=>this.detail.push(this.formBuilder.array({[{detail.expenses:detail.expenses},{detail.price:detail.price}]})));
+      // //        this.expensesForm.setControl('detail',this.formBuilder.array(this.updateEx.detail||[]));
+      // {[{detail.expenses:detail.expenses},{detail.price:detail.price}]}
       //  this.updateEx.detail.forEach(
       //   d => {
       //        this.detail.push(this.formBuilder.group(d));
@@ -60,21 +60,20 @@ export class ExpensesFormComponent implements OnInit {
 
       this.expensesForm.setControl('detail', this.formBuilder.array(this.updateEx.detail));
       console.log("this.detail");
-      console.log(this.expensesForm.value.detail);
+      console.log(this.expensesForm.value.detail[0].expenses);
 
-      // let dd=this.expensesForm.get('detail') as FormArray;
       this.expensesForm.value.detail.forEach(d => {
+       
         this.detail.push(this.formBuilder.group(d));
         console.log("d", d);
       });
     }
-    // var tagsArray = [];
-    // this.product.tags.forEach(product => tagsArray.push(this.fb.group({tag: [product.tag, [Validators.required]]})));
-    // this.productForm.setControl('tags', this.fb.array(tagsArray || []));
+
     console.log("this.detail");
     console.log(this.expensesForm.value.detail);
 
   }
+  
   ngAfterViewInit() {
     this.showModalOnClick1.show();
   }
@@ -88,7 +87,7 @@ export class ExpensesFormComponent implements OnInit {
   save() {
     // console.log(this.expensesForm.value);
     // alert("האם ברצונך לשמור את הנתונים")
-    if (this.expensesForm.valid) {      
+    if (this.expensesForm.valid) {
       this.expensesForm.value.amount = this.expensesForm.value.detail
         .reduce((prev, curr) => prev + Number(curr.price), 0);
       // if (this.expensesForm.value.detail) {
@@ -128,15 +127,15 @@ export class ExpensesFormComponent implements OnInit {
     alert("האם ברצונך לשמור את הנתונים")
     if (this.expensesForm.valid) {
       // console.log("aaaaaaaaaaaaaaaa:",this.amount);
-console.log("d",this.expensesForm.value.detail.length!=0);
-if(this.expensesForm.value.detail.length!=0){
-      this.expensesForm.value.amount = this.expensesForm.value.detail
-        .reduce((prev, curr) => prev + Number(curr.price), 0);
-}
-else{
-    this.expensesForm.value.amount=0;
-  console.log("sss",this.expensesForm.value.amount);
-}
+      console.log("d", this.expensesForm.value.detail.length != 0);
+      if (this.expensesForm.value.detail.length != 0) {
+        this.expensesForm.value.amount = this.expensesForm.value.detail
+          .reduce((prev, curr) => prev + Number(curr.price), 0);
+      }
+      else {
+        this.expensesForm.value.amount = 0;
+        console.log("sss", this.expensesForm.value.amount);
+      }
       this.expensesService.updateExpenses(this.updateEx.id, this.expensesForm.value);
       this.expensesForm.reset();
 
@@ -158,7 +157,7 @@ else{
   cancelex() {
     // if (this.updateEx != undefined) {
     //   console.log("amount");
-      
+
     //   this.expensesForm.patchValue({
     //     amount: 0,})
     //   }
