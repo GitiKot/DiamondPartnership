@@ -51,7 +51,6 @@
           <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
         </svg>   שותף חדש
 </button> 
-
 <!-- modal new & update partner -->
  <div style="overflow-y: auto" mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
@@ -124,7 +123,7 @@
         <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="resetform()" (click)="frame.hide()">ביטול</button>
       <button *ngIf="!(updatePartner)" type="button" class="btn btn-primary" (click)="save()" (click)="frame.hide()">שמירה</button>
     <button class="btn btn-primary"  *ngIf="updatePartner"(click)="update()" (click)="frame.hide()">שמירה</button>
-      </div>
+  </div>
     </div>
   </div>
 </div>

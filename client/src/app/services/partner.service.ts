@@ -23,7 +23,7 @@ export class PartnerService {
 
    return this.http.post<Partner>(this.partnerUrl,p);
   }
-  updatePartner(pId, partner: Partner) {
+  updatePartner(pId, partner: Partner){
     console.log("partner",partner);
 
     const urlupdate = `${this.partnerUrl}/${pId}`;

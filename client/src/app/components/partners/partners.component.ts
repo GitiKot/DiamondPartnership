@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { PartnerService } from 'src/app/services/partner.service';
-import { from } from 'rxjs';
 import { Partner } from 'src/app/data/partner';
-
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { ContactNumberValidator } from 'src/app/validtors/contact.validator';
 import { phoneValidator } from 'src/app/validtors/phone.validator';
@@ -75,7 +73,6 @@ export class PartnersComponent implements OnInit {
   }
   
   save() {
-    // alert("האם הנך בטוח במה שאתה עושה");
     if (this.partnersForm.valid) {
       
       this.partnerService.addPartner(this.partnersForm.value)
@@ -108,31 +105,36 @@ export class PartnersComponent implements OnInit {
 
   }
   update() {
-    console.log("updatee");
-    console.log(this.updatePartner.id);
-    console.log(this.partnersForm.value);
-    alert("האם ברצונך לשמור את הנתונים")
-    // if (this.updatePartner.Remarks) {
-    //   this.partnersForm.patchValue({
-    //     Remarks: this.updatePartner.Remarks,
-    //   });
-    // }
-    // else {
-    //   this.partnersForm.patchValue({
-    //     Remarks: '',
-    //   });
-    // }
-    console.log(this.partnersForm.value.Remarks);
+//     this.partnerService.addPartner(this.partnersForm.value)
+//     .subscribe(a => {
+//       this.r.navigate(['partners/modal-form', 'שותף'])
+//       this.partnersForm.reset();
+//     }, () => {
+//       console.log("error");
+//     });
+// }
+// else {
+//   alert("חסרים נתונים");
+// }
+    // alert("האם ברצונך לשמור את הנתונים")
+    // console.log(this.partnersForm.value.Remarks);
     if (this.partnersForm.valid) {
-      console.log("is valid");
+      // console.log("is valid");
 
 
-      this.partnerService.updatePartner(this.updatePartner.id, this.partnersForm.value);
-      // this.partnersForm.reset();
+     if(this.partnerService.updatePartner(this.updatePartner.id, this.partnersForm.value)) {
+     this.r.navigate(['partners/modal-form', 'שותף'])
+         this.partnersForm.reset();
+     console.log("rrrrrrrrrrrrrr");
+     }
+     else {
+        alert("חסרים נתונים");
+      }
     }
     // this.showModalOnClick.hide();
     // צריך פה לעשות רפרש לטבלה
-    // this.r.navigate(['']);
+    this.partnersForm.reset();
+    this.r.navigate(['partners']);
 
   }
 
