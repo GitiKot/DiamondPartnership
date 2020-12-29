@@ -153,16 +153,14 @@
                                             <!-- [formGroup]="detail.controls[i]" -->
                                             <div [formGroupName]="i">
                                                 <tr class="header" *ngIf="i=='0'">
-                                                    <!-- <th>#</th> -->
                                                     <th>שם הוצאה</th>
                                                     <th>מחיר</th>
                                                     <th>מחיקה</th>
                                                 </tr>
                                                 <tr>
-                                                    <!-- <td>{{i}}</td> -->
-                                                    <td><input type="text" formControlName="expenses" class="input">
+                                                    <td><input type="text" formControlName="expenses" class="input" >
                                                     </td>
-                                                    <td><input type="number" min="0" formControlName="price" class="input"></td>
+                                                    <td><input type="number" min="0" formControlName="price" class="input" ></td>
                                                     <td><button (click)="removeDetail(i)">x</button></td>
                                                 </tr>
                                             </div>
@@ -173,7 +171,6 @@
                             </table>
 
                         </div>
-
 
                         <!-- <div class="modal-footer"> -->
                         <div> <button class="btn btn-outline-primary" (click)="addDetail()"
