@@ -63,7 +63,7 @@ export class ExpensesFormComponent implements OnInit {
       console.log(this.expensesForm.value.detail[0].expenses);
 
       this.expensesForm.value.detail.forEach(d => {
-       
+
         this.detail.push(this.formBuilder.group(d));
         console.log("d", d);
       });
@@ -73,27 +73,26 @@ export class ExpensesFormComponent implements OnInit {
     console.log(this.expensesForm.value.detail);
 
   }
-  
+
   ngAfterViewInit() {
     this.showModalOnClick1.show();
   }
 
   close() {
-if(this.updateEx!=undefined){
-this.showModalOnClick.hide();
-this.showModalOnClick1.hide();
-}
-else{
-   // this.r.navigate(['']);
-    this.r.navigate(['expenses']);
-}
-   
+    if (this.updateEx != undefined) {
+      this.showModalOnClick.hide();
+      this.showModalOnClick1.hide();
+    }
+    else {
+      // this.r.navigate(['']);
+      this.r.navigate(['expenses']);
+    }
   }
 
   save() {
-    // console.log(this.expensesForm.value);
-    // alert("האם ברצונך לשמור את הנתונים")
+   
     if (this.expensesForm.valid) {
+
       this.expensesForm.value.amount = this.expensesForm.value.detail
         .reduce((prev, curr) => prev + Number(curr.price), 0);
       // if (this.expensesForm.value.detail) {
@@ -108,13 +107,11 @@ else{
       // console.log(this.expensesForm.value.detail.length);
       // }
       this.expensesService.addExpenses(this.expensesForm.value).subscribe(e => {
-        // this.expensesList.push(e);
-        this.r.navigate(['modal-form', 'הוצאה'])
+        this.r.navigate(['expenses/expenses-form/modal-form', 'הוצאה'])
       }, () => {
         console.log("error");
-        this.expensesForm.reset();
+        // this.expensesForm.reset();
       })
-
     }
     else {
       alert("חסרים נתונים");
@@ -127,13 +124,13 @@ else{
   }
 
   update() {
-    console.log("updateeeeee");
-    console.log(this.updateEx.id);
-    console.log(this.expensesForm.value);
-    alert("האם ברצונך לשמור את הנתונים")
+    // console.log("updateeeeee");
+    // console.log(this.updateEx.id);
+    // console.log(this.expensesForm.value);
+    // alert("האם ברצונך לשמור את הנתונים")
     if (this.expensesForm.valid) {
       // console.log("aaaaaaaaaaaaaaaa:",this.amount);
-      console.log("d", this.expensesForm.value.detail.length != 0);
+      // console.log("d", this.expensesForm.value.detail.length != 0);
       if (this.expensesForm.value.detail.length != 0) {
         this.expensesForm.value.amount = this.expensesForm.value.detail
           .reduce((prev, curr) => prev + Number(curr.price), 0);
@@ -142,15 +139,22 @@ else{
         this.expensesForm.value.amount = 0;
         console.log("sss", this.expensesForm.value.amount);
       }
-      this.expensesService.updateExpenses(this.updateEx.id, this.expensesForm.value);
-      this.expensesForm.reset();
-
+      this.expensesService.updateExpenses(this.updateEx.id, this.expensesForm.value).subscribe(e => {
+        this.r.navigate(['expenses/expenses-form/modal-form', 'הוצאה'])
+      }, () => {
+        console.log("error");
+        // this.expensesForm.reset();
+      })
     }
-    this.showModalOnClick.hide();
-    this.showModalOnClick1.hide();
+    else {
+      alert("חסרים נתונים");
+    }
+      // this.expensesForm.reset();
+    // this.showModalOnClick.hide();
+    // this.showModalOnClick1.hide();
     // צריך פה לעשות רפרש לטבלה
     // this.r.navigate(['expenses']);
-    this.r.navigate(['']);
+    // this.r.navigate(['']);
 
   }
   savemodal() {
