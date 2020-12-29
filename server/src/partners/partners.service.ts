@@ -9,59 +9,12 @@ export class PartnersService {
 
     constructor(
         @InjectModel('Partner') private readonly partnersModel: Model<Partner>,) { }
-    // async insertProduct(title: string, desc: string, price: number) {
-    //     const newPartner = new this.partnersModel({
-    //         title,
-    //         description: desc,
-    //         price,
-    //     });
-    //     const result = await newPartner.save();
-    //     return result.id as string;
-    // }
+    
     async addPartner(createPartnerDto: createPartnerDto): Promise<Partner> {
         const createPartner = new this.partnersModel(createPartnerDto);
         return createPartner.save();
     }
-    // async insertPartner(
-    //     // id: string,
-    //     name: string,
-    //     contact: string,
-    //     email: string,
-    //     phone: string,
-    //     fax: string,
-    //     pel: string,
-    //     Remarks: string,
-    // ) {
-    //     const newPartner = new this.partnersModel({
-    //         name, contact, email, phone, fax, pel, Remarks,
-    //     });
-    //     const result = await newPartner.save();
-    //     return result.id as string;
-    //     // const insertPartner = await this.findPartner();
-    //     //     const insertPartner=new this.partnersModel;
-    //     //     if (name) {
-    //     //         insertPartner.name = name;
-    //     //     }
-    //     //     if (contact) {
-    //     //         insertPartner.contact = contact;
-    //     //     }
-    //     //     if (email) {
-    //     //         insertPartner.email = email;
-    //     //     }if (phone) {
-    //     //         insertPartner.phone = phone;
-    //     //     }
-    //     //     if (fax) {
-    //     //         insertPartner.fax = fax;
-    //     //     }
-    //     //     if (pel) {
-    //     //         insertPartner.pel = pel;
-    //     //     }
-    //     //     if (Remarks) {
-    //     //         insertPartner.Remarks = Remarks;
-    //     //     }
-    //     //     insertPartner.save();
-    // }
-
+    
     async getPartners() {
         const Partners = await this.partnersModel.find().exec();
         return Partners.map(part => ({

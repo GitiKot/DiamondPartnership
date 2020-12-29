@@ -139,7 +139,7 @@ console.log("ex",this.serialForm.value.privateSeria.expenses);
     else {
       alert("חסרים נתונים")
     }
-    this.serialForm.reset();
+    // this.serialForm.reset();
     // this.r.navigate(['./seriousness'])
   }
 

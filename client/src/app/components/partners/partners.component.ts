@@ -71,10 +71,10 @@ export class PartnersComponent implements OnInit {
   get Remarks() {
     return this.partnersForm.get('Remarks');
   }
-  
+
   save() {
     if (this.partnersForm.valid) {
-      
+
       this.partnerService.addPartner(this.partnersForm.value)
         .subscribe(a => {
           this.r.navigate(['partners/modal-form', 'שותף'])
@@ -100,57 +100,37 @@ export class PartnersComponent implements OnInit {
       fax: this.updatePartner.fax,
       Remarks: this.updatePartner.Remarks,
     });
-   
+
     this.showModalOnClick.show();
 
   }
   update() {
-//     this.partnerService.addPartner(this.partnersForm.value)
-//     .subscribe(a => {
-//       this.r.navigate(['partners/modal-form', 'שותף'])
-//       this.partnersForm.reset();
-//     }, () => {
-//       console.log("error");
-//     });
-// }
-// else {
-//   alert("חסרים נתונים");
-// }
-    // alert("האם ברצונך לשמור את הנתונים")
-    // console.log(this.partnersForm.value.Remarks);
+    
     if (this.partnersForm.valid) {
-      // console.log("is valid");
 
-
-     if(this.partnerService.updatePartner(this.updatePartner.id, this.partnersForm.value)) {
-     this.r.navigate(['partners/modal-form', 'שותף'])
-         this.partnersForm.reset();
-     console.log("rrrrrrrrrrrrrr");
-     }
-     else {
-        alert("חסרים נתונים");
-      }
+      this.partnerService.updatePartner(this.updatePartner.id, this.partnersForm.value)
+        .subscribe(() => {
+          this.r.navigate(['partners/modal-form', 'שותף'])
+          this.partnersForm.reset();
+        }, () => {
+          console.log("error");
+        });
     }
-    // this.showModalOnClick.hide();
-    // צריך פה לעשות רפרש לטבלה
-    this.partnersForm.reset();
-    this.r.navigate(['partners']);
-
+    else {
+      alert("חסרים נתונים");
+    }
   }
 
   resetform() {
-    
-    this.partnersForm.reset();    
+    this.partnersForm.reset();
   }
   deletePartner(p) {
     var div = document.getElementById('alert');
     div.style.visibility = "visible";
     this.currectPartner = p;
-
   }
   ok(s) {
-    console.log("ok");
-
+    
     if (s != '') {
       var tt = this.partnerService.deletePartner(this.currectPartner);
       console.log(tt);
@@ -165,6 +145,7 @@ export class PartnersComponent implements OnInit {
     let row = document.getElementById("row" + i);
     let del = document.getElementById("del" + i);
     let update = document.getElementById("update" + i);
+
     row.style.borderColor = " #f1f1f1";
     del.style.display = "inline";
     del.style.visibility = "visible";
@@ -176,6 +157,7 @@ export class PartnersComponent implements OnInit {
     let row = document.getElementById("row" + i);
     let del = document.getElementById("del" + i);
     let update = document.getElementById("update" + i);
+
     row.style.borderColor = "none";
     del.style.display = "none";
     del.style.visibility = "hidden";
