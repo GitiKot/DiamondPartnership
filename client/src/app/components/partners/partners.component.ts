@@ -73,10 +73,11 @@ export class PartnersComponent implements OnInit {
   get Remarks() {
     return this.partnersForm.get('Remarks');
   }
+  
   save() {
     // alert("האם הנך בטוח במה שאתה עושה");
     if (this.partnersForm.valid) {
-      // const p = new Partner();
+      
       this.partnerService.addPartner(this.partnersForm.value)
         .subscribe(a => {
           this.r.navigate(['partners/modal-form', 'שותף'])
@@ -84,6 +85,9 @@ export class PartnersComponent implements OnInit {
         }, () => {
           console.log("error");
         });
+    }
+    else {
+      alert("חסרים נתונים");
     }
   }
   updateModal(p) {
@@ -133,7 +137,8 @@ export class PartnersComponent implements OnInit {
   }
 
   resetform() {
-    this.partnersForm.reset();
+    
+    this.partnersForm.reset();    
   }
   deletePartner(p) {
     var div = document.getElementById('alert');
