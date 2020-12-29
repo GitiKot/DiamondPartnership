@@ -79,9 +79,15 @@ export class ExpensesFormComponent implements OnInit {
   }
 
   close() {
-
-    this.r.navigate(['']);
-    // this.r.navigate(['expenses']);
+if(this.updateEx!=undefined){
+this.showModalOnClick.hide();
+this.showModalOnClick1.hide();
+}
+else{
+   // this.r.navigate(['']);
+    this.r.navigate(['expenses']);
+}
+   
   }
 
   save() {
