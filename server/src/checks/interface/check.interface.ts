@@ -1,4 +1,5 @@
 // import { ObjectId } from "mongodb";
+import { ObjectId } from 'mongodb';
 import { Document } from 'mongoose';
 
 export interface Checks extends Document {
@@ -9,4 +10,6 @@ export interface Checks extends Document {
      date: Date;
      sum: number;
      ReceiptOrInvoice: string;
+     publicSerialName: {type:ObjectId,ref:'Seriousness'};
+
 }

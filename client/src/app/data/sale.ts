@@ -5,9 +5,9 @@ export class Sale {
 
     date: Date;
     invoiceNumber: Number;//מספר חשבונית
-    publicSerialName: String;
+    publicSerialName: string;
 
-    privateSerialName: String;
+    privateSerialName: string;
     stoneName: string;
     weight: Number;
 
@@ -30,11 +30,11 @@ export class Sale {
     constructor(d?: Date, 
       
         invoice?: Number,
-        publicSerial?: String,
-        privateSerial?: String,
+        publicSerial?: string,
+        privateSerial?: string,
         stoneName?: string,
-        w?: Number,
-        pricePerCarat?: Number,
+        w?: number,
+        pricePerCarat?: number,
         numOfDate?:number,
         rawOrPolished?: string,
         isOpen?:boolean)

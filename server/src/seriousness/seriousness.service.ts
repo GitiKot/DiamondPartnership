@@ -44,28 +44,28 @@ export class seriousnessService {
         }));
     }
 
-    // async getSingleSeriousness(SeriousnessId: string) {
-    //     const ex = await this.findSeriousness(SeriousnessId);
-    //     return {
-    //         serialName: ex.serialName,
-    //         id: ex.id,
-    //         dateBuy: ex.dateBuy,
-    //         cost: ex.cost,
-    //         amountReceived: ex.amountReceived,
-    //         partnersPercent: ex.partnersPercent,
-    //         AmountReceivedPartner: ex.AmountReceivedPartner,
-    //         finishDate: ex.finishDate,
-    //         privateSeria: ex.privateSeria.map(ps => ({
-    //             namePrivate: ps.namePrivate,
-    //             price: ps.price,
-    //             expenses:ps.expenses.map(e=>({
-    //                 nameExpenses:e.nameExpenses,
-    //                 price:e.price
-    //             }))
-    //         }))
+    async getSingleSeriousness(SeriousnessId: string) {
+        const ex = await this.findSeriousness(SeriousnessId);
+        return {
+            serialName: ex.serialName,
+            id: ex.id,
+            dateBuy: ex.dateBuy,
+            cost: ex.cost,
+            amountReceived: ex.amountReceived,
+            partnersPercent: ex.partnersPercent,
+            AmountReceivedPartner: ex.AmountReceivedPartner,
+            finishDate: ex.finishDate,
+            privateSeria: ex.privateSeria.map(ps => ({
+                namePrivate: ps.namePrivate,
+                price: ps.price,
+                expenses: ps.expenses.map(e => ({
+                    nameExpenses: e.nameExpenses,
+                    exspensesPrice: e.exspensesPrice
+                }))
+            }))
 
-    //     };
-    // }
+        };
+    }
 
 
     async updateSeriousness(
