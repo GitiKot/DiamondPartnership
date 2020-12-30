@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { Sale } from 'src/app/data/sale';
 import { SalesService } from 'src/app/services/sales.service';
 
@@ -10,11 +11,13 @@ import { SalesService } from 'src/app/services/sales.service';
   styleUrls: ['./sales.component.css']
 })
 export class SalesComponent implements OnInit {
+
+  @ViewChild('frame') public hideModalOnClick: ModalDirective;
   salesForm: FormGroup;
   currectSale: Sale;
   isSalesPage = this.route.snapshot.paramMap.get('isSales');
   dateper = [];
-  dateP:string;
+  dateP: string;
   updateSale: Sale;
   //  constructor(private r: Router, private saleService: SalesService,private route:ActivatedRoute) { }
   constructor(private r: Router, private route: ActivatedRoute, private saleService: SalesService) { }
@@ -75,17 +78,21 @@ export class SalesComponent implements OnInit {
   //   dateSales.setDate(dateSales.getDate() + num);
   //   (document.querySelector('#DueDate') as HTMLInputElement).value = dateSales.toLocaleDateString();
   updateModal(s) {
+    if (s.isOpen==false) {
+      alert("לא ניתן לעדכן מכירה שסגרו עליה צ'ק");
+      this.hideModalOnClick.hide();
+    }
+    else{
     this.updateSale = s;
     console.log("s ", s);
     console.log(this.updateSale);
-    // this.r.navigate(['sales-form'], { state: this.updateSale })
 
     this.salesForm.patchValue({
       date: this.updateSale.date,
       numOfDate: this.updateSale.numOfDate,
       invoiceNumber: this.updateSale.invoiceNumber,
       publicSerialName: this.updateSale.publicSerialName,
-      privateSerialNameate: this.updateSale.privateSerialName,
+      privateSerialName: this.updateSale.privateSerialName,
       stoneName: this.updateSale.stoneName,
       weight: this.updateSale.weight,
       pricePerCarat: this.updateSale.pricePerCarat,
@@ -93,7 +100,7 @@ export class SalesComponent implements OnInit {
       rawOrPolished: this.updateSale.rawOrPolished,
       totalPrice: Number(this.updateSale.weight) * Number(this.updateSale.pricePerCarat),
     })
-
+}
   }
   addEventCalcDate() {
     var d = (document.querySelector('#datesale') as HTMLInputElement).value;
@@ -105,17 +112,25 @@ export class SalesComponent implements OnInit {
   }
 
   update() {
-    if (this.salesForm.valid) {
-      this.saleService.updateSale(this.updateSale.id, this.salesForm.value).subscribe(() => {
-        this.r.navigate(['sales-form/modal-form', 'מכירה'])
-        this.salesForm.reset();
-      }, () => {
-        console.log("error");
-      });
+    if (this.updateSale != undefined) {
+      if (this.salesForm.valid) {
+       console.log("form",this.updateSale);
+       console.log("update form",this.salesForm.value);
+       
+       
+          this.saleService.updateSale(this.updateSale.id, this.salesForm.value).subscribe(() => {
+            this.r.navigate(['sales-form/modal-form', 'מכירה'])
+            this.salesForm.reset();
+          }, () => {
+            console.log("error");
+          });
+       
+      }
+      else {
+        alert("חסרים נתונים");
+      }
     }
-    // else {
-    //   alert("חסרים נתונים");
-    // }
+
     // let flag = 0;
     // if (this.tableContent[0] != undefined) {
     //   let i = 0;
@@ -155,7 +170,7 @@ export class SalesComponent implements OnInit {
     else {
       this.currectSale = undefined;
       alert("לא ניתן למחוק מכירה שסגרו עליה צ'ק");
-      alert("עליך למחוק מכירה זו בצ''קים סגורים בכדי שתוכלי למחוק מכירה זו.");
+      alert("עליך למחוק מכירה זו בצ'קים סגורים בכדי שתוכלי למחוק מכירה זו.");
     }
 
   }

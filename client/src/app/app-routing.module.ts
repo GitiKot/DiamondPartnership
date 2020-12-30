@@ -30,9 +30,7 @@ const routes: Routes = [
     ]
   },
   { path: 'sales/:isSales', component: SalesComponent },
-  { path: 'sales-form', component: SalesFormComponent,data:{
-    sale:Sale
-  },
+  { path: 'sales-form', component: SalesFormComponent,
   children:[
     {path:'',redirectTo:'sales-form',pathMatch: 'full'}  ,
    { path:'modal-form/:type',component:ModalFormComponent,}] ,
