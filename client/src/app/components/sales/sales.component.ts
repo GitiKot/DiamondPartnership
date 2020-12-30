@@ -14,7 +14,7 @@ export class SalesComponent implements OnInit {
   currectSale: Sale;
   isSalesPage = this.route.snapshot.paramMap.get('isSales');
   dateper = [];
-  updateSale:Sale;
+  updateSale: Sale;
   //  constructor(private r: Router, private saleService: SalesService,private route:ActivatedRoute) { }
   constructor(private r: Router, private route: ActivatedRoute, private saleService: SalesService) { }
   salesList: Array<Sale>
@@ -23,7 +23,7 @@ export class SalesComponent implements OnInit {
     this.salesForm = new FormGroup({});
 
   }
- // var d = (document.querySelector('#datesale') as HTMLInputElement).value;
+  // var d = (document.querySelector('#datesale') as HTMLInputElement).value;
   //   var dateSales = new Date(d)
 
   //   var num: number = +(document.querySelector('#numOfDate') as HTMLInputElement).value;
@@ -34,13 +34,21 @@ export class SalesComponent implements OnInit {
     this.updateSale = s;
     console.log("s ", s);
     console.log(this.updateSale);
-    this.r.navigate(['sales-form'],{state:this.updateSale})
-  
+    this.r.navigate(['sales-form'], { state: this.updateSale })
+
   }
   deleteSale(sale) {
-    var div = document.getElementById('alert');
-    div.style.visibility = "visible";
-    this.currectSale = sale;
+
+    if (sale.isOpen == true) {
+      var div = document.getElementById('alert');
+      div.style.visibility = "visible";
+      this.currectSale = sale;
+    }
+    else {this.currectSale=undefined;
+      alert("לא ניתן למחוק מכירה שסגרו עליה צ'ק");
+      alert("עליך למחוק מכירה זו בצ''קים סגורים בכדי שתוכלי למחוק מכירה זו.");
+    }
+
   }
   ok(s) {
     console.log("ok");

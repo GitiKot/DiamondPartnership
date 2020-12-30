@@ -137,7 +137,7 @@ export class ExpensesFormComponent implements OnInit {
     this.r.navigate(['']);
   }
   savemodal() {
-    // console.log(this.expensesForm.value.detail);
+  
     this.showModalOnClick.hide();
     this.showModalOnClick1.show();
     // if (this.expensesForm.value.detail) { }
