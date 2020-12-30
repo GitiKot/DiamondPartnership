@@ -5,6 +5,9 @@ import { Checks } from 'src/app/data/checks';
 import { SalesService } from 'src/app/services/sales.service';
 import { Sale } from 'src/app/data/sale';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
+import { seriousnessService } from 'src/app/services/seriousness.service';
+import { Seriousness } from 'src/app/data/seriousness';
+import { CastExpr } from '@angular/compiler';
 @Component({
   selector: 'app-checks',
   templateUrl: './checks.component.html',
@@ -33,42 +36,22 @@ export class ChecksComponent implements OnInit {
   // this.selectedRow = index;
   // }
   // }
-  constructor(private salesService: SalesService, private checksService: ChecksService, private formBuilder: FormBuilder) { }
+  constructor(private salesService: SalesService, private checksService: ChecksService,
+    private formBuilder: FormBuilder, private seriousnessService: seriousnessService) { }
 
   ngOnInit() {
 
     this.checksForm = this.formBuilder.group({
-      date: ['', [Validators.required]],
-      numCheck: ['', Validators.required],
+      date: [''],
+      numCheck: [''],
       sum: [''],
       ReceiptOrInvoice: ['', Validators.required],
       IdSales: this.formBuilder.array([]),
+      publicSerialName: ['']
     })
-
     this.OpenSalesList = new Array();
     this.ClosedSalesList = new Array();
-    this.salesService.getAllSales().subscribe(ans =>
-      ans.find(s => {
-        if (s.isOpen == true) { this.OpenSalesList.push(s); }
-        else { this.ClosedSalesList.push(s); }
-      }))
-
-    this.checksService.getAllChecks().subscribe(ans => this.checksList = ans);
-    // find all sales according public name
-    // let PublicSerialName=document.getElementById("publicSerialName");
-    // console.log(PublicSerialName);
-
-    // this.salesService.findAllSales("2r").subscribe(ans => (ans.map(sale => {
-    //   if (sale.publicSerialName == "2r") {//htmlבמקום 2ר לוקחים את מה שנכנס באינפוט מתוך    
-    //     console.log("findaillsales in");
-    //     console.log(sale.publicSerialName == "2r");
-    //     console.log("salelist");
-    //   }
-    // })))
-    // here the table items are called from webapi
-    // console.log("function");
-    
-    if (this.updateCheck != undefined) {console.log("updateCheck", this.updateCheck);
+    if (this.updateCheck != undefined) {
       // console.log("updatecheck");
       this.checksForm.patchValue({
         ReceiptOrInvoice: this.updateCheck.ReceiptOrInvoice,
@@ -78,15 +61,150 @@ export class ChecksComponent implements OnInit {
       });
 
       this.checksForm.setControl('IdSales', this.formBuilder.array(this.updateCheck.IdSales));
-      console.log("this.IdSales");
-      console.log(this.checksForm.value.IdSales)
       this.checksForm.value.IdSales.forEach(s => {
         this.IdSales.push(this.formBuilder.group(s));
-        console.log("s", s);
       });
     }
   }
 
+  calcCheckDate(): Date {
+    let finalDate : Date;
+    let paymentDate :Date;    
+    let saleDate;
+    let totalSumDate = 0;
+    let totalSumMoney = 0;
+    let currMoney: number;
+    
+    this.getSelectedRows().forEach(s => {
+      currMoney = <number>s.pricePerCarat * <number>s.weight;
+      console.log("currMoney:" ,currMoney);
+      
+      saleDate = new Date(s.date);
+      console.log("saleDate: ",saleDate);
+      
+      paymentDate= new Date(s.date);paymentDate.setDate(paymentDate.getDate()+s.numOfDate)
+      console.log("paymentDate: ",paymentDate);
+
+      totalSumMoney += currMoney;
+      totalSumDate = totalSumDate + <number>(this.diffDate(paymentDate)) * <number>currMoney;
+
+    });
+    console.log(":לסיכום:");
+    console.log("totalSumMoney", totalSumMoney);
+    console.log("totalSumDate", totalSumDate);
+
+totalSumDate /= totalSumMoney;
+finalDate = new Date('01/01/1970 02:00:00')
+console.log("finalDate : ",finalDate);
+console.log("totalSumMoney : ",totalSumDate);
+console.log(typeof(totalSumDate));
+
+finalDate.setDate(finalDate.getDate()+totalSumDate)
+    console.log("final ", finalDate);
+    return finalDate;
+
+  }
+
+  calcCheckMoney(): number {
+    let sum = 0;
+    this.getSelectedRows().forEach(s => {
+      sum += <number>s.pricePerCarat * <number>s.weight;
+    })
+    return sum;
+  }
+  diffDate(d: Date): number {
+    d.setHours(2);
+    var time = (new Date(d)).getTime() - new Date('01/01/1970 02:00:00').getTime();
+    time /= (1000 * 60 * 60 * 24);
+    let abs = Math.round(time)
+    console.log('time :', abs);
+    return abs;
+  }
+  save() {
+    alert("האם הנך בטוח שברצונך לשמור  צ'ק זה ? ");
+    if (this.checksForm.valid) {
+     
+      let sale: Sale;
+     
+      for (let index = 0; index < this.getSelectedRows().length; index++) {
+        this.checksForm.value.IdSales.push(this.getSelectedRows()[index].id)
+        sale = this.getSelectedRows()[index];
+
+        sale.isOpen = false;
+        this.salesService.updateSale(sale.id, sale);
+
+      }
+      this.checksForm.value.publicSerialName = this.getSelectedRows()[0].id;
+      this.checksForm.value.date = this.calcCheckDate();
+      this.checksForm.value.sum = this.calcCheckMoney();
+      console.log("תאריך סופי שיק: ", this.calcCheckDate().toLocaleString());
+      console.log("סכום: ", this.calcCheckMoney());
+
+
+      this.checksService.addChecks(this.checksForm.value).subscribe(c => {
+        this.checksList.push(c);
+
+      })
+      //   for (let i = 0; i < this.getSelectedRows().length; i++) {
+      //     //תוצאה= 
+      //     const result = this.OpenSalesList.filter(s =>
+      //       this.getSelectedRows()[i].id.includes(s.id));
+      //     for (let i = 0; i < this.OpenSalesList.length; i++) {
+      //       if (result[0].id == this.OpenSalesList[i].id) {
+      //         // this.salesService.updateSale(this.OpenSalesList[j].id, {this.OpenSalesList[j].id,});
+      //         // this.OpenSalesList[j].isOpen = false;
+      //         sale = this.OpenSalesList[i];
+      //         sale.isOpen = false;
+      //         sumAllSales += (Number(this.OpenSalesList[i].pricePerCarat) * Number(this.OpenSalesList[i].weight));
+      //         this.salesService.updateSale(this.OpenSalesList[i].id, sale);
+      //         var dd=new Date()
+      //         sale.date= new Date();
+
+      //         dd.setDate(sale.date.getDate() + sale.numOfDate)
+      //         sumDate+=this.diff(dateOld,dd)*<number>sale.pricePerCarat*<number>sale.weight;
+      //         sumMoney+=<number>sale.weight*<number>sale.pricePerCarat
+      //       }
+      //       let saleOne = <unknown>this.getSelectedRows()[0].publicSerialName;
+      //       serial = <Seriousness>saleOne;
+      //                 console.log("good",serial);
+
+      //       if (serial.amountReceived > serial.cost)
+      //         sumAllSales /= 2;
+      //       else sumAllSales = sumAllSales * serial.partnersPercent / 100;
+      //  this.checksForm.value.date =new Date() ;
+
+      //   this.checksForm.value.date.setDate(dateOld.getDate()+sumDate/sumMoney);
+      //       this.checksForm.value.sum = sumAllSales;
+
+      //       this.checksForm.value.publicSerialName = serial.id;
+      //     }
+      //   }
+
+
+
+      // this.checksForm.reset();
+
+    } else {
+      alert("חלק מהנתונים לא נכון")
+    }
+  }
+
+  getSaleBySeria(e) {
+    this.OpenSalesList = [];
+    this.ClosedSalesList = [];
+    this.salesService.findBySerailName(e.target.value).subscribe(ans => {
+      ans.forEach(s => {
+        if (s.isOpen == true) { this.OpenSalesList.push(s); }
+        else { this.ClosedSalesList.push(s); }
+      })
+
+      this.checksService.findBySerailName(e.target.value).subscribe(ans => {
+        console.log(ans);
+
+        this.checksList = ans;
+      })
+    });
+  }
   resetform() {
     this.checksForm.reset();
   }
@@ -94,13 +212,11 @@ export class ChecksComponent implements OnInit {
     this.indexC = i;
   }
   updateModal(ch) {
-    this.updateCheck = ch; console.log("flag ", ch);
+    this.updateCheck = ch;
     this.showModalOnClick.show();
   }
   update() {
-    console.log("updateeeeee");
-    console.log(this.updateCheck.id);
-    console.log(this.checksForm.value);
+
     alert("האם ברצונך לשמור את הנתונים")
     if (this.checksForm.valid) {
       // console.log("aaaaaaaaaaaaaaaa:",this.sum);
@@ -122,9 +238,8 @@ export class ChecksComponent implements OnInit {
     // this.r.navigate(['']);
 
   }
-
+  ///   -הוא מכיל את הת"ז של המכירות שנבחרו selectedRowIds יש מערך שנקרא   
   onRowClick(id: string) {
-
     if (this.selectedRowIds.has(id)) {
       this.selectedRowIds.delete(id);
     }
@@ -132,11 +247,11 @@ export class ChecksComponent implements OnInit {
       this.selectedRowIds.add(id);
     }
   }
-
+  //האם הת"ז הזו בחורה?
   rowIsSelected(id: string) {
     return this.selectedRowIds.has(id);
   }
-
+  // מחזיר מערך עם  המכירות הפתוחות 
   getSelectedRows() {
     return this.OpenSalesList.filter(x => this.selectedRowIds.has(x.id));
   }
@@ -158,42 +273,6 @@ export class ChecksComponent implements OnInit {
       }
     }
     return arr;
-  }
-  save() {
-    alert("האם הנך בטוח שברצונך לשמור פרטי צ'ק אלו??");// alert("האם ברצונך לשמור את הנתונים") 
-    if (this.checksForm.valid) {
-      for (let i = 0; i < this.getSelectedRows().length; i++) {
-        this.checksForm.value.IdSales.push(this.getSelectedRows()[i].id)
-      }
-      let sale: Sale;
-      let sumAllSales = 0;
-      for (let i = 0; i < this.getSelectedRows().length; i++) {
-        const result = this.OpenSalesList.filter(s =>
-          this.getSelectedRows()[i].id.includes(s.id));
-        for (let j = 0; j < this.OpenSalesList.length; j++) {
-          if (result[0].id == this.OpenSalesList[j].id) {
-            // this.salesService.updateSale(this.OpenSalesList[j].id, {this.OpenSalesList[j].id,});
-            // this.OpenSalesList[j].isOpen = false;
-            sale = this.OpenSalesList[j];
-            sale.isOpen = false;
-            sumAllSales += (Number(this.OpenSalesList[j].pricePerCarat) * Number(this.OpenSalesList[j].weight));
-            this.salesService.updateSale(this.OpenSalesList[j].id, sale);
-
-          }
-        }
-      }
-      console.log("save sum", sumAllSales);
-
-      // const s = this.OpenSalesList.some((val) => this.getSelectedRows().indexOf(val) !== -1);
-      // console.log(s);
-      this.checksForm.value.sum = sumAllSales;
-      this.checksService.addChecks(this.checksForm.value).subscribe(c => {
-        this.checksList.push(c);
-
-      })
-      // this.checksForm.reset();
-
-    }
   }
 
   deleteCheck(c: Checks) {
@@ -220,7 +299,6 @@ export class ChecksComponent implements OnInit {
         } s++;
       }
       var ch = this.checksService.deleteChecks(this.currentChecks);
-      console.log("ch:", ch);
       this.checksService.getAllChecks().subscribe(ans => this.checksList = ans);
     }
     this.currentChecks = null;

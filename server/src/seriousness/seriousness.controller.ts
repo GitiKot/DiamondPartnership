@@ -18,10 +18,12 @@ export class SeriousnessController {
         return seriousness;
     }
 
-    // @Get(':id')
-    // getSeriousness(@Param('id') exId: string) {
-    //     return this.seriousnessService.getSingleSeriousness(exId);
-    // }
+    @Get(':id')
+    getSeriousness(@Param('id') exId: string) {
+        console.log(exId);
+        
+        return this.seriousnessService.getSingleSeriousness(exId);
+    }
     @Patch(':id')
     async updateSeriousness(  
         // parent:{type:mongoose.Schema.Types.ObjectId,ref:'Partner'},

@@ -12,10 +12,10 @@
         d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
     </svg>&nbsp;
 
-    <input type="text" id="publicSerialName" class="form-control form-control-sm ml-3 " placeholder="סריה כללית"
+    <input type="text" id="publicSerialName"(keyup.enter)="getSaleBySeria($event)" class="form-control form-control-sm ml-3 " placeholder="סריה כללית"
       title="חיפוש לפי שם סריה כללית">
   </div>
-  <table id="checksTable" class="table table-hover">
+  <table style="background-color: rgb(211, 243, 243);" id="checksTable" class="table table-hover">
     <!--mdbTable class="z-depth-1"id="myTable" -->
     <tr class="header">
       <th></th>
@@ -39,7 +39,7 @@
             </svg></button>
         </td>
         <td>{{c.date|date:'dd/MM/yy'}}</td>
-        <td>{{c.sum}}</td>
+        <td>{{c.sum | currency:"USD":true}}</td>
         <td>{{c.ReceiptOrInvoice}}</td>
         <td>{{c.numCheck}}</td>
         <td><button type="button" class="btn btn-primary" (click)="updateCi(ci)" (click)="framec.show()"
@@ -115,7 +115,7 @@
   <input type="text" id="private" class="form-control form-control-sm ml-3 " (keyup)="searchPrivate()"
     placeholder="חיפוש לפי שם סריה פרטית"></div>
   
-  <div class="container">
+  <div style="background-color: rgb(220, 235, 219);" class="container">
     <table id="salesTable" class="table table-hover">
       <thead>
         <tr class="header">
@@ -186,7 +186,7 @@
             </mdb-success>
           </div>
 
-          <div class="md-form mb-4">
+          <!-- <div class="md-form mb-4">
             <input *ngIf="updateCheck" type="date" id="form31" class="form-control" mdbInput mdbValidate
               [formControl]="date" [ngModel]="updateCheck.date | date:'yyyy-MM-dd'">
             <input *ngIf="!(updateCheck)" type="date" id="form31" class="form-control" mdbInput mdbValidate
@@ -196,7 +196,7 @@
             </mdb-error>
             <mdb-success *ngIf="date.valid && (date.dirty || date.touched)">
             </mdb-success>
-          </div>
+          </div> -->
 
           <div class="md-form mb-4">
             <select class="browser-default custom-select" mdbInput mdbValidate [formControl]="ReceiptOrInvoice">

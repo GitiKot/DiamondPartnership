@@ -1,14 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { ObjectID } from 'mongodb';
 import { Model } from 'mongoose';
 import { createChecksDto } from 'src/checks/dto/create-check.dto';
 import { Checks } from 'src/checks/interface/check.interface';
-
+import {Seriousness} from 'src/seriousness/seriousness.model'
 @Injectable()
 export class ChecksService {
 
     constructor(
-        @InjectModel('checks') private readonly checkModel: Model<Checks>,) { }
+        @InjectModel('checks') private readonly checkModel: Model<Checks>,
+        @InjectModel('Seriousness') private readonly seriousnessModel: Model<Seriousness>) { }
 
     async addChecks(createChecksDto: createChecksDto): Promise<Checks> {
         const createCheck = new this.checkModel(createChecksDto);
@@ -36,7 +38,7 @@ export class ChecksService {
             date: ch.date,
             sum: ch.sum,
             ReceiptOrInvoice: ch.ReceiptOrInvoice,
-
+            publicSerialName:ch.publicSerialName
         };
     }
 
@@ -47,7 +49,7 @@ export class ChecksService {
         date: Date,
         sum: number,
         ReceiptOrInvoice: string,
-
+        publicSerialName:ObjectID
     ) {
         const updateCheck = await this.findCheck(id);
         if (IdSales) {
@@ -68,7 +70,24 @@ export class ChecksService {
 
         updateCheck.save();
     }
+    async findBySerailName(serialNameIs: string) { 
+        const seriousnessOne =  this.seriousnessModel.findOne({serialName:serialNameIs}).select(['_id']).exec();
+    
+     const v = (await seriousnessOne)._id;
+     console.log("good nigth", v);
 
+        const SaleBySerailName = await this.checkModel.find({publicSerialName:v}).populate('publicSerialName').exec();
+      
+        return SaleBySerailName.map(ch => ({
+            id: ch.id,
+            IdSales: ch.IdSales,
+            numCheck: ch.numCheck,
+            date: ch.date,
+            sum: ch.sum,
+            ReceiptOrInvoice: ch.ReceiptOrInvoice,
+            publicSerialName:ch.publicSerialName
+        }));
+    }
     async deleteChecks(chId: string) {
         const result = await this.checkModel.deleteOne({ _id: chId }).exec();
         if (result.n === 0) {

@@ -14,18 +14,19 @@ export class ChecksService {
   getAllChecks(): Observable<Checks[]> {
     return this.http.get<Checks[]>(this.checksUrl);
   }
-
+  findBySerailName(serialName: string):Observable<Checks[]> {
+    const urlFindBy = `${this.checksUrl}/${serialName}`;
+    return this.http.get<Checks[]>(urlFindBy)
+  }
   addChecks(c: Checks): Observable<Checks> {
-    console.log("service", this.checksUrl);
     return this.http.post<Checks>(this.checksUrl, c);
   }
   updateCheck(chId, check: Checks) {
-    console.log("check",check);
 
     const urlupdate = `${this.checksUrl}/${chId}`;
     return this.http.patch<Checks>(urlupdate, check, this.options)
     .subscribe((c: Checks) => {
-      console.log(c, "suecces");
+      console.log( "suecces");
     }, () => {
       console.log("error");
     }
