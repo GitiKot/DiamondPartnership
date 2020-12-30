@@ -131,6 +131,10 @@ export class ExpensesFormComponent implements OnInit {
     else {
       alert("חסרים נתונים");
     }
+    this.showModalOnClick.hide();
+    this.showModalOnClick1.hide();
+    this.updateFlag.emit(1);
+    this.r.navigate(['']);
   }
   savemodal() {
     // console.log(this.expensesForm.value.detail);
