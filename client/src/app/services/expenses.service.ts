@@ -20,17 +20,11 @@ export class ExpensesService {
     console.log("service", this.expensesUrl);
     return this.http.post<Expenses>(this.expensesUrl, e);
   }
-  updateExpenses(exId, expenses: Expenses) {
+  updateExpenses(exId, expenses: Expenses):Observable<Expenses> {
     console.log("exp",expenses);
     
     const urlupdate = `${this.expensesUrl}/${exId}`;
-    return this.http.patch<Expenses>(urlupdate, expenses, this.options)
-    .subscribe((e: Expenses) => {
-      console.log(e, "suecces");
-    }, () => {
-      console.log("error");
-    }
-    );
+    return this.http.patch<Expenses>(urlupdate, expenses, this.options);
   }
   deleteExpenses(e: Expenses) {
     var ex = `${this.expensesUrl}/${e.id}`;

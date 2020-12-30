@@ -23,8 +23,10 @@ export class SalesFormComponent implements OnInit {
   totalPrice = [];
   dateP: string;
   seriousnessList: Array<Seriousness>;
-  constructor(private router: Router, private seriousnessService: seriousnessService, private salesServise: SalesService, private cdRef: ChangeDetectorRef) {
-
+  updateSale:Sale;
+  CurrentNavigation;
+  constructor(private router: Router,  private seriousnessService: seriousnessService, private salesServise: SalesService, private cdRef: ChangeDetectorRef) {
+this.CurrentNavigation=this.router.getCurrentNavigation().extras.state;
   }
 
   ngOnInit(): void {
@@ -51,6 +53,23 @@ export class SalesFormComponent implements OnInit {
       num: new FormControl(''),
       isOpen: new FormControl(''),
     });
+this.updateSale=this.CurrentNavigation;
+if(this.CurrentNavigation!=undefined)
+{
+  this.salesForm.patchValue({
+    date: this.updateSale.date,
+    numOfDate: this.updateSale.numOfDate,
+    invoiceNumber: this.updateSale.invoiceNumber,
+    publicSerialName: this.updateSale.publicSerialName,
+    privateSerialNameate: this.updateSale.privateSerialName,
+    stoneName: this.updateSale.stoneName,
+    weight: this.updateSale.weight,
+    pricePerCarat: this.updateSale.pricePerCarat,
+    isOpen: this.updateSale.isOpen,
+    rawOrPolished: this.updateSale.rawOrPolished,
+  })
+}
+
 
     // var radioRaw= document.getElementById('raw');
     document.getElementById('raw').setAttribute('checked', 'true')

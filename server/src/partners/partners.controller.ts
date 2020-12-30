@@ -5,23 +5,6 @@ import { PartnersService } from './partners.service';
 @Controller('partners')
 export class PartnersController {
     constructor(private readonly partnerService :PartnersService){}
-    // @Post('/add')
-    // async insertPartner(
-    //   @Body('name') partname: string,
-    //   @Body('contact') partcontact: string,
-    //   @Body('email') partemail: string,
-    //   @Body('phone') parttel: string,
-    //   @Body('fax') partfax: string,
-    //   @Body('pel') partpel: string,
-    //   @Body('Remarks') partRemarks: string,
-    // ) {
-    //   const generatedId = await this.partnerService.insertPartner(
-    //     partname,
-    //     partcontact,
-    //     partemail,parttel,partfax,partpel,partRemarks
-    //   );
-    //   return { id: generatedId };
-    // }
    
     @Post()
     async addPartner(@Body() createPartnerDto: createPartnerDto) {

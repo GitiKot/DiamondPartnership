@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import{HttpClient, HttpHeaders}from '@angular/common/http'
-import { from, Observable } from 'rxjs';
+import {  Observable } from 'rxjs';
 import {Partner} from '../data/partner'
-
-
 
 @Injectable({
   providedIn: 'root'
@@ -23,17 +21,11 @@ export class PartnerService {
 
    return this.http.post<Partner>(this.partnerUrl,p);
   }
-  updatePartner(pId, partner: Partner) {
+  updatePartner(pId, partner: Partner):Observable<Partner>{
     console.log("partner",partner);
 
     const urlupdate = `${this.partnerUrl}/${pId}`;
     return this.http.patch<Partner>(urlupdate, partner, this.options)
-    .subscribe((p: Partner) => {
-      console.log(p, "suecces");
-    }, () => {
-      console.log("error");
-    }
-    );
   }
   deletePartner(p:Partner){
     var ttt=`${this.partnerUrl}/${p.id}`;

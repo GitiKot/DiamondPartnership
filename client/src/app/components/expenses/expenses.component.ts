@@ -69,16 +69,34 @@ export class ExpensesComponent implements OnInit {
       }
     }
   }
-  
+ f(){
+   this.e=undefined;
+   console.log("e",this.e);
+   
+   this.flagupdate=1;
+   console.log("f");
+    console.log(this.flagupdate);
+ }
   updateflag(ex){
     this.e = ex;
-    console.log("giti:  ",ex);
+    console.log("הוצאה: ",ex);
     this.flagupdate=1;
+    console.log("updateflag");
+    console.log(this.flagupdate);
+    
+
+  }
+  updateFromFlag(event){
+    console.log("updatefromflag");
+console.log("evevt",event);
+this.flagupdate=event;
+console.log(this.flagupdate);
 
   }
   updateEi(i: number) {
     this.indexE = i;
   }
+  // נראה לי שאפשר למחוק פונ' זו
   updateExpenses(exid: string, expenses: Expenses) {
     console.log("updateExpenses");
     console.log(expenses);

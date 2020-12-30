@@ -1,13 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalModule } from 'angular-bootstrap-md';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { from } from 'rxjs';
-import { Expenses } from 'src/app/data/expenses';
 import { Partner } from 'src/app/data/partner';
 import { Seriousness } from 'src/app/data/seriousness';
-import { ExpensesService } from 'src/app/services/expenses.service'
 import { PartnerService } from 'src/app/services/partner.service';
 import { seriousnessService } from 'src/app/services/seriousness.service';
 import { ModalFormComponent } from '../modal-form/modal-form.component';
@@ -23,9 +21,10 @@ export class SerialFormComponent implements OnInit {
 
   @ViewChild('frame1') frame1: ModalDirective;
   @ViewChild('frame2') frame2: ModalDirective;
-  totalPrice=[];
-  selectedPartner:Partner;
-  constructor(private changeDetectorRef: ChangeDetectorRef,private r: Router, private partnerService: PartnerService, private seriousnessService: seriousnessService, private formBuilder: FormBuilder) { }
+  @Input() updateSerial: Seriousness;
+  totalPrice = [];
+  selectedPartner: Partner;
+  constructor(private changeDetectorRef: ChangeDetectorRef, private r: Router, private partnerService: PartnerService, private seriousnessService: seriousnessService, private formBuilder: FormBuilder) { }
   // Validators.compose([Validators.minLength(10)
   ngOnInit(): void {
     this.partnerService.getAllPartners().subscribe(ans => { this.partnerList = ans; })
@@ -35,23 +34,77 @@ export class SerialFormComponent implements OnInit {
       dateBuy: ['', [Validators.required]],
       cost: ['', [Validators.required]],
       partnersPercent: ['', [Validators.compose([Validators.required, Validators.pattern('[0-9]{2}')])]],
-      finishDate: ['', ],
+      finishDate: ['',],
       privateSeria: this.formBuilder.array([]),
       partner: ['', [Validators.required]],
     });
     this.totalPrice['לחץ לפרטים']
 
+    if (this.updateSerial != undefined) {
+      console.log("iibfuuuuuuuuuu");
+      console.log(this.updateSerial.privateSeria);
+      this.serialForm.patchValue({
+        serialName: this.updateSerial.serialName,
+        dateBuy: this.updateSerial.dateBuy,
+        cost: this.updateSerial.cost,
+        partnersPercent: this.updateSerial.partnersPercent,
+        finishDate: this.updateSerial.finishDate,
+        privateSeria: this.updateSerial.privateSeria,
+        partner: this.updateSerial.partner,
+      });
+      this.serialForm.setControl('privateSeria', this.formBuilder.array(this.updateSerial.privateSeria));
+      console.log("this.privateSeria");
+      console.log(this.serialForm.value.privateSeria);
+
+      
+      this.serialForm.value.privateSeria.forEach(p => {
+        this.privateSeria.push(this.formBuilder.group({
+          namePrivate: p.namePrivate,
+          price: p.price,
+          expenses:p.expenses,
+
+         
+        }));     
+        // this.serialForm.value.privateSeria.setControl('expenses',this.formBuilder.array(p));
+        console.log("p");
+        console.log(p);
+        
+console.log("ex",this.serialForm.value.privateSeria);
+console.log("control",this.serialForm.value.privateSeria.controls);
+console.log("value",this.serialForm.value.privateSeria.value);
+console.log("ex",this.serialForm.value.privateSeria.expenses);
+
+      //   this.serialForm.value.privateSeria.expenses.forEach(e => {
+      //     console.log("e",e);
+          
+      // this.privateSeria.push(this.formBuilder.group({
+      //       nameExpenses: e.nameExpenses,
+      //       exspensesPrice: e.exspensesPrice,
+          
+      //     }));     
+         
+  
+        // });
+
+      });
+
+
+
+      // this.serialForm.setControl('expenses', this.formBuilder.array(this.updateSerial.privateSeria));
+      //   console.log("this.expenses");
+      //   console.log(this.serialForm.value.privateSeria);
+    }
   }
   // ngAfterContentChecked() {
 
   //   this.changeDetectorRef.detectChanges();
   //   // console.log(" detece chande");
-    
+
 
   // }
-  
+
   // onCloseMember() {
-    // this.changeDetectorRef.detectChanges();
+  // this.changeDetectorRef.detectChanges();
   // }
   ngAfterViewInit() {
     this.changeDetectorRef.detectChanges();
@@ -72,23 +125,24 @@ export class SerialFormComponent implements OnInit {
     this.serialForm.get('partner').setValue(this.selectedPartner)
     // console.log(this.privateSeria.value);
     console.log(this.serialForm.value);
- 
-     
+
+
     if (this.serialForm.valid) {
       this.seriousnessService.addSeria(this.serialForm.value).subscribe(sss => {
-        this.r.navigate(['seriousness/serial-form/modal-form','סריה'])
-      },()=>{
-        console.log("error");       
-      } )}
-     
-    
-    else{
+        this.r.navigate(['seriousness/serial-form/modal-form', 'סריה'])
+      }, () => {
+        console.log("error");
+      })
+    }
+
+
+    else {
       alert("חסרים נתונים")
     }
-     this.serialForm.reset();
+    // this.serialForm.reset();
     // this.r.navigate(['./seriousness'])
   }
- 
+
   close() {
     this.r.navigate(['seriousness']);
   }
@@ -129,13 +183,13 @@ export class SerialFormComponent implements OnInit {
 
   get namePrivate() {
     return this.serialForm.get("privateSeria").get('namePrivate');
-  }get price() {
+  } get price() {
     return this.serialForm.get("privateSeria").get('price');
   }
   newPrivateSerial(): FormGroup {
     return this.formBuilder.group({
       namePrivate: '',
-      price:'',
+      price: '',
       expenses: this.formBuilder.array([]),
     })
   }
@@ -173,11 +227,11 @@ export class SerialFormComponent implements OnInit {
     console.log(this.privateSeria.value);
     this.frame2.hide()
   }
-  removePrivate(i:number){
-    this.privateSeria.removeAt(i)  ; 
+  removePrivate(i: number) {
+    this.privateSeria.removeAt(i);
 
   }
-  removeExpPrivate(i:number,ip:number){
-this.expenses(i).removeAt(ip)
+  removeExpPrivate(i: number, ip: number) {
+    this.expenses(i).removeAt(ip)
   }
 }

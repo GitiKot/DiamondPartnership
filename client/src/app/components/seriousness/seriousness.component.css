@@ -2,7 +2,7 @@
 position: fixed;
 bottom: 25px; left: 25px;
 }
-.del{
+.del,.update{
     text-align: center;
     border: none;
     display: none;

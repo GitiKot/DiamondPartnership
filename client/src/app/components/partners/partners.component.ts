@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { PartnerService } from 'src/app/services/partner.service';
-import { from } from 'rxjs';
 import { Partner } from 'src/app/data/partner';
-
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { ContactNumberValidator } from 'src/app/validtors/contact.validator';
 import { phoneValidator } from 'src/app/validtors/phone.validator';
@@ -73,10 +71,10 @@ export class PartnersComponent implements OnInit {
   get Remarks() {
     return this.partnersForm.get('Remarks');
   }
+
   save() {
-    // alert("האם הנך בטוח במה שאתה עושה");
     if (this.partnersForm.valid) {
-      // const p = new Partner();
+
       this.partnerService.addPartner(this.partnersForm.value)
         .subscribe(a => {
           this.r.navigate(['partners/modal-form', 'שותף'])
@@ -84,6 +82,9 @@ export class PartnersComponent implements OnInit {
         }, () => {
           console.log("error");
         });
+    }
+    else {
+      alert("חסרים נתונים");
     }
   }
   updateModal(p) {
@@ -99,37 +100,25 @@ export class PartnersComponent implements OnInit {
       fax: this.updatePartner.fax,
       Remarks: this.updatePartner.Remarks,
     });
-   
+
     this.showModalOnClick.show();
 
   }
   update() {
-    console.log("updatee");
-    console.log(this.updatePartner.id);
-    console.log(this.partnersForm.value);
-    alert("האם ברצונך לשמור את הנתונים")
-    // if (this.updatePartner.Remarks) {
-    //   this.partnersForm.patchValue({
-    //     Remarks: this.updatePartner.Remarks,
-    //   });
-    // }
-    // else {
-    //   this.partnersForm.patchValue({
-    //     Remarks: '',
-    //   });
-    // }
-    console.log(this.partnersForm.value.Remarks);
+    
     if (this.partnersForm.valid) {
-      console.log("is valid");
 
-
-      this.partnerService.updatePartner(this.updatePartner.id, this.partnersForm.value);
-      // this.partnersForm.reset();
+      this.partnerService.updatePartner(this.updatePartner.id, this.partnersForm.value)
+        .subscribe(() => {
+          this.r.navigate(['partners/modal-form', 'שותף'])
+          this.partnersForm.reset();
+        }, () => {
+          console.log("error");
+        });
     }
-    // this.showModalOnClick.hide();
-    // צריך פה לעשות רפרש לטבלה
-    // this.r.navigate(['']);
-
+    else {
+      alert("חסרים נתונים");
+    }
   }
 
   resetform() {
@@ -139,11 +128,9 @@ export class PartnersComponent implements OnInit {
     var div = document.getElementById('alert');
     div.style.visibility = "visible";
     this.currectPartner = p;
-
   }
   ok(s) {
-    console.log("ok");
-
+    
     if (s != '') {
       var tt = this.partnerService.deletePartner(this.currectPartner);
       console.log(tt);
@@ -158,6 +145,7 @@ export class PartnersComponent implements OnInit {
     let row = document.getElementById("row" + i);
     let del = document.getElementById("del" + i);
     let update = document.getElementById("update" + i);
+
     row.style.borderColor = " #f1f1f1";
     del.style.display = "inline";
     del.style.visibility = "visible";
@@ -169,6 +157,7 @@ export class PartnersComponent implements OnInit {
     let row = document.getElementById("row" + i);
     let del = document.getElementById("del" + i);
     let update = document.getElementById("update" + i);
+
     row.style.borderColor = "none";
     del.style.display = "none";
     del.style.visibility = "hidden";

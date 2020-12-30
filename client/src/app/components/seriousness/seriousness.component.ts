@@ -13,6 +13,8 @@ export class SeriousnessComponent implements OnInit {
   @ViewChild('frame2') frame2: ModalDirective;
 indexSerial:number;
 currectSeria:Seriousness;
+s:Seriousness;
+flagupdate=0;
   constructor(private seriousnessService:seriousnessService,private r:Router) { }
 
   
@@ -22,7 +24,12 @@ seriousnessList:Array<Seriousness>
     this.seriousnessService.getAllSeriousness().subscribe(ans => {this.seriousnessList = ans});
 
   }
- 
+  updateflag(serial){
+    this.s= serial;
+    console.log("giti:  ",serial);
+    this.flagupdate=1;
+
+  }
   cancel() {
     console.log("ertyui"); 
     this.r.navigate(['/seriousness']);
@@ -69,19 +76,24 @@ seriousnessList:Array<Seriousness>
 
     let row = document.getElementById("row" + i);
     let del = document.getElementById("del" + i);
+    let update = document.getElementById("update" + i);
 
     row.style.borderColor = " #f1f1f1";
     del.style.display = "inline";
     del.style.visibility = "visible";
+    update.style.display = "inline";
+    update.style.visibility = "visible";
   }
   toolbar1(i: number) {
 
     let row = document.getElementById("row" + i);
     let del = document.getElementById("del" + i);
-
+    let update = document.getElementById("update" + i);
     row.style.borderColor = "none";
     del.style.display = "none";
     del.style.visibility = "hidden";
+    update.style.display = "none";
+    update.style.visibility = "hidden";
   }
   deleteSerial(s) {
     var div = document.getElementById('alert');
