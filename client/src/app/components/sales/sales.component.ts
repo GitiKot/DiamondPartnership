@@ -112,12 +112,13 @@ export class SalesComponent implements OnInit {
   }
 
   update() {
+    // this.updateRawOrPolished();
     if (this.updateSale != undefined) {
       if (this.salesForm.valid) {
        console.log("form",this.updateSale);
        console.log("update form",this.salesForm.value);
        
-       
+       document.getElementById('raw').setAttribute('checked', 'true')
           this.saleService.updateSale(this.updateSale.id, this.salesForm.value).subscribe(() => {
             this.r.navigate(['sales-form/modal-form', 'מכירה'])
             this.salesForm.reset();
@@ -209,6 +210,13 @@ export class SalesComponent implements OnInit {
   }
   rawOrPolishedFunc(sale: Sale): string {
     return sale.rawOrPolished == 'raw' ? 'גלם' : 'מלוטש'
+  }
+  updateRawOrPolished(){
+    let a=document.getElementById('1');
+    let b=document.getElementById('2');
+    console.log("a",a,"b",b);
+    
+    
   }
   toolbar(i: number) {
 

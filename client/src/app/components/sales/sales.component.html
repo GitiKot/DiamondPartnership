@@ -150,8 +150,8 @@
   <!-- modal -->
 
   <div style="overflow-y: auto" mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1"
-    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" (mouseenter)="addEventCalcDate()" >
-    <div class="modal-dialog" role="document"  >
+    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" (mouseenter)="addEventCalcDate()">
+    <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header text-center">
           <h4 class="modal-title w-100 font-weight-bold"> עדכן פרטים עבור מכירה זו</h4>
@@ -173,7 +173,7 @@
             </div>
             <div class="col-8 col-sm-6 col-example">
               <div class="md-form mb-5">
-                
+
                 <input type="number" min="0" (input)="addEventCalcDate()" class="form-control" tabindex="2"
                   formControlName="numOfDate" id="numOfDate"><label for="form34">תנאי תשלום</label>
                 <mdb-error *ngIf="numOfDate.invalid && (numOfDate.dirty || numOfDate.touched)"></mdb-error>
@@ -182,9 +182,9 @@
             </div>
             <div class="col-8 col-sm-6 col-example">
               <div class="md-form mb-5">
-              
+
                 <input [value]="dateP" type="text" class="form-control" formControlName="date2" id="DueDate"
-                  disabled="form-check-input">  <label for="form34">תאריך פרעון:</label>
+                  disabled="form-check-input"> <label for="form34">תאריך פרעון:</label>
               </div>
             </div>
             <div class="col-8 col-sm-6 col-example">
@@ -241,17 +241,45 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-8 col-sm-6 col-example">
+            <!-- <div class="col-8 col-sm-6 col-example">
               <div class="md-form mb-5" *ngIf="updateSale"  >
-                <select class="browser-default custom-select">
+                <select class="browser-default custom-select" (click)="updateRawOrPolished()">
                   <option *ngIf="updateSale.rawOrPolished=='גלם'" selected>גלם</option>
                   <option *ngIf="updateSale.rawOrPolished=='מלוטש'" selected>מלוטש</option>
-                  <option selected value="rawOrPolishedFunc(updateSale)"> {{rawOrPolishedFunc(updateSale)}}</option>
-                  <option value="גלם">גלם</option>
-                  <option value="מלוטש">מלוטש</option>
+                  <option selected > {{rawOrPolishedFunc(updateSale)}}</option>
+                  <option id="1" value="גלם">גלם</option>
+                  <option id="2" value="מלוטש">מלוטש</option>
                 </select>
               </div>
+            </div> -->
+            <div class="col-8 col-sm-6 col-example">
+              <div class="md-form mb-5">
+                <label class="form-check-label">
+                  <div>
+                    <input type="radio" id="raw" class="form-check-input" formControlName="rawOrPolished" value="raw">
+                    &nbsp;גלם
+                  </div>
+                  &nbsp;
+                  <div>
+                    <input type="radio" class="form-check-input" tabindex="5" value="polished"
+                      formControlName="rawOrPolished" [checked]="false">&nbsp;מלוטש
+                  </div></label>
+              </div>
             </div>
+            <!-- <div>
+              <label class="form-check-label">
+                <label>
+                  <input type="radio" id="raw"  class="form-check-input"tabindex="4" formControlName="rawOrPolished" value="raw"
+                    >&nbsp;גלם
+                </label>
+
+               <label>
+                &nbsp;
+                <input type="radio" class="form-check-input"tabindex="5" value="polished" formControlName="rawOrPolished"
+                [checked]="false">&nbsp;מלוטש
+                </label>
+              </label>
+            </div> -->
             <!-- <td>   
        
               <select id="selectSeri"  tabindex={{i*5+6}} class="input" [ngModelOptions]="{standalone: true}"
@@ -269,7 +297,7 @@
 
         </div>
         <div class="modal-footer d-flex justify-content-center">
-          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="frame.hide()" >ביטול</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="frame.hide()">ביטול</button>
           <button class="btn btn-primary" (click)="update()" (click)="frame.hide()">שמירה</button>
         </div>
       </div>
