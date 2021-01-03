@@ -1,6 +1,5 @@
-import { variable } from '@angular/compiler/src/output/output_ast';
 import { ChangeDetectorRef } from '@angular/core';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Sale } from 'src/app/data/sale';
@@ -12,8 +11,8 @@ import { seriousnessService } from 'src/app/services/seriousness.service';
   selector: 'app-sales-form',
   templateUrl: './sales-form.component.html',
   styleUrls: ['./sales-form.component.css']
-
 })
+
 export class SalesFormComponent implements OnInit {
   selectedSerial: Seriousness;
   numStones: number;
@@ -23,10 +22,10 @@ export class SalesFormComponent implements OnInit {
   totalPrice = [];
   dateP: string;
   seriousnessList: Array<Seriousness>;
-  updateSale:Sale;
-  CurrentNavigation;
+  // updateSale:Sale;
+  // CurrentNavigation;
   constructor(private router: Router,  private seriousnessService: seriousnessService, private salesServise: SalesService, private cdRef: ChangeDetectorRef) {
-this.CurrentNavigation=this.router.getCurrentNavigation().extras.state;
+// this.CurrentNavigation=this.router.getCurrentNavigation().extras.state;
   }
 
   ngOnInit(): void {
@@ -53,23 +52,6 @@ this.CurrentNavigation=this.router.getCurrentNavigation().extras.state;
       num: new FormControl(''),
       isOpen: new FormControl(''),
     });
-this.updateSale=this.CurrentNavigation;
-if(this.CurrentNavigation!=undefined)
-{
-  this.salesForm.patchValue({
-    date: this.updateSale.date,
-    numOfDate: this.updateSale.numOfDate,
-    invoiceNumber: this.updateSale.invoiceNumber,
-    publicSerialName: this.updateSale.publicSerialName,
-    privateSerialNameate: this.updateSale.privateSerialName,
-    stoneName: this.updateSale.stoneName,
-    weight: this.updateSale.weight,
-    pricePerCarat: this.updateSale.pricePerCarat,
-    isOpen: this.updateSale.isOpen,
-    rawOrPolished: this.updateSale.rawOrPolished,
-  })
-}
-
 
     // var radioRaw= document.getElementById('raw');
     document.getElementById('raw').setAttribute('checked', 'true')

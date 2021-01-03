@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalModule } from 'angular-bootstrap-md';
@@ -22,6 +22,7 @@ export class SerialFormComponent implements OnInit {
   @ViewChild('frame1') frame1: ModalDirective;
   @ViewChild('frame2') frame2: ModalDirective;
   @Input() updateSerial: Seriousness;
+  @Output() updateFlag = new EventEmitter<number>();
   totalPrice = [];
   selectedPartner: Partner;
   constructor(private changeDetectorRef: ChangeDetectorRef, private r: Router, private partnerService: PartnerService, private seriousnessService: seriousnessService, private formBuilder: FormBuilder) { }
@@ -41,8 +42,7 @@ export class SerialFormComponent implements OnInit {
     this.totalPrice['לחץ לפרטים']
 
     if (this.updateSerial != undefined) {
-      console.log("iibfuuuuuuuuuu");
-      console.log(this.updateSerial.privateSeria);
+      console.log("iibfuuuuuuuuuu",this.updateSerial.privateSeria);
       this.serialForm.patchValue({
         serialName: this.updateSerial.serialName,
         dateBuy: this.updateSerial.dateBuy,
@@ -52,55 +52,23 @@ export class SerialFormComponent implements OnInit {
         privateSeria: this.updateSerial.privateSeria,
         partner: this.updateSerial.partner,
       });
-      this.serialForm.setControl('privateSeria', this.formBuilder.array(this.updateSerial.privateSeria));
-      console.log("this.privateSeria");
-      console.log(this.serialForm.value.privateSeria);
 
-      
-      this.serialForm.value.privateSeria.forEach(p => {
-        this.privateSeria.push(this.formBuilder.group({
-          namePrivate: p.namePrivate,
-          price: p.price,
-          expenses:p.expenses,
-
-         
-        }));     
-        // this.serialForm.value.privateSeria.setControl('expenses',this.formBuilder.array(p));
-        console.log("p");
-        console.log(p);
-        
-console.log("ex",this.serialForm.value.privateSeria);
-console.log("control",this.serialForm.value.privateSeria.controls);
-console.log("value",this.serialForm.value.privateSeria.value);
-console.log("ex",this.serialForm.value.privateSeria.expenses);
-
-      //   this.serialForm.value.privateSeria.expenses.forEach(e => {
-      //     console.log("e",e);
+      let i=0;
+      this.updateSerial.privateSeria.forEach(s => {
+        this.editPrivateSerial(s.namePrivate, s.price);
+        s.expenses.forEach(ex=>{
+          this.editExArrray(i,ex.nameExpenses,ex.exspensesPrice);
+          console.log("ex.price,ex.nameExpenses",ex.exspensesPrice,ex.nameExpenses);
           
-      // this.privateSeria.push(this.formBuilder.group({
-      //       nameExpenses: e.nameExpenses,
-      //       exspensesPrice: e.exspensesPrice,
-          
-      //     }));     
-         
-  
-        // });
+        });
+        i++;
+      })
 
-      });
-
-
-
-      // this.serialForm.setControl('expenses', this.formBuilder.array(this.updateSerial.privateSeria));
-      //   console.log("this.expenses");
-      //   console.log(this.serialForm.value.privateSeria);
     }
   }
   // ngAfterContentChecked() {
-
   //   this.changeDetectorRef.detectChanges();
   //   // console.log(" detece chande");
-
-
   // }
 
   // onCloseMember() {
@@ -108,7 +76,6 @@ console.log("ex",this.serialForm.value.privateSeria.expenses);
   // }
   ngAfterViewInit() {
     this.changeDetectorRef.detectChanges();
-
     this.frame1.show();
   }
   Table2() {
@@ -134,29 +101,52 @@ console.log("ex",this.serialForm.value.privateSeria.expenses);
         console.log("error");
       })
     }
-
-
     else {
       alert("חסרים נתונים")
     }
+    this.updateFlag.emit(1);
+    this.r.navigate(['']);
     // this.serialForm.reset();
     // this.r.navigate(['./seriousness'])
   }
+  update(){
 
-  close() {
-    this.r.navigate(['seriousness']);
+    this.serialForm.get('partner').setValue(this.selectedPartner)
+    console.log(this.serialForm.value);
+
+    if (this.serialForm.valid) {
+      this.seriousnessService.updateSerial(this.updateSerial.id,this.serialForm.value).subscribe(() => {
+        this.r.navigate(['seriousness/serial-form/modal-form', 'סריה'])
+      }, () => {
+        console.log("error");
+      })
+    }
+    else {
+      alert("חסרים נתונים")
+    }
+    this.updateFlag.emit(1);
+    this.r.navigate(['']);
   }
-  cancelex() {
-    this.privateSeria.reset();
-    this.r.navigate(['seriousness']);
+  
+  close() {
 
-  } get serialName() {
+    if (this.updateSerial != undefined) {
+      this.frame2.hide();
+      this.frame1.hide();
+    }
+    else {
+      
+    }
+    this.updateFlag.emit(0);
+
+  }
+  
+ get serialName() {
     return this.serialForm.get('serialName');
   }
   get dateBuy() {
     return this.serialForm.get('dateBuy');
   }
-
   get cost() {
     return this.serialForm.get('cost');
   }
@@ -178,7 +168,6 @@ console.log("ex",this.serialForm.value.privateSeria.expenses);
   expenses(index: number): FormArray {
     return this.privateSeria.at(index).get("expenses") as FormArray
   }
-
   //privateSeria:Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,price:number}>}>;
 
   get namePrivate() {
@@ -199,11 +188,26 @@ console.log("ex",this.serialForm.value.privateSeria.expenses);
       exspensesPrice: ''
     })
   }
+  updatePrivateSerial(n: string, p: number): FormGroup {
+    return this.formBuilder.group({
+      namePrivate: n,
+      price: p,
+      expenses: this.formBuilder.array([]),
+    })
+  }
+  updateExpenses(n: string, p: number): FormGroup {
+    console.log("price",n,p);
+    
+    return this.formBuilder.group({
+      nameExpenses: n,
+      exspensesPrice: p,
+    })
+  }
   get nameExpenses() {
     return this.serialForm.get("privateSeria").get('expenses').get('nameExpenses');
   }
   get exspensesPrice() {
-    return this.serialForm.get("privateSeria").get('expenses').get('exspensesPrice');
+    return this.serialForm.get("privateSeria").get('expenses').get('exspensesPricep');
   }
   addPrivateSerial() {
     console.log('privateSeria:');
@@ -215,6 +219,14 @@ console.log("ex",this.serialForm.value.privateSeria.expenses);
     this.expenses(i).push(this.newExpenses())
     console.log('privateSeria[i].expenses :  ');
     console.log(this.expenses(i).value);
+  }
+  editPrivateSerial(n: string, p: number) {
+    console.log('privateSeria:');
+    this.privateSeria.push(this.updatePrivateSerial(n, p));
+    console.log(this.privateSeria.value);
+  }
+  editExArrray(i: number, n: string, p: number) {
+    this.expenses(i).push(this.updateExpenses(n, p));
   }
   removePrivateSerial(i: number) {
     this.privateSeria.removeAt(i);

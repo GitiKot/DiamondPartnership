@@ -29,16 +29,8 @@ const routes: Routes = [
     },
     ]
   },
-  // {
-  //   path: 'expenses', component: ExpensesComponent,
-  //   children: [{ path: '', redirectTo: 'expenses', pathMatch: 'full' }
-  //     , { path: 'expenses-form', component: ExpensesFormComponent },
-  //     { path: 'modal-form', component:ModalFormComponent, }]
-  // },
   { path: 'sales/:isSales', component: SalesComponent },
-  { path: 'sales-form', component: SalesFormComponent,data:{
-    sale:Sale
-  },
+  { path: 'sales-form', component: SalesFormComponent,
   children:[
     {path:'',redirectTo:'sales-form',pathMatch: 'full'}  ,
    { path:'modal-form/:type',component:ModalFormComponent,}] ,

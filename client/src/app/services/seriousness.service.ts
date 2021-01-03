@@ -38,17 +38,12 @@ export class seriousnessService {
       }
       );
   }
-  updateSerial(serial: Seriousness) {
+  updateSerial(sId:string,serial: Seriousness):Observable<Seriousness> {
     console.log("update");
 
-    const urlupdate = `${this.seriousnessUrl}/${serial.id}`;
+    const urlupdate = `${this.seriousnessUrl}/${sId}`;
     // return this.http.put<Sale>(fullUrl, sale, this.options);
-    return this.http.patch<Seriousness>(urlupdate, serial, this.options)
-    .subscribe((s: Seriousness) => {
-      console.log(s, "suecces");
-    }, () => {
-      console.log("error");
-    }
-    );
+    return this.http.patch<Seriousness>(urlupdate, serial, this.options);
+    
   }
 }

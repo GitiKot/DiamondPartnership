@@ -5,7 +5,7 @@ export class Seriousness {
     serialName: string;
     dateBuy: Date;
     partner: Partner;
-    privateSeria: Array<{ namePrivate: string, price:number, expenses: Array<{ nameExpenses: string, price: number }> }>;//מספר חשבונית
+    privateSeria: Array<{ namePrivate: string, price:number, expenses: Array<{ nameExpenses: string, exspensesPrice: number }> }>;//מספר חשבונית
     cost: number;
     amountReceived:number;
     partnersPercent: number;///totaldate
@@ -25,7 +25,7 @@ export class Seriousness {
 constructor(s?: string, d?: Date, p?: Partner,
         ps?: Array<{
             namePrivate: string,price:number, expenses:
-                Array<{ nameExpenses: string, price: number }>
+                Array<{ nameExpenses: string, exspensesPrice: number }>
         }>, c?: number, ar?:number,pp?: number,arp?:number
         , fd?: Date
     ) {

@@ -28,18 +28,12 @@ export class SalesService {
 
     return this.http.post<Sale>(this.salesUrl, s);
   }
-  updateSale(saleId, sale: Sale) {
+  updateSale(saleId, sale: Sale) :Observable<Sale>{
     console.log("update");
 
-    const urlupdate = `${this.salesUrl}/${sale.id}`;
-    // return this.http.put<Sale>(fullUrl, sale, this.options);
+    const urlupdate = `${this.salesUrl}/${saleId}`;
     return this.http.patch<Sale>(urlupdate, sale, this.options)
-    .subscribe((s: Sale) => {
-      console.log(s, "suecces");
-    }, () => {
-      console.log("error");
-    }
-    );
+    
   }
 
  

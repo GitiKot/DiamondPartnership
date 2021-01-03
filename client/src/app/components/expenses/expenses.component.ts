@@ -31,12 +31,12 @@ export class ExpensesComponent implements OnInit {
     this.expensesService.getAllExpenses()
       .subscribe((data: any[]) => {
         this.newexpensesForm = this.formBuilder.group({
-          expenses: this.formBuilder.array(data.map(datum => this.aexpensesFormGroup(datum)))
+          expenses: this.formBuilder.array(data.map(datum => this.aExpensesFormGroup(datum)))
         });
       });
   }
 
-  private aexpensesFormGroup(datum) {
+  private aExpensesFormGroup(datum) {
     // console.log("datum");
     // console.log(datum);
     return this.formBuilder.group({

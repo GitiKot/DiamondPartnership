@@ -18,12 +18,12 @@ export class ExpensesFormComponent implements OnInit {
   expensesList: Array<Expenses>;
 
   @Input() updateEx: Expenses;
- @Output() updateFlag= new EventEmitter<number>();
+  @Output() updateFlag = new EventEmitter<number>();
 
   constructor(private r: Router, private expensesService: ExpensesService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
- 
+
     // this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
     this.expensesForm = this.formBuilder.group({
       PublicSerialName: ['', [Validators.required]],
@@ -36,8 +36,8 @@ export class ExpensesFormComponent implements OnInit {
       Remarks: [''],
     })
     // this.expensesForm.controls['PublicSerialName'].setValue(this.updateEx.PublicSerialName);
-    console.log("updateex",this.updateEx);
-    
+    console.log("updateex", this.updateEx);
+
     if (this.updateEx != undefined) {
       console.log("iibfuuuuuuuuuu");
       console.log(this.updateEx.detail);
@@ -52,19 +52,14 @@ export class ExpensesFormComponent implements OnInit {
       });
       console.log("amount:", this.amount.value);
 
-      this.expensesForm.setControl('detail', this.formBuilder.array(this.updateEx.detail));
-      console.log("this.detail-setcontrol");
-      console.log(this.expensesForm.value.detail);
 
-      this.expensesForm.value.detail.forEach(d => {
-        this.detail.push(this.formBuilder.group(d));
-        console.log("d", d);
-      });
-      console.log("this.detail-pacthvalue");
-    console.log(this.expensesForm.value.detail);
+      // this.expensesForm.setControl('detail', this.formBuilder.array(this.updateEx.detail));
+      this.updateEx.detail.forEach(e => {
+        this.editDetail(e.expenses, e.price);
+      })
     }
 
-    
+
   }
 
   ngAfterViewInit() {
@@ -72,22 +67,22 @@ export class ExpensesFormComponent implements OnInit {
   }
 
   close() {
-   
+
     if (this.updateEx != undefined) {
       this.showModalOnClick.hide();
       this.showModalOnClick1.hide();
     }
-    else { 
+    else {
       // this.r.navigate(['expenses']);
     }
     console.log("close");
     this.updateFlag.emit(0);
     console.log(this.updateFlag);
-    
+
   }
 
   save() {
-   
+
     if (this.expensesForm.valid) {
 
       this.expensesForm.value.amount = this.expensesForm.value.detail
@@ -100,7 +95,7 @@ export class ExpensesFormComponent implements OnInit {
       })
     }
     else {
-      alert("חסרים נתונים");    
+      alert("חסרים נתונים");
     }
     this.showModalOnClick.hide();
     this.showModalOnClick1.hide();
@@ -111,9 +106,9 @@ export class ExpensesFormComponent implements OnInit {
   }
 
   update() {
-    
+
     if (this.expensesForm.valid) {
-  
+
       if (this.expensesForm.value.detail.length != 0) {
         this.expensesForm.value.amount = this.expensesForm.value.detail
           .reduce((prev, curr) => prev + Number(curr.price), 0);
@@ -137,17 +132,17 @@ export class ExpensesFormComponent implements OnInit {
     this.r.navigate(['']);
   }
   savemodal() {
-    // console.log(this.expensesForm.value.detail);
+
     this.showModalOnClick.hide();
     this.showModalOnClick1.show();
     // if (this.expensesForm.value.detail) { }
   }
 
   cancelex() {
-  
+
     this.detail.reset();
     this.detail.clear();
-    
+
     this.showModalOnClick.hide();
     this.showModalOnClick1.show();
 
@@ -198,7 +193,17 @@ export class ExpensesFormComponent implements OnInit {
 
     this.detail.push(this.newDetail());
   }
+  updateDetail(ex: string, p: number): FormGroup {
+    return this.formBuilder.group({
+      expenses: ex,
+      price: p,
+    })
+  }
 
+  editDetail(ex: string, p: number) {
+
+    this.detail.push(this.updateDetail(ex, p));
+  }
   removeDetail(i: number) {
     this.detail.removeAt(i);
   }
