@@ -42,8 +42,7 @@ export class SerialFormComponent implements OnInit {
     this.totalPrice['לחץ לפרטים']
 
     if (this.updateSerial != undefined) {
-      console.log("iibfuuuuuuuuuu");
-      console.log(this.updateSerial.privateSeria);
+      console.log("iibfuuuuuuuuuu",this.updateSerial.privateSeria);
       this.serialForm.patchValue({
         serialName: this.updateSerial.serialName,
         dateBuy: this.updateSerial.dateBuy,
@@ -68,7 +67,6 @@ export class SerialFormComponent implements OnInit {
     }
   }
   // ngAfterContentChecked() {
-
   //   this.changeDetectorRef.detectChanges();
   //   // console.log(" detece chande");
   // }
@@ -112,12 +110,24 @@ export class SerialFormComponent implements OnInit {
     // this.r.navigate(['./seriousness'])
   }
   update(){
+
+    this.serialForm.get('partner').setValue(this.selectedPartner)
+    console.log(this.serialForm.value);
+
+    if (this.serialForm.valid) {
+      this.seriousnessService.updateSerial(this.updateSerial.id,this.serialForm.value).subscribe(() => {
+        this.r.navigate(['seriousness/serial-form/modal-form', 'סריה'])
+      }, () => {
+        console.log("error");
+      })
+    }
+    else {
+      alert("חסרים נתונים")
+    }
     this.updateFlag.emit(1);
     this.r.navigate(['']);
   }
-  // close() {
-  //   this.r.navigate(['seriousness']);
-  // }
+  
   close() {
 
     if (this.updateSerial != undefined) {
@@ -127,21 +137,11 @@ export class SerialFormComponent implements OnInit {
     else {
       
     }
-    console.log("close");
     this.updateFlag.emit(0);
-    console.log(this.updateFlag);
 
   }
-  cancelex() {
-    this.privateSeria.reset();
-    console.log("cancelex", this.frame1.isShown);
-    if (this.frame1.isShown == true) {
-      this.frame1.hide();
-    }
-    else {
-      this.r.navigate(['seriousness']);
-    }
-  } get serialName() {
+  
+ get serialName() {
     return this.serialForm.get('serialName');
   }
   get dateBuy() {

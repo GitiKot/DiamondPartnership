@@ -2,8 +2,8 @@ import { ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalDirective } from 'angular-bootstrap-md';
-import{Seriousness} from 'src/app/data/seriousness'
-import{seriousnessService} from 'src/app/services/seriousness.service'
+import { Seriousness } from 'src/app/data/seriousness'
+import { seriousnessService } from 'src/app/services/seriousness.service'
 @Component({
   selector: 'app-seriousness',
   templateUrl: './seriousness.component.html',
@@ -11,40 +11,29 @@ import{seriousnessService} from 'src/app/services/seriousness.service'
 })
 export class SeriousnessComponent implements OnInit {
   @ViewChild('frame2') frame2: ModalDirective;
-indexSerial:number;
-currectSeria:Seriousness;
-s:Seriousness;
-flagupdate=0;
-  constructor(private seriousnessService:seriousnessService,private r:Router) { }
+  indexSerial: number;
+  currectSeria: Seriousness;
+  s: Seriousness;
+  flagupdate = 0;
+  constructor(private seriousnessService: seriousnessService, private r: Router) { }
 
-  
-seriousnessList:Array<Seriousness>
+  seriousnessList: Array<Seriousness>
   ngOnInit(): void {
 
-    this.seriousnessService.getAllSeriousness().subscribe(ans => {this.seriousnessList = ans});
+    this.seriousnessService.getAllSeriousness().subscribe(ans => { this.seriousnessList = ans });
 
   }
-  Uflag(){
-    this.s=undefined;
-    this.flagupdate=1;
+  Uflag() {
+    this.s = undefined;
+    this.flagupdate = 1;
   }
-  updateflag(serial){
-    this.s= serial;
-    console.log("giti:  ",serial);
-    this.flagupdate=1;
-
+  updateflag(serial) {
+    this.s = serial;
+    this.flagupdate = 1;
   }
-  updateFromFlag(event){
-console.log("updatefromflag evevt",event);
-this.flagupdate=event;
-console.log(this.flagupdate);
-
+  updateFromFlag(event) {
+    this.flagupdate = event;
   }
-  cancel() {
-    console.log("ertyui"); 
-    this.r.navigate(['/seriousness']);
-  }
-
   filterNameSeria() {
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("public");
@@ -63,7 +52,6 @@ console.log(this.flagupdate);
       }
     }
   }
- 
   filterPartner() {
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("partner");
@@ -81,7 +69,7 @@ console.log(this.flagupdate);
         }
       }
     }
-  } 
+  }
   toolbar(i: number) {
 
     let row = document.getElementById("row" + i);
@@ -109,12 +97,12 @@ console.log(this.flagupdate);
     var div = document.getElementById('alert');
     div.style.visibility = "visible";
     this.currectSeria = s;
-   }
-   ok(messsege) {
+  }
+  ok(messsege) {
     console.log("ok");
-    
-    if ( messsege!= '') {
-      var tt= this.seriousnessService.deleteSeria(this.currectSeria);
+
+    if (messsege != '') {
+      var tt = this.seriousnessService.deleteSeria(this.currectSeria);
       // console.log( tt);
       this.seriousnessService.getAllSeriousness().subscribe(ans => this.seriousnessList = ans);
     }
