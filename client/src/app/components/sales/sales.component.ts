@@ -112,7 +112,6 @@ export class SalesComponent implements OnInit {
   }
 
   update() {
-    // this.updateRawOrPolished();
     if (this.updateSale != undefined) {
       if (this.salesForm.valid) {
        console.log("form",this.updateSale);
@@ -125,41 +124,11 @@ export class SalesComponent implements OnInit {
           }, () => {
             console.log("error");
           });
-       
       }
       else {
         alert("חסרים נתונים");
       }
     }
-
-    // let flag = 0;
-    // if (this.tableContent[0] != undefined) {
-    //   let i = 0;
-    //   this.tableContent.forEach(sale => {
-    //     this.salesForm.controls['publicSerialName'].setValue(this.selectedSerial.id)
-    //     this.salesForm.controls['privateSerialName'].setValue(sale.privateSerial)
-    //     this.salesForm.controls['stoneName'].setValue(sale.stoneName)
-    //     this.salesForm.controls['weight'].setValue(sale.w)
-    //     this.salesForm.controls['pricePerCarat'].setValue(sale.pricePerCarat)
-    //     this.salesForm.controls['isOpen'].setValue('true')
-    //     if (this.salesForm.valid) {
-    //       this.salesServise.addSale(this.salesForm.value)
-    //         .subscribe(a => {
-    //           this.selectedSerial.amountReceived = this.salesForm.controls['weight'].value *
-    //             this.salesForm.controls['pricePerCarat'].value;
-    //           this.seriousnessService.updateSerial(this.selectedSerial)
-    //         });
-    //       i++;
-    //     }
-    //     else {
-    //       alert("חלק מהנתונים לא נכון");
-    //       flag = 1;
-    //     }
-    //   });
-    //   if (!flag)
-    //     this.router.navigate(['sales-form/modal-form', 'מכירה'])
-    //   else;
-    // }
   }
   deleteSale(sale) {
 
@@ -211,13 +180,7 @@ export class SalesComponent implements OnInit {
   rawOrPolishedFunc(sale: Sale): string {
     return sale.rawOrPolished == 'raw' ? 'גלם' : 'מלוטש'
   }
-  updateRawOrPolished(){
-    let a=document.getElementById('1');
-    let b=document.getElementById('2');
-    console.log("a",a,"b",b);
-    
-    
-  }
+  
   toolbar(i: number) {
 
     let row = document.getElementById("row" + i);
