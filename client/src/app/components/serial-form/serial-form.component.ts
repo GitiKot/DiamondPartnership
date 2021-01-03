@@ -53,13 +53,15 @@ export class SerialFormComponent implements OnInit {
         partner: this.updateSerial.partner,
       });
 
-      // let i=0;
+      let i=0;
       this.updateSerial.privateSeria.forEach(s => {
         this.editPrivateSerial(s.namePrivate, s.price);
-        // s.expenses.forEach(ex=>{
-        //   this.editExArrray(i,ex.nameExpenses,ex.price);
-        // });
-        // i++;
+        s.expenses.forEach(ex=>{
+          this.editExArrray(i,ex.nameExpenses,ex.exspensesPrice);
+          console.log("ex.price,ex.nameExpenses",ex.exspensesPrice,ex.nameExpenses);
+          
+        });
+        i++;
       })
 
     }
@@ -176,6 +178,8 @@ export class SerialFormComponent implements OnInit {
     })
   }
   updateExpenses(n: string, p: number): FormGroup {
+    console.log("price",n,p);
+    
     return this.formBuilder.group({
       nameExpenses: n,
       exspensesPrice: p,
@@ -185,7 +189,7 @@ export class SerialFormComponent implements OnInit {
     return this.serialForm.get("privateSeria").get('expenses').get('nameExpenses');
   }
   get exspensesPrice() {
-    return this.serialForm.get("privateSeria").get('expenses').get('exspensesPrice');
+    return this.serialForm.get("privateSeria").get('expenses').get('exspensesPricep');
   }
   addPrivateSerial() {
     console.log('privateSeria:');
