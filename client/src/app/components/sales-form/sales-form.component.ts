@@ -101,7 +101,7 @@ export class SalesFormComponent implements OnInit {
               this.selectedSerial.amountReceived = this.salesForm.controls['weight'].value *
                 this.salesForm.controls['pricePerCarat'].value;
 
-              this.seriousnessService.updateSerial(this.selectedSerial)
+              this.seriousnessService.updateSerial(this.selectedSerial.id,this.selectedSerial)
 
             });
           i++;
