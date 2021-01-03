@@ -90,7 +90,6 @@ export class SalesService {
         rawOrPolished: string,
         isOpen: Boolean,
     ) {
-        console.log("sales service update");
 
         const updatedSale = await this.findSale(id);
         if (date) {
@@ -119,19 +118,15 @@ export class SalesService {
         if (rawOrPolished) {
             updatedSale.rawOrPolished = rawOrPolished;
         }
-        console.log("isopen");
-        console.log(isOpen);
         
         if (isOpen!=null) {
-            console.log("in open");
-            console.log(updatedSale.isOpen);
-            console.log(isOpen);
+           
             
             updatedSale.isOpen = isOpen;
         }
 
         updatedSale.save();
-        console.log("updatesale");
+     
         
         
         return updatedSale;
