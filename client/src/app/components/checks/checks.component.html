@@ -119,7 +119,7 @@
     <table id="salesTable" class="table table-hover">
       <thead>
         <tr class="header">
-          <th>select</th>
+          <td><input type="checkbox" (click)="onRowClick('all')"></td>
           <th>תאריך מכירה</th>
           <th>סך ימים</th>
           <th>תאריך קבלת הצ'ק</th>
@@ -134,7 +134,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let s of OpenSalesList" [class.selectedRow]="rowIsSelected(s.id)" style="cursor: pointer;">
-          <td><input type="checkbox" (click)="onRowClick(s.id)"></td>
+          <td><input id="cbox" type="checkbox" (click)="onRowClick(s.id)"></td>
           <td>{{s.date | date:'dd/MM/yy'}}</td>
           <td>{{s.numOfDate}}</td>
           <td>לעשות פונקציה</td>
@@ -199,9 +199,11 @@
           </div> -->
 
           <div class="md-form mb-4">
-            <select class="browser-default custom-select" mdbInput mdbValidate [formControl]="ReceiptOrInvoice">
+            <select  placeholder="vd" class="browser-default custom-select" mdbInput mdbValidate [formControl]="ReceiptOrInvoice">
               <!-- <select class="form-control" mdbInput mdbValidate [formControl]="ReceiptOrInvoice"> -->
-              <option selected>קבלה</option>
+                <option value="" disabled selected> חשבונית/קבלה </option>
+
+              <option placeholder="sa"  selected>קבלה</option>
               <option value="חשבונית">חשבונית</option>
             </select>
             <mdb-error *ngIf="ReceiptOrInvoice.invalid && (ReceiptOrInvoice.dirty || ReceiptOrInvoice.touched)">
