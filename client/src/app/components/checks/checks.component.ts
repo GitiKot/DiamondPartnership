@@ -101,7 +101,6 @@ export class ChecksComponent implements OnInit {
     var time = (new Date(d)).getTime() - new Date('01/01/1970 02:00:00').getTime();
     time /= (1000 * 60 * 60 * 24);
     let abs = Math.round(time)
-    console.log('time :', abs);
     return abs;
   }
 
@@ -125,26 +124,20 @@ export class ChecksComponent implements OnInit {
         this.checksForm.value.sum = this.calcCheckMoney() / 2;
       else
         this.checksForm.value.sum = this.calcCheckMoney() * serial.partnersPercent / 100;
+        serial.AmountReceivedPartner=this.checksForm.value.sum;
+        console.log("serial: ",serial);
+        
+this.seriousnessService.updateSerial(serial.id,serial)
       this.checksForm.value.date = this.calcCheckDate();
-      console.log("טופס :", this.checksForm.value);
       this.checksService.addChecks(this.checksForm.value).subscribe(c => {
         this.checksList.push(c);
-        console.log("sale.id:",sale.id);
         this.getSelectedRows()
           .forEach(saleChecked => {
-           console.log(saleChecked);
-           
-          
-        }); 
-        console.log("index:",
-         this.OpenSalesList.indexOf(this.getSelectedRows()[0]));
-        this.OpenSalesList = this.OpenSalesList.filter(s => { this.getSelectedRows()
-          .forEach(saleChecked => {
-            s.id!==saleChecked.id
-          
-        }); })
-        console.log(  "sdasd",this.OpenSalesList);
-        
+            let i = this.OpenSalesList.indexOf(saleChecked)
+            if (i > -1) {
+              this.OpenSalesList.splice(i, 1);
+            }
+          });
       })
       this.checksForm.reset();
     } else {
@@ -162,7 +155,6 @@ export class ChecksComponent implements OnInit {
       })
 
       this.checksService.findBySerailName(e.target.value).subscribe(ans => {
-        console.log(ans);
 
         this.checksList = ans;
       })
@@ -212,7 +204,6 @@ export class ChecksComponent implements OnInit {
         (((c as Element) as Input) as CheckboxComponent).checked = true
       })
       // let r=   ( (cbox as Element) as Input);
-      console.log("cbox", cbox);
 
     }
 
