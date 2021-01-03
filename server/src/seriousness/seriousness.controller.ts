@@ -20,7 +20,6 @@ export class SeriousnessController {
 
     @Get(':id')
     getSeriousness(@Param('id') exId: string) {
-        console.log(exId);
         
         return this.seriousnessService.getSingleSeriousness(exId);
     }
@@ -40,6 +39,7 @@ export class SeriousnessController {
         @Body('privateSeria') privateSeria: Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,exspensesPrice:number}>}>,
         
     ) {
+console.log(AmountReceivedPartner);
 
         await this.seriousnessService.updateSeriousness(seId,serialName,
             dateBuy,cost, amountReceived, partnersPercent, AmountReceivedPartner, finishDate ,privateSeria,partner);

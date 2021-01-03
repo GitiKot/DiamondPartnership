@@ -20,7 +20,6 @@ export class ChecksController {
   async findBySerailName(@Param('serialName') seria: string) {
     
     const checks = await this.checksService.findBySerailName(seria);
-    console.log("checks: ",checks);
     
     return checks;
   }

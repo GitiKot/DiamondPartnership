@@ -43,15 +43,10 @@ export class SalesController {
     @Body('rawOrPolished') srawOrPolished: string,
     @Body('isOpen') sisOpen: boolean,
   ) {
-    console.log("uupdate controller");
-    console.log("sisopen:");
-
-    console.log(sisOpen);
-
+   
 
     const sale = await this.salesService.updateSale(sId, sdate, snumOfDate, sinvoiceNumber, spublicSerialName,
       sprivateSerialName, sstoneName, sweight, spricePerCarat, srawOrPolished, sisOpen);
-    console.log("update controller");
     return sale;
     // return this.salesService.updateSale(id, sale);
     // return null;

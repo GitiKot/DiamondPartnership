@@ -74,7 +74,6 @@ export class ChecksService {
         const seriousnessOne =  this.seriousnessModel.findOne({serialName:serialNameIs}).select(['_id']).exec();
     
      const v = (await seriousnessOne)._id;
-     console.log("good nigth", v);
 
         const SaleBySerailName = await this.checkModel.find({publicSerialName:v}).populate('publicSerialName').exec();
       

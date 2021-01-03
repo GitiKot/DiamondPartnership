@@ -103,7 +103,15 @@ export class ChecksComponent implements OnInit {
     let abs = Math.round(time)
     return abs;
   }
+  updateSale(sale: Sale) {
+    sale.isOpen = false;
+    this.salesService.updateSale(sale.id, sale);
+  }
+  updateSerial(serial: Seriousness) {
+    serial.AmountReceivedPartner = this.checksForm.value.sum;
 
+    this.seriousnessService.updateSerial(serial.id, serial)
+  }
   save() {
     alert("האם הנך בטוח שברצונך לשמור  צ'ק זה ? ");
     if (this.checksForm.valid) {
@@ -112,8 +120,8 @@ export class ChecksComponent implements OnInit {
       for (let index = 0; index < this.getSelectedRows().length; index++) {
         this.checksForm.value.IdSales.push(this.getSelectedRows()[index].id)
         sale = this.getSelectedRows()[index];
-        sale.isOpen = false;
-        this.salesService.updateSale(sale.id, sale);
+        //לזכור להחזיר
+        // this.updateSale(sale)
         if (index == 0) {
           this.checksForm.value.publicSerialName = sale.publicSerialName
         }
@@ -124,27 +132,27 @@ export class ChecksComponent implements OnInit {
         this.checksForm.value.sum = this.calcCheckMoney() / 2;
       else
         this.checksForm.value.sum = this.calcCheckMoney() * serial.partnersPercent / 100;
-        serial.AmountReceivedPartner=this.checksForm.value.sum;
-        console.log("serial: ",serial);
-        
-this.seriousnessService.updateSerial(serial.id,serial)
+
+      this.updateSerial(serial);
       this.checksForm.value.date = this.calcCheckDate();
       this.checksService.addChecks(this.checksForm.value).subscribe(c => {
         this.checksList.push(c);
-        this.getSelectedRows()
-          .forEach(saleChecked => {
-            let i = this.OpenSalesList.indexOf(saleChecked)
-            if (i > -1) {
-              this.OpenSalesList.splice(i, 1);
-            }
-          });
+        this.spliceOpenSaleList();
       })
       this.checksForm.reset();
     } else {
       alert("חלק מהנתונים לא נכון")
     }
   }
-
+  spliceOpenSaleList() {
+    this.getSelectedRows()
+      .forEach(saleChecked => {
+        let i = this.OpenSalesList.indexOf(saleChecked)
+        if (i > -1) {
+          this.OpenSalesList.splice(i, 1);
+        }
+      });
+  }
   getSaleBySeria(e) {
     this.OpenSalesList = [];
     this.ClosedSalesList = [];
@@ -193,17 +201,28 @@ this.seriousnessService.updateSerial(serial.id,serial)
     // this.r.navigate(['']);
 
   }
-  ///   -הוא מכיל את הת"ז של המכירות שנבחרו selectedRowIds יש מערך שנקרא   
   onRowClick(id: string) {
     if (id == 'all') {
-      this.OpenSalesList.forEach(s => {
-        this.selectedRowIds.add(s.id)
-      })
-      let cbox = document.querySelectorAll('td input');
-      cbox.forEach(c => {
-        (((c as Element) as Input) as CheckboxComponent).checked = true
-      })
-      // let r=   ( (cbox as Element) as Input);
+      // if ((((document.getElementById('selectAll') as Element) as Input) as CheckboxComponent).checked == true) {
+          //   (((document.getElementById('selectAll') as Element) as Input) as CheckboxComponent).checked = false
+  // } 
+  let cbox = document.querySelectorAll('td input');
+      if(this.OpenSalesList.length == this.getSelectedRows().length){
+        (((document.getElementById('selectAll') as Element) as Input) as CheckboxComponent).checked = false
+        this.OpenSalesList.forEach(s => {
+          this.selectedRowIds.delete(s.id)
+        })
+        
+      }
+      else {
+        this.OpenSalesList.forEach(s => {
+          this.selectedRowIds.add(s.id)
+        })
+        
+        cbox.forEach(c => {
+          (((c as Element) as Input) as CheckboxComponent).checked = true
+        })
+      }
 
     }
 
@@ -214,11 +233,9 @@ this.seriousnessService.updateSerial(serial.id,serial)
       this.selectedRowIds.add(id);
     }
   }
-  //האם הת"ז הזו בחורה?
   rowIsSelected(id: string) {
     return this.selectedRowIds.has(id);
   }
-  // מחזיר מערך עם  המכירות הפתוחות 
   getSelectedRows() {
     return this.OpenSalesList.filter(x => this.selectedRowIds.has(x.id));
   }
