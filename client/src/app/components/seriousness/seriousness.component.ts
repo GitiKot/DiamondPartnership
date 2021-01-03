@@ -24,10 +24,20 @@ seriousnessList:Array<Seriousness>
     this.seriousnessService.getAllSeriousness().subscribe(ans => {this.seriousnessList = ans});
 
   }
+  Uflag(){
+    this.s=undefined;
+    this.flagupdate=1;
+  }
   updateflag(serial){
     this.s= serial;
     console.log("giti:  ",serial);
     this.flagupdate=1;
+
+  }
+  updateFromFlag(event){
+console.log("updatefromflag evevt",event);
+this.flagupdate=event;
+console.log(this.flagupdate);
 
   }
   cancel() {

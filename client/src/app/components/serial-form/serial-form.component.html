@@ -105,13 +105,15 @@
                         סריות פרטיות </button>
                     <br>
                     <div class="modal-footer d-flex">
-                        <button type="button" mdbBtn color="blue" rounded="true" data-toggle="modal"
+                        <button *ngIf="!(updateSerial)" type="button" mdbBtn color="blue" rounded="true" data-toggle="modal"
                             data-target="#basicExample" (click)="save()" mdbWavesEffect id="newexpenses">
                             שמירה </button>
-
+                            <button *ngIf="updateSerial" type="button" mdbBtn color="blue" rounded="true" data-toggle="modal"
+                            data-target="#basicExample" (click)="update()" mdbWavesEffect id="newexpenses">
+                            שמירה </button>
                         <router-outlet></router-outlet>
                         <button type="button" mdbBtn color="blue" rounded="true" data-toggle="modal"
-                            data-target="#basicExample" (click)="cancelex()" mdbWavesEffect id="newexpenses">
+                            data-target="#basicExample" (click)="close()" mdbWavesEffect id="newexpenses">
                             ביטול </button>
                     </div>
                 </div>
@@ -209,6 +211,7 @@
                     <button type="button" class="btn btn-primary" data-dismiss="modal"
                         (click)="cancelPrivateSerial()">ביטול</button>
                     <button class="btn btn-primary" (click)="savePrivateSerial()">שמירה</button>
+                    <!-- <button class="btn btn-primary" (click)="updatePrivateSerial()">שמירה</button> -->
                 </div>
             </div>
         </div>

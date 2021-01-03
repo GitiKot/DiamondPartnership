@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalModule } from 'angular-bootstrap-md';
@@ -22,6 +22,7 @@ export class SerialFormComponent implements OnInit {
   @ViewChild('frame1') frame1: ModalDirective;
   @ViewChild('frame2') frame2: ModalDirective;
   @Input() updateSerial: Seriousness;
+  @Output() updateFlag = new EventEmitter<number>();
   totalPrice = [];
   selectedPartner: Partner;
   constructor(private changeDetectorRef: ChangeDetectorRef, private r: Router, private partnerService: PartnerService, private seriousnessService: seriousnessService, private formBuilder: FormBuilder) { }
@@ -102,16 +103,34 @@ export class SerialFormComponent implements OnInit {
         console.log("error");
       })
     }
-
-
     else {
       alert("חסרים נתונים")
     }
+    this.updateFlag.emit(1);
+    this.r.navigate(['']);
     // this.serialForm.reset();
     // this.r.navigate(['./seriousness'])
   }
+  update(){
+    this.updateFlag.emit(1);
+    this.r.navigate(['']);
+  }
+  // close() {
+  //   this.r.navigate(['seriousness']);
+  // }
   close() {
-    this.r.navigate(['seriousness']);
+
+    if (this.updateSerial != undefined) {
+      this.frame2.hide();
+      this.frame1.hide();
+    }
+    else {
+      
+    }
+    console.log("close");
+    this.updateFlag.emit(0);
+    console.log(this.updateFlag);
+
   }
   cancelex() {
     this.privateSeria.reset();
@@ -149,7 +168,6 @@ export class SerialFormComponent implements OnInit {
   expenses(index: number): FormArray {
     return this.privateSeria.at(index).get("expenses") as FormArray
   }
-
   //privateSeria:Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,price:number}>}>;
 
   get namePrivate() {
