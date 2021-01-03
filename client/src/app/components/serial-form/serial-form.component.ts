@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ModalModule } from 'angular-bootstrap-md';
+import { CheckboxComponent, ModalModule } from 'angular-bootstrap-md';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { from } from 'rxjs';
 import { Partner } from 'src/app/data/partner';
@@ -63,7 +63,22 @@ export class SerialFormComponent implements OnInit {
         });
         i++;
       })
-
+      if(this.updateSerial.finishDate){
+         let cbox = document.getElementById('form3');
+       (((cbox as Element) as Input) as CheckboxComponent).checked = true;
+      }
+ 
+    }
+  }
+  updateFinishDate(){
+    let cbox = document.getElementById('form3');
+    // (((cbox as Element) as Input) as CheckboxComponent).checked = true
+    if(this.updateSerial!=undefined){
+      if((((cbox as Element) as Input) as CheckboxComponent).checked==false){
+        this.updateSerial.finishDate=null;
+        console.log("finishDate",this.serialForm.value.finishDate);
+        
+      }
     }
   }
   // ngAfterContentChecked() {

@@ -28,8 +28,11 @@
                         </div>
                         <div class="col-4 col-sm-6 col-example">
                             <div class="md-form mb-5">
-                                <input type="date" id="form34" class="form-control" mdbInput mdbValidate
-                                    [formControl]="dateBuy">
+                                <input *ngIf="!(updateSerial)" type="date" id="form34" class="form-control" mdbInput
+                                    mdbValidate [formControl]="dateBuy">
+                                <input *ngIf="updateSerial" type="date" id="form34" class="form-control" mdbInput
+                                    mdbValidate [formControl]="dateBuy"
+                                    [ngModel]="updateSerial.dateBuy | date:'yyyy-MM-dd'">
                                 <label for="form34"> תאריך קניה</label>
                                 <mdb-error *ngIf="dateBuy.invalid && (dateBuy.dirty || dateBuy.touched)">
                                 </mdb-error>
@@ -52,7 +55,7 @@
                         </div>
                         <div class="col-8 col-sm-6 col-example">
                             <div class="md-form mb-5">
-                                <input class="form-control" type="number" min="0"mdbInput mdbValidate
+                                <input class="form-control" type="number" min="0" mdbInput mdbValidate
                                     [formControl]="partnersPercent">
                                 <label> אחוזים לשותף </label>
                                 <mdb-error
@@ -67,14 +70,17 @@
                     <div class="row">
                         <div class="col-8 col-sm-6 col-example">
                             <div class="md-form mb-8 ">
-                                <input type="checkbox" id="form3" #closeSerial mdbInput mdbValidate>
+                                <input (click)="updateFinishDate()" type="checkbox" id="form3" #closeSerial mdbInput mdbValidate>
                                 <label for="form3"> סריה סגורה </label>
                             </div>
                         </div>
                         <div class="col-8 col-sm-6 col-example" *ngIf="closeSerial.checked">
                             <div class="md-form mb-8 ">
-                                <input type="date" id="form3" class="form-control" mdbInput mdbValidate
-                                    [formControl]="finishDate">
+                                <input *ngIf="!(updateSerial)" type="date" id="form34" class="form-control" mdbInput
+                                    mdbValidate [formControl]="finishDate">
+                                <input *ngIf="updateSerial" type="date" id="form34" class="form-control" mdbInput
+                                    mdbValidate [formControl]="finishDate"
+                                    [ngModel]="updateSerial.finishDate | date:'yyyy-MM-dd'">
                                 <label for="form3"> תאריך סגירת סריה </label>
                             </div>
                         </div>
@@ -86,6 +92,8 @@
                                 <select id="selectPart" [ngModelOptions]="{standalone: true}"
                                     [(ngModel)]="selectedPartner" placeholder="בחר"
                                     class="browser-default custom-select" mdbInput mdbValidate>
+                                    <option *ngIf="updateSerial" [value]="updateSerial.partner.id" (change)="pp()">
+                                        {{updateSerial.partner.name}}</option>
                                     <option disabled>--בחר--</option>
 
                                     <option *ngFor="let p of partnerList" [value]="p.id" (change)="pp()">
@@ -105,11 +113,13 @@
                         סריות פרטיות </button>
                     <br>
                     <div class="modal-footer d-flex">
-                        <button *ngIf="!(updateSerial)" type="button" mdbBtn color="blue" rounded="true" data-toggle="modal"
-                            data-target="#basicExample" (click)="save()" mdbWavesEffect id="newexpenses">
+                        <button *ngIf="!(updateSerial)" type="button" mdbBtn color="blue" rounded="true"
+                            data-toggle="modal" data-target="#basicExample" (click)="save()" mdbWavesEffect
+                            id="newexpenses">
                             שמירה </button>
-                            <button *ngIf="updateSerial" type="button" mdbBtn color="blue" rounded="true" data-toggle="modal"
-                            data-target="#basicExample" (click)="update()" mdbWavesEffect id="newexpenses">
+                        <button *ngIf="updateSerial" type="button" mdbBtn color="blue" rounded="true"
+                            data-toggle="modal" data-target="#basicExample" (click)="update()" mdbWavesEffect
+                            id="newexpenses">
                             שמירה </button>
                         <router-outlet></router-outlet>
                         <button type="button" mdbBtn color="blue" rounded="true" data-toggle="modal"
@@ -123,7 +133,7 @@
     <div mdbModal #frame2="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog  modal-dialog-scrollable modal-l modal-side modal-top-right" role="document">
-            <div class="modal-content"  >
+            <div class="modal-content">
 
                 <div class="modal-header text-center">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame2.hide()">
@@ -133,11 +143,12 @@
                 </div>
                 <div class="modal-body mx-3">
                     <table class="table">
-                       <div>
+                        <div>
                             <tr>
                                 <th>שם סריה פרטית </th>
                                 <th>מחיר</th>
-                                <th><i class="fa fa-plus"title="הוספה" (click)="addPrivateSerial()" title="הוספת סריה" aria-hidden="true"></i></th>
+                                <th><i class="fa fa-plus" title="הוספה" (click)="addPrivateSerial()" title="הוספת סריה"
+                                        aria-hidden="true"></i></th>
                             </tr>
                             <div formArrayName="privateSeria">
                                 <div class="form-group" *ngFor="let ps of privateSeria.controls; let i=index">
@@ -149,12 +160,12 @@
                                                     formControlName="namePrivate" placeholder="שם סריה">
                                             </td>
                                             <td>
-                                                <input mdbInput class="form-control inputS" size="sm" min="0" type="number"
-                                                    formControlName="price" placeholder="מחיר סריה">
+                                                <input mdbInput class="form-control inputS" size="sm" min="0"
+                                                    type="number" formControlName="price" placeholder="מחיר סריה">
                                             </td>
                                             <td scope="role">
                                                 <input class="form-control inputS" type="text" size="sm"
-                                                    (click)="test.toggle()"title="פרטי הוצאה" placeholder=" לחץ ">
+                                                    (click)="test.toggle()" title="פרטי הוצאה" placeholder=" לחץ ">
                                                 <div mdbCollapse #test="bs-collapse">
                                                     <table class="table-hover ">
                                                         <tbody>
@@ -162,7 +173,8 @@
                                                                 <tr>
                                                                     <th>הוצאה </th><br><br><br>
                                                                     <th>מחיר </th>
-                                                                    <th><i title="הוספה" class="fa fa-plus" (click)="addExArrray(i)"
+                                                                    <th><i title="הוספה" class="fa fa-plus"
+                                                                            (click)="addExArrray(i)"
                                                                             aria-hidden="true"></i></th>
                                                                 </tr>
                                                                 <div
@@ -182,7 +194,10 @@
                                                                                     #price placeholder="מחיר"
                                                                                     (input)="totalPrice[i] = price.value + totalPrice[i]">
                                                                             </td>
-                                                                            <td><i title="מחיקה" (click)="removeExpPrivate(i,ip)"class="fa fa-times" aria-hidden="false"></i>
+                                                                            <td><i title="מחיקה"
+                                                                                    (click)="removeExpPrivate(i,ip)"
+                                                                                    class="fa fa-times"
+                                                                                    aria-hidden="false"></i>
 
                                                                             </td>
                                                                         </tr>
@@ -193,7 +208,8 @@
                                                     </table>
                                                 </div>
                                             </td>
-                                            <td><i title="מחיקה" (click)="removePrivate(i)"class="fa fa-times" aria-hidden="false"></i>
+                                            <td><i title="מחיקה" (click)="removePrivate(i)" class="fa fa-times"
+                                                    aria-hidden="false"></i>
 
                                             </td>
 
