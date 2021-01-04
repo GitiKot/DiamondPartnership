@@ -99,6 +99,9 @@ export class SerialFormComponent implements OnInit {
     }
   }
   save() {
+    
+    console.log("this",this.selectedPartner);
+    
     this.serialForm.get('partner').setValue(this.selectedPartner)
     if (this.serialForm.valid&&this.serialForm.value.partner) {
       this.seriousnessService.addSeria(this.serialForm.value).subscribe(sss => {

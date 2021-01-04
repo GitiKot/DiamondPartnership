@@ -70,7 +70,8 @@
                     <div class="row">
                         <div class="col-8 col-sm-6 col-example">
                             <div class="md-form mb-8 ">
-                                <input (click)="updateFinishDate()" type="checkbox" id="form3" #closeSerial mdbInput mdbValidate>
+                                <input (click)="updateFinishDate()" type="checkbox" id="form3" #closeSerial mdbInput
+                                    mdbValidate>
                                 <label for="form3"> סריה סגורה </label>
                             </div>
                         </div>
@@ -88,19 +89,35 @@
 
                     <div class="row">
                         <div class="col-4 col-sm-6 col-example">
-                            <div class="md-form mb-5">
+                            <!-- <div class="md-form mb-5">
                                 <select id="selectPart" [ngModelOptions]="{standalone: true}"
                                     [(ngModel)]="selectedPartner" placeholder="בחר"
                                     class="browser-default custom-select" mdbInput mdbValidate>
-                                    <option *ngIf="updateSerial" value="{{updateSerial.partner.name}}" [value]="updateSerial.partner.id" (change)="pp()">
+                                    <option *ngIf="updateSerial" value="{{updateSerial.partner.name}}" 
+                                    [value]="updateSerial.partner.id" (change)="pp()">
                                         {{updateSerial.partner.name}}</option>
                                     <option disabled>--בחר--</option>
-
-                                    <option *ngFor="let p of partnerList" [value]="p.id" (change)="pp()">
+                                    <option *ngFor="let p of partnerList" [ngValue]="p.id" (change)="pp()">
                                         {{p.name}}</option>
                                 </select>
                                 <label> בחר שותף</label>
 
+                                <mdb-error *ngIf="partner.invalid && (partner.dirty || partner.touched)">
+                                </mdb-error>
+                                <mdb-success *ngIf="partner.valid && (partner.dirty ||  partner.touched)">
+                                </mdb-success>
+                            </div> -->
+                            <div class="md-form mb-5">  <label> בחר שותף</label>
+                                <input type="text" id="selectPart" name="example" list="exampleList"
+                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedPartner"
+                                    placeholder="בחר">
+                                <datalist id="exampleList">
+                                    <option *ngIf="updateSerial" selected="selected" value="{{updateSerial.partner.name}}"
+                                        [ngValue]="updateSerial.partner.id" (change)="pp()">
+                                        {{updateSerial.partner.name}}</option>
+                                    <option *ngFor="let p of partnerList" [value]="p.id" (change)="pp()">
+                                        {{p.name}}</option>
+                                </datalist>
                                 <mdb-error *ngIf="partner.invalid && (partner.dirty || partner.touched)">
                                 </mdb-error>
                                 <mdb-success *ngIf="partner.valid && (partner.dirty ||  partner.touched)">
@@ -118,8 +135,7 @@
                             id="newexpenses">
                             שמירה </button>
                         <button *ngIf="updateSerial" type="button" mdbBtn color="blue" rounded="true"
-                            data-toggle="modal" data-target="#basicExample" (click)="update()" mdbWavesEffect
-                            >
+                            data-toggle="modal" data-target="#basicExample" (click)="update()" mdbWavesEffect>
                             שמירה </button>
                         <router-outlet></router-outlet>
                         <button type="button" mdbBtn color="blue" rounded="true" data-toggle="modal"
