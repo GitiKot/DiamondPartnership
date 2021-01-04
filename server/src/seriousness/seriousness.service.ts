@@ -82,8 +82,8 @@ export class seriousnessService {
         partner: ObjectId
 
     ) {
-console.log("AmountReceivedPartner:",AmountReceivedPartner);
-
+        console.log("AmountReceivedPartner:",AmountReceivedPartner);
+       
         const updatedSeriousness = await this.findSeriousness(id);
         if (serialName) {
             updatedSeriousness.serialName = serialName;
@@ -102,13 +102,12 @@ console.log("AmountReceivedPartner:",AmountReceivedPartner);
         if (AmountReceivedPartner) {
             updatedSeriousness.AmountReceivedPartner += AmountReceivedPartner;
         }
-        if (finishDate) {
-            updatedSeriousness.finishDate = finishDate;
-        }
+        updatedSeriousness.finishDate = finishDate;
         if (privateSeria) {
             updatedSeriousness.privateSeria = privateSeria;
         }
         if (partner) {
+            updatedSeriousness.partner = String(partner);
         }
         updatedSeriousness.save();
     }

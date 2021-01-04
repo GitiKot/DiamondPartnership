@@ -73,10 +73,16 @@ export class SerialFormComponent implements OnInit {
   updateFinishDate(){
     let cbox = document.getElementById('form3');
     // (((cbox as Element) as Input) as CheckboxComponent).checked = true
+    console.log("cbox .checked",(((cbox as Element) as Input) as CheckboxComponent).checked);
+    
     if(this.updateSerial!=undefined){
-      if((((cbox as Element) as Input) as CheckboxComponent).checked==false){
+      if(this.updateSerial.finishDate!=undefined){
+         if((((cbox as Element) as Input) as CheckboxComponent).checked==false){
         this.updateSerial.finishDate=null;
+       this.serialForm.value.finishDate=null;
         console.log("finishDate",this.serialForm.value.finishDate);
+        console.log("e",this.updateSerial.finishDate);
+      } 
         
       }
     }
@@ -105,9 +111,7 @@ export class SerialFormComponent implements OnInit {
   }
   save() {
     this.serialForm.get('partner').setValue(this.selectedPartner)
-    // console.log(this.privateSeria.value);
     console.log(this.serialForm.value);
-
 
     if (this.serialForm.valid) {
       this.seriousnessService.addSeria(this.serialForm.value).subscribe(sss => {
@@ -127,8 +131,10 @@ export class SerialFormComponent implements OnInit {
   update(){
 
     this.serialForm.get('partner').setValue(this.selectedPartner)
-    console.log(this.serialForm.value);
-
+    let cbox = document.getElementById('form3');
+    if((((cbox as Element) as Input) as CheckboxComponent).checked==false){
+     this.serialForm.value.finishDate=null;
+    console.log(this.serialForm.value);}
     if (this.serialForm.valid) {
       this.seriousnessService.updateSerial(this.updateSerial.id,this.serialForm.value).subscribe(() => {
         this.r.navigate(['seriousness/serial-form/modal-form', 'סריה'])

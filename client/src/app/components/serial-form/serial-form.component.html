@@ -92,7 +92,7 @@
                                 <select id="selectPart" [ngModelOptions]="{standalone: true}"
                                     [(ngModel)]="selectedPartner" placeholder="בחר"
                                     class="browser-default custom-select" mdbInput mdbValidate>
-                                    <option *ngIf="updateSerial" [value]="updateSerial.partner.id" (change)="pp()">
+                                    <option *ngIf="updateSerial" value="{{updateSerial.partner.name}}" [value]="updateSerial.partner.id" (change)="pp()">
                                         {{updateSerial.partner.name}}</option>
                                     <option disabled>--בחר--</option>
 
@@ -119,7 +119,7 @@
                             שמירה </button>
                         <button *ngIf="updateSerial" type="button" mdbBtn color="blue" rounded="true"
                             data-toggle="modal" data-target="#basicExample" (click)="update()" mdbWavesEffect
-                            id="newexpenses">
+                            >
                             שמירה </button>
                         <router-outlet></router-outlet>
                         <button type="button" mdbBtn color="blue" rounded="true" data-toggle="modal"
