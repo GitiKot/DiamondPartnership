@@ -17,8 +17,7 @@ export class SerialFormComponent implements OnInit {
   serialForm: FormGroup;
   partnerList: Array<Partner>;
   totalPrice = [];
-  selectedPartner: Partner;
-PartnerId;
+  partnerId;
   @ViewChild('frame1') frame1: ModalDirective;
   @ViewChild('frame2') frame2: ModalDirective;
   @Input() updateSerial: Seriousness;
@@ -62,7 +61,6 @@ PartnerId;
         let cbox = document.getElementById('form3');
         (((cbox as Element) as Input) as CheckboxComponent).checked = true;
       }
-
     }
   }
   updateFinishDate() {
@@ -98,25 +96,20 @@ PartnerId;
     }
   }
   selectedPartnerId(event) {
-   
-     let a=event.target;
     let p = event.target.value;
-    console.log("p",p);
     let idp = document.getElementById(p);
-    console.log("idp,id", idp,idp.id);
-    let att = idp.getAttribute('data-value');
-    console.log("att",att);
-    // let t = event.target.getAttribute('data-value');
-    this.PartnerId=att;
-    
-    
+    if (idp) {
+      console.log("idp,id", idp, idp.id);
+      let att = idp.getAttribute('data-value');
+      console.log("att", att);
+      this.partnerId = att;
+    }
+    else {
+      alert("עליך לבחור שם שותף שקיים")
+    }
   }
-
   save() {
-
-    console.log("this", this.selectedPartner);
-// selectedPartner
-    this.serialForm.get('partner').setValue(this.PartnerId)
+    this.serialForm.get('partner').setValue(this.partnerId)
     if (this.serialForm.valid && this.serialForm.value.partner) {
       this.seriousnessService.addSeria(this.serialForm.value).subscribe(sss => {
         this.r.navigate(['seriousness/serial-form/modal-form', 'סריה'])
@@ -125,14 +118,12 @@ PartnerId;
       })
     }
     else {
-      alert("חסרים נתונים")
+        alert("חסרים נתונים")
     }
     this.updateFlag.emit(1);
-    this.r.navigate(['']);
   }
   update() {
-
-    this.serialForm.get('partner').setValue(this.PartnerId)
+    this.serialForm.get('partner').setValue(this.partnerId)
     let cbox = document.getElementById('form3');
     if ((((cbox as Element) as Input) as CheckboxComponent).checked == false) {
       this.serialForm.value.finishDate = null;
@@ -151,10 +142,9 @@ PartnerId;
       })
     }
     else {
-      alert("חסרים נתונים")
+        alert("חסרים נתונים")
     }
     this.updateFlag.emit(1);
-    this.r.navigate(['']);
   }
   close() {
     if (this.updateSerial != undefined) {
