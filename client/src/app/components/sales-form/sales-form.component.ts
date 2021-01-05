@@ -97,7 +97,6 @@ export class SalesFormComponent implements OnInit {
       // console.log(this.tableContent);
       let i = 0;
       this.tableContent.forEach(sale => {
-
         // this.salesForm.controls['publicSerialName'].setValue(sale.publicSerial);
         this.salesForm.controls['publicSerialName'].setValue(this.serialId)
 

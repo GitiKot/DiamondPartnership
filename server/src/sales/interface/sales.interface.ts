@@ -5,7 +5,8 @@ export interface Partner extends Document {
     date: Date;
     numOfDate:number;
     invoiceNumber: Number;
-    publicSerialName: {type:ObjectId,ref:'Seriousness'};
+    // publicSerialName: {type:ObjectId,ref:'Seriousness'};
+    publicSerialName:ObjectId;
     privateSerialName: Number;
     stoneName: string;
     weight: Number;

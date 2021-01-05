@@ -36,17 +36,10 @@ export class SalesService {
   }
 
  
-  deleteSale(s: Sale) {
+  deleteSale(s: Sale) :Observable<Sale>{
     var ttt = `${this.salesUrl}/${s.id}`;
 
-    return this.http.delete<Sale>(ttt, this.options)
-      .subscribe((s: Sale) => {
-        console.log(s, "suecces");
-      }, () => {
-        console.log("error");
-      }
-      );
-
+    return this.http.delete<Sale>(ttt, this.options);
   }
 }
 
