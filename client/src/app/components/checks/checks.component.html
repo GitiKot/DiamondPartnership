@@ -15,6 +15,9 @@
     <input type="text" id="publicSerialName"(keyup.enter)="getSaleBySeria($event)" class="form-control form-control-sm ml-3 " placeholder="סריה כללית"
       title="חיפוש לפי שם סריה כללית">
   </div>
+  <button class="btn" (click)="test.toggle()" ><i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+  </button>
+  <div  mdbCollapse #test="bs-collapse">
   <table id="checksTable" class="table table-hover">
     <!--mdbTable class="z-depth-1"id="myTable" -->
     <tr class="header">
@@ -46,8 +49,9 @@
             data-toggle="modal" data-target="#modalCart" title="פרטי מכירות">+</button></td>
       </tr>
 
-      <!-- modal -->
-      <div mdbModal #framec="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
+    </tbody>
+  </table></div>
+  <div mdbModal #framec="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-side modal-top-right" role="document">
           <div class="modal-content">
@@ -58,7 +62,6 @@
               </button>
             </div>
 
-            <!--Body-->
             <div class="modal-body">
               <table class="table table-hover">
                 <thead class="header">
@@ -73,7 +76,7 @@
                     <th>סך אחוזים לשותף</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody *ngIf="checksList">
                   <tr *ngFor="let s of getSalesFromId([indexC]);let i=index">
                     <td>{{s.id}}</td>
                     <td>{{s.date| date:'dd/MM/yy'}}</td>
@@ -95,9 +98,6 @@
           </div>
         </div>
       </div>
-    </tbody>
-  </table>
-
   <div id="alert" class="alert alert-success">
     <strong> שים לב </strong>בקשת למחוק צ'ק<button type="button" class="btn btn-outline-primary"
       (click)="ok('ok')">אישור</button>
@@ -115,7 +115,7 @@
   <input type="text" id="private" class="form-control form-control-sm ml-3 " (keyup)="searchPrivate()"
     placeholder="חיפוש לפי שם סריה פרטית"></div>
   
-  <div  class="container">
+  <div  class="container" >
     <table id="salesTable" class="table table-hover">
       <thead>
         <tr class="header">
@@ -129,6 +129,7 @@
           <th>משקל</th>
           <th>מחיר לקרט</th>
           <th>סה"כ</th>
+          <th>לשותף</th>
           <th>גלם/מלוטש</th>
         </tr>
       </thead>
@@ -144,6 +145,8 @@
           <td>{{s.weight}}</td>
           <td>{{s.pricePerCarat | currency:"USD":true}}</td>
           <td> {{s.weight*s.pricePerCarat | currency:"USD":true}}</td>
+          <td *ngIf="getSeria().cost>=getSeria().AmountReceivedPartner"> {{s.weight*s.pricePerCarat*getSeria().partnersPercent/100 | currency:"USD":true}}</td>
+          <td *ngIf="getSeria().AmountReceivedPartner>getSeria().cost"> {{s.weight*s.pricePerCarat/2 | currency:"USD":true}}</td>
           <td>{{s.rawOrPolished}}</td>
           <td *ngIf="s.admin==false" class="row-right"></td>
         </tr>
@@ -157,11 +160,10 @@
   <div id="row">
     <span>סה"כ מכירות: </span>&nbsp;<input class="input" mdbInput mdbValidate disabled
       placeholder="{{OpenSalesList.length+ClosedSalesList.length}}">
-    <span>צ'קים סגורים: </span>&nbsp;<input class="input" mdbInput mdbValidate disabled placeholder="{{checksList.length}}">
+    <span>צ'קים סגורים: </span>&nbsp;<input *ngIf="checksList" class="input" mdbInput mdbValidate disabled placeholder="{{checksList.length}}">
     <span>סה"כ מכירות פתוחות: </span><input class="input" mdbInput mdbValidate disabled placeholder="{{OpenSalesList.length}}">
   </div>
 
-  <!-- checks modal -->
 
   <div mdbModal #framen="mdbModal" class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel" aria-hidden="true">
@@ -176,8 +178,12 @@
           </button>
         </div>
         <div class="modal-body mx-3">
-          
           <div class="md-form mb-5">
+            <input type="checkbox" id="cb" class="form-control" mdbInput mdbValidate (click)="until()">
+            <label for="cb">עד לקוסט ?</label>
+           
+          </div>
+          <div *ngIf="untilcost" class="md-form mb-5">
             <input type="number" min="0" id="form32" class="form-control" mdbInput mdbValidate [formControl]="numCheck">
             <label for="form32">מספר צ'ק</label>
             <mdb-error *ngIf="numCheck.invalid && (numCheck.dirty || numCheck.touched)">
@@ -185,20 +191,7 @@
             <mdb-success *ngIf="numCheck.valid && (numCheck.dirty || numCheck.touched)">
             </mdb-success>
           </div>
-
-          <!-- <div class="md-form mb-4">
-            <input *ngIf="updateCheck" type="date" id="form31" class="form-control" mdbInput mdbValidate
-              [formControl]="date" [ngModel]="updateCheck.date | date:'yyyy-MM-dd'">
-            <input *ngIf="!(updateCheck)" type="date" id="form31" class="form-control" mdbInput mdbValidate
-              [formControl]="date">
-            <label for="form31">תאריך</label>
-            <mdb-error *ngIf="date.invalid && (date.dirty || date.touched)">
-            </mdb-error>
-            <mdb-success *ngIf="date.valid && (date.dirty || date.touched)">
-            </mdb-success>
-          </div> -->
-
-          <div class="md-form mb-4">
+          <div  *ngIf="untilcost" class="md-form mb-4">
             <select  placeholder="vd" class="browser-default custom-select" mdbInput mdbValidate [formControl]="ReceiptOrInvoice">
               <!-- <select class="form-control" mdbInput mdbValidate [formControl]="ReceiptOrInvoice"> -->
                 <option value="" disabled selected> חשבונית/קבלה </option>
@@ -224,69 +217,3 @@
   </div>
 
 </form>
-
-
-
-
-
-
-
-
-
-
-
-<!-- modal -->
-
-<!-- <div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
-  aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">מלא את הפרטים עבור הוצאה חדשה</h5>
-
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true" (click)="frame.hide()">&times;</span>
-        </button>
-      </div>
-
-      <div class="modal-body mx-3">
-
-        <div class="md-form mb-5">
-          <input type="text" id="form32" class="form-control" mdbInput mdbValidate [formControl]="numCheck">
-          <label for="form32">מספר צ'ק</label>
-          <mdb-error *ngIf="numCheck.invalid && (numCheck.dirty || numCheck.touched)">
-          </mdb-error>
-          <mdb-success *ngIf="numCheck.valid && (numCheck.dirty || numCheck.touched)">
-          </mdb-success>
-        </div>
-
-        <div class="md-form mb-5">
-          <input type="date" id="form31" class="form-control" mdbInput mdbValidate [formControl]="date">
-          <label for="form31">תאריך</label>
-          <mdb-error *ngIf="date.invalid && (date.dirty || date.touched)">
-          </mdb-error>
-          <mdb-success *ngIf="date.valid && (date.dirty || date.touched)">
-          </mdb-success>
-        </div>
-
-        <div class="md-form mb-5">
-          <select class="form-control" mdbInput mdbValidate [formControl]="ReceiptOrInvoice">
-            <option selected>קבלה</option>
-            <option value="חשבונית">חשבונית</option>
-          </select>
-          <mdb-error *ngIf="ReceiptOrInvoice.invalid && (ReceiptOrInvoice.dirty || ReceiptOrInvoice.touched)">
-          </mdb-error>
-          <mdb-success *ngIf="ReceiptOrInvoice.valid && (ReceiptOrInvoice.dirty || ReceiptOrInvoice.touched)">
-          </mdb-success>
-        </div>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="frame.hide()">ביטול</button>
-        <button *ngIf="!(updateCheck)" type="button" class="btn btn-primary">שמירה</button>
-        <button *ngIf="updateCheck" class="btn btn-primary" (click)=update() (click)="close()">שמירה</button>
-      </div>
-    </div>
-  </div>
-</div> -->

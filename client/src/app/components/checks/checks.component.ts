@@ -16,8 +16,9 @@ import { CheckboxComponent } from 'angular-bootstrap-md';
 })
 export class ChecksComponent implements OnInit {
   @ViewChild('framen') public showModalOnClick: ModalDirective;
-
   checksForm: FormGroup;
+  untilcost = false
+
   checksList: Array<Checks>;
   OpenSalesList: Array<Sale>;
   ClosedSalesList: Array<Sale>;
@@ -65,7 +66,20 @@ export class ChecksComponent implements OnInit {
       });
     }
   }
+  until() {
+    if (this.untilcost)
+      this.untilcost = false;
+    else this.untilcost = true;
+    let cost = this.getSeria().cost;
+    let sumSale;
+    this.getSelectedRows().forEach(
+      sale => {
+        sumSale = <number>sale.pricePerCarat * <number>sale.weight;
+        if (sumSale <= cost) { }
+      }
+    )
 
+  }
   calcCheckDate(): Date {
     let finalDate: Date;
     let paymentDate: Date;
@@ -87,11 +101,18 @@ export class ChecksComponent implements OnInit {
     finalDate.setDate(finalDate.getDate() + totalSumDate)
     return finalDate;
   }
+  getSeria() {
+    let serial: Seriousness, saleOne;
 
+    saleOne = <unknown>this.OpenSalesList[0].publicSerialName;
+    serial = <Seriousness>saleOne;
+    return serial;
+  }
   calcCheckMoney(): number {
     let sum = 0;
     this.getSelectedRows().forEach(s => {
-      sum += <number>s.pricePerCarat * <number>s.weight;
+      if (this.getSeria().cost <= this.getSeria().amountReceived)
+        sum += <number>s.pricePerCarat * <number>s.weight * this.getSeria().partnersPercent / 100;
     })
     return sum;
   }
@@ -115,7 +136,7 @@ export class ChecksComponent implements OnInit {
   save() {
     alert("האם הנך בטוח שברצונך לשמור  צ'ק זה ? ");
     if (this.checksForm.valid) {
-      let serial: Seriousness, saleOne;;
+
       let sale: Sale;
       for (let index = 0; index < this.getSelectedRows().length; index++) {
         this.checksForm.value.IdSales.push(this.getSelectedRows()[index].id)
@@ -126,14 +147,14 @@ export class ChecksComponent implements OnInit {
           this.checksForm.value.publicSerialName = sale.publicSerialName
         }
       }
-      saleOne = <unknown>this.getSelectedRows()[0].publicSerialName;
-      serial = <Seriousness>saleOne;
-      if (serial.amountReceived > serial.cost)
+      // saleOne = <unknown>this.getSelectedRows()[0].publicSerialName;
+      // serial = <Seriousness>saleOne;
+      if (this.getSeria().amountReceived > this.getSeria().cost)
         this.checksForm.value.sum = this.calcCheckMoney() / 2;
       else
-        this.checksForm.value.sum = this.calcCheckMoney() * serial.partnersPercent / 100;
+        this.checksForm.value.sum = this.calcCheckMoney() * this.getSeria().partnersPercent / 100;
 
-      this.updateSerial(serial);
+      this.updateSerial(this.getSeria());
       this.checksForm.value.date = this.calcCheckDate();
       this.checksService.addChecks(this.checksForm.value).subscribe(c => {
         this.checksList.push(c);
@@ -204,21 +225,21 @@ export class ChecksComponent implements OnInit {
   onRowClick(id: string) {
     if (id == 'all') {
       // if ((((document.getElementById('selectAll') as Element) as Input) as CheckboxComponent).checked == true) {
-          //   (((document.getElementById('selectAll') as Element) as Input) as CheckboxComponent).checked = false
-  // } 
-  let cbox = document.querySelectorAll('td input');
-      if(this.OpenSalesList.length == this.getSelectedRows().length){
+      //   (((document.getElementById('selectAll') as Element) as Input) as CheckboxComponent).checked = false
+      // } 
+      let cbox = document.querySelectorAll('td input');
+      if (this.OpenSalesList.length == this.getSelectedRows().length) {
         (((document.getElementById('selectAll') as Element) as Input) as CheckboxComponent).checked = false
         this.OpenSalesList.forEach(s => {
           this.selectedRowIds.delete(s.id)
         })
-        
+
       }
       else {
         this.OpenSalesList.forEach(s => {
           this.selectedRowIds.add(s.id)
         })
-        
+
         cbox.forEach(c => {
           (((c as Element) as Input) as CheckboxComponent).checked = true
         })
