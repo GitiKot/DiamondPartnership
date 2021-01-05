@@ -13,7 +13,6 @@
 
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
                             <span aria-hidden="true">&times;</span>
-                            <!-- <span aria-hidden="true">x</span> -->
                         </button>
                     </div>
 
@@ -21,7 +20,7 @@
 
                         <div class="row">
                             <div class="col-8 col-sm-6 col-example">
-                                <div class="md-form mb-5">
+                                <!-- <div class="md-form mb-5">
                                     <input type="text" id="form34" class="form-control" mdbInput mdbValidate
                                         [formControl]="PublicSerialName">
                                     <label for="form34">שם סריה כללית</label>
@@ -31,7 +30,34 @@
                                     <mdb-success
                                         *ngIf="PublicSerialName.valid && (PublicSerialName.dirty || PublicSerialName.touched)">
                                     </mdb-success>
+                                </div> -->
+<!--  -->
+                                <!-- <input style="border: none;" type="text" id="selectSerial" tabindex={{i*5+6}} name="example" list="List"
+                                [ngModelOptions]="{standalone: true}"  [(ngModel)]="selectedSerial" 
+                                placeholder="בחר" (change)="selectedSaleId($event)">
+                            <datalist id="List">
+                                <option id="{{s.serialName}}" *ngFor="let s of seriousnessList ;let i=index" 
+                                [attr.data-value]="s.id" [attr.i]="i" >{{s.serialName}}
+                                </option>
+                            </datalist> -->
+                                <div class="md-form mb-5"> 
+                                    <label for="form34">שם סריה כללית</label>
+                                    <input [formControl]="PublicSerialName" type="text" id="selectExp" name="exp" list="List"
+                                        [ngModelOptions]="{standalone: true}"
+                                        placeholder="בחר" (change)="selectedExpensesId($event)">
+                                    <datalist id="List">
+                                        <!-- <option *ngIf="updateSerial" value="{{updateSerial.partner.name}}">
+                                            {{updateSerial.partner.name}}</option> -->
+                                        <option id="{{s.serialName}}"  [attr.data-value]="s.id" [attr.i]="i" 
+                                         *ngFor="let s of seriousnessList;let i=index" [value]=" s.serialName">
+                                           </option>
+                                    </datalist>
+                                    <mdb-error *ngIf="PublicSerialName.invalid && (PublicSerialName.dirty || PublicSerialName.touched)">
+                                    </mdb-error>
+                                    <mdb-success *ngIf="PublicSerialName.valid && (PublicSerialName.dirty || PublicSerialName.touched)">
+                                    </mdb-success>
                                 </div>
+
 
                             </div>
                             <div class="col-4 col-sm-6 col-example">

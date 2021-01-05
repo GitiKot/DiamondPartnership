@@ -3,7 +3,9 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { Expenses } from 'src/app/data/expenses';
+import { Seriousness } from 'src/app/data/seriousness';
 import { ExpensesService } from 'src/app/services/expenses.service';
+import{ seriousnessService}from 'src/app/services/seriousness.service';
 
 @Component({
   selector: 'app-expenses-form',
@@ -16,14 +18,17 @@ export class ExpensesFormComponent implements OnInit {
   @ViewChild('frame1') public showModalOnClick1: ModalDirective;//model big
   expensesForm: FormGroup;
   expensesList: Array<Expenses>;
-
+  seriousnessList: Array<Seriousness>;
+  place;
   @Input() updateEx: Expenses;
   @Output() updateFlag = new EventEmitter<number>();
 
-  constructor(private r: Router, private expensesService: ExpensesService, private formBuilder: FormBuilder) { }
+  constructor(private r: Router, private expensesService: ExpensesService,private seriousnessService: seriousnessService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-
+    this.seriousnessService.getAllSeriousness().subscribe(ans => {
+      this.seriousnessList = ans;
+    });
     // this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
     this.expensesForm = this.formBuilder.group({
       PublicSerialName: ['', [Validators.required]],
@@ -65,7 +70,19 @@ export class ExpensesFormComponent implements OnInit {
   ngAfterViewInit() {
     this.showModalOnClick1.show();
   }
-
+  selectedExpensesId(event){
+    let s = event.target.value;
+    let ids = document.getElementById(s);
+    if (ids) {
+    // this.serialId= ids.getAttribute('data-value');
+    this.place=ids.getAttribute('i');
+    console.log("place  ids",this.place,ids);
+    
+     }
+    else {
+      alert("עליך לבחור שם סריה קיימת")
+    }
+  }
   close() {
 
     if (this.updateEx != undefined) {
