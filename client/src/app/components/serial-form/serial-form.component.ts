@@ -18,7 +18,7 @@ export class SerialFormComponent implements OnInit {
   partnerList: Array<Partner>;
   totalPrice = [];
   selectedPartner: Partner;
-
+PartnerId;
   @ViewChild('frame1') frame1: ModalDirective;
   @ViewChild('frame2') frame2: ModalDirective;
   @Input() updateSerial: Seriousness;
@@ -41,7 +41,6 @@ export class SerialFormComponent implements OnInit {
     this.totalPrice['לחץ לפרטים']
 
     if (this.updateSerial != undefined) {
-      console.log("iibfuuuuuuuuuu", this.updateSerial.privateSeria);
       this.serialForm.patchValue({
         serialName: this.updateSerial.serialName,
         dateBuy: this.updateSerial.dateBuy,
@@ -98,12 +97,27 @@ export class SerialFormComponent implements OnInit {
       elem.style.display = "none";
     }
   }
+  selectedPartnerId(event) {
+   
+     let a=event.target;
+    let p = event.target.value;
+    console.log("p",p);
+    let idp = document.getElementById(p);
+    console.log("idp,id", idp,idp.id);
+    let att = idp.getAttribute('data-value');
+    console.log("att",att);
+    // let t = event.target.getAttribute('data-value');
+    this.PartnerId=att;
+    
+    
+  }
+
   save() {
-    
-    console.log("this",this.selectedPartner);
-    
-    this.serialForm.get('partner').setValue(this.selectedPartner)
-    if (this.serialForm.valid&&this.serialForm.value.partner) {
+
+    console.log("this", this.selectedPartner);
+// selectedPartner
+    this.serialForm.get('partner').setValue(this.PartnerId)
+    if (this.serialForm.valid && this.serialForm.value.partner) {
       this.seriousnessService.addSeria(this.serialForm.value).subscribe(sss => {
         this.r.navigate(['seriousness/serial-form/modal-form', 'סריה'])
       }, () => {
@@ -118,7 +132,7 @@ export class SerialFormComponent implements OnInit {
   }
   update() {
 
-    this.serialForm.get('partner').setValue(this.selectedPartner)
+    this.serialForm.get('partner').setValue(this.PartnerId)
     let cbox = document.getElementById('form3');
     if ((((cbox as Element) as Input) as CheckboxComponent).checked == false) {
       this.serialForm.value.finishDate = null;

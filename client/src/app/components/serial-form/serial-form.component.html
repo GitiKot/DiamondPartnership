@@ -101,22 +101,47 @@
                                         {{p.name}}</option>
                                 </select>
                                 <label> בחר שותף</label>
-
                                 <mdb-error *ngIf="partner.invalid && (partner.dirty || partner.touched)">
                                 </mdb-error>
                                 <mdb-success *ngIf="partner.valid && (partner.dirty ||  partner.touched)">
                                 </mdb-success>
                             </div> -->
-                            <div class="md-form mb-5">  <label> בחר שותף</label>
-                                <input type="text" id="selectPart" name="example" list="exampleList"
+
+
+                            <!--  -->
+                            <!--  -->
+                            <!--  -->
+                            <!-- <div class="md-form mb-5">  <label> בחר שותף</label>
+                                <input type="text" id="selectPart" name="example" list="List"
                                     [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedPartner"
-                                    placeholder="בחר">
-                                <datalist id="exampleList">
-                                    <option *ngIf="updateSerial" selected="selected" value="{{updateSerial.partner.name}}"
-                                        [ngValue]="updateSerial.partner.id" (change)="pp()">
+                                    placeholder="בחר"
+                                    (change)="selectedPartnerId($event.target.value)">
+                                <datalist id="List" >
+                                    <option *ngIf="updateSerial" value="{{updateSerial.partner.name}}"
+                                        >
                                         {{updateSerial.partner.name}}</option>
-                                    <option *ngFor="let p of partnerList" [value]="p.id" (change)="pp()">
+                                    <option id="{{p.id}}" class="option"  *ngFor="let p of partnerList" [value]="p.id" >
                                         {{p.name}}</option>
+                                </datalist>
+                                <mdb-error *ngIf="partner.invalid && (partner.dirty || partner.touched)">
+                                </mdb-error>
+                                <mdb-success *ngIf="partner.valid && (partner.dirty ||  partner.touched)">
+                                </mdb-success>
+                            </div>  data-value="{{p.id}}"-->
+
+
+
+
+                            <div class="md-form mb-5"> <label> בחר שותף</label>
+                                <input type="text" id="selectPart" name="example" list="List"
+                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedPartner"
+                                    placeholder="בחר" (change)="selectedPartnerId($event)">
+                                <datalist id="List">
+                                    <option *ngIf="updateSerial" value="{{updateSerial.partner.name}}">
+                                        {{updateSerial.partner.name}}</option>
+                                    <option id="{{p.name}}"  [attr.data-value]="p.id" 
+                                     *ngFor="let p of partnerList" [value]=" p.name">
+                                       </option>
                                 </datalist>
                                 <mdb-error *ngIf="partner.invalid && (partner.dirty || partner.touched)">
                                 </mdb-error>
