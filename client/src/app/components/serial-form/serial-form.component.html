@@ -112,18 +112,17 @@
                         סריות פרטיות </button>
                     <br>
                     <div class="modal-footer d-flex">
-                        <button type="button" mdbBtn color="blue" rounded="true" data-toggle="modal"
-                        data-target="#basicExample" (click)="close()" mdbWavesEffect >
-                        ביטול </button>
                         <button *ngIf="!(updateSerial)" type="button" mdbBtn color="blue" rounded="true"
                             data-toggle="modal" data-target="#basicExample" (click)="save()" mdbWavesEffect
-                            id="saveExpenses">
+                            id="newexpenses">
                             שמירה </button>
                         <button *ngIf="updateSerial" type="button" mdbBtn color="blue" rounded="true"
                             data-toggle="modal" data-target="#basicExample" (click)="update()" mdbWavesEffect>
                             שמירה </button>
                         <router-outlet></router-outlet>
-                       
+                        <button type="button" mdbBtn color="blue" rounded="true" data-toggle="modal"
+                            data-target="#basicExample" (click)="close()" mdbWavesEffect id="newexpenses">
+                            ביטול </button>
                     </div>
                 </div>
             </div>

@@ -22,8 +22,6 @@ export class SalesFormComponent implements OnInit {
   totalPrice = [];
   dateP: string;
   seriousnessList: Array<Seriousness>;
-  serialId;
-  place;
   // updateSale:Sale;
   // CurrentNavigation;
   constructor(private router: Router,  private seriousnessService: seriousnessService, private salesServise: SalesService, private cdRef: ChangeDetectorRef) {
@@ -66,18 +64,7 @@ export class SalesFormComponent implements OnInit {
     this.addrow();
 
   }
-  selectedSaleId(event){
-      let s = event.target.value;
-      let ids = document.getElementById(s);
-      if (ids) {
-      this.serialId= ids.getAttribute('data-value');
-      this.place=ids.getAttribute('i');
-       }
-      else {
-        alert("עליך לבחור שם סריה קיימת")
-      }
-    
-  }
+
   addEventCalcDate() {
     var d = (document.querySelector('#datesale') as HTMLInputElement).value;
     var dateSales = new Date(d)
@@ -90,6 +77,7 @@ export class SalesFormComponent implements OnInit {
 
   save() {
 
+
     let flag = 0;
     // alert("האם הנך בטוח במה שאתה עושה");
     if (this.tableContent[0] != undefined) {
@@ -98,7 +86,7 @@ export class SalesFormComponent implements OnInit {
       this.tableContent.forEach(sale => {
 
         // this.salesForm.controls['publicSerialName'].setValue(sale.publicSerial);
-        this.salesForm.controls['publicSerialName'].setValue(this.serialId)
+        this.salesForm.controls['publicSerialName'].setValue(this.selectedSerial.id)
 
         this.salesForm.controls['privateSerialName'].setValue(sale.privateSerial)
         this.salesForm.controls['stoneName'].setValue(sale.stoneName)
@@ -110,16 +98,17 @@ export class SalesFormComponent implements OnInit {
         if (this.salesForm.valid) {
           this.salesServise.addSale(this.salesForm.value)
             .subscribe(a => {
-               this.seriousnessList[this.place].amountReceived += this.salesForm.controls['weight'].value *
+              this.selectedSerial.amountReceived = this.salesForm.controls['weight'].value *
                 this.salesForm.controls['pricePerCarat'].value;
 
-              this.seriousnessService.updateSerial(this.serialId.id,this.seriousnessList[this.place])
+              this.seriousnessService.updateSerial(this.selectedSerial.id,this.selectedSerial)
 
             });
           i++;
         }
+
         else {
-          alert("חלק מהנתונים אינם נכונים");
+          alert("חלק מהנתונים לא נכון");
           flag = 1;
         }
       });
@@ -178,8 +167,8 @@ export class SalesFormComponent implements OnInit {
     }, false))
   }
   tableKeyPresent() {
-    // var i = document.querySelector('select');
-    var i = document.querySelector('input');
+    var i = document.querySelector('select');
+
     var allInputSimple = document.querySelectorAll('td input');
     
     const allInput = Array.from(allInputSimple);

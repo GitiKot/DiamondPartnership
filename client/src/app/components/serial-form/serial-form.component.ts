@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CheckboxComponent } from 'angular-bootstrap-md';
+import { CheckboxComponent, ModalModule } from 'angular-bootstrap-md';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { Partner } from 'src/app/data/partner';
 import { Seriousness } from 'src/app/data/seriousness';
