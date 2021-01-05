@@ -19,16 +19,14 @@ export class seriousnessService {
   }
 
   addSeria(s: Seriousness): Observable<Seriousness> {
-    console.log("serial" + s);
+    
     s.amountReceived = 0;
     s.AmountReceivedPartner = 0;
-    console.log("service", this.seriousnessUrl);
 
     return this.http.post<Seriousness>(this.seriousnessUrl, s);
   }
   deleteSeria(s: Seriousness) {
     var ttt = `${this.seriousnessUrl}/${s.id}`;
-    console.log("url=" + ttt);
 
     return this.http.delete<Seriousness>(ttt, this.options)
       .subscribe((s: Seriousness) => {
@@ -39,9 +37,11 @@ export class seriousnessService {
       );
   }
   updateSerial(sId:string,serial: Seriousness):Observable<Seriousness> {
-    console.log("AmountReceivedPartner: ",serial.AmountReceivedPartner);
+    console.log("AmountReceive: ",serial.amountReceived);
 
     const urlupdate = `${this.seriousnessUrl}/${sId}`;
+    console.log(urlupdate);
+    
     // return this.http.put<Sale>(fullUrl, sale, this.options);
     return this.http.patch<Seriousness>(urlupdate, serial, this.options);
     
