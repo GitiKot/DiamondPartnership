@@ -24,12 +24,11 @@ export class SalesService {
     return this.http.get<Sale[]>(this.salesUrl);
   }
   addSale(s: Sale): Observable<Sale> {
-    console.log("service", this.salesUrl);
+  
 
     return this.http.post<Sale>(this.salesUrl, s);
   }
   updateSale(saleId, sale: Sale) :Observable<Sale>{
-    console.log("update");
 
     const urlupdate = `${this.salesUrl}/${saleId}`;
     return this.http.patch<Sale>(urlupdate, sale, this.options)
@@ -39,7 +38,6 @@ export class SalesService {
  
   deleteSale(s: Sale) {
     var ttt = `${this.salesUrl}/${s.id}`;
-    console.log("url=" + ttt);
 
     return this.http.delete<Sale>(ttt, this.options)
       .subscribe((s: Sale) => {

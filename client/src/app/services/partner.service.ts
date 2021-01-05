@@ -17,19 +17,16 @@ export class PartnerService {
   } 
 
   addPartner(p:Partner):Observable<Partner>{
-    console.log("service", this.partnerUrl);
 
    return this.http.post<Partner>(this.partnerUrl,p);
   }
   updatePartner(pId, partner: Partner):Observable<Partner>{
-    console.log("partner",partner);
 
     const urlupdate = `${this.partnerUrl}/${pId}`;
     return this.http.patch<Partner>(urlupdate, partner, this.options)
   }
   deletePartner(p:Partner){
     var ttt=`${this.partnerUrl}/${p.id}`;
-    console.log("url="+ttt);
   
     return  this.http.delete<Partner>(ttt,this.options)
     .subscribe((p:Partner)=>{console.log(p,"suecces");
