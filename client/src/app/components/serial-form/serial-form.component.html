@@ -1,7 +1,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <form [formGroup]="serialForm">
     <div mdbModal #frame1="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
-        aria-hidden="true">
+    [config]="{backdrop: 'static',  keyboard: false}"
+    aria-hidden="true">
 
 
         <div class="modal-dialog modal-dialog-scrollable modal-l" role="document">
@@ -27,7 +28,7 @@
                             </div>
                         </div>
                         <div class="col-4 col-sm-6 col-example">
-                            <div class="md-form mb-5">
+                            <div class="md-form mb-5" >
                                 <input *ngIf="!(updateSerial)" type="date" id="form34" class="form-control" mdbInput
                                     mdbValidate [formControl]="dateBuy">
                                 <input *ngIf="updateSerial" type="date" id="form34" class="form-control" mdbInput
@@ -71,16 +72,16 @@
                         <div class="col-8 col-sm-6 col-example">
                             <div class="md-form mb-8 ">
                                 <input (click)="updateFinishDate()" type="checkbox" id="form3" #closeSerial mdbInput
-                                    mdbValidate>
+                                    mdbValidate >
                                 <label for="form3"> סריה סגורה </label>
                             </div>
                         </div>
-                        <div class="col-8 col-sm-6 col-example" *ngIf="closeSerial.checked">
+                        <div class="col-8 col-sm-6 col-example" *ngIf="closeSerial.checked" >
                             <div class="md-form mb-8 ">
                                 <input *ngIf="!(updateSerial)" type="date" id="form34" class="form-control" mdbInput
-                                    mdbValidate [formControl]="finishDate">
+                                    mdbValidate [formControl]="finishDate" name="setTodaysDate" min="{{this.serialForm.value.dateBuy}}">
                                 <input *ngIf="updateSerial" type="date" id="form34" class="form-control" mdbInput
-                                    mdbValidate [formControl]="finishDate"
+                                    mdbValidate [formControl]="finishDate"  min="{{this.serialForm.value.dateBuy}}"
                                     [ngModel]="updateSerial.finishDate | date:'yyyy-MM-dd'">
                                 <label for="form3"> תאריך סגירת סריה </label>
                             </div>
@@ -130,7 +131,8 @@
         </div>
     </div>
     <div mdbModal #frame2="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
+    [config]="{backdrop: 'static',  keyboard: false}"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog  modal-dialog-scrollable modal-l modal-side modal-top-right" role="document">
             <div class="modal-content">
 

@@ -154,50 +154,30 @@ export class SalesComponent implements OnInit {
     console.log("ok");
 
     if (s != '') {
-      let saleDelete=this.currectSale;
+      let saleDelete = this.currectSale;
       var tt, input, nameSeria;
       tt = this.saleService.deleteSale(this.currectSale)
-      .subscribe(() => {
-console.log("cure",saleDelete);
-          let ser=<Seriousness>((saleDelete.publicSerialName) as any)
-          console.log("pname",ser.amountReceived);
-            ser.amountReceived = (Number(saleDelete.weight) *
-              Number(saleDelete.pricePerCarat)) * (-1);   
-                       console.log("aaaaaaa",ser.amountReceived);
-// update
-let idser;
-this.seriousnessList.forEach(s => {
-  console.log(s);
-  
-  console.log(s.serialName,ser.serialName);
-  
-  if(s.serialName==ser.serialName){
-    console.log("sid",s.id);
-    
-    idser=s.id;
-  }
-});
-console.log("idser",idser);
-
-this.seriousnessService.updateSerial(idser,ser).subscribe(()=>{
-
-},()=>{
-  console.log("error");
-  
-})
-
-       
-        // console.log(s, "suecces");
-      }, () => {
-        console.log("error");
-      }
-      );
-
+        .subscribe(() => {
+          let ser = <Seriousness>((saleDelete.publicSerialName) as any)
+          ser.amountReceived = (Number(saleDelete.weight) *
+            Number(saleDelete.pricePerCarat)) * (-1);
+          let idser;
+          this.seriousnessList.forEach(s => {
+            if (s.serialName == ser.serialName) {
+              idser = s.id;
+            }
+          });
+          this.seriousnessService.updateSerial(idser, ser).subscribe(() => {
+          }, () => {
+            console.log("error");
+          })
+        }, () => {
+          console.log("error");
+        });
       // console.log(tt);
       input = document.getElementById("public");
       nameSeria = input.value;
       this.saleService.findBySerailName(nameSeria).subscribe(ans => this.salesList = ans);
-
     }
     this.currectSale = null;
     var div = document.getElementById('alert');

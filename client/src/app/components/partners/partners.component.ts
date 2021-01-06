@@ -102,7 +102,6 @@ export class PartnersComponent implements OnInit {
     });
 
     this.showModalOnClick.show();
-
   }
   update() {
     
@@ -120,9 +119,9 @@ export class PartnersComponent implements OnInit {
       alert("חסרים נתונים");
     }
   }
-
   resetform() {
     this.partnersForm.reset();
+    this.updatePartner=null;
   }
   deletePartner(p) {
     var div = document.getElementById('alert');
