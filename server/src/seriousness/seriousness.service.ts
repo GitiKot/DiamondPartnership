@@ -81,7 +81,6 @@ export class seriousnessService {
         partner: ObjectId
 
     ) {
-        console.log("AmountReceivedPartner:",AmountReceivedPartner);
        
         const updatedSeriousness = await this.findSeriousness(id);
         if (serialName) {
