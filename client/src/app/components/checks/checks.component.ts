@@ -188,6 +188,8 @@ export class ChecksComponent implements OnInit {
         this.checksList = ans;
       })
     });
+    this.seriousnessService.findBySerailName(e.target.value).subscribe(ans => { console.log(ans); }
+    )
   }
   resetform() {
     this.checksForm.reset();
@@ -232,8 +234,13 @@ export class ChecksComponent implements OnInit {
         (((document.getElementById('selectAll') as Element) as Input) as CheckboxComponent).checked = false
         this.OpenSalesList.forEach(s => {
           this.selectedRowIds.delete(s.id)
-        })
 
+        })
+console.log("nonononononononononono");
+
+        cbox.forEach(c => {
+       ( (  (c as Element) as Input) as CheckboxComponent).checked = false;
+        })
       }
       else {
         this.OpenSalesList.forEach(s => {
@@ -246,12 +253,13 @@ export class ChecksComponent implements OnInit {
       }
 
     }
-
-    if (this.selectedRowIds.has(id)) {
-      this.selectedRowIds.delete(id);
-    }
     else {
-      this.selectedRowIds.add(id);
+      if (this.selectedRowIds.has(id)) {
+        this.selectedRowIds.delete(id);
+      }
+      else {
+        this.selectedRowIds.add(id);
+      }
     }
   }
   rowIsSelected(id: string) {

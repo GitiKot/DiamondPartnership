@@ -112,6 +112,44 @@ export class seriousnessService {
         updatedSeriousness.save();
     }
 
+    async findBySerailName(serialNameIs: string) { 
+        const seriousnessOne =  this.seriousnessModel.findOne({serialName:serialNameIs}).exec();
+    console.log("seriousnessOne ",seriousnessOne);
+    
+     const v = (await seriousnessOne)
+     
+    //     const SaleBySerailName = await this.salesModel.find({publicSerialName:v}).populate('publicSerialName').exec();
+      
+        // return   {
+          
+        //     numOfDate: v.numOfDate,
+        //     invoiceNumber: seriousnessOne.invoiceNumber,
+        //     publicSerialName: sale.publicSerialName,
+        //     privateSerialName: sale.privateSerialName,
+        //     stoneName: sale.stoneName,
+        //     weight: sale.weight,
+        //     pricePerCarat: sale.pricePerCarat,
+        //     rawOrPolished: sale.rawOrPolished,
+        //     isOpen: sale.isOpen, serialName: ex.serialName,
+        //     id: ex.id,
+        //     dateBuy: ex.dateBuy,
+        //     cost: ex.cost,
+        //     amountReceived: ex.amountReceived,
+        //     partnersPercent: ex.partnersPercent,
+        //     AmountReceivedPartner: ex.AmountReceivedPartner,
+        //     finishDate: ex.finishDate,
+        //     privateSeria: ex.privateSeria.map(ps => ({
+        //         namePrivate: ps.namePrivate,
+        //         price: ps.price,
+        //         expenses: ps.expenses.map(e => ({
+        //             nameExpenses: e.nameExpenses,
+        //             exspensesPrice: e.exspensesPrice
+        //         }))
+        //     }))
+
+        //  };
+    }
+
     async deleteSeriousness(exId: string) {
         const result = await this.seriousnessModel.deleteOne({ _id: exId }).exec();
         if (result.n === 0) {

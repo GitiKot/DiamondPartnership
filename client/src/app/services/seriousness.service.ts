@@ -46,4 +46,11 @@ export class seriousnessService {
     return this.http.patch<Seriousness>(urlupdate, serial, this.options);
     
   }
+  
+  findBySerailName(serialName: string):Observable<Seriousness[]> {
+    const urlFindBy = `${this.seriousnessUrl}/${serialName}`;
+    console.log(urlFindBy);
+    
+    return this.http.get<Seriousness[]>(urlFindBy)
+  }
 }
