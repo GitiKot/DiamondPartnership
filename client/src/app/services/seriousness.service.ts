@@ -47,10 +47,10 @@ export class seriousnessService {
     
   }
   
-  findBySerailName(serialName: string):Observable<Seriousness[]> {
+  findBySerailName(serialName: string):Observable<Seriousness> {
     const urlFindBy = `${this.seriousnessUrl}/${serialName}`;
     console.log(urlFindBy);
     
-    return this.http.get<Seriousness[]>(urlFindBy)
+    return this.http.get<Seriousness>(urlFindBy)
   }
 }

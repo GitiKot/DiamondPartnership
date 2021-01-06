@@ -178,7 +178,7 @@
           </button>
         </div>
         <div class="modal-body mx-3">
-          <div class="md-form mb-5">
+          <div *ngIf="selectedRowIds.size==0" class="md-form mb-5">
             <input type="checkbox" id="cb" class="form-control" mdbInput mdbValidate (click)="until()">
             <label for="cb">עד לקוסט ?</label>
            

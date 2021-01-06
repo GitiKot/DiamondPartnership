@@ -112,7 +112,7 @@ export class seriousnessService {
         updatedSeriousness.save();
     }
 
-    async findBySerailName(serialNameIs: string) { 
+    async findBySerailNameS(serialNameIs: string) { 
         const seriousnessOne =  this.seriousnessModel.findOne({serialName:serialNameIs}).exec();
     console.log("seriousnessOne ",seriousnessOne);
     
@@ -120,34 +120,25 @@ export class seriousnessService {
      
     //     const SaleBySerailName = await this.salesModel.find({publicSerialName:v}).populate('publicSerialName').exec();
       
-        // return   {
-          
-        //     numOfDate: v.numOfDate,
-        //     invoiceNumber: seriousnessOne.invoiceNumber,
-        //     publicSerialName: sale.publicSerialName,
-        //     privateSerialName: sale.privateSerialName,
-        //     stoneName: sale.stoneName,
-        //     weight: sale.weight,
-        //     pricePerCarat: sale.pricePerCarat,
-        //     rawOrPolished: sale.rawOrPolished,
-        //     isOpen: sale.isOpen, serialName: ex.serialName,
-        //     id: ex.id,
-        //     dateBuy: ex.dateBuy,
-        //     cost: ex.cost,
-        //     amountReceived: ex.amountReceived,
-        //     partnersPercent: ex.partnersPercent,
-        //     AmountReceivedPartner: ex.AmountReceivedPartner,
-        //     finishDate: ex.finishDate,
-        //     privateSeria: ex.privateSeria.map(ps => ({
-        //         namePrivate: ps.namePrivate,
-        //         price: ps.price,
-        //         expenses: ps.expenses.map(e => ({
-        //             nameExpenses: e.nameExpenses,
-        //             exspensesPrice: e.exspensesPrice
-        //         }))
-        //     }))
+        return   {
+        
+            id: v.id,
+            dateBuy: v.dateBuy,
+            cost: v.cost,
+            amountReceived: v.amountReceived,
+            partnersPercent: v.partnersPercent,
+            AmountReceivedPartner: v.AmountReceivedPartner,
+            finishDate: v.finishDate,
+            privateSeria: v.privateSeria.map(ps => ({
+                namePrivate:ps.namePrivate,
+                price: ps.price,
+                expenses: ps.expenses.map(e => ({
+                    nameExpenses: e.nameExpenses,
+                    exspensesPrice: e.exspensesPrice
+                }))
+            }))
 
-        //  };
+         };
     }
 
     async deleteSeriousness(exId: string) {

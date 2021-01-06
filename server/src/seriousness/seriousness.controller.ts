@@ -18,17 +18,17 @@ export class SeriousnessController {
         return seriousness;
     }
 
-    @Get(':id')
-    getSeriousness(@Param('id') exId: string) {
+    // @Get(':id')
+    // getSeriousness(@Param('id') exId: string) {
         
-        return this.seriousnessService.getSingleSeriousness(exId);
-    }
+    //     return this.seriousnessService.getSingleSeriousness(exId);
+    // }
 
     @Get(':serialName')
-    async findBySerailName(@Param('serialName') serialName: string) {
+     findBySerailName(@Param('serialName') serialName: string) {
       console.log("AAA");
       
-      const ser =  this.seriousnessService.findBySerailName(serialName);
+      const ser =  this.seriousnessService.findBySerailNameS(serialName);
       console.log("seria",ser);
       
       return ser;

@@ -27,6 +27,7 @@ export class ChecksComponent implements OnInit {
   updateCheck: Checks;
   currentChecks: Checks;
   selectedRowIds: Set<string> = new Set<string>();
+  serial:Seriousness
   // formBuilder: any;
   // masterToggle() {
   // this.isAllSelected() ?
@@ -69,16 +70,21 @@ export class ChecksComponent implements OnInit {
   until() {
     if (this.untilcost)
       this.untilcost = false;
-    else this.untilcost = true;
-    let cost = this.getSeria().cost;
-    let sumSale;
-    this.getSelectedRows().forEach(
-      sale => {
-        sumSale = <number>sale.pricePerCarat * <number>sale.weight;
-        if (sumSale <= cost) { }
-      }
-    )
+    else {
+      this.untilcost = true;
+      let cost = this.getSeria().cost;
+      let sumSale;
+      let sum= 
+      this.getSelectedRows().forEach(
+        sale => {
+          sumSale = <number>sale.pricePerCarat * <number>sale.weight;
+          if (sumSale <= cost) { 
 
+          }
+        }
+      )
+      // תתקשרי אלי לטלפון
+    }
   }
   calcCheckDate(): Date {
     let finalDate: Date;
@@ -128,10 +134,10 @@ export class ChecksComponent implements OnInit {
     sale.isOpen = false;
     this.salesService.updateSale(sale.id, sale);
   }
-  updateSerial(serial: Seriousness) {
-    serial.AmountReceivedPartner = this.checksForm.value.sum;
+  updateSerial() {
+    this.serial.AmountReceivedPartner = this.checksForm.value.sum;
 
-    this.seriousnessService.updateSerial(serial.id, serial)
+    this.seriousnessService.updateSerial(this.serial.id, this.serial)
   }
   save() {
     alert("האם הנך בטוח שברצונך לשמור  צ'ק זה ? ");
@@ -154,7 +160,7 @@ export class ChecksComponent implements OnInit {
       else
         this.checksForm.value.sum = this.calcCheckMoney() * this.getSeria().partnersPercent / 100;
 
-      this.updateSerial(this.getSeria());
+      this.updateSerial();
       this.checksForm.value.date = this.calcCheckDate();
       this.checksService.addChecks(this.checksForm.value).subscribe(c => {
         this.checksList.push(c);
@@ -188,7 +194,8 @@ export class ChecksComponent implements OnInit {
         this.checksList = ans;
       })
     });
-    this.seriousnessService.findBySerailName(e.target.value).subscribe(ans => { console.log(ans); }
+    this.seriousnessService.findBySerailName(e.target.value).subscribe(ans => { 
+this.serial=ans     }
     )
   }
   resetform() {
@@ -236,10 +243,9 @@ export class ChecksComponent implements OnInit {
           this.selectedRowIds.delete(s.id)
 
         })
-console.log("nonononononononononono");
 
         cbox.forEach(c => {
-       ( (  (c as Element) as Input) as CheckboxComponent).checked = false;
+          (((c as Element) as Input) as CheckboxComponent).checked = false;
         })
       }
       else {
