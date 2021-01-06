@@ -183,7 +183,7 @@
             <label for="cb">עד לקוסט ?</label>
            
           </div>
-          <div *ngIf="untilcost" class="md-form mb-5">
+          <div class="md-form mb-5">
             <input type="number" min="0" id="form32" class="form-control" mdbInput mdbValidate [formControl]="numCheck">
             <label for="form32">מספר צ'ק</label>
             <mdb-error *ngIf="numCheck.invalid && (numCheck.dirty || numCheck.touched)">
@@ -191,7 +191,7 @@
             <mdb-success *ngIf="numCheck.valid && (numCheck.dirty || numCheck.touched)">
             </mdb-success>
           </div>
-          <div  *ngIf="untilcost" class="md-form mb-4">
+          <div  class="md-form mb-4">
             <select  placeholder="vd" class="browser-default custom-select" mdbInput mdbValidate [formControl]="ReceiptOrInvoice">
               <!-- <select class="form-control" mdbInput mdbValidate [formControl]="ReceiptOrInvoice"> -->
                 <option value="" disabled selected> חשבונית/קבלה </option>

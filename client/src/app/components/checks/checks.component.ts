@@ -27,7 +27,7 @@ export class ChecksComponent implements OnInit {
   updateCheck: Checks;
   currentChecks: Checks;
   selectedRowIds: Set<string> = new Set<string>();
-  serial:Seriousness
+  serial: Seriousness
   // formBuilder: any;
   // masterToggle() {
   // this.isAllSelected() ?
@@ -74,15 +74,15 @@ export class ChecksComponent implements OnInit {
       this.untilcost = true;
       let cost = this.getSeria().cost;
       let sumSale;
-      let sum= 
-      this.getSelectedRows().forEach(
-        sale => {
-          sumSale = <number>sale.pricePerCarat * <number>sale.weight;
-          if (sumSale <= cost) { 
+      let sum =
+        this.getSelectedRows().forEach(
+          sale => {
+            sumSale = <number>sale.pricePerCarat * <number>sale.weight;
+            if (sumSale <= cost) {
 
+            }
           }
-        }
-      )
+        )
       // תתקשרי אלי לטלפון
     }
   }
@@ -136,6 +136,7 @@ export class ChecksComponent implements OnInit {
   }
   updateSerial() {
     this.serial.AmountReceivedPartner = this.checksForm.value.sum;
+console.log(  this.serial.AmountReceivedPartner);
 
     this.seriousnessService.updateSerial(this.serial.id, this.serial)
   }
@@ -194,8 +195,10 @@ export class ChecksComponent implements OnInit {
         this.checksList = ans;
       })
     });
-    this.seriousnessService.findBySerailName(e.target.value).subscribe(ans => { 
-this.serial=ans     }
+    this.seriousnessService.findBySerailName(e.target.value).subscribe(ans => {
+      this.serial = ans;
+      console.log( this.serial);
+    }
     )
   }
   resetform() {
