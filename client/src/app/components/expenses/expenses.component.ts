@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { Expenses } from 'src/app/data/expenses';
@@ -71,20 +71,13 @@ export class ExpensesComponent implements OnInit {
   }
  f(){
    this.e=undefined;
-   console.log("e",this.e);
-   
    this.flagupdate=1;
-   console.log("f");
-    console.log(this.flagupdate);
  }
   updateflag(ex){
     this.e = ex;
-    console.log("הוצאה: ",ex);
     this.flagupdate=1;
-    console.log("updateflag");
-    console.log(this.flagupdate);
-    
 
+    console.log("updateflag",this.flagupdate);
   }
   updateFromFlag(event){
     console.log("updatefromflag");
