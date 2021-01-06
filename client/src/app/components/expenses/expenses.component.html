@@ -19,10 +19,12 @@
       (click)="f()" mdbWavesEffect id="newexpenses" >
         הוצאה חדשה
       </button>
+      <a href="expenses" style=" position: fixed; bottom: 25px; right: 25px;">
+        <i class="fa fa-arrow-circle-up fa-3x"   aria-hidden="true"></i></a>
       <router-outlet></router-outlet>
     </div>
     <table id="expensesTable" class="table table-hover">
-      <thead>
+    <thead>
         <tr class="header"> 
           <th></th>
           <th></th>
