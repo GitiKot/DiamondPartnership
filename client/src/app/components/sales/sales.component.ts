@@ -3,7 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { Sale } from 'src/app/data/sale';
+import { Seriousness } from 'src/app/data/seriousness';
 import { SalesService } from 'src/app/services/sales.service';
+import { seriousnessService } from 'src/app/services/seriousness.service';
 
 @Component({
   selector: 'app-sales',
@@ -19,11 +21,16 @@ export class SalesComponent implements OnInit {
   dateper = [];
   dateP: string;
   updateSale: Sale;
+  seriousnessList: Array<Seriousness>;
   //  constructor(private r: Router, private saleService: SalesService,private route:ActivatedRoute) { }
-  constructor(private r: Router, private route: ActivatedRoute, private saleService: SalesService) { }
+  constructor(private r: Router, private route: ActivatedRoute, private seriousnessService: seriousnessService, private saleService: SalesService) { }
   salesList: Array<Sale>
   nameSerial: string;
   ngOnInit(): void {
+    this.seriousnessService.getAllSeriousness().subscribe(ans => {
+      this.seriousnessList = ans;
+    });
+
     this.salesForm = new FormGroup({
       date: new FormControl('', Validators.required),
       numOfDate: new FormControl('', Validators.required),
@@ -78,29 +85,29 @@ export class SalesComponent implements OnInit {
   //   dateSales.setDate(dateSales.getDate() + num);
   //   (document.querySelector('#DueDate') as HTMLInputElement).value = dateSales.toLocaleDateString();
   updateModal(s) {
-    if (s.isOpen==false) {
+    if (s.isOpen == false) {
       alert("לא ניתן לעדכן מכירה שסגרו עליה צ'ק");
       this.hideModalOnClick.hide();
     }
-    else{
-    this.updateSale = s;
-    console.log("s ", s);
-    console.log(this.updateSale);
+    else {
+      this.updateSale = s;
+      console.log("s ", s);
+      console.log(this.updateSale);
 
-    this.salesForm.patchValue({
-      date: this.updateSale.date,
-      numOfDate: this.updateSale.numOfDate,
-      invoiceNumber: this.updateSale.invoiceNumber,
-      publicSerialName: this.updateSale.publicSerialName,
-      privateSerialName: this.updateSale.privateSerialName,
-      stoneName: this.updateSale.stoneName,
-      weight: this.updateSale.weight,
-      pricePerCarat: this.updateSale.pricePerCarat,
-      isOpen: this.updateSale.isOpen,
-      rawOrPolished: this.updateSale.rawOrPolished,
-      totalPrice: Number(this.updateSale.weight) * Number(this.updateSale.pricePerCarat),
-    })
-}
+      this.salesForm.patchValue({
+        date: this.updateSale.date,
+        numOfDate: this.updateSale.numOfDate,
+        invoiceNumber: this.updateSale.invoiceNumber,
+        publicSerialName: this.updateSale.publicSerialName,
+        privateSerialName: this.updateSale.privateSerialName,
+        stoneName: this.updateSale.stoneName,
+        weight: this.updateSale.weight,
+        pricePerCarat: this.updateSale.pricePerCarat,
+        isOpen: this.updateSale.isOpen,
+        rawOrPolished: this.updateSale.rawOrPolished,
+        totalPrice: Number(this.updateSale.weight) * Number(this.updateSale.pricePerCarat),
+      })
+    }
   }
   addEventCalcDate() {
     var d = (document.querySelector('#datesale') as HTMLInputElement).value;
@@ -114,16 +121,16 @@ export class SalesComponent implements OnInit {
   update() {
     if (this.updateSale != undefined) {
       if (this.salesForm.valid) {
-       console.log("form",this.updateSale);
-       console.log("update form",this.salesForm.value);
-       
-       document.getElementById('raw').setAttribute('checked', 'true')
-          this.saleService.updateSale(this.updateSale.id, this.salesForm.value).subscribe(() => {
-            this.r.navigate(['sales-form/modal-form', 'מכירה'])
-            this.salesForm.reset();
-          }, () => {
-            console.log("error");
-          });
+        console.log("form", this.updateSale);
+        console.log("update form", this.salesForm.value);
+
+        document.getElementById('raw').setAttribute('checked', 'true')
+        this.saleService.updateSale(this.updateSale.id, this.salesForm.value).subscribe(() => {
+          this.r.navigate(['sales-form/modal-form', 'מכירה'])
+          this.salesForm.reset();
+        }, () => {
+          console.log("error");
+        });
       }
       else {
         alert("חסרים נתונים");
@@ -131,7 +138,6 @@ export class SalesComponent implements OnInit {
     }
   }
   deleteSale(sale) {
-
     if (sale.isOpen == true) {
       var div = document.getElementById('alert');
       div.style.visibility = "visible";
@@ -148,12 +154,50 @@ export class SalesComponent implements OnInit {
     console.log("ok");
 
     if (s != '') {
+      let saleDelete=this.currectSale;
       var tt, input, nameSeria;
-      tt = this.saleService.deleteSale(this.currectSale);
+      tt = this.saleService.deleteSale(this.currectSale)
+      .subscribe(() => {
+console.log("cure",saleDelete);
+          let ser=<Seriousness>((saleDelete.publicSerialName) as any)
+          console.log("pname",ser.amountReceived);
+            ser.amountReceived = (Number(saleDelete.weight) *
+              Number(saleDelete.pricePerCarat)) * (-1);   
+                       console.log("aaaaaaa",ser.amountReceived);
+// update
+let idser;
+this.seriousnessList.forEach(s => {
+  console.log(s);
+  
+  console.log(s.serialName,ser.serialName);
+  
+  if(s.serialName==ser.serialName){
+    console.log("sid",s.id);
+    
+    idser=s.id;
+  }
+});
+console.log("idser",idser);
+
+this.seriousnessService.updateSerial(idser,ser).subscribe(()=>{
+
+},()=>{
+  console.log("error");
+  
+})
+
+       
+        // console.log(s, "suecces");
+      }, () => {
+        console.log("error");
+      }
+      );
+
       // console.log(tt);
       input = document.getElementById("public");
       nameSeria = input.value;
       this.saleService.findBySerailName(nameSeria).subscribe(ans => this.salesList = ans);
+
     }
     this.currectSale = null;
     var div = document.getElementById('alert');
@@ -180,7 +224,7 @@ export class SalesComponent implements OnInit {
   rawOrPolishedFunc(sale: Sale): string {
     return sale.rawOrPolished == 'raw' ? 'גלם' : 'מלוטש'
   }
-  
+
   toolbar(i: number) {
 
     let row = document.getElementById("row" + i);

@@ -26,7 +26,8 @@ export class SalesFormComponent implements OnInit {
   place;
   // updateSale:Sale;
   // CurrentNavigation;
-  constructor(private router: Router,  private seriousnessService: seriousnessService, private salesServise: SalesService, private cdRef: ChangeDetectorRef) {
+  constructor(private router: Router,  private seriousnessService: seriousnessService,
+     private salesServise: SalesService, private cdRef: ChangeDetectorRef) {
 // this.CurrentNavigation=this.router.getCurrentNavigation().extras.state;
   }
 
@@ -96,7 +97,6 @@ export class SalesFormComponent implements OnInit {
       // console.log(this.tableContent);
       let i = 0;
       this.tableContent.forEach(sale => {
-
         // this.salesForm.controls['publicSerialName'].setValue(sale.publicSerial);
         this.salesForm.controls['publicSerialName'].setValue(this.serialId)
 
@@ -109,12 +109,14 @@ export class SalesFormComponent implements OnInit {
 
         if (this.salesForm.valid) {
           this.salesServise.addSale(this.salesForm.value)
-            .subscribe(a => {
-               this.seriousnessList[this.place].amountReceived += this.salesForm.controls['weight'].value *
+            .subscribe(() => {
+               this.seriousnessList[this.place].amountReceived = this.salesForm.controls['weight'].value *
                 this.salesForm.controls['pricePerCarat'].value;
 
-              this.seriousnessService.updateSerial(this.serialId,this.seriousnessList[this.place])
-
+              this.seriousnessService.updateSerial(this.serialId,this.seriousnessList[this.place]).subscribe(()=>{
+              },()=>{
+                console.log("error");
+              })
             });
           i++;
         }

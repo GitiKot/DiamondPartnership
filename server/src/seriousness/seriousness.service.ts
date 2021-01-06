@@ -107,7 +107,7 @@ export class seriousnessService {
             updatedSeriousness.privateSeria = privateSeria;
         }
         if (partner) {
-            updatedSeriousness.partner = String(partner);
+            updatedSeriousness.partner =partner;
         }
         updatedSeriousness.save();
     }
