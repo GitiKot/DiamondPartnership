@@ -132,7 +132,13 @@ export class ChecksComponent implements OnInit {
     this.serial.AmountReceivedPartner =this.checksForm.controls['sum'].value ;
     console.log("AmountReceivedPartner",this.serial.AmountReceivedPartner);
 
-    this.seriousnessService.updateSerial(this.serial.id, this.serial)
+    this.seriousnessService.updateSerial(this.serial.id, this.serial).subscribe(()=>{
+      console.log("sss");
+      
+    },()=>{
+      console.log("error");
+      
+    })
   }
   save() {
     alert("האם הנך בטוח שברצונך לשמור  צ'ק זה ? ");

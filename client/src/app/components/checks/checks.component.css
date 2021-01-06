@@ -66,3 +66,8 @@ bottom: .5em;
   border: none;
   background-color: white;
 }
+#newcheck{
+  position: fixed; 
+  bottom: 25px; left: 25px;
+  /* width: 100px; */
+}

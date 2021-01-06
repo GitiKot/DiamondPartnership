@@ -41,6 +41,7 @@ export class seriousnessService {
 
     const urlupdate = `${this.seriousnessUrl}/${sId}`;
     console.log(urlupdate);
+    console.log(serial);
     
     // return this.http.put<Sale>(fullUrl, sale, this.options);
     return this.http.patch<Seriousness>(urlupdate, serial, this.options);

@@ -155,8 +155,12 @@
             <td>{{s.rawOrPolished}}</td>
             <td *ngIf="s.admin==false" class="row-right"></td>
           </tr>
-          <button *ngIf="OpenSalesList.length>0" type="button" class="btn btn-primary" (click)="framen.show()"
-            data-toggle="modal" data-target="#modalCart">לסגירת צ'ק</button>
+          <!-- <button  type="button" class="btn btn-primary" (click)="framen.show()"
+            data-toggle="modal" data-target="#modalCart">ל</button> -->
+            <button *ngIf="OpenSalesList.length>0" type="button" id="newcheck" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
+            (click)="framen.show()" mdbWavesEffect>לסגירת צ'ק  <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+    </button> 
+
         </tbody>
       </table>
 

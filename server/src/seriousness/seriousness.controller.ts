@@ -8,7 +8,7 @@ export class SeriousnessController {
     constructor(private readonly seriousnessService: seriousnessService) { }
     @Post()
     async addSeriousness(@Body() createSeriousnessDto: createSeriousnessDto) {
-        
+
         return this.seriousnessService.addSeriousness(createSeriousnessDto);
     }
 
@@ -18,25 +18,11 @@ export class SeriousnessController {
         return seriousness;
     }
 
-    // @Get(':id')
-    // getSeriousness(@Param('id') exId: string) {
-        
-    //     return this.seriousnessService.getSingleSeriousness(exId);
-    // }
-
-    @Get(':serialName')
-     findBySerailName(@Param('serialName') serialName: string) {
-
-      const ser =  this.seriousnessService.findBySerailNameS(serialName);
-    
-      return ser;
-    }
-
     @Patch(':id')
-    async updateSeriousness(  
+    async updateSeriousness(
         // parent:{type:mongoose.Schema.Types.ObjectId,ref:'Partner'},
         // privateSeria:Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,price:number}>}>;
-        @Param('id') seId: string,
+        @Param('id') id: string,
         @Body('serialName') serialName: string,
         @Body('partner') partner: ObjectId,
         @Body('dateBuy') dateBuy: Date,
@@ -45,16 +31,24 @@ export class SeriousnessController {
         @Body('partnersPercent') partnersPercent: number,
         @Body('AmountReceivedPartner') AmountReceivedPartner: number,
         @Body('finishDate') finishDate: Date,
-        @Body('privateSeria') privateSeria: Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,exspensesPrice:number}>}>,
-        
-    ) {
-console.log(AmountReceivedPartner);
+        @Body('privateSeria') privateSeria: Array<{ namePrivate: string, price: number, expenses: Array<{ nameExpenses: string, exspensesPrice: number }> }>,
 
-        await this.seriousnessService.updateSeriousness(seId,serialName,
-            dateBuy,cost, amountReceived, partnersPercent, AmountReceivedPartner, finishDate ,privateSeria,partner);
+    ) {
+        console.log(AmountReceivedPartner);
+
+        await this.seriousnessService.updateSeriousness(id, serialName,
+            dateBuy, cost, amountReceived, partnersPercent, AmountReceivedPartner, finishDate, privateSeria, partner);
         return null;
     }
-    
+    @Get(':serialName')
+    findBySerailName(@Param('serialName') serialName: string) {
+
+        const ser = this.seriousnessService.findBySerailNameS(serialName);
+
+        return ser;
+    }
+
+
     @Delete(':id')
     async removeProduct(@Param('id') prodId: string) {
         await this.seriousnessService.deleteSeriousness(prodId);
