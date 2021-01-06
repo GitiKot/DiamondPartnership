@@ -69,7 +69,6 @@ export class seriousnessService {
 
 
     async updateSeriousness(
-
         id: string,
         serialName: string,
         dateBuy: Date,
@@ -114,14 +113,8 @@ export class seriousnessService {
 
     async findBySerailNameS(serialNameIs: string) { 
         const seriousnessOne =  this.seriousnessModel.findOne({serialName:serialNameIs}).exec();
-    console.log("seriousnessOne ",seriousnessOne);
-    
-     const v = (await seriousnessOne)
-     
-    //     const SaleBySerailName = await this.salesModel.find({publicSerialName:v}).populate('publicSerialName').exec();
-      
-        return   {
-        
+     const v = (await seriousnessOne) 
+        return   {   
             id: v.id,
             dateBuy: v.dateBuy,
             cost: v.cost,

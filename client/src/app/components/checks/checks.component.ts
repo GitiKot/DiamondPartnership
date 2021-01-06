@@ -18,7 +18,6 @@ export class ChecksComponent implements OnInit {
   @ViewChild('framen') public showModalOnClick: ModalDirective;
   checksForm: FormGroup;
   untilcost = false
-
   checksList: Array<Checks>;
   OpenSalesList: Array<Sale>;
   ClosedSalesList: Array<Sale>;
@@ -27,18 +26,8 @@ export class ChecksComponent implements OnInit {
   updateCheck: Checks;
   currentChecks: Checks;
   selectedRowIds: Set<string> = new Set<string>();
-  serial:Seriousness
-  // formBuilder: any;
-  // masterToggle() {
-  // this.isAllSelected() ?
-  // this.selection.clear() :
-  // this.dataSource.data.forEach(row => this.selection.select(row));
-  // }
-  // constructor(private proService: ChecksService) {
-  // this.setClickedRow = function (index) {
-  // this.selectedRow = index;
-  // }
-  // }
+  serial: Seriousness
+
   constructor(private salesService: SalesService, private checksService: ChecksService,
     private formBuilder: FormBuilder, private seriousnessService: seriousnessService) { }
 
@@ -49,7 +38,7 @@ export class ChecksComponent implements OnInit {
       sum: [''],
       ReceiptOrInvoice: ['', Validators.required],
       IdSales: this.formBuilder.array([]),
-      publicSerialName: ['']
+      publicSerialName: ['', Validators.required]
     })
     this.OpenSalesList = new Array();
     this.ClosedSalesList = new Array();
@@ -72,17 +61,17 @@ export class ChecksComponent implements OnInit {
       this.untilcost = false;
     else {
       this.untilcost = true;
-      let cost = this.getSeria().cost;
+      let cost = this.serial.cost;
       let sumSale;
-      let sum= 
-      this.getSelectedRows().forEach(
-        sale => {
-          sumSale = <number>sale.pricePerCarat * <number>sale.weight;
-          if (sumSale <= cost) { 
+      let sum =
+        this.getSelectedRows().forEach(
+          sale => {
+            sumSale = <number>sale.pricePerCarat * <number>sale.weight;
+            if (sumSale <= cost) {
 
+            }
           }
-        }
-      )
+        )
       // תתקשרי אלי לטלפון
     }
   }
@@ -107,18 +96,23 @@ export class ChecksComponent implements OnInit {
     finalDate.setDate(finalDate.getDate() + totalSumDate)
     return finalDate;
   }
-  getSeria() {
-    let serial: Seriousness, saleOne;
+  // getSeria() {
+  //   let serial: Seriousness, saleOne;
 
-    saleOne = <unknown>this.OpenSalesList[0].publicSerialName;
-    serial = <Seriousness>saleOne;
-    return serial;
-  }
+  //   saleOne = <unknown>this.OpenSalesList[0].publicSerialName;
+  //   serial = <Seriousness>saleOne;
+  //   return serial;
+  // }
   calcCheckMoney(): number {
     let sum = 0;
     this.getSelectedRows().forEach(s => {
-      if (this.getSeria().cost <= this.getSeria().amountReceived)
-        sum += <number>s.pricePerCarat * <number>s.weight * this.getSeria().partnersPercent / 100;
+      if (this.serial.cost <= this.serial.AmountReceivedPartner)
+        sum += <number>s.pricePerCarat * <number>s.weight *
+          this.serial.partnersPercent / 100;
+      else {
+        sum += <number>s.pricePerCarat * <number>s.weight *
+          this.serial.partnersPercent / 2;
+      }
     })
     return sum;
   }
@@ -135,13 +129,20 @@ export class ChecksComponent implements OnInit {
     this.salesService.updateSale(sale.id, sale);
   }
   updateSerial() {
-    this.serial.AmountReceivedPartner = this.checksForm.value.sum;
+    this.serial.AmountReceivedPartner =this.checksForm.controls['sum'].value ;
+    console.log("AmountReceivedPartner",this.serial.AmountReceivedPartner);
 
-    this.seriousnessService.updateSerial(this.serial.id, this.serial)
+    this.seriousnessService.updateSerial(this.serial.id, this.serial).subscribe(()=>{
+      console.log("sss");
+      
+    },()=>{
+      console.log("error");
+      
+    })
   }
   save() {
     alert("האם הנך בטוח שברצונך לשמור  צ'ק זה ? ");
-    if (this.checksForm.valid) {
+   
 
       let sale: Sale;
       for (let index = 0; index < this.getSelectedRows().length; index++) {
@@ -149,19 +150,27 @@ export class ChecksComponent implements OnInit {
         sale = this.getSelectedRows()[index];
         //לזכור להחזיר
         // this.updateSale(sale)
-        if (index == 0) {
-          this.checksForm.value.publicSerialName = sale.publicSerialName
-        }
+        // if (index == 0) {
+        //   this.checksForm.value.publicSerialName = sale.publicSerialName
+        // }
       }
       // saleOne = <unknown>this.getSelectedRows()[0].publicSerialName;
       // serial = <Seriousness>saleOne;
-      if (this.getSeria().amountReceived > this.getSeria().cost)
-        this.checksForm.value.sum = this.calcCheckMoney() / 2;
-      else
-        this.checksForm.value.sum = this.calcCheckMoney() * this.getSeria().partnersPercent / 100;
+    
 
-      this.updateSerial();
-      this.checksForm.value.date = this.calcCheckDate();
+        // this.checksForm.value.sum = this.calcCheckMoney();
+        this.checksForm.controls['sum'].setValue(this.calcCheckMoney())
+
+        this.checksForm.controls['publicSerialName'].setValue(this.serial.id)
+        // this.checksForm.value.publicSerialName=this.serial.id;
+        // console.log( this.checksForm.value.publicSerialName);
+        this.checksForm.controls['date'].setValue(this.calcCheckDate())
+
+      // this.checksForm.value.date = this.calcCheckDate();
+      console.log(  this.checksForm.value);
+      if (this.checksForm.valid) {   
+             this.updateSerial();
+
       this.checksService.addChecks(this.checksForm.value).subscribe(c => {
         this.checksList.push(c);
         this.spliceOpenSaleList();
@@ -169,6 +178,8 @@ export class ChecksComponent implements OnInit {
       this.checksForm.reset();
     } else {
       alert("חלק מהנתונים לא נכון")
+      console.log(  this.checksForm.value);
+
     }
   }
   spliceOpenSaleList() {
@@ -194,8 +205,10 @@ export class ChecksComponent implements OnInit {
         this.checksList = ans;
       })
     });
-    this.seriousnessService.findBySerailName(e.target.value).subscribe(ans => { 
-this.serial=ans     }
+    this.seriousnessService.findBySerailName(e.target.value).subscribe(ans => {
+      this.serial = ans;
+      console.log(this.serial);
+    }
     )
   }
   resetform() {
