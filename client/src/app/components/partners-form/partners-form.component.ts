@@ -138,18 +138,17 @@ export class PartnersFormComponent implements OnInit {
         this.router.navigate(['partners/partners-form/modal-form', 'שותף'])
       }, () => {
         console.log("error");
-      })
+      }) 
+      this.showModalOnClick.hide();
+      this.updateFlag.emit(1);
+     this.close();
     }
     else {
       alert("חסרים נתונים");
     }
-    this.showModalOnClick.hide();
-    this.updateFlag.emit(1);
-   this.router.navigate(['']);
   }
   close() {
     if (this.updateP != undefined) {
-      this.partnersForm.reset();
       this.showModalOnClick.hide();
     }
     else {

@@ -12,15 +12,15 @@ import { ExpensesService } from 'src/app/services/expenses.service'
 })
 export class ExpensesComponent implements OnInit {
   indexE = 0;
-  currentExpenses:Expenses;
-  e:Expenses;
+  currentExpenses: Expenses;
+  e: Expenses;
   expensesForm: FormGroup;
   expensesList: Array<Expenses>;
   @ViewChild('frame2') public showModalOnClick: ModalDirective;//model s
   @ViewChild('frame1') public showModalOnClick1: ModalDirective;//model big
   newexpensesForm: FormGroup;
 
- flagupdate=0;
+  flagupdate = 0;
 
   constructor(private r: Router, private expensesService: ExpensesService, private formBuilder: FormBuilder) { }
 
@@ -37,8 +37,7 @@ export class ExpensesComponent implements OnInit {
   }
 
   private aExpensesFormGroup(datum) {
-    // console.log("datum");
-    // console.log(datum);
+
     return this.formBuilder.group({
       PublicSerialName: this.formBuilder.control({ value: datum.PublicSerialName, disabled: true }),
       date: this.formBuilder.control({ value: datum.date, disabled: true }),
@@ -69,21 +68,20 @@ export class ExpensesComponent implements OnInit {
       }
     }
   }
- f(){
-   this.e=undefined;
-   this.flagupdate=1;
- }
-  updateflag(ex){
-    this.e = ex;
-    this.flagupdate=1;
-
-    console.log("updateflag",this.flagupdate);
+  f() {
+    this.e = undefined;
+    this.flagupdate = 1;
   }
-  updateFromFlag(event){
+  updateflag(ex) {
+    this.e = ex;
+    this.flagupdate = 1;
+    console.log("updateflag", this.flagupdate);
+  }
+  updateFromFlag(event) {
     console.log("updatefromflag");
-console.log("evevt",event);
-this.flagupdate=event;
-console.log(this.flagupdate);
+    console.log("evevt", event);
+    this.flagupdate = event;
+    console.log(this.flagupdate);
 
   }
   updateEi(i: number) {
@@ -91,11 +89,10 @@ console.log(this.flagupdate);
   }
   // נראה לי שאפשר למחוק פונ' זו
   updateExpenses(exid: string, expenses: Expenses) {
-    console.log("updateExpenses");
-    console.log(expenses);
+    console.log("updateExpenses",expenses);
     console.log(this.expensesList[exid].id);
-    expenses.id=this.expensesList[exid].id;
-    
+    expenses.id = this.expensesList[exid].id;
+
     this.expensesService.updateExpenses(this.expensesList[exid].id, expenses);
   }
   deleteExpe(e) {
@@ -106,7 +103,7 @@ console.log(this.flagupdate);
   ok(e) {
 
     if (e != '') {
-      var ex= this.expensesService.deleteExpenses(this.currentExpenses);
+      var ex = this.expensesService.deleteExpenses(this.currentExpenses);
       this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
     }
     this.currentExpenses = null;

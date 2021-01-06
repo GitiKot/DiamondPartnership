@@ -47,56 +47,6 @@ export class PartnersComponent implements OnInit {
     this.flagupdate = event;
     console.log(this.flagupdate);
   }
-  save() {
-    // if (this.partnersForm.valid) {
-
-    //   this.partnerService.addPartner(this.partnersForm.value)
-    //     .subscribe(a => {
-    //       this.r.navigate(['partners/modal-form', 'שותף'])
-    //       this.partnersForm.reset();
-    //     }, () => {
-    //       console.log("error");
-    //     });
-    // }
-    // else {
-    //   alert("חסרים נתונים");
-    // }
-  }
-  updateModal(p) {
-    // this.updatePartner = p;
-    // console.log("p ", p);
-    // console.log(this.updatePartner);
-    // this.partnersForm.patchValue({
-    //   name: this.updatePartner.name,
-    //   email: this.updatePartner.email,
-    //   contact: this.updatePartner.contact,
-    //   phone: this.updatePartner.phone,
-    //   pel: this.updatePartner.pel,
-    //   fax: this.updatePartner.fax,
-    //   Remarks: this.updatePartner.Remarks,
-    // });
-
-    // this.showModalOnClick.show();
-  }
-  update() {
-
-    // if (this.partnersForm.valid) {
-
-    //   this.partnerService.updatePartner(this.updateP.id, this.partnersForm.value)
-    //     .subscribe(() => {
-    //       this.r.navigate(['partners/modal-form', 'שותף'])
-    //       this.partnersForm.reset();
-    //     }, () => {
-    //       console.log("error");
-    //     });
-    // }
-    // else {
-    //   alert("חסרים נתונים");
-    // }
-  }
-  resetform() {
-    this.partnersForm.reset();
-  }
   deletePartner(p) {
     var div = document.getElementById('alert');
     div.style.visibility = "visible";
