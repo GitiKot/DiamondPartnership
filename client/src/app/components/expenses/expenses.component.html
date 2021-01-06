@@ -19,8 +19,8 @@
       (click)="f()"  [routerLink]="['expenses-form']" mdbWavesEffect id="newexpenses" >
         הוצאה חדשה
       </button> -->
-      <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
-      (click)="f()"   mdbWavesEffect id="newexpenses" >
+      <button type="button" mdbBtn color="blue" rounded="true" data-toggle="modal" data-target="#basicExample"
+      (click)="f()" mdbWavesEffect id="newexpenses" >
         הוצאה חדשה
       </button>
       <router-outlet></router-outlet>
@@ -64,7 +64,8 @@
           <td >{{e.Remarks}}</td>
           <td>{{e.amount|currency}}</td>
           <td><button type="button" class="btn btn-primary" (click)="updateEi(ei)" (click)="frame.show()"
-              data-toggle="modal" data-target="#modalCart">+</button></td>
+              data-toggle="modal" data-target="#modalCart">+</button>          
+            </td>
           <td>{{e.amountPartner}}</td>
         </tr>
       </tbody>
@@ -80,7 +81,9 @@
     <!-- -------model expenses------------------------------------ -->
 
     <div mdbModal #frame="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
-      aria-labelledby="exampleModalLabel" aria-hidden="true">
+    [config]="{backdrop: 'static',  keyboard: false}" 
+    aria-labelledby="exampleModalLabel" 
+      aria-hidden="true">
       <div class="modal-dialog modal-side modal-top-right" role="document">
         <!-- <div class="modal-dialog modal-fluid" role="document"> -->
         <div class="modal-content">
@@ -89,7 +92,6 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-
           <!--Body-->
           <div class="modal-body">
             <table class="table table-hover">
@@ -99,7 +101,7 @@
                   <th>מחיר</th>
                 </tr>
               </thead>
-              <tbody *ngIf="expensesList[indexE]">
+              <tbody *ngIf="expensesList[indexE].detail">
                 <tr *ngFor="let e of expensesList[indexE].detail;let i=index">
                   <td>{{e.expenses}}</td>
                   <td>{{e.price}}</td>

@@ -96,7 +96,8 @@
 
   <!-- modal -->
   <div mdbModal #framen="mdbModal" class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog"
-    aria-labelledby="myModalLabel" aria-hidden="true">
+  [config]="{backdrop: 'static',  keyboard: false}" 
+  aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header text-center">
@@ -150,7 +151,9 @@
   <!-- modal -->
 
   <div style="overflow-y: auto" mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1"
-    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" (mouseenter)="addEventCalcDate()">
+    role="dialog"
+    [config]="{backdrop: 'static',  keyboard: false}" 
+    aria-labelledby="myModalLabel" aria-hidden="true" (mouseenter)="addEventCalcDate()">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header text-center">

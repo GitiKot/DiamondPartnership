@@ -1,7 +1,8 @@
 <form [formGroup]='expensesForm' class="form-inline d-flex justify-content-center md-form form-sm mt-0">
 
     <div style="overflow-y: auto" mdbModal #frame1="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
-        aria-labelledby="myModalLabel" aria-hidden="true">
+    [config]="{backdrop: 'static',  keyboard: false}" 
+    aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body mx-3">
