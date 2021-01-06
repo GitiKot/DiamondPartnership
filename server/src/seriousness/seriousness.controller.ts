@@ -18,11 +18,22 @@ export class SeriousnessController {
         return seriousness;
     }
 
-    @Get(':id')
-    getSeriousness(@Param('id') exId: string) {
+    // @Get(':id')
+    // getSeriousness(@Param('id') exId: string) {
         
-        return this.seriousnessService.getSingleSeriousness(exId);
+    //     return this.seriousnessService.getSingleSeriousness(exId);
+    // }
+
+    @Get(':serialName')
+     findBySerailName(@Param('serialName') serialName: string) {
+      console.log("AAA");
+      
+      const ser =  this.seriousnessService.findBySerailNameS(serialName);
+      console.log("seria",ser);
+      
+      return ser;
     }
+
     @Patch(':id')
     async updateSeriousness(  
         // parent:{type:mongoose.Schema.Types.ObjectId,ref:'Partner'},
@@ -39,13 +50,12 @@ export class SeriousnessController {
         @Body('privateSeria') privateSeria: Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,exspensesPrice:number}>}>,
         
     ) {
-console.log(AmountReceivedPartner);
 
         await this.seriousnessService.updateSeriousness(seId,serialName,
             dateBuy,cost, amountReceived, partnersPercent, AmountReceivedPartner, finishDate ,privateSeria,partner);
         return null;
     }
-
+    
     @Delete(':id')
     async removeProduct(@Param('id') prodId: string) {
         await this.seriousnessService.deleteSeriousness(prodId);
