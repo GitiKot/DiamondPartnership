@@ -1,5 +1,5 @@
-import { asNativeElements, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import {  FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ChecksService } from 'src/app/services/checks.service';
 import { Checks } from 'src/app/data/checks';
 import { SalesService } from 'src/app/services/sales.service';
@@ -7,7 +7,6 @@ import { Sale } from 'src/app/data/sale';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { seriousnessService } from 'src/app/services/seriousness.service';
 import { Seriousness } from 'src/app/data/seriousness';
-import { CastExpr } from '@angular/compiler';
 import { CheckboxComponent } from 'angular-bootstrap-md';
 @Component({
   selector: 'app-checks',
@@ -114,6 +113,8 @@ export class ChecksComponent implements OnInit {
           this.serial.partnersPercent / 2;
       }
     })
+    console.log("sum",sum);
+    
     return sum;
   }
 
@@ -160,8 +161,9 @@ export class ChecksComponent implements OnInit {
 
         // this.checksForm.value.sum = this.calcCheckMoney();
         this.checksForm.controls['sum'].setValue(this.calcCheckMoney())
-
-        this.checksForm.controls['publicSerialName'].setValue(this.serial.id)
+        this.checksForm.value.sum=this.calcCheckMoney();
+        // this.checksForm.controls['publicSerialName'].setValue(this.serial.id)
+        this.checksForm.value.publicSerialName=this.serial.id;
         // this.checksForm.value.publicSerialName=this.serial.id;
         // console.log( this.checksForm.value.publicSerialName);
         this.checksForm.controls['date'].setValue(this.calcCheckDate())
