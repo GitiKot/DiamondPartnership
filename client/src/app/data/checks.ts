@@ -7,15 +7,16 @@ export class Checks {
     date: Date;
     sum: number;
     ReceiptOrInvoice: string;
-
+    publicSerialName:string
 
     constructor(id:string, Id: Array<string>,
-        num: number,d: Date, sum: number, ReceiptOrInvoice: string) {
+        num: number,d: Date, sum: number, ReceiptOrInvoice: string,psn:string) {
         this.id=id;
         this.IdSales=Id;
         this.numCheck=num;
         this.date=d;
         this.sum=sum;
        this.ReceiptOrInvoice=ReceiptOrInvoice;
+       this.publicSerialName=psn;
     }
 }

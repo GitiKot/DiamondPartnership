@@ -37,7 +37,7 @@ export class seriousnessService {
       );
   }
   updateSerial(sId:string,serial: Seriousness):Observable<Seriousness> {
-    console.log("AmountReceive: ",serial.amountReceived);
+    console.log("AmountReceivepatner: ",serial.AmountReceivedPartner);
 
     const urlupdate = `${this.seriousnessUrl}/${sId}`;
     console.log(urlupdate);

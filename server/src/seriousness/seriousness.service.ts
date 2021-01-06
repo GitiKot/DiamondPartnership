@@ -114,7 +114,6 @@ export class seriousnessService {
 
     async findBySerailNameS(serialNameIs: string) { 
         const seriousnessOne =  this.seriousnessModel.findOne({serialName:serialNameIs}).exec();
-    console.log("seriousnessOne ",seriousnessOne);
     
      const v = (await seriousnessOne)
      
