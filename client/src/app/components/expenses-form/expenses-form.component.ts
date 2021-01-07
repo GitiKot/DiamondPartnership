@@ -41,10 +41,9 @@ export class ExpensesFormComponent implements OnInit {
       Remarks: [''],
     })
     // this.expensesForm.controls['PublicSerialName'].setValue(this.updateEx.PublicSerialName);
-    console.log("updateex", this.updateEx);
 
     if (this.updateEx != undefined) {
-      console.log("iibfuuuuuuuuuu");
+      console.log("iu");
       console.log(this.updateEx.detail);
       this.expensesForm.patchValue({
         PublicSerialName: this.updateEx.PublicSerialName,
@@ -55,16 +54,12 @@ export class ExpensesFormComponent implements OnInit {
         amount: this.updateEx.amount,
         Remarks: this.updateEx.Remarks,
       });
-      console.log("amount:", this.amount.value);
-
 
       // this.expensesForm.setControl('detail', this.formBuilder.array(this.updateEx.detail));
       this.updateEx.detail.forEach(e => {
         this.editDetail(e.expenses, e.price);
       })
     }
-
-
   }
 
   ngAfterViewInit() {
@@ -74,17 +69,13 @@ export class ExpensesFormComponent implements OnInit {
     let s = event.target.value;
     let ids = document.getElementById(s);
     if (ids) {
-    // this.serialId= ids.getAttribute('data-value');
     this.place=ids.getAttribute('i');
-    console.log("place  ids",this.place,ids);
-    
      }
     else {
       alert("עליך לבחור שם סריה קיימת")
     }
   }
   close() {
-
     if (this.updateEx != undefined) {
       this.showModalOnClick.hide();
       this.showModalOnClick1.hide();
@@ -94,10 +85,7 @@ export class ExpensesFormComponent implements OnInit {
     }
     console.log("close");
     this.updateFlag.emit(0);
-    console.log(this.updateFlag);
-
   }
-
   save() {
 
     if (this.expensesForm.valid) {

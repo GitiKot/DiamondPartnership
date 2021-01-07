@@ -34,8 +34,6 @@ const routes: Routes = [
   children:[
     {path:'',redirectTo:'sales-form',pathMatch: 'full'}  ,
    { path:'modal-form/:type',component:ModalFormComponent,}] ,
-
-
    },
   {
     path: 'seriousness', component: SeriousnessComponent,
@@ -48,16 +46,27 @@ const routes: Routes = [
     ]
   },
   { path: 'nav-bar', component: NavBarComponent },
-  
-  { path: 'partners', component: PartnersComponent 
-  ,children:[
-    {path:'',redirectTo:'partners',pathMatch:'full'},
-    {path: 'modal-form/:type', component:ModalFormComponent,}] 
+  {
+    path: 'partners', component: PartnersComponent,
+    children: [{ path: '', redirectTo: 'partners', pathMatch: 'full' }
+      , {
+        path: 'partners-form', component: PartnersFormComponent, children:
+         [{ path: '', redirectTo: 'partners-form', pathMatch: 'full' }       
+       ,  { path: 'modal-form/:type', component:ModalFormComponent, }]
+    },
+    ]
   },
+
+
+  // { path: 'partners', component: PartnersComponent 
+  // ,children:[
+  //   {path:'',redirectTo:'partners',pathMatch:'full'},
+  //   {path: 'modal-form/:type', component:ModalFormComponent,}] 
+  // },
     
-  { path: 'partners-form', component: PartnersFormComponent,children:[
-    {path:'',redirectTo:'partners-form',pathMatch:'full'},
-    {path: 'modal-form/:type', component:ModalFormComponent,}] },
+  // { path: 'partners-form', component: PartnersFormComponent,children:[
+  //   {path:'',redirectTo:'partners-form',pathMatch:'full'},
+  //   {path: 'modal-form/:type', component:ModalFormComponent,}] },
 
 ];
 

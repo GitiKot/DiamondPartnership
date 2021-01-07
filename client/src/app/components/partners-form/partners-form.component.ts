@@ -1,46 +1,63 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {  FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { from } from 'rxjs';
 import { Partner } from 'src/app/data/partner';
 import { PartnerService } from 'src/app/services/partner.service';
 import { phoneValidator } from 'src/app/validtors/phone.validator';
 import { ContactNumberValidator } from 'src/app/validtors/contact.validator'
+import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 @Component({
   selector: 'app-partners-form',
   templateUrl: './partners-form.component.html',
   styleUrls: ['./partners-form.component.css']
 })
 export class PartnersFormComponent implements OnInit {
-  
-  // partnersList: Array<Partner>;
-  // partnersForm: FormGroup;
-
-
+ 
   partnersList: Array<Partner>;
   partnersForm: FormGroup;
   currectPartner: Partner;
-  constructor(private partnerService: PartnerService, private router: Router) { }
-  ngOnInit()//: void 
-  {
+  @Input() updateP: Partner;
+  @Output() updateFlag = new EventEmitter<number>();
+  @ViewChild('frame') public showModalOnClick: ModalDirective;
 
+  constructor(private partnerService: PartnerService, private router: Router,private formBuilder: FormBuilder) { }
+ 
+  ngOnInit(): void 
+  {
+      this.partnersForm = this.formBuilder.group({
+          name: ['', [Validators.required]],
+          email: ['', [Validators.compose([Validators.required, Validators.email])]],
+          contact:['', [Validators.required]],
+          phone: ['', [Validators.compose([Validators.minLength(9), Validators.pattern('[0][2,3,4,8,9][0-9]{7}')])]],
+          pel: ['', [Validators.compose([Validators.minLength(10), Validators.pattern('[0][5][0-9]{8}'), phoneValidator()])]],
+          fax: ['', [Validators.required]],
+          Remarks: [''],
+        }, ContactNumberValidator(['phone', 'pel', 'email'])); console.log(this.partnersForm.controls.email.value);
+
+      // this.partnersForm = new FormGroup({
+      //   name: new FormControl('', Validators.required),
+      //   email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
+      //   contact: new FormControl('', Validators.required),
+      //   phone: new FormControl('', Validators.compose([Validators.minLength(9), Validators.pattern('[0][2,3,4,8,9][0-9]{7}')])),
+      //   pel: new FormControl('', Validators.compose([Validators.minLength(10), Validators.pattern('[0][5][0-9]{8}'), phoneValidator()])),
+      //   fax: new FormControl('', Validators.required),
+      //   Remarks: new FormControl(''),
+      // }, ContactNumberValidator(['phone', 'pel', 'email'])); console.log(this.partnersForm.controls.email.value);
     
-      this.partnerService.getAllPartners().subscribe(ans => {
-        this.partnersList = ans; console.log("partner");
-      });
-  
-      this.partnersForm = new FormGroup({
-        name: new FormControl('', Validators.required),
-        email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
-        contact: new FormControl('', Validators.required),
-        phone: new FormControl('', Validators.compose([Validators.minLength(9), Validators.pattern('[0][2,3,4,8,9][0-9]{7}')])),
-        pel: new FormControl('', Validators.compose([Validators.minLength(10), Validators.pattern('[0][5][0-9]{8}'), phoneValidator()])),
-        fax: new FormControl('', Validators.required),
-        Remarks: new FormControl(''),
-  
-      }, ContactNumberValidator(['phone', 'pel', 'email'])); console.log(this.partnersForm.controls.email.value);
-    
-    
+      console.log("updateex", this.updateP);
+      if (this.updateP != undefined) {
+        console.log("iu");
+        console.log(this.updateP);
+        this.partnersForm.patchValue({
+          name: this.updateP.name,
+          contact: this.updateP.contact,
+          phone: this.updateP.phone,
+          email: this.updateP.email,
+          pel: this.updateP.pel,
+          fax: this.updateP.fax,
+          Remarks: this.updateP.Remarks,
+        });
+      }
     // var firstInput = document.getElementById('name');
     // var allInput = document.querySelectorAll('input');
     // firstInput.focus();
@@ -69,49 +86,12 @@ export class PartnersFormComponent implements OnInit {
     //       var All = document.getElementsByTagName(element_type);
     //       for (var i = 0; i < All.length; i++) {
     //         if (All[i].getAttribute(attribute) == value) { return All[i]; }
-    //       }
-    //     }
-    //   }
+    //       } }  }
     // }, false))
-
-
-    // // this.partnerService.getAllPartners().subscribe(ans=>this.partnersList=ans);
-    // this.partnersForm = new FormGroup({
-    //   name: new FormControl('', Validators.required),
-    //   email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
-    //   contact: new FormControl('', Validators.required),
-    //   phone: new FormControl('', Validators.compose([Validators.minLength(9), Validators.pattern('[0][2,3,4,8,9][0-9]{7}')])),
-    //   pel: new FormControl('', Validators.compose([Validators.minLength(10), Validators.pattern('[0][5][0-9]{8}'), phoneValidator()])),
-    //   fax: new FormControl('', Validators.required),
-    //   Remarks: new FormControl(''),
-
-    // }, ContactNumberValidator(['phone', 'pel', 'email'])); console.log(this.partnersForm.controls.email.value);
   }
-
-  // save() {
-
-  //   alert("האם הנך בטוח במה שאתה עושה");
-  //   if (this.partnersForm.valid) {
-  //     const p = new Partner();
-  //     this.partnerService.addPartner(this.partnersForm.value)
-  //       .subscribe(a => {
-  //         this.router.navigate(['partners-form/modal-form', 'שותף'])
-  //         this.partnersForm.reset();
-  //       }, () => {
-  //         console.log("error");
-  //       });
-  //   }
-
-//  this.router.navigate(['partners-form']);
-//   }
-//   cancel() {
-//     this.router.navigate(['/partners']);
-//   }
- 
-
-  
-
- 
+  ngAfterViewInit() {
+    this.showModalOnClick.show();
+  }
   get name() {
     return this.partnersForm.get('name');
   }
@@ -132,29 +112,54 @@ export class PartnersFormComponent implements OnInit {
   }
   get Remarks() {
     return this.partnersForm.get('Remarks');
-  }
+  } 
   save(){
-    // alert("האם הנך בטוח במה שאתה עושה");
+  
     if (this.partnersForm.valid) {
-      // const p = new Partner();
       this.partnerService.addPartner(this.partnersForm.value)
         .subscribe(a => {
-          this.router.navigate(['partners-form/modal-form', 'שותף'])  
-          this.partnersForm.reset();
+          this.router.navigate(['partners/partners-form/modal-form', 'שותף'])  
         }, () => {
           console.log("error");
         });
     }
-
+    else{
+      alert("חסרים נתונים");
+    }
+    this.showModalOnClick.hide();
+    this.updateFlag.emit(1);
+    this.router.navigate(['']);
   }
-  resetform() {
-   this.partnersForm.reset();
+  update() {
+
+    if (this.partnersForm.valid) {
+
+      this.partnerService.updatePartner(this.updateP.id, this.partnersForm.value).subscribe(() => {
+        this.router.navigate(['partners/partners-form/modal-form', 'שותף'])
+      }, () => {
+        console.log("error");
+      }) 
+      this.showModalOnClick.hide();
+      this.updateFlag.emit(1);
+     this.close();
+    }
+    else {
+      alert("חסרים נתונים");
+    }
+  }
+  close() {
+    if (this.updateP != undefined) {
+      this.showModalOnClick.hide();
+    }
+    else {
+    }
+    console.log("close");
+    this.updateFlag.emit(0);
   }
   deletePartner(p) {
     var div = document.getElementById('alert');
     div.style.visibility = "visible";
     this.currectPartner = p;
-
   }
   ok(s) {
     console.log("ok");

@@ -22,8 +22,8 @@
       <table id="checksTable" class="table table-hover">
         <!--mdbTable class="z-depth-1"id="myTable" -->
         <tr class="header">
-          <th></th>
-          <th></th>
+          <th style="width: 53px;"></th>
+          <th style="width: 53px;"></th>
           <th class="th-sm">תאריך צ'ק</th>
           <th>סכום צ'ק</th>
           <th>קבלה/חשבונית</th>
@@ -147,7 +147,7 @@
             <td>{{s.weight}}</td>
             <td>{{s.pricePerCarat | currency:"USD":true}}</td>
             <td> {{s.weight*s.pricePerCarat | currency:"USD":true}}</td>
-            <td *ngIf="serial.cost>=serial.AmountReceivedPartner">
+            <td *ngIf="[serial].cost>=serial.AmountReceivedPartner">
               {{s.weight*s.pricePerCarat*serial.partnersPercent/100 | currency:"USD":true}}</td>
             <td *ngIf="serial.AmountReceivedPartner>serial.cost"> {{s.weight*s.pricePerCarat/2 |
               currency:"USD":true}}</td>

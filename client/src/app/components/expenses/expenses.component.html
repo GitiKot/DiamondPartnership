@@ -15,21 +15,19 @@
       </svg>&nbsp;
       <input type="text" id="publicSerialName" class="form-control form-control-sm ml-3" 
       (keyup)="filterNameSeria()"  placeholder="סריה כללית" title="חיפוש לפי סריה כללית">
-      <!-- <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
-      (click)="f()"  [routerLink]="['expenses-form']" mdbWavesEffect id="newexpenses" >
-        הוצאה חדשה
-      </button> -->
       <button type="button" mdbBtn color="blue" rounded="true" data-toggle="modal" data-target="#basicExample"
       (click)="f()" mdbWavesEffect id="newexpenses" >
         הוצאה חדשה
       </button>
+      <a href="expenses" style=" position: fixed; bottom: 25px; right: 25px;">
+        <i class="fa fa-arrow-circle-up fa-3x" aria-hidden="true"></i></a>
       <router-outlet></router-outlet>
     </div>
     <table id="expensesTable" class="table table-hover">
-      <thead>
+    <thead>
         <tr class="header"> 
-          <th></th>
-          <th></th>
+          <th style="width: 53px;"></th>
+          <th style="width: 53px;"></th>
           <th style="width: 150px;">שם סריה כללית</th>
           <th>תאריך</th>
           <th style="width: 270px;">האם קיבלתי צ'ק או לקזז הצ'ק הבא</th>
@@ -84,7 +82,7 @@
     [config]="{backdrop: 'static',  keyboard: false}" 
     aria-labelledby="exampleModalLabel" 
       aria-hidden="true">
-      <div class="modal-dialog modal-side modal-top-right" role="document">
+      <div class="modal-dialog modal-top" role="document">
         <!-- <div class="modal-dialog modal-fluid" role="document"> -->
         <div class="modal-content">
           <div class="modal-header text-center">

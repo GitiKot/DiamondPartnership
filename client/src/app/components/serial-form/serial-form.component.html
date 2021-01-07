@@ -30,10 +30,10 @@
                         <div class="col-4 col-sm-6 col-example">
                             <div class="md-form mb-5" >
                                 <input *ngIf="!(updateSerial)" type="date" id="form34" class="form-control" mdbInput
-                                    mdbValidate [formControl]="dateBuy">
+                                    mdbValidate [formControl]="dateBuy" max="{{this.serialForm.value.finishDate}}">
                                 <input *ngIf="updateSerial" type="date" id="form34" class="form-control" mdbInput
                                     mdbValidate [formControl]="dateBuy"
-                                    [ngModel]="updateSerial.dateBuy | date:'yyyy-MM-dd'">
+                                    [ngModel]="updateSerial.dateBuy | date:'yyyy-MM-dd'" max="{{this.serialForm.value.finishDate}}">
                                 <label for="form34"> תאריך קניה</label>
                                 <mdb-error *ngIf="dateBuy.invalid && (dateBuy.dirty || dateBuy.touched)">
                                 </mdb-error>
@@ -79,7 +79,7 @@
                         <div class="col-8 col-sm-6 col-example" *ngIf="closeSerial.checked" >
                             <div class="md-form mb-8 ">
                                 <input *ngIf="!(updateSerial)" type="date" id="form34" class="form-control" mdbInput
-                                    mdbValidate [formControl]="finishDate" name="setTodaysDate" min="{{this.serialForm.value.dateBuy}}">
+                                    mdbValidate [formControl]="finishDate" min="{{this.serialForm.value.dateBuy}}">
                                 <input *ngIf="updateSerial" type="date" id="form34" class="form-control" mdbInput
                                     mdbValidate [formControl]="finishDate"  min="{{this.serialForm.value.dateBuy}}"
                                     [ngModel]="updateSerial.finishDate | date:'yyyy-MM-dd'">

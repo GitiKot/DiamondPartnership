@@ -248,6 +248,53 @@ export class SalesComponent implements OnInit {
       }
     }
   }
+
+
+
+
+
+
+
+
+  public chartType: string = 'bar';
+
+  public chartDatasets: Array<any> = [
+    { data: [1500000, 125000], label: 'הכותרת' }
+  ];
+
+  public chartLabels: Array<any> = ['קוסט', 'ניתן לשותף'];
+
+  public chartColors: Array<any> = [
+    {
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+      ],
+      borderWidth: 3,
+    }
+  ];
+
+  public chartOptions: any = {
+    responsive: true
+  };
+  public chartClicked(e: any): void { }
+  public chartHovered(e: any): void { }
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 

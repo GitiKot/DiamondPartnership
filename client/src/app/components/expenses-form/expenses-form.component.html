@@ -20,32 +20,11 @@
                     <div class="modal-body mx-3">
 
                         <div class="row">
-                            <div class="col-8 col-sm-6 col-example">
-                                <!-- <div class="md-form mb-5">
-                                    <input type="text" id="form34" class="form-control" mdbInput mdbValidate
-                                        [formControl]="PublicSerialName">
-                                    <label for="form34">שם סריה כללית</label>
-                                    <mdb-error
-                                        *ngIf="PublicSerialName.invalid && (PublicSerialName.dirty || PublicSerialName.touched)">
-                                    </mdb-error>
-                                    <mdb-success
-                                        *ngIf="PublicSerialName.valid && (PublicSerialName.dirty || PublicSerialName.touched)">
-                                    </mdb-success>
-                                </div> -->
-<!--  -->
-                                <!-- <input style="border: none;" type="text" id="selectSerial" tabindex={{i*5+6}} name="example" list="List"
-                                [ngModelOptions]="{standalone: true}"  [(ngModel)]="selectedSerial" 
-                                placeholder="בחר" (change)="selectedSaleId($event)">
-                            <datalist id="List">
-                                <option id="{{s.serialName}}" *ngFor="let s of seriousnessList ;let i=index" 
-                                [attr.data-value]="s.id" [attr.i]="i" >{{s.serialName}}
-                                </option>
-                            </datalist> -->
+                            <div class="col-8 col-sm-6 col-example">                     
                                 <div class="md-form mb-5"> 
-                                    <label for="form34">שם סריה כללית</label>
                                     <input [formControl]="PublicSerialName" type="text" id="selectExp" name="exp" list="List"
                                         [ngModelOptions]="{standalone: true}"
-                                        placeholder="בחר" (change)="selectedExpensesId($event)">
+                                        placeholder="בחר שם סריה כללית" (change)="selectedExpensesId($event)">
                                     <datalist id="List">
                                         <!-- <option *ngIf="updateSerial" value="{{updateSerial.partner.name}}">
                                             {{updateSerial.partner.name}}</option> -->
@@ -58,7 +37,6 @@
                                     <mdb-success *ngIf="PublicSerialName.valid && (PublicSerialName.dirty || PublicSerialName.touched)">
                                     </mdb-success>
                                 </div>
-
 
                             </div>
                             <div class="col-4 col-sm-6 col-example">
@@ -125,8 +103,6 @@
                                         <textarea type="text" id="form8" class="md-textarea form-control" rows="1"
                                             mdbInput mdbValidate [formControl]="Remarks"></textarea>
                                         <label for="form8">הערות</label>
-                                        <!-- <mdb-error *ngIf="Remarks.invalid && (Remarks.dirty || Remarks.touched)"> -->
-                                        <!-- </mdb-error> -->
                                         <mdb-success *ngIf="Remarks.valid && (Remarks.dirty || Remarks.touched)">
                                         </mdb-success>
                                     </div>
@@ -140,7 +116,7 @@
                         <div class="modal-footer d-flex justify-content-center">
                             <!--Footer-->
                             <!-- <div class="modal-footer"> -->
-                            <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
+                            <div> <button type="button" class="btn btn-primary" data-dismiss="modal"
                                     (click)="close()">ביטול</button>
                                 <button *ngIf="!(updateEx)" class="btn btn-primary" (click)=save()
                                     (click)="close()">שמירה</button>
@@ -148,10 +124,6 @@
                                     (click)="close()">שמירה</button>
                             </div>
                         </div>
-
-                        <!-- <button type="button" class="btn btn-primary" (click)="frame2.show()" data-toggle="modal"
-                    data-target="#modalCart">+</button> -->
-
                     </div>
                 </div>
             </div>
@@ -177,7 +149,6 @@
                                 <tbody>
                                     <div formArrayName="detail">
                                         <div *ngFor="let d of detail.controls; let i=index">
-                                            <!-- [formGroup]="detail.controls[i]" -->
                                             <div [formGroupName]="i">
                                                 <tr class="header" *ngIf="i=='0'">
                                                     <th>שם הוצאה</th>
@@ -196,7 +167,6 @@
 
                                 </tbody>
                             </table>
-
                         </div>
 
                         <!-- <div class="modal-footer"> -->
@@ -208,7 +178,6 @@
                         </div>
                         <!-- </div> -->
                     </div>
-
                 </div>
             </div>
         </div>
