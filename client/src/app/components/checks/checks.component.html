@@ -49,7 +49,6 @@
             <td><button type="button" class="btn btn-primary" (click)="updateCi(ci)" (click)="framec.show()"
                 data-toggle="modal" data-target="#modalCart" title="פרטי מכירות">+</button></td>
           </tr>
-
         </tbody>
       </table>
     </div>
@@ -166,14 +165,7 @@
 
     </div>
 
-    <div id="row">
-      <span>סה"כ מכירות: </span>&nbsp;<input class="input" mdbInput mdbValidate disabled
-        placeholder="{{OpenSalesList.length+ClosedSalesList.length}}">
-      <span>צ'קים סגורים: </span>&nbsp;<input *ngIf="checksList" class="input" mdbInput mdbValidate disabled
-        placeholder="{{checksList.length}}">
-      <span>סה"כ מכירות פתוחות: </span><input class="input" mdbInput mdbValidate disabled
-        placeholder="{{OpenSalesList.length}}">
-    </div>
+  
   </div>
 
   <div mdbModal #framen="mdbModal" class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog"
@@ -230,5 +222,12 @@
       </div>
     </div>
   </div>
-
+  <div id="row">
+      <span>סה"כ מכירות: </span>&nbsp;<input class="input" mdbInput mdbValidate disabled
+        placeholder="{{OpenSalesList.length+ClosedSalesList.length}}">
+      <span>צ'קים סגורים: </span>&nbsp;<input *ngIf="checksList" class="input" mdbInput mdbValidate disabled
+        placeholder="{{checksList.length}}">
+      <span>סה"כ מכירות פתוחות: </span><input class="input" mdbInput mdbValidate disabled
+        placeholder="{{OpenSalesList.length}}">
+    </div>
 </form>

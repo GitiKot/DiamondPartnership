@@ -72,7 +72,6 @@ export class ChecksComponent implements OnInit {
             }
           }
         )
-      // תתקשרי אלי לטלפון
     }
   }
   calcCheckDate(): Date {
@@ -96,13 +95,7 @@ export class ChecksComponent implements OnInit {
     finalDate.setDate(finalDate.getDate() + totalSumDate)
     return finalDate;
   }
-  // getSeria() {
-  //   let serial: Seriousness, saleOne;
-
-  //   saleOne = <unknown>this.OpenSalesList[0].publicSerialName;
-  //   serial = <Seriousness>saleOne;
-  //   return serial;
-  // }
+  
   calcCheckMoney(): number {
     let sum = 0;
     this.getSelectedRows().forEach(s => {
@@ -148,25 +141,18 @@ export class ChecksComponent implements OnInit {
       for (let index = 0; index < this.getSelectedRows().length; index++) {
         this.checksForm.value.IdSales.push(this.getSelectedRows()[index].id)
         sale = this.getSelectedRows()[index];
-        //לזכור להחזיר
-        // this.updateSale(sale)
-        // if (index == 0) {
-        //   this.checksForm.value.publicSerialName = sale.publicSerialName
-        // }
+        this.updateSale(sale)
+      
       }
-      // saleOne = <unknown>this.getSelectedRows()[0].publicSerialName;
-      // serial = <Seriousness>saleOne;
+     ;
     
 
-        // this.checksForm.value.sum = this.calcCheckMoney();
         this.checksForm.controls['sum'].setValue(this.calcCheckMoney())
 
         this.checksForm.controls['publicSerialName'].setValue(this.serial.id)
-        // this.checksForm.value.publicSerialName=this.serial.id;
-        // console.log( this.checksForm.value.publicSerialName);
+    
         this.checksForm.controls['date'].setValue(this.calcCheckDate())
 
-      // this.checksForm.value.date = this.calcCheckDate();
       console.log(  this.checksForm.value);
       if (this.checksForm.valid) {   
              this.updateSerial();
