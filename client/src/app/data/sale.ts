@@ -15,14 +15,6 @@ export class Sale {
     rawOrPolished: string;
     numOfDate:number;
     isOpen:Boolean;
-// invoiceNumber: new FormControl('', Validators.required),
-// publicSerialName: new FormControl('', Validators.required),
-// privateSerialName: new FormControl('', Validators.required),
-// stoneName: new FormControl('', Validators.required),
-// weight: new FormControl('', Validators.required),
-// pricePerCarat: new FormControl('', Validators.required),
-// rawOrPolished: new FormControl('', Validators.required)
-
 
 
 

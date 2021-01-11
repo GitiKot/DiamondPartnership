@@ -15,10 +15,23 @@
     <input type="text" id="publicSerialName" (keyup.enter)="getSaleBySeria($event)"
       class="form-control form-control-sm ml-3 " placeholder="סריה כללית" title="חיפוש לפי שם סריה כללית">
   </div>
+  <div *ngIf="serial" >
+    <canvas mdbChart
+        [chartType]="chartType"
+        [datasets]="chartDatasets"
+        [labels]="chartLabels"
+        [colors]="chartColors"
+        [options]="chartOptions"
+        [legend]="true"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)">
+    </canvas>
+  </div>
   <div *ngIf="checksList">
     <button class="btn" (click)="test.toggle()"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
     </button>
     <div mdbCollapse #test="bs-collapse">
+      <h5>שיקים סגורים</h5>
       <table id="checksTable" class="table table-hover">
         <!--mdbTable class="z-depth-1"id="myTable" -->
         <tr class="header">
@@ -32,10 +45,10 @@
         </tr>
         <tbody>
           <tr *ngFor="let c of checksList;let ci=index" (mouseenter)="toolbar(ci)" (mouseleave)="toolbar1(ci)"
-            id="row{{ci}}">
+            id="row{{ci}}" >
             <td> <button id="del{{ci}}" class="del" (click)="deleteCheck(c)" title="מחיקה">
                 <i class="fa fa-trash" id="trash" aria-hidden="true"></i></button> </td>
-            <td> <button id="update{{ci}}" class="update" (click)="updateModal(c)" title="עדכון">
+            <td > <button id="update{{ci}}" class="update" (click)="updateModal(c)" title="עדכון">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                   class="bi bi-brush-fill" viewBox="0 0 16 16">
                   <path fill-rule="evenodd"
@@ -46,14 +59,14 @@
             <td>{{c.sum | currency:"USD":true}}</td>
             <td>{{c.ReceiptOrInvoice}}</td>
             <td>{{c.numCheck}}</td>
-            <td><button type="button" class="btn btn-primary" (click)="updateCi(ci)" (click)="framec.show()"
+            <td><button type="button" class="btn btn-primary"(mouseenter)="updateCi(c)"  (click)="framec.show()"
                 data-toggle="modal" data-target="#modalCart" title="פרטי מכירות">+</button></td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
-  <div mdbModal #framec="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
+  <div  mdbModal #framec="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-side modal-top-right" role="document">
       <div class="modal-content">
@@ -63,40 +76,38 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+            <i  style="position: 40px;" class="fa fa-print" aria-hidden="true"></i>
 
         <div class="modal-body">
           <table class="table table-hover">
+
             <thead class="header">
               <tr>
-                <th>id</th>
-                <th>תאריך תשלום</th>
                 <th>שם סריה פרטית</th>
                 <th>שם אבן</th>
                 <th>קרט</th>
                 <th>מחיר</th>
                 <th>סך מכירה</th>
-                <th>סך אחוזים לשותף</th>
+                <th>סך  לשותף</th>
               </tr>
             </thead>
             <tbody *ngIf="checksList">
-              <tr *ngFor="let s of getSalesFromId([indexC]);let i=index">
-                <td>{{s.id}}</td>
-                <td>{{s.date| date:'dd/MM/yy'}}</td>
+              <tr *ngFor="let s of getSalesFromId();let i=index">
                 <td>{{s.privateSerialName}}</td>
                 <td>{{s.stoneName}}</td>
                 <td>{{s.weight}}</td>
-                <td>{{s.pricePerCarat}}</td>
-                <td>{{s.weight*s.pricePerCarat}}</td>
-                <td>אחוזים לשותף</td>
-              </tr>
+                <td>{{s.pricePerCarat | currency:"USD":true}}</td>
+                <td>{{s.weight*s.pricePerCarat | currency:"USD":true}}</td>
+                <td *ngIf="[serial].cost>=[serial].AmountReceivedPartner">
+                  {{s.weight*s.pricePerCarat*serial.partnersPercent/100 | currency:"USD":true}}</td>
+                <td *ngIf="[serial].AmountReceivedPartner>[serial].cost">
+                   {{s.weight*s.pricePerCarat/2 |
+                  currency:"USD":true}}</td>         
+               </tr>
             </tbody>
           </table>
         </div>
-        <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
-            (click)="framec.hide()">ביטול</button>
-          <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
-            (click)="framec.hide()">להדפסה</button>
-        </div>
+       
       </div>
     </div>
   </div>
@@ -116,9 +127,11 @@
       <input type="text" id="private" class="form-control form-control-sm ml-3 " (keyup)="searchPrivate()"
         placeholder="חיפוש סריה פרטית">
     </div>
+    <h5>שיקים פתוחים</h5>
 
     <div class="container">
       <table id="salesTable" class="table table-hover">
+
         <thead>
           <tr class="header">
             <td><input type="checkbox" id="selectAll" (click)="onRowClick('all')"></td>
@@ -132,24 +145,27 @@
             <th>מחיר לקרט</th>
             <th>סה"כ</th>
             <th>לשותף</th>
-            <th>גלם/מלוטש</th>
+            <th>גלם/מלוטש</th> 
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let s of OpenSalesList" [class.selectedRow]="rowIsSelected(s.id)" style="cursor: pointer;">
+         <tr><p>{{(serial).cost}}</p>
+          <p>{{(serial).AmountReceivedPartner}}</p></tr>
+          <tr *ngFor="let s of OpenSalesList; let i=index" [class.selectedRow]="rowIsSelected(s.id)" style="cursor: pointer;">
             <td><input id="cbox" type="checkbox" (click)="onRowClick(s.id)"></td>
             <td>{{s.date | date:'dd/MM/yy'}}</td>
             <td>{{s.numOfDate}}</td>
-            <td>לעשות פונקציה</td>
+            <td> {{dateper[i] | date:'dd/MM/yy'}}</td>
             <td>{{s.invoiceNumber}}</td>
             <td>{{s.privateSerialName}}</td>
             <td>{{s.stoneName}}</td>
             <td>{{s.weight}}</td>
             <td>{{s.pricePerCarat | currency:"USD":true}}</td>
             <td> {{s.weight*s.pricePerCarat | currency:"USD":true}}</td>
-            <td *ngIf="[serial].cost>=serial.AmountReceivedPartner">
-              {{s.weight*s.pricePerCarat*serial.partnersPercent/100 | currency:"USD":true}}</td>
-            <td *ngIf="serial.AmountReceivedPartner>serial.cost"> {{s.weight*s.pricePerCarat/2 |
+            <td *ngIf="(serial).cost>=(serial).AmountReceivedPartner">
+
+              {{s.weight*s.pricePerCarat*(serial).partnersPercent/100 | currency:"USD":true}}</td>
+            <td *ngIf="(serial).AmountReceivedPartner>(serial).cost"> {{s.weight*s.pricePerCarat/2 |
               currency:"USD":true}}</td>
             <td>{{s.rawOrPolished}}</td>
             <td *ngIf="s.admin==false" class="row-right"></td>

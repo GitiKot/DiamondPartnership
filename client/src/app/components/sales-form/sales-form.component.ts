@@ -1,4 +1,4 @@
-import { ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -57,6 +57,7 @@ export class SalesFormComponent implements OnInit {
     });
 
     // var radioRaw= document.getElementById('raw');
+this.salesForm.controls['numOfDate'].setValue(60);
     document.getElementById('raw').setAttribute('checked', 'true')
   }
   numStonesFunc() {

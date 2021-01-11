@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import {  FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ChecksService } from 'src/app/services/checks.service';
 import { Checks } from 'src/app/data/checks';
 import { SalesService } from 'src/app/services/sales.service';
@@ -14,6 +14,39 @@ import { CheckboxComponent } from 'angular-bootstrap-md';
   styleUrls: ['./checks.component.css']
 })
 export class ChecksComponent implements OnInit {
+  
+  public chartType: string = 'bar';
+
+  public chartDatasets: Array<any>=[];
+
+  public chartLabels: Array<any> = ['קוסט','ניתן לשותף','נותר לקוסט','סכום התקבל'];
+
+  public chartColors: Array<any> = [
+    {
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(88, 162, 235, 1)',
+        'rgba(54, 55, 235, 1)',
+        'rgba(5, 77, 235, 1)',
+
+      ],
+      borderWidth: 3,
+    }
+  ];
+
+  public chartOptions: any = {
+    responsive: true
+  };
+  public chartClicked(e: any): void { }
+  public chartHovered(e: any): void { }
+
+
+
+
   @ViewChild('framen') public showModalOnClick: ModalDirective;
   checksForm: FormGroup;
   untilcost = false
@@ -21,12 +54,11 @@ export class ChecksComponent implements OnInit {
   OpenSalesList: Array<Sale>;
   ClosedSalesList: Array<Sale>;
   c: Checks;
-  indexC = 0;
   updateCheck: Checks;
   currentChecks: Checks;
   selectedRowIds: Set<string> = new Set<string>();
   serial: Seriousness
-
+  dateper = [];
   constructor(private salesService: SalesService, private checksService: ChecksService,
     private formBuilder: FormBuilder, private seriousnessService: seriousnessService) { }
 
@@ -42,7 +74,7 @@ export class ChecksComponent implements OnInit {
     this.OpenSalesList = new Array();
     this.ClosedSalesList = new Array();
     if (this.updateCheck != undefined) {
-      // console.log("updatecheck");
+
       this.checksForm.patchValue({
         ReceiptOrInvoice: this.updateCheck.ReceiptOrInvoice,
         date: this.updateCheck.date,
@@ -94,7 +126,7 @@ export class ChecksComponent implements OnInit {
     finalDate.setDate(finalDate.getDate() + totalSumDate)
     return finalDate;
   }
-  
+
   calcCheckMoney(): number {
     let sum = 0;
     this.getSelectedRows().forEach(s => {
@@ -106,7 +138,7 @@ export class ChecksComponent implements OnInit {
           this.serial.partnersPercent / 2;
       }
     })
-    console.log("sum",sum);
+
     
     return sum;
   }
@@ -120,49 +152,77 @@ export class ChecksComponent implements OnInit {
   }
   updateSale(sale: Sale) {
     sale.isOpen = false;
-    this.salesService.updateSale(sale.id, sale);
+    this.salesService.updateSale(sale.id, sale).subscribe();
+    this.ClosedSalesList.push(sale);
   }
   updateSerial() {
-    this.serial.AmountReceivedPartner =this.checksForm.controls['sum'].value ;
-    console.log("AmountReceivedPartner",this.serial.AmountReceivedPartner);
+    this.serial.AmountReceivedPartner += this.checksForm.controls['sum'].value;
+    this.seriousnessService.updateSerial(this.serial.id, this.serial).subscribe(() => {
 
-    this.seriousnessService.updateSerial(this.serial.id, this.serial).subscribe(()=>{
-      console.log("sss");
-      
-    },()=>{
+      console.log("dnew",this.serial);
+      this.chartDatasets=[]
+      this.chartDatasets.push({ data: [
+        this.serial.cost, this.serial.AmountReceivedPartner,this.serial.cost-this.serial.AmountReceivedPartner,this.serial.amountReceived],label: 'הסכום בדולרים '
+       })
+          }, () => {
       console.log("error");
-      
+
     })
+  }
+  getSalesFromId(): Array<Sale> {
+    let arr: Array<Sale>;
+    arr = new Array();
+
+    let d = this.ClosedSalesList.forEach(sale => {
+      this.currentChecks.IdSales.forEach(idCeck => {
+        if (sale.id == idCeck)
+          arr.push(sale)
+      })
+    })
+
+
+    // this.currentChecks.IdSales.forEach(id => {
+    //   arr.push(this.ClosedSalesList.find(sale => {
+    //     sale.id == id
+    //   }))
+
+    // })
+
+    // for (let c = 0; c < this.checksList.length; c++) {
+    //   if (this.checksList[Cid].id == this.checksList[c].id) {
+    //     //  אולי אפשר לעשות פונ אחרת 
+    //     let s = 0;
+    //     while (this.checksList[c].IdSales[s]) {
+    //       for (let i = 0; i < this.ClosedSalesList.length; i++) {
+    //         if (this.checksList[c].IdSales[s] == this.ClosedSalesList[i].id) {
+    //           arr.push(this.ClosedSalesList[i]);
+    //         }
+    //       }
+    //       s++;
+    //     }
+    //   }
+    // }
+    // console.log("arr", arr);
+
+    return arr;
   }
   save() {
     alert("האם הנך בטוח שברצונך לשמור  צ'ק זה ? ");
-   
+    let sale: Sale;
+    for (let index = 0; index < this.getSelectedRows().length; index++) {
+      this.checksForm.value.IdSales.push(this.getSelectedRows()[index].id)
+      sale = this.getSelectedRows()[index];
+      this.updateSale(sale);
+    }
+    ;
+    this.checksForm.controls['sum'].setValue(this.calcCheckMoney())
+    this.checksForm.controls['publicSerialName'].setValue(this.serial.id)
+    this.checksForm.value.sum = this.calcCheckMoney();
+    this.checksForm.controls['date'].setValue(this.calcCheckDate())
+    this.checksForm.controls['publicSerialName'].setValue(this.serial.id)
 
-      let sale: Sale;
-      for (let index = 0; index < this.getSelectedRows().length; index++) {
-        this.checksForm.value.IdSales.push(this.getSelectedRows()[index].id)
-        sale = this.getSelectedRows()[index];
-        this.updateSale(sale)
-      
-      }
-     ;
-    
-
-        this.checksForm.controls['sum'].setValue(this.calcCheckMoney())
-
-        this.checksForm.controls['publicSerialName'].setValue(this.serial.id)
-    
-        this.checksForm.value.sum=this.calcCheckMoney();
-        // this.checksForm.controls['publicSerialName'].setValue(this.serial.id)
-        this.checksForm.value.publicSerialName=this.serial.id;
-        // this.checksForm.value.publicSerialName=this.serial.id;
-        // console.log( this.checksForm.value.publicSerialName);
-        this.checksForm.controls['date'].setValue(this.calcCheckDate())
-
-      console.log(  this.checksForm.value);
-      if (this.checksForm.valid) {   
-             this.updateSerial();
-
+    if (this.checksForm.valid) {
+      this.updateSerial();
       this.checksService.addChecks(this.checksForm.value).subscribe(c => {
         this.checksList.push(c);
         this.spliceOpenSaleList();
@@ -170,7 +230,6 @@ export class ChecksComponent implements OnInit {
       this.checksForm.reset();
     } else {
       alert("חלק מהנתונים לא נכון")
-      console.log(  this.checksForm.value);
 
     }
   }
@@ -184,37 +243,53 @@ export class ChecksComponent implements OnInit {
       });
   }
   getSaleBySeria(e) {
+    let i = 0;
     this.OpenSalesList = [];
     this.ClosedSalesList = [];
     this.salesService.findBySerailName(e.target.value).subscribe(ans => {
       ans.forEach(s => {
-        if (s.isOpen == true) { this.OpenSalesList.push(s); }
+        if (s.isOpen == true) {
+          this.OpenSalesList.push(s);
+          let saleDate = new Date(s.date);
+          let d = new Date();
+          d.setDate(saleDate.getDate() + s.numOfDate);
+          this.dateper[i] = d;
+          i++;
+        }
         else { this.ClosedSalesList.push(s); }
       })
-
       this.checksService.findBySerailName(e.target.value).subscribe(ans => {
-
         this.checksList = ans;
+        if (this.checksList.length > 0)
+          this.currentChecks = this.checksList[0];
       })
     });
     this.seriousnessService.findBySerailName(e.target.value).subscribe(ans => {
       this.serial = ans;
-      console.log(this.serial);
-    }
-    )
+      // public chartLabels: Array<any> = ['קוסט','ניתן לשותף','נותר לקוסט','סכום התקבל'];
+// 
+      this.chartDatasets=[];
+      this.chartDatasets.push({ data: [
+        this.serial.cost, this.serial.AmountReceivedPartner,this.serial.cost-this.serial.AmountReceivedPartner,this.serial.amountReceived],label: 'הסכום בדולרים '
+       }
+      )
+      // { data: [1500000, 125000], label: 'הכותרת' }
+
+    })
   }
   resetform() {
     this.checksForm.reset();
   }
-  updateCi(i: number) {
-    this.indexC = i;
+  updateCi(c: Checks) {
+    this.currentChecks = c;
+
+    
   }
   updateModal(ch) {
     this.updateCheck = ch;
     this.showModalOnClick.show();
   }
   update() {
-
     alert("האם ברצונך לשמור את הנתונים")
     if (this.checksForm.valid) {
       // console.log("aaaaaaaaaaaaaaaa:",this.sum);
@@ -246,9 +321,7 @@ export class ChecksComponent implements OnInit {
         (((document.getElementById('selectAll') as Element) as Input) as CheckboxComponent).checked = false
         this.OpenSalesList.forEach(s => {
           this.selectedRowIds.delete(s.id)
-
         })
-
         cbox.forEach(c => {
           (((c as Element) as Input) as CheckboxComponent).checked = false;
         })
@@ -257,12 +330,10 @@ export class ChecksComponent implements OnInit {
         this.OpenSalesList.forEach(s => {
           this.selectedRowIds.add(s.id)
         })
-
         cbox.forEach(c => {
           (((c as Element) as Input) as CheckboxComponent).checked = true
         })
       }
-
     }
     else {
       if (this.selectedRowIds.has(id)) {
@@ -279,31 +350,13 @@ export class ChecksComponent implements OnInit {
   getSelectedRows() {
     return this.OpenSalesList.filter(x => this.selectedRowIds.has(x.id));
   }
-  getSalesFromId(Cid: number) {
-    let arr: Array<Sale>;
-    arr = new Array();
-    for (let c = 0; c < this.checksList.length; c++) {
-      if (this.checksList[Cid].id == this.checksList[c].id) {
-        //  אולי אפשר לעשות פונ אחרת 
-        let s = 0;
-        while (this.checksList[c].IdSales[s]) {
-          for (let i = 0; i < this.ClosedSalesList.length; i++) {
-            if (this.checksList[c].IdSales[s] == this.ClosedSalesList[i].id) {
-              arr.push(this.ClosedSalesList[i]);
-            }
-          }
-          s++;
-        }
-      }
-    }
-    return arr;
-  }
 
-  deleteCheck(c: Checks) {
+
+  deleteCheck() {
 
     var div = document.getElementById('alert');
     div.style.visibility = "visible";
-    this.currentChecks = c;
+    // this.currentChecks = c;
   }
 
   ok(c) {
