@@ -15,8 +15,8 @@ export class Sale {
     rawOrPolished: string;
     numOfDate:number;
     isOpen:Boolean;
-
-
+sumPerPartner:Number;
+sum:Number
 
 
     constructor(d?: Date, 
@@ -29,7 +29,9 @@ export class Sale {
         pricePerCarat?: number,
         numOfDate?:number,
         rawOrPolished?: string,
-        isOpen?:boolean)
+        isOpen?:boolean,
+        sumPerPartner?:number,
+        sum?:number)
          {
         this.date = d;
         this.weight = w;
@@ -43,6 +45,8 @@ export class Sale {
         this.pricePerCarat = pricePerCarat;
         this.invoiceNumber = invoice;
        this.isOpen=isOpen;
+       this.sumPerPartner=sumPerPartner;
+       this.sum = sum
         
     }
   

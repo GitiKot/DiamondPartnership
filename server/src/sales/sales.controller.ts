@@ -42,11 +42,13 @@ export class SalesController {
     @Body('pricePerCarat') spricePerCarat: number,
     @Body('rawOrPolished') srawOrPolished: string,
     @Body('isOpen') sisOpen: boolean,
+    @Body('sumPerPartner') ssumPerPartner: Number,
+
   ) {
    
 
     const sale = await this.salesService.updateSale(sId, sdate, snumOfDate, sinvoiceNumber, spublicSerialName,
-      sprivateSerialName, sstoneName, sweight, spricePerCarat, srawOrPolished, sisOpen);
+      sprivateSerialName, sstoneName, sweight, spricePerCarat, srawOrPolished, sisOpen,ssumPerPartner);
     return sale;
     // return this.salesService.updateSale(id, sale);
     // return null;
@@ -64,26 +66,8 @@ export class SalesController {
 
 
 
-  // @Patch(':id')
-  // async updatePartner(
+ 
 
-  //   @Param('id') partId: string,
-  //   @Body('name') partname: string,
-  //   @Body('contact') partcontact: string,
-  //   @Body('email') partemail: string,
-  //   @Body('phone') parttel: string,
-  //   @Body('fax') partfax: string,
-  //   @Body('pel') partpel: string,
-  //   @Body('Remarks') partRemarks: string,
-  // ) {
-  //   await this.partnerService.updatePartner(partId, partname, partcontact, partemail,parttel,partfax,partpel,partRemarks);
-  //   return null;
-  // }
-
-  // @Delete(':id')
-  // async removeProduct(@Param('id') prodId: string) {
-  //     await this.partnerService.deletePartner(prodId);
-  //     return null;
-  // }
+  
 
 }

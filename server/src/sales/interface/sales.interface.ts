@@ -13,4 +13,6 @@ export interface Partner extends Document {
     pricePerCarat: Number;
     rawOrPolished: string;
     isOpen:Boolean;
+    sumPerPartner:Number;
+    sum:Number
 }

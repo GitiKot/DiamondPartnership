@@ -31,16 +31,16 @@ export class SalesService {
             id: sale.id,
             date: sale.date,
             numOfDate: sale.numOfDate,
-            // getchack: sale.getchack,
             invoiceNumber: sale.invoiceNumber,
             publicSerialName: sale.publicSerialName,
             privateSerialName: sale.privateSerialName,
             stoneName: sale.stoneName,
             weight: sale.weight,
             pricePerCarat: sale.pricePerCarat,
-            // TotalPrice: sale.TotalPrice,
             rawOrPolished: sale.rawOrPolished,
             isOpen: sale.isOpen,
+            sumPerPartner:sale.sumPerPartner,
+            sum:sale.sum,
         }));
     }
     
@@ -63,6 +63,7 @@ export class SalesService {
             pricePerCarat: sale.pricePerCarat,
             rawOrPolished: sale.rawOrPolished,
             isOpen: sale.isOpen,
+            sumPerPartner:sale.sumPerPartner
         }));
     }
     // async update(id: string, article: UpdateArticleDto) {
@@ -89,6 +90,7 @@ export class SalesService {
         pricePerCarat: Number,
         rawOrPolished: string,
         isOpen: Boolean,
+        sumPerPartner:Number
     ) {
 
         const updatedSale = await this.findSale(id);
@@ -118,10 +120,11 @@ export class SalesService {
         if (rawOrPolished) {
             updatedSale.rawOrPolished = rawOrPolished;
         }
-        
+        if (sumPerPartner) {
+            updatedSale.sumPerPartner = sumPerPartner;
+        }
         if (isOpen!=null) {
            
-            
             updatedSale.isOpen = isOpen;
         }
 

@@ -73,3 +73,7 @@ bottom: .5em;
   bottom: 25px; left: 25px;
   /* width: 100px; */
 }
+.fa-print{
+position:absolute; left:18px; top:16px;color: blue;
+font-size: 20px;
+}

@@ -12,4 +12,6 @@ export declare class createSaleDto {
     readonly pricePerCarat: Number;
     readonly rawOrPolished: string;
     readonly isOpen:Boolean;
+    readonly sumPerPartner:Number;
+    readonly sum:Number
 }

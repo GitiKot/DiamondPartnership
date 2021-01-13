@@ -7,23 +7,15 @@ export const SaleSchema = new mongoose.Schema({
     stoneName: { type: String, required: true },
     date: { type: Date, required: true },
     numOfDate: { type: Number, required: true },
-    // getchack: { type: Boolean, required: true },
     invoiceNumber: { type: Number, required: true },
     weight: { type: Number, required: true },
     pricePerCarat: { type: Number, required: true },
-    // TotalPrice: { type: Number, required: true },
     rawOrPolished: { type: String, required: true },
     isOpen:{type:Boolean,required:true},
+    sumPerPartner:{type:Number},
+    sum:{type:Number}
 });
-// date: "2020-10-17"
-// dateOfPayment: "01/11/202"
-// invoiceNumber: "12"
-// pricePerCarat: "3"
-// privateSerialName: "trtre"
-// publicSerialName: "ב"ה"
-// rawOrPolished: "polished"
-// stoneName: "wertwert"
-// weight: "5"
+
 export interface Sales extends mongoose.Document {
     id: string;
     date: Date;
@@ -36,4 +28,6 @@ export interface Sales extends mongoose.Document {
     pricePerCarat: Number;
     rawOrPolished: string;
     isOpen:Boolean;
+    sumPerPartner:Number;
+    sum:Number
 }
