@@ -49,7 +49,7 @@ export class ChecksComponent implements OnInit {
 
   @ViewChild('framen') public showModalOnClick: ModalDirective;
   checksForm: FormGroup;
-  untilcost = false
+  untilcost: boolean
   checksList: Array<Checks>;
   OpenSalesList: Array<Sale>;
   ClosedSalesList: Array<Sale>;
@@ -105,54 +105,99 @@ export class ChecksComponent implements OnInit {
         )
     }
   }
+  arrSale = new Array()
   calcCheckMoney(): number {
-    let sum = 0, currentSum, apr = this.serial.AmountReceivedPartner, flag=false;
+
+    let sum = 0, currentSum, apr = this.serial.AmountReceivedPartner, flag = false;
     console.log("סכום שהשותף קיבל: ", apr);
+    if (this.getSelectedRows().length > 0) {
+      this.getSelectedRows().forEach(s => {
+        currentSum = <number>s.pricePerCarat * <number>s.weight;
 
-    this.getSelectedRows().forEach(s => {
-      // כמה סכום המכירה הנוכחית
-      currentSum = <number>s.pricePerCarat * <number>s.weight;
-//עכשיו מחלקים לשותף
-//בודקים:האם הוא מתחת לקוסט 
-      if (currentSum <= this.serial.cost - apr) {
-        //אם מתחת מחלקים באחוזים
-        currentSum = currentSum * this.serial.partnersPercent / 100;
-        // console.log("ddddddd", s);
-        // console.log(currentSum);
-        //מעדכנים את הכום של השותף- גדל
-        apr += currentSum;
-        this.updateSale(s, currentSum);
-        sum += currentSum;
-      }
-      else {
-        if (flag) {
-          currentSum /= 2;
+        if (currentSum <= this.serial.cost - apr) {
+          //אם מתחת מחלקים באחוזים
+          currentSum = currentSum * this.serial.partnersPercent / 100;
 
-          // console.log(currentSum);
-          apr += currentSum
-          this.updateSale(s, currentSum);
+          //מעדכנים את הכום של השותף- גדל
+          apr += currentSum;
+          this.arrSale.push({ i: s, j: currentSum })
+          // this.updateSale(s, currentSum);
           sum += currentSum;
+
         }
         else {
-          let forPartner = this.serial.cost - apr;
-          sum += forPartner;
-          let our = forPartner * (100 - this.serial.partnersPercent) / this.serial.partnersPercent;
-          let newSum = (currentSum - (forPartner + our)) / 2;
-          let newSale: Sale;
-          newSale = s;
-          sum += newSum;
+          if (flag) {
+            currentSum /= 2;
 
-          flag = true;
-          newSale.sumPerPartner = newSum;
-          newSale.isOpen = false;
-          newSale.sum = (currentSum - forPartner - our);
-          this.salesService.updateSale(newSale.id, newSale).subscribe();
-          this.ClosedSalesList.push(newSale)
-          console.log("newSAle", newSale);
+            // console.log(currentSum);
+            apr += currentSum
+            this.arrSale.push({ i: s, j: currentSum })
+            // this.updateSale(s, currentSum);
+            sum += currentSum;
+          }
+          else {
+            let forPartner = this.serial.cost - apr;
+            sum += forPartner;
+            let our = forPartner * (100 - this.serial.partnersPercent) / this.serial.partnersPercent;
+            let newSum = (currentSum - (forPartner + our)) / 2;
+            let newSale: Sale;
+            newSale = s;
+            sum += newSum;
+
+            flag = true;
+            // newSale.sumPerPartner = newSum;
+            // newSale.isOpen = false;
+            newSale.sum = (currentSum - forPartner - our);
+            this.arrSale.push({ i: newSale, j: newSum })
+            // this.salesService.updateSale(newSale.id, newSale).subscribe();
+            // this.ClosedSalesList.push(newSale)
+            // console.log("newSAle", newSale);
+
+          }
+        }
+      })
+    }
+    else {
+      this.OpenSalesList.forEach(s => {
+        currentSum = <number>s.pricePerCarat * <number>s.weight;
+
+        if (currentSum <= this.serial.cost - apr) {
+          //אם מתחת מחלקים באחוזים
+          currentSum = currentSum * this.serial.partnersPercent / 100;
+
+          //מעדכנים את הכום של השותף- גדל
+          apr += currentSum;
+          this.arrSale.push({ i: s, j: currentSum })
+          // this.updateSale(s, currentSum);
+          sum += currentSum;
 
         }
-      }
-    })
+        else {
+          if (!flag) {
+
+
+            let forPartner = this.serial.cost - apr;
+            sum += forPartner;
+            let our = forPartner * (100 - this.serial.partnersPercent) / this.serial.partnersPercent;
+            let newSum = (currentSum - (forPartner + our)) / 2;
+            let newSale: Sale;
+            newSale = s;
+            sum += newSum;
+
+            flag = true;
+            // newSale.sumPerPartner = newSum;
+            // newSale.isOpen = false;
+            newSale.sum = (currentSum - forPartner - our);
+            this.arrSale.push({ i: newSale, j: newSum })
+            // this.salesService.updateSale(newSale.id, newSale).subscribe();
+            // this.ClosedSalesList.push(newSale)
+            // console.log("newSAle", newSale);
+
+
+          }
+        }
+      })
+    }
     return sum;
   }
   calcCheckDate(): Date {
@@ -189,10 +234,10 @@ export class ChecksComponent implements OnInit {
   updateSale(sale: Sale, sumperpartner: number) {
     sale.isOpen = false;
     sale.sumPerPartner = sumperpartner;
-    this.salesService.updateSale(sale.id, sale).subscribe();
+    this.salesService.updateSale(sale.id, sale).subscribe(() => console.log("sss")
+    );
     this.ClosedSalesList.push(sale);
-    console.log("  this.ClosedSalesList.push(sale);",sale.id);
-    
+
   }
   updateSerial() {
     this.serial.AmountReceivedPartner += this.checksForm.controls['sum'].value;
@@ -204,7 +249,7 @@ export class ChecksComponent implements OnInit {
           this.serial.cost, this.serial.AmountReceivedPartner, this.serial.cost - this.serial.AmountReceivedPartner, this.serial.amountReceived], label: 'הסכום בדולרים '
       })
     }, () => {
-      console.log("error");
+      alert("error")
 
     })
   }
@@ -251,32 +296,41 @@ export class ChecksComponent implements OnInit {
     return arr;
   }
 
-  save() {
-    alert("האם הנך בטוח שברצונך לשמור  צ'ק זה ? ");
+  createCheck() {
+    this.arrSale = [];
     let sale: Sale;
     for (let index = 0; index < this.getSelectedRows().length; index++) {
       this.checksForm.value.IdSales.push(this.getSelectedRows()[index].id)
       sale = this.getSelectedRows()[index];
     }
-    ;
+
     this.checksForm.controls['sum'].setValue(this.calcCheckMoney())
     this.checksForm.controls['publicSerialName'].setValue(this.serial.id)
     this.checksForm.controls['date'].setValue(this.calcCheckDate())
 
+  }
+  save() {
     if (this.checksForm.valid) {
       this.updateSerial();
       this.checksService.addChecks(this.checksForm.value).subscribe(c => {
         this.checksList.push(c);
+        // console.log(this.arrSale);
+
+        this.arrSale.forEach(w => {
+          // console.log(w.i);
+
+          this.updateSale(w.i, w.j)
+
+        })
+
         this.spliceOpenSaleList();
       })
       this.checksForm.reset();
     } else {
       alert("חלק מהנתונים לא נכון")
       console.log("form check", this.checksForm.value);
-
     }
   }
-
   spliceOpenSaleList() {
     this.getSelectedRows()
       .forEach(saleChecked => {
@@ -319,7 +373,6 @@ export class ChecksComponent implements OnInit {
       }
       )
       // { data: [1500000, 125000], label: 'הכותרת' }
-
     })
   }
   resetform() {
@@ -327,8 +380,6 @@ export class ChecksComponent implements OnInit {
   }
   updateCi(c: Checks) {
     this.currentChecks = c;
-
-
   }
   updateModal(ch) {
     this.updateCheck = ch;
@@ -337,15 +388,12 @@ export class ChecksComponent implements OnInit {
   update() {
     alert("האם ברצונך לשמור את הנתונים")
     if (this.checksForm.valid) {
-      // console.log("aaaaaaaaaaaaaaaa:",this.sum);
-      // console.log("d",this.checksForm.value.detail.length!=0);
       // if(this.checksForm.value.detail.length!=0){
       //       this.checksForm.value.amount = this.checksForm.value.detail
       //         .reduce((prev, curr) => prev + Number(curr.price), 0);
       // }
       // else{
       //     this.checksForm.value.sum=0;
-      //   console.log("sss",this.checksForm.value.sum);
       // }
       this.checksService.updateCheck(this.updateCheck.id, this.checksForm.value);
       this.checksForm.reset();
@@ -408,11 +456,11 @@ export class ChecksComponent implements OnInit {
     // let s = 0;
     // let sale;
     if (c == 'ok') {
-      console.log("sad", this.currentChecks);
+      // console.log("sad", this.currentChecks);
 
       this.currentChecks.IdSales.forEach(idSale => {
         let currSale = this.ClosedSalesList.find(s => s.id == idSale)
-        console.log("currSale: ", currSale);
+        // console.log("currSale: ", currSale);
 
         currSale.isOpen = true;
         this.salesService.updateSale(currSale.id, currSale)

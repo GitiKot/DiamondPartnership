@@ -118,9 +118,9 @@
                             <!-- <div class="modal-footer"> -->
                             <div> <button type="button" class="btn btn-primary" data-dismiss="modal"
                                     (click)="close()">ביטול</button>
-                                <button *ngIf="!(updateEx)" class="btn btn-primary" (click)=save()
+                                <button *ngIf="!(updateEx)" [disabled]="!expensesForm.valid" class="btn btn-primary" (click)=save()
                                     (click)="close()">שמירה</button>
-                                <button *ngIf="updateEx" class="btn btn-primary" (click)=update()
+                                <button *ngIf="updateEx"[disabled]="!expensesForm.valid" class="btn btn-primary" (click)=update()
                                     (click)="close()">שמירה</button>
                             </div>
                         </div>

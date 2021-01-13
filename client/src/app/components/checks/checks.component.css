@@ -77,3 +77,12 @@ bottom: .5em;
 position:absolute; left:18px; top:16px;color: blue;
 font-size: 20px;
 }
+.fialInput{
+  border:0;outline:0; outline:none!important;
+
+}
+P{
+ display:inline-block;margin-right:10px;
+} 
+.fialInput {display:inline-block;} 
+

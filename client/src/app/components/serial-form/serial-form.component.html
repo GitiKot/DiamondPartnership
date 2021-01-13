@@ -116,7 +116,7 @@
                         <button type="button" mdbBtn color="blue" rounded="true" data-toggle="modal"
                         data-target="#basicExample" (click)="close()" mdbWavesEffect >
                         ביטול </button>
-                        <button *ngIf="!(updateSerial)" type="button" mdbBtn color="blue" rounded="true"
+                        <button *ngIf="!(updateSerial)" [disabled]="!serialForm.valid" type="button" mdbBtn color="blue" rounded="true"
                             data-toggle="modal" data-target="#basicExample" (click)="save()" mdbWavesEffect
                             id="saveExpenses">
                             שמירה </button>

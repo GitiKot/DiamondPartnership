@@ -2,10 +2,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <br>
 
-<form [formGroup]='checksForm' class="form-inline d-flex justify-content-center md-form form-sm mt-0">
-
-  <div>
-    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
+ <span>
+    <svg style="display: inline-block;margin-right:10px;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
       xmlns="http://www.w3.org/2000/svg">
       <path fill-rule="evenodd"
         d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
@@ -13,19 +11,16 @@
         d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
     </svg>&nbsp;
 
-    <input type="text" id="publicSerialName" (keyup.enter)="getSaleBySeria($event)"
-      class="form-control form-control-sm ml-3 " placeholder="סריה כללית" title="חיפוש לפי שם סריה כללית">
-  </div>
-  <div *ngIf="serial" >
-    <canvas mdbChart
-        [chartType]="chartType"
-        [datasets]="chartDatasets"
-        [labels]="chartLabels"
-        [colors]="chartColors"
-        [options]="chartOptions"
-        [legend]="true"
-        (chartHover)="chartHovered($event)"
-        (chartClick)="chartClicked($event)">
+    <input  style="display: inline-block; width: 170px;" type="text" id="publicSerialName" (keyup.enter)="getSaleBySeria($event)"
+      class="form-control form-control-sm ml-3 " placeholder=" הכנס סריה כללית" title="חיפוש לפי שם סריה כללית">
+  </span>
+<form [formGroup]='checksForm' class="form-inline d-flex justify-content-center md-form form-sm mt-0">
+
+ 
+  <br>
+  <div *ngIf="serial">
+    <canvas mdbChart [chartType]="chartType" [datasets]="chartDatasets" [labels]="chartLabels" [colors]="chartColors"
+      [options]="chartOptions" [legend]="true" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
     </canvas>
   </div>
   <br>
@@ -37,7 +32,7 @@
     <button type="button" class="btn btn-outline-primary" (click)="ok('')">ביטול</button>
   </div>
   <div *ngIf="checksList">
-    <button class="btn" (click)="test.toggle()"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+    <button class="btn" (click)="test.toggle()"><i  class="fa fa-arrow-circle-up" aria-hidden="true"></i>
     </button>
     <div mdbCollapse #test="bs-collapse">
       <h5>שיקים סגורים</h5>
@@ -53,11 +48,11 @@
           <th>פרטי מכירות</th>
         </tr>
         <tbody>
-          <tr *ngFor="let c of checksList;let ci=index" (click)="updateCi(c)"  (mouseenter)="toolbar(ci)" (mouseleave)="toolbar1(ci)"
-            id="row{{ci}}" >
+          <tr *ngFor="let c of checksList;let ci=index" (click)="updateCi(c)" (mouseenter)="toolbar(ci)"
+            (mouseleave)="toolbar1(ci)" id="row{{ci}}">
             <td> <button id="del{{ci}}" class="del" (click)="deleteCheck(c)" title="מחיקה">
                 <i class="fa fa-trash" id="trash" aria-hidden="true"></i></button> </td>
-            <td > <button id="update{{ci}}" class="update" (click)="updateModal(c)" title="עדכון">
+            <td> <button id="update{{ci}}" class="update" (click)="updateModal(c)" title="עדכון">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                   class="bi bi-brush-fill" viewBox="0 0 16 16">
                   <path fill-rule="evenodd"
@@ -68,14 +63,14 @@
             <td>{{c.sum | currency:"USD":true}}</td>
             <td>{{c.ReceiptOrInvoice}}</td>
             <td>{{c.numCheck}}</td>
-            <td><button type="button" class="btn btn-primary"(click)="updateCi(c)"  (click)="framec.show()"
+            <td><button type="button" class="btn btn-primary" (click)="updateCi(c)" (click)="framec.show()"
                 data-toggle="modal" data-target="#modalCart" title="פרטי מכירות">+</button></td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
-  <div  mdbModal #framec="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
+  <div mdbModal #framec="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-side modal-top-right" role="document">
       <div class="modal-content">
@@ -85,7 +80,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-            <i  class="fa fa-print" aria-hidden="true" title="הדפסה"></i>
+        <i class="fa fa-print" aria-hidden="true" title="הדפסה"></i>
 
         <div class="modal-body">
           <table class="table table-hover">
@@ -97,29 +92,29 @@
                 <th>קרט</th>
                 <th>מחיר</th>
                 <th>סך מכירה</th>
-                <th>סך  לשותף</th>
+                <th>סך לשותף</th>
               </tr>
             </thead>
             <tbody *ngIf="checksList!=undefined">
               <tr *ngFor="let s of getSalesFromId();let i=index">
-                <!-- <td>{{getSalesFromId().length}}</td> -->
+                <td>{{getSalesFromId().length}}</td>
                 <td>{{s.privateSerialName}}</td>
                 <td>{{s.stoneName}}</td>
                 <td>{{s.weight}}</td>
                 <td>{{s.pricePerCarat | currency:"USD":true}}</td>
-                <td *ngIf="s.sum==undefined" > רגיל{{s.weight*s.pricePerCarat | currency:"USD":true}}</td>
-                <td *ngIf="s.sum!=undefined" >מיוחד{{s.sum | currency:"USD":true}}</td>
-               <td>{{ s.sumPerPartner| currency:"USD":true}}</td>
-                          
-               </tr>
+                <td *ngIf="s.sum==undefined"> רגיל{{s.weight*s.pricePerCarat | currency:"USD":true}}</td>
+                <td *ngIf="s.sum!=undefined">מיוחד{{s.sum | currency:"USD":true}}</td>
+                <td>{{ s.sumPerPartner| currency:"USD":true}}</td>
+
+              </tr>
             </tbody>
           </table>
         </div>
-       
+
       </div>
     </div>
   </div>
-  
+
   <div *ngIf="OpenSalesList.length>0">
     <div><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
         xmlns="http://www.w3.org/2000/svg">
@@ -149,12 +144,13 @@
             <th>מחיר לקרט</th>
             <th>סה"כ</th>
             <th>לשותף</th>
-            <th>גלם/מלוטש</th> 
+            <th>גלם/מלוטש</th>
           </tr>
         </thead>
         <tbody>
-       
-          <tr *ngFor="let s of OpenSalesList; let i=index" [class.selectedRow]="rowIsSelected(s.id)" style="cursor: pointer;">
+
+          <tr *ngFor="let s of OpenSalesList; let i=index" [class.selectedRow]="rowIsSelected(s.id)"
+            style="cursor: pointer;">
             <td><input id="cbox" type="checkbox" (click)="onRowClick(s.id)"></td>
             <td>{{s.date | date:'dd/MM/yy'}}</td>
             <td>{{s.numOfDate}}</td>
@@ -175,16 +171,17 @@
           </tr>
           <!-- <button  type="button" class="btn btn-primary" (click)="framen.show()"
             data-toggle="modal" data-target="#modalCart">ל</button> -->
-            <button *ngIf="OpenSalesList.length>0" type="button" id="newcheck" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
-            (click)="framen.show()" mdbWavesEffect>לסגירת צ'ק  <i class="fa fa-unlock-alt" aria-hidden="true"></i>
-    </button> 
+          <button *ngIf="OpenSalesList.length>0" type="button" id="newcheck" mdbBtn color="default" rounded="true"
+            data-toggle="modal" data-target="#basicExample" (click)="framen.show()" (click)="createCheck()"
+            mdbWavesEffect>לסגירת צ'ק <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+          </button>
 
         </tbody>
       </table>
 
     </div>
 
-  
+
   </div>
 
   <div mdbModal #framen="mdbModal" class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog"
@@ -199,12 +196,12 @@
             <span aria-hidden="true" (click)="framen.hide()" (click)="resetform()">&times;</span>
           </button>
         </div>
-         <div *ngIf="selectedRowIds.size==0" class="md-form mb-1">
-            <input type="checkbox" id="cb" mdbInput  (click)="until()">
-            <label for="cb">חילול שיק עד הקוסט</label>
-          </div>
+        <div *ngIf="selectedRowIds.size==0" class="md-form mb-1">
+          <input type="checkbox" id="cb"(change)="untilcost=!untilcost" mdbInput >
+          <label for="cb">חילול שיק עד הקוסט</label>
+        </div>
         <div class="modal-body mx-3">
-         
+
           <div *ngIf="selectedRowIds.size>0||untilcost">
             <div class="md-form mb-5">
               <input type="number" min="0" id="form32" class="form-control" mdbInput mdbValidate
@@ -229,24 +226,36 @@
               <mdb-success *ngIf="ReceiptOrInvoice.valid && (ReceiptOrInvoice.dirty || ReceiptOrInvoice.touched)">
               </mdb-success>
             </div>
+            <div>
+           
+                <p for="finalSum">סכום:</p> &nbsp;<input class="fialInput" id="finalSum"
+               [value]="checksForm.controls['sum'].value | currency:'USD':true">   
+            
+            </div>
+            <div>
+              <p for="finalDate">תאריך:</p>&nbsp;
+              <input class="fialInput" id="finalDate" 
+              [value]="checksForm.controls['date'].value | date:'dd/MM/yy'">
+            </div>
           </div>
         </div>
         <div class="modal-footer d-flex justify-content-center">
           <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="framen.hide()"
             (click)="resetform()">ביטול</button>
-          <button *ngIf="!(updateCheck)" type="button" class="btn btn-primary" (click)="save()"
-            (click)="framen.hide()">שמירה</button>
+          <button *ngIf="!(updateCheck)" type="button" class="btn btn-primary" (click)="save()" (click)="framen.hide()"
+            [disabled]="!checksForm.valid">שמירה</button>
           <button *ngIf="updateCheck" class="btn btn-primary" (click)=update() (click)="framen.hide()">שמירה</button>
         </div>
       </div>
     </div>
   </div>
+  <br>
   <div id="row">
-      <span>סה"כ מכירות: </span>&nbsp;<input class="input" mdbInput mdbValidate disabled
-        placeholder="{{OpenSalesList.length+ClosedSalesList.length}}">
-      <span>צ'קים סגורים: </span>&nbsp;<input *ngIf="checksList" class="input" mdbInput mdbValidate disabled
-        placeholder="{{checksList.length}}">
-      <span>סה"כ מכירות פתוחות: </span><input class="input" mdbInput mdbValidate disabled
-        placeholder="{{OpenSalesList.length}}">
-    </div>
+    <span>סה"כ מכירות: </span>&nbsp;<input class="input" mdbInput mdbValidate disabled
+      placeholder="{{OpenSalesList.length+ClosedSalesList.length}}">
+    <span>צ'קים סגורים: </span>&nbsp;<input *ngIf="checksList" class="input" mdbInput mdbValidate disabled
+      placeholder="{{checksList.length}}">
+    <span>סה"כ מכירות פתוחות: </span><input class="input" mdbInput mdbValidate disabled
+      placeholder="{{OpenSalesList.length}}">
+  </div>
 </form>
