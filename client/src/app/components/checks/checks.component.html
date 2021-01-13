@@ -24,9 +24,7 @@
     </canvas>
   </div>
   <br>
-  <div id="alert" class="alert alert-success" style="position:absolute;
-  right:0;
-  ">
+  <div id="alert" class="alert alert-success" style="position:absolute;right:0;">
     <strong> שים לב </strong>בקשת למחוק צ'ק<button type="button" class="btn btn-outline-primary"
       (click)="ok('ok')">אישור</button> &nbsp;
     <button type="button" class="btn btn-outline-primary" (click)="ok('')">ביטול</button>
@@ -97,7 +95,7 @@
             </thead>
             <tbody *ngIf="checksList!=undefined">
               <tr *ngFor="let s of getSalesFromId();let i=index">
-                <td>{{getSalesFromId().length}}</td>
+                <!-- <td>{{getSalesFromId().length}}</td> -->
                 <td>{{s.privateSerialName}}</td>
                 <td>{{s.stoneName}}</td>
                 <td>{{s.weight}}</td>
@@ -250,7 +248,7 @@
     </div>
   </div>
   <br>
-  <div id="row">
+  <div *ngIf="checksList" id="row">
     <span>סה"כ מכירות: </span>&nbsp;<input class="input" mdbInput mdbValidate disabled
       placeholder="{{OpenSalesList.length+ClosedSalesList.length}}">
     <span>צ'קים סגורים: </span>&nbsp;<input *ngIf="checksList" class="input" mdbInput mdbValidate disabled

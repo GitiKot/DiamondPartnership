@@ -66,7 +66,7 @@ export class ChecksComponent implements OnInit {
     this.checksForm = this.formBuilder.group({
       date: [''],
       numCheck: [''],
-      sum: [''],
+      sum: ['',Validators.min(1)],
       ReceiptOrInvoice: ['', Validators.required],
       IdSales: this.formBuilder.array([]),
       publicSerialName: ['', Validators.required]
@@ -87,25 +87,18 @@ export class ChecksComponent implements OnInit {
       });
     }
   }
-  until() {
-    if (this.untilcost)
-      this.untilcost = false;
-    else {
-      this.untilcost = true;
 
-      let cost = this.serial.cost;
-      let sumSale;
-      let sum =
-        this.getSelectedRows().forEach(
-          sale => {
-            sumSale = <number>sale.pricePerCarat * <number>sale.weight;
-            if (sumSale <= cost) {
-            }
-          }
-        )
-    }
-  }
   arrSale = new Array()
+  //   calcSaleOpenUntilCost() {
+
+  //     let currentSum, apr = this.serial.AmountReceivedPartner;
+  //     this.OpenSalesList.forEach(s => {
+  //       currentSum = <number>s.weight * <number>s.pricePerCarat;
+  // if(currentSum<=this.serial.cost-apr){
+  //   this.selectedRowIds.add(s.id)
+  // }
+  // })
+  // }
   calcCheckMoney(): number {
 
     let sum = 0, currentSum, apr = this.serial.AmountReceivedPartner, flag = false;
@@ -158,106 +151,115 @@ export class ChecksComponent implements OnInit {
       })
     }
     else {
-      this.OpenSalesList.forEach(s => {
-        currentSum = <number>s.pricePerCarat * <number>s.weight;
-
-        if (currentSum <= this.serial.cost - apr) {
-          //אם מתחת מחלקים באחוזים
-          currentSum = currentSum * this.serial.partnersPercent / 100;
-
-          //מעדכנים את הכום של השותף- גדל
-          apr += currentSum;
-          this.arrSale.push({ i: s, j: currentSum })
-          // this.updateSale(s, currentSum);
-          sum += currentSum;
-
-        }
-        else {
-          if (!flag) {
+      if (this.serial.cost > this.serial.AmountReceivedPartner) {
+        alert("עד הקוסט")
 
 
-            let forPartner = this.serial.cost - apr;
-            sum += forPartner;
-            let our = forPartner * (100 - this.serial.partnersPercent) / this.serial.partnersPercent;
-            let newSum = (currentSum - (forPartner + our)) / 2;
-            let newSale: Sale;
-            newSale = s;
-            sum += newSum;
+        this.OpenSalesList.forEach(s => {
+          currentSum = <number>s.pricePerCarat * <number>s.weight;
 
-            flag = true;
-            // newSale.sumPerPartner = newSum;
-            // newSale.isOpen = false;
-            newSale.sum = (currentSum - forPartner - our);
-            this.arrSale.push({ i: newSale, j: newSum })
-            // this.salesService.updateSale(newSale.id, newSale).subscribe();
-            // this.ClosedSalesList.push(newSale)
-            // console.log("newSAle", newSale);
+          if (currentSum <= this.serial.cost - apr) {
+            alert("מתחת קוסט")
+            //אם מתחת מחלקים באחוזים
+            currentSum = currentSum * this.serial.partnersPercent / 100;
 
-
+            //מעדכנים את הכום של השותף- גדל
+            apr += currentSum;
+            this.arrSale.push({ i: s, j: currentSum })
+            // this.updateSale(s, currentSum);
+            sum += currentSum;
+            this.selectedRowIds.add(s.id)
           }
-        }
+          else {
+            if (!flag) {
+
+
+              let forPartner = this.serial.cost - apr;
+              sum += forPartner;
+              let our = forPartner * (100 - this.serial.partnersPercent) / this.serial.partnersPercent;
+              let newSum = (currentSum - (forPartner + our)) / 2;
+              let newSale: Sale;
+              newSale = s;
+              sum += newSum;
+
+              flag = true;
+              // newSale.sumPerPartner = newSum;
+              // newSale.isOpen = false;
+              newSale.sum = (currentSum - forPartner - our);
+              this.OpenSalesList.push(newSale)
+              // this.arrSale.push({ i: newSale, j: newSum })
+              // this.salesService.updateSale(newSale.id, newSale).subscribe();
+              // this.ClosedSalesList.push(newSale)
+              // console.log("newSAle", newSale);
+              console.log("newSAle", newSale);
+
+              this.selectedRowIds.add(newSale.id)
+
+            }
+          }
+        })
+      }}
+      return sum;
+    }
+    calcCheckDate(): Date {
+      let finalDate: Date;
+      let paymentDate: Date;
+      let saleDate;
+      let totalSumDate = 0;
+      let totalSumMoney = 0;
+      let currMoney: number;
+      if (this.getSelectedRows().length > 0) {
+        this.getSelectedRows().forEach(s => {
+          currMoney = <number>s.pricePerCarat * <number>s.weight;
+          saleDate = new Date(s.date);
+          paymentDate = new Date(s.date); paymentDate.setDate(paymentDate.getDate() + s.numOfDate)
+          totalSumMoney += currMoney;
+          totalSumDate = totalSumDate + <number>(this.diffDate(paymentDate)) * <number>currMoney;
+        });
+      }
+
+      totalSumDate /= totalSumMoney;
+      finalDate = new Date('01/01/1970 02:00:00')
+      finalDate.setDate(finalDate.getDate() + totalSumDate)
+      return finalDate;
+    }
+
+
+
+    diffDate(d: Date): number {
+      d.setHours(2);
+      var time = (new Date(d)).getTime() - new Date('01/01/1970 02:00:00').getTime();
+      time /= (1000 * 60 * 60 * 24);
+      let abs = Math.round(time)
+      return abs;
+    }
+    updateSale(sale: Sale, sumperpartner: number) {
+      sale.isOpen = false;
+      sale.sumPerPartner = sumperpartner;
+      this.salesService.updateSale(sale.id, sale).subscribe(() => console.log("sss")
+      );
+      this.ClosedSalesList.push(sale);
+
+    }
+    updateSerial() {
+      this.serial.AmountReceivedPartner += this.checksForm.controls['sum'].value;
+      this.seriousnessService.updateSerial(this.serial.id, this.serial).subscribe(() => {
+
+        this.chartDatasets = []
+        this.chartDatasets.push({
+          data: [
+            this.serial.cost, this.serial.AmountReceivedPartner, this.serial.cost - this.serial.AmountReceivedPartner, this.serial.amountReceived], label: 'הסכום בדולרים '
+        })
+      }, () => {
+        alert("error")
+
       })
     }
-    return sum;
-  }
-  calcCheckDate(): Date {
-    let finalDate: Date;
-    let paymentDate: Date;
-    let saleDate;
-    let totalSumDate = 0;
-    let totalSumMoney = 0;
-    let currMoney: number;
-
-    this.getSelectedRows().forEach(s => {
-      currMoney = <number>s.pricePerCarat * <number>s.weight;
-      saleDate = new Date(s.date);
-      paymentDate = new Date(s.date); paymentDate.setDate(paymentDate.getDate() + s.numOfDate)
-      totalSumMoney += currMoney;
-      totalSumDate = totalSumDate + <number>(this.diffDate(paymentDate)) * <number>currMoney;
-    });
-
-    totalSumDate /= totalSumMoney;
-    finalDate = new Date('01/01/1970 02:00:00')
-    finalDate.setDate(finalDate.getDate() + totalSumDate)
-    return finalDate;
-  }
-
-
-
-  diffDate(d: Date): number {
-    d.setHours(2);
-    var time = (new Date(d)).getTime() - new Date('01/01/1970 02:00:00').getTime();
-    time /= (1000 * 60 * 60 * 24);
-    let abs = Math.round(time)
-    return abs;
-  }
-  updateSale(sale: Sale, sumperpartner: number) {
-    sale.isOpen = false;
-    sale.sumPerPartner = sumperpartner;
-    this.salesService.updateSale(sale.id, sale).subscribe(() => console.log("sss")
-    );
-    this.ClosedSalesList.push(sale);
-
-  }
-  updateSerial() {
-    this.serial.AmountReceivedPartner += this.checksForm.controls['sum'].value;
-    this.seriousnessService.updateSerial(this.serial.id, this.serial).subscribe(() => {
-
-      this.chartDatasets = []
-      this.chartDatasets.push({
-        data: [
-          this.serial.cost, this.serial.AmountReceivedPartner, this.serial.cost - this.serial.AmountReceivedPartner, this.serial.amountReceived], label: 'הסכום בדולרים '
-      })
-    }, () => {
-      alert("error")
-
-    })
-  }
-  getSalesFromId(): Array<Sale> {
-    let arr: Array<Sale>;
-    arr = new Array();
-    // console.log("curenty check", this.currentChecks);
-    if (this.currentChecks) {
+    getSalesFromId(): Array < Sale > {
+      let arr: Array<Sale>;
+      arr = new Array();
+      // console.log("curenty check", this.currentChecks);
+      if(this.currentChecks) {
       this.ClosedSalesList.forEach(sale => {
         this.currentChecks.IdSales.forEach(idCeck => {
           if (sale.id == idCeck)
