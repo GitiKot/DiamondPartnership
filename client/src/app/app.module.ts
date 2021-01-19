@@ -58,6 +58,7 @@ import { SucssesModalComponent } from './components/sucsses-modal/sucsses-modal.
     
     SucssesModalComponent,
     
+    
   ],
   imports: [
     

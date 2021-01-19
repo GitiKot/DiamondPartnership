@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Input } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Sale } from 'src/app/data/sale';
 import { Seriousness } from 'src/app/data/seriousness';
@@ -16,7 +16,8 @@ import { seriousnessService } from 'src/app/services/seriousness.service';
 export class SalesFormComponent implements OnInit {
   selectedSerial: Seriousness;
   numStones: number;
-  tableContent = []
+  tableContent=[];
+  // tableContent = Array<{ publicSerialName: string, privateSerialName: string, stoneName: number, weight: number, pricePerCarat: number, isOpen: boolean }>();
   salesForm: FormGroup;
   salesList: Array<Sale>;
   totalPrice = [];
@@ -26,9 +27,9 @@ export class SalesFormComponent implements OnInit {
   place;
   // updateSale:Sale;
   // CurrentNavigation;
-  constructor(private router: Router,  private seriousnessService: seriousnessService,
-     private salesServise: SalesService, private cdRef: ChangeDetectorRef) {
-// this.CurrentNavigation=this.router.getCurrentNavigation().extras.state;
+  constructor(private router: Router, private seriousnessService: seriousnessService,
+    private salesServise: SalesService,private formBuilder:FormBuilder, private cdRef: ChangeDetectorRef) {
+    // this.CurrentNavigation=this.router.getCurrentNavigation().extras.state;
   }
 
   ngOnInit(): void {
@@ -40,26 +41,48 @@ export class SalesFormComponent implements OnInit {
     this.keypressEnter();
     this.addEventCalcDate();
 
-    this.salesForm = new FormGroup({
-      date: new FormControl('', Validators.required),
-      numOfDate: new FormControl('', Validators.required),
-      invoiceNumber: new FormControl('', Validators.required),
-      publicSerialName: new FormControl('', Validators.required),
-      privateSerialName: new FormControl('', Validators.required),
-      stoneName: new FormControl('', Validators.required),
-      weight: new FormControl('', Validators.required),
-      pricePerCarat: new FormControl('', Validators.required),
-      totalPrice: new FormControl(''),
-      rawOrPolished: new FormControl('', Validators.required),
-      date2: new FormControl(''),
-      num: new FormControl(''),
-      isOpen: new FormControl(''),
+    this.salesForm = this.formBuilder.group({
+      date: ['', [Validators.required]],
+      numOfDate: ['', [Validators.required]],
+      invoiceNumber: ['', [Validators.required]],
+      date2:[''],
+      num: [''],
+      isOpen: [''],
+      rawOrPolished: ['', [Validators.required]],
+      newSaleRow: this.formBuilder.array([]),
     });
 
     // var radioRaw= document.getElementById('raw');
-this.salesForm.controls['numOfDate'].setValue(60);
+    this.salesForm.controls['numOfDate'].setValue(60);
     document.getElementById('raw').setAttribute('checked', 'true')
   }
+
+
+  newSale(): FormGroup {
+    return this.formBuilder.group({
+      publicSerialName: '',
+      privateSerialName:['', [Validators.required]],
+      stoneName:['', [Validators.required]],
+      weight: ['', [Validators.required]],
+      pricePerCarat: ['', [Validators.required]],
+      totalPrice: '',
+     }
+    )
+  }
+  get date() {
+    return this.salesForm.get('date');
+  }
+  get getchack() {
+    return this.salesForm.get('getchack');
+  }
+  get newSaleRow(): FormArray {
+    return this.salesForm.get('newSaleRow') as FormArray
+  }
+  addSale() {
+    
+    this.newSaleRow.push(this.newSale());
+  }
+
   numStonesFunc() {
 
     this.tableContent = []
@@ -68,17 +91,17 @@ this.salesForm.controls['numOfDate'].setValue(60);
     this.addrow();
 
   }
-  selectedSaleId(event){
-      let s = event.target.value;
-      let ids = document.getElementById(s);
-      if (ids) {
-      this.serialId= ids.getAttribute('data-value');
-      this.place=ids.getAttribute('i');
-       }
-      else {
-        alert("עליך לבחור שם סריה קיימת")
-      }
-    
+  selectedSaleId(event) {
+    let s = event.target.value;
+    let ids = document.getElementById(s);
+    if (ids) {
+      this.serialId = ids.getAttribute('data-value');
+      this.place = ids.getAttribute('i');
+    }
+    else {
+      alert("עליך לבחור שם סריה קיימת")
+    }
+
   }
   addEventCalcDate() {
     var d = (document.querySelector('#datesale') as HTMLInputElement).value;
@@ -89,8 +112,76 @@ this.salesForm.controls['numOfDate'].setValue(60);
 
     (document.querySelector('#DueDate') as HTMLInputElement).value = dateSales.toLocaleDateString();
   }
+  rowSale(irow, sale) {
+    //לפה זה מגיע טוב רק צריך ללחוץ על השורה ואז
+    // או שלא משתמשים באנטר כי זה לא קולט או שמוסיפים עמודה לאישור השורה או לנסות לבדוק עם ה html. 
+    console.log("trrow", sale);
+    console.log(sale.publicSerial = this.serialId);
+    console.log("i", irow);
+    for (let t = 0; t < this.tableContent.length; t++) {
+      console.log("this.tableContent[irow].salesForm", this.tableContent[irow]);
+      sale.publicSerial = this.serialId;
+      console.log("ps", sale.publicSerial);
+      this.salesForm.value.publicSerialName = this.serialId;
+      if (this.tableContent[irow]) {
 
+        this.tableContent[irow].publicSerialName = this.serialId;
+        this.tableContent[irow].privateSerialName = sale.privateSerial;
+        this.tableContent[irow].stoneName = sale.stoneName;
+        this.tableContent[irow].weight = sale.w;
+        this.tableContent[irow].pricePerCarat = sale.pricePerCarat;
+        this.tableContent[irow].isOpen = true;
+
+      }
+      let flag = 0;
+      if (this.tableContent[irow] != undefined) {
+        // let i = 0;
+        // this.tableContent.forEach(sale => {
+
+        // sale.publicSerial = this.serialId;
+        // this.salesForm.controls['publicSerialName'].setValue(this.serialId)
+        // this.salesForm.controls['privateSerialName'].setValue(sale.privateSerial)
+        // this.salesForm.controls['stoneName'].setValue(sale.stoneName)
+        // this.salesForm.controls['weight'].setValue(sale.w)
+        // this.salesForm.controls['pricePerCarat'].setValue(sale.pricePerCarat)
+        // this.salesForm.controls['isOpen'].setValue('true')
+        console.log("valid", this.salesForm.value, this.salesForm.valid);
+        if (this.salesForm.valid) {
+          console.log("valid", this.salesForm.valid);
+
+          this.salesServise.addSale(this.salesForm.value)
+            .subscribe(() => {
+              this.seriousnessList[this.place].amountReceived = this.salesForm.controls['weight'].value *
+                this.salesForm.controls['pricePerCarat'].value;
+
+              this.seriousnessService.updateSerial(this.serialId, this.seriousnessList[this.place]).subscribe(() => {
+              }, () => {
+                console.log("error");
+              })
+            });
+          // i++;
+        }
+        else {
+          // alert("חלק מהנתונים אינם נכונים");
+          flag = 1;
+        }
+        // });
+        if (!flag)
+          this.router.navigate(['sales-form/modal-form', 'מכירה'])
+        else;
+      }
+      else {
+        alert("לא הוכנסו שורות לטבלה")
+      }
+
+    }
+
+    console.log("this.tableContent[i]", this.tableContent);
+
+  }
   save() {
+    //לפה זה כבר מגיע  שורה ראשונה בהכפלה
+    console.log(this.tableContent);
 
     let flag = 0;
     // alert("האם הנך בטוח במה שאתה עושה");
@@ -99,23 +190,24 @@ this.salesForm.controls['numOfDate'].setValue(60);
       let i = 0;
       this.tableContent.forEach(sale => {
         // this.salesForm.controls['publicSerialName'].setValue(sale.publicSerial);
+
+        // sale.publicSerial = this.serialId;
         this.salesForm.controls['publicSerialName'].setValue(this.serialId)
 
-        this.salesForm.controls['privateSerialName'].setValue(sale.privateSerial)
+        this.salesForm.controls['privateSerialName'].setValue(sale.privateSerialName)
         this.salesForm.controls['stoneName'].setValue(sale.stoneName)
-        this.salesForm.controls['weight'].setValue(sale.w)
+        this.salesForm.controls['weight'].setValue(sale.weight)
         this.salesForm.controls['pricePerCarat'].setValue(sale.pricePerCarat)
 
         this.salesForm.controls['isOpen'].setValue('true')
-
         if (this.salesForm.valid) {
           this.salesServise.addSale(this.salesForm.value)
             .subscribe(() => {
-               this.seriousnessList[this.place].amountReceived = this.salesForm.controls['weight'].value *
+              this.seriousnessList[this.place].amountReceived = this.salesForm.controls['weight'].value *
                 this.salesForm.controls['pricePerCarat'].value;
 
-              this.seriousnessService.updateSerial(this.serialId,this.seriousnessList[this.place]).subscribe(()=>{
-              },()=>{
+              this.seriousnessService.updateSerial(this.serialId, this.seriousnessList[this.place]).subscribe(() => {
+              }, () => {
                 console.log("error");
               })
             });
@@ -153,14 +245,14 @@ this.salesForm.controls['numOfDate'].setValue(60);
         var num = (Number(index));
         num++;
         let nextInput;
-        if(num==6){
-           nextInput = FindByAttributeValue("tabindex", num, "select");
+        if (num == 6) {
+          nextInput = FindByAttributeValue("tabindex", num, "select");
 
         }
-      else{
-         nextInput = FindByAttributeValue("tabindex", num, "input");
+        else {
+          nextInput = FindByAttributeValue("tabindex", num, "input");
 
-      }
+        }
         if (nextInput != undefined) {
           nextInput.focus();
         }
@@ -184,14 +276,14 @@ this.salesForm.controls['numOfDate'].setValue(60);
     // var i = document.querySelector('select');
     var i = document.querySelector('input');
     var allInputSimple = document.querySelectorAll('td input');
-    
+
     const allInput = Array.from(allInputSimple);
     allInput.push(i);
-   
+
     allInput.forEach(a => a.addEventListener("keypress", function (event) {
       if ((event as KeyboardEvent)
         .code === "Enter") {
-        
+
 
         var current = (event.target as Element);
 
@@ -222,11 +314,12 @@ this.salesForm.controls['numOfDate'].setValue(60);
     for (let i = 0; i < this.numStones; i++) {
       this.tableContent.push({
 
-        publicSerial: null,
-        privateSerial: null,
+        publicSerialName: null,
+        privateSerialName: null,
         stoneName: null,
-        w: null,
-        pricePerCarat: null
+        weight:null,
+        pricePerCarat: null,
+isOpen:true,
 
       })
 

@@ -18,7 +18,7 @@ import { Sale } from './data/sale';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'checks', component: ChecksComponent },
+  { path: 'checks', component: ChecksComponent},
   {
     path: 'expenses', component: ExpensesComponent,
     children: [{ path: '', redirectTo: 'expenses', pathMatch: 'full' }
@@ -56,17 +56,7 @@ const routes: Routes = [
     },
     ]
   },
-
-
-  // { path: 'partners', component: PartnersComponent 
-  // ,children:[
-  //   {path:'',redirectTo:'partners',pathMatch:'full'},
-  //   {path: 'modal-form/:type', component:ModalFormComponent,}] 
-  // },
-    
-  // { path: 'partners-form', component: PartnersFormComponent,children:[
-  //   {path:'',redirectTo:'partners-form',pathMatch:'full'},
-  //   {path: 'modal-form/:type', component:ModalFormComponent,}] },
+ 
 
 ];
 

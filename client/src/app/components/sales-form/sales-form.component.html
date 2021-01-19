@@ -2,50 +2,54 @@
 <div>
   <h3>הוספת מכירות</h3>
 </div>
-<form [formGroup]='salesForm' action="action" (submit)="save()" method="POST" class="form-inline">
+<form style="max-width: 960px" [formGroup]='salesForm' action="action" (submit)="save()" method="POST"
+  class="form-inline">
   <br>
-  
+
   <span>
 
     <label for="datesale">מספר אבנים</label>
-    <input type="number" min="0" formControlName="num"  class="form-control" tabindex="0" (change) ="numStonesFunc()"id="numStones">
+    <input type="number" min="0" formControlName="num" class="form-control" tabindex="0" (change)="numStonesFunc()"
+      id="numStones">
     <!-- <label  *ngIf="salesForm.controls['datesale'].error!=null">גדול </label> -->
   </span>&nbsp; &nbsp;
   <span>
 
     <label for="datesale"> תאריך מכירה:</label>
-    <input  type="date" (input) ="addEventCalcDate()"  class="form-control" formControlName="date"tabindex="1" id="datesale">
+    <input type="date" (input)="addEventCalcDate()" class="form-control" formControlName="date" tabindex="1"
+      id="datesale">
 
     <!-- <label  *ngIf="salesForm.controls['datesale'].error!=null">גדול </label> -->
   </span>&nbsp; &nbsp;
   <!-- PaymentsNumber -->
   <span>
     <label for="numOfDate">תנאי תשלום:</label>
-    <input type="text" min="0" (input) ="addEventCalcDate()" class="form-control" type="number" tabindex="2" formControlName="numOfDate" placeholder="מספר ימים" id="numOfDate">
+    <input type="text" min="0" (input)="addEventCalcDate()" class="form-control" type="number" tabindex="2"
+      formControlName="numOfDate" placeholder="מספר ימים" id="numOfDate">
   </span>&nbsp; &nbsp;
 
   <span>
     <label>תאריך פרעון:</label>
-    <input [value]="dateP" type="text" class="form-control" formControlName="date2"
-      placeholder="אוטומטי" id="DueDate"disabled="form-check-input" >
+    <input [value]="dateP" type="text" class="form-control" formControlName="date2" placeholder="אוטומטי" id="DueDate"
+      disabled="form-check-input">
   </span>&nbsp; &nbsp;
   <span>
     <label for="invoiceNumber">מספר חשבונית:</label>
-    <input type="number" min="0" class="form-control" formControlName="invoiceNumber" tabindex="3" placeholder="מספר חשבונית"
-      id="invoiceNumber">
+    <input type="number" min="0" class="form-control" formControlName="invoiceNumber" tabindex="3"
+      placeholder="מספר חשבונית" id="invoiceNumber">
 
   </span>&nbsp; &nbsp;
   <br><br><br><br>
   <div>
     <label class="form-check-label">
       <label>
-        <input type="radio" (input)="tableKeyPresent()"  id="raw"  class="form-check-input"tabindex="4" formControlName="rawOrPolished" value="raw"
-          >&nbsp;גלם
+        <input type="radio" (input)="tableKeyPresent()" id="raw" class="form-check-input" tabindex="4"
+          formControlName="rawOrPolished" value="raw">&nbsp;גלם
       </label>
-    <label>
-      &nbsp;
-      <input type="radio"(input)="tableKeyPresent()"  class="form-check-input"tabindex="5" value="polished" formControlName="rawOrPolished"
-        [checked]="false">&nbsp;מלוטש
+      <label>
+        &nbsp;
+        <input type="radio" (input)="tableKeyPresent()" class="form-check-input" tabindex="5" value="polished"
+          formControlName="rawOrPolished" [checked]="false">&nbsp;מלוטש
       </label>
     </label>
   </div>
@@ -65,33 +69,35 @@
   <input [value]="totalPrice"  >
 
   <input [value]="totalPrice" > -->
-  
-   <table class="table table-bordered" id="saleTable">
-     <thead>
+
+  <table class="table table-bordered" id="saleTable">
+    <thead>
       <tr id="header">
         <!-- <th scope="col"></th> -->
         <th>סריה כללית</th>
         <th>סריה פרטית</th>
-        <th>שם אבן   </th>
+        <th>שם אבן </th>
         <th>משקל</th>
-        <th style="height:5px ;">   מחיר לקראט</th>
+        <th style="height:5px ;"> מחיר לקראט</th>
         <th>סה"כ</th>
+        <th>לאישור</th>
       </tr>
     </thead>
-     <tbody  id="tbodySale">
-      <tr *ngFor="let sale of tableContent; let i = index; let l = last; let f=first" >
-     <!-- <td scope="row"><svg  *ngIf="l" (click)="addrow1()" id="svg" width="2em" height="2em" viewBox="0 0 16 16"
+    <tbody id="tbodySale">
+      <tr *ngFor="let sale of tableContent; let i = index; let l = last; let f=first" (click)="rowSale(i,sale)">
+        <!-- <td scope="row"><svg  *ngIf="l" (click)="addrow1()" id="svg" width="2em" height="2em" viewBox="0 0 16 16"
     class="bi bi-file-earmark-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M4 0h5.5v1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h1V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z" />
     <path d="M9.5 3V0L14 4.5h-3A1.5 1.5 0 0 1 9.5 3z" />
     <path fill-rule="evenodd"
       d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z" />
-  </svg></td> tabindex={{i*5+6}}-->  <!-- <input   
+  </svg></td> tabindex={{i*5+6}}-->
+        <!-- <input   
           type="text" class="input" formControlName="publicSerialName" tabindex={{i*5+6}}
        [(ngModel)]="sale.publicSerial" > -->
-      <td>   
-            <!-- <select id="selectSeri"  tabindex={{i*5+6}} class="input" 
+        <td>
+          <!-- <select id="selectSeri"  tabindex={{i*5+6}} class="input" 
               [ngModelOptions]="{standalone: true}"
             [(ngModel)]="selectedSerial" placeholder="בחר"
                 class="browser-default custom-select" mdbInput mdbValidate>
@@ -99,48 +105,45 @@
                 <option *ngFor="let s of seriousnessList " [ngValue]='s'>
                     {{s.serialName}}</option>
             </select> -->
-           
-              <input style="border: none;" type="text" id="selectSerial" tabindex={{i*5+6}} name="example" list="List"
-                  [ngModelOptions]="{standalone: true}"  [(ngModel)]="selectedSerial" 
-                  placeholder="בחר" (change)="selectedSaleId($event)">
-              <datalist id="List">
-                  <option id="{{s.serialName}}" *ngFor="let s of seriousnessList ;let i=index" 
-                  [attr.data-value]="s.id" [attr.i]="i" >{{s.serialName}}
-                  </option>
-              </datalist>
-          
-        
-      </td>
-<td>
-     
-           <input 
-          formControlName="privateSerialName" type="text" class="input" 
-          tabindex={{i*5+7}}    [(ngModel)]="sale.privateSerial"> </td> 
 
-        <td><input  [(ngModel)]="sale.stoneName" 
-          formControlName="stoneName"type="text" class="input"  
-          [(ngModel)]="tableContent[i].stoneName" tabindex={{i*5+8}} > </td>
+          <input style="border: none;" type="text" id="selectSerial" tabindex={{i*5+6}} name="example" list="List"
+            [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedSerial" placeholder="בחר"
+            (change)="selectedSaleId($event)">
+          <datalist id="List">
+            <option id="{{s.serialName}}" *ngFor="let s of seriousnessList ;let i=index" [attr.data-value]="s.id"
+              [attr.i]="i">{{s.serialName}}
+            </option>
+          </datalist>
 
-        <td><input  #wee tabindex={{i*5+9}} (input) ="totalPrice[i] = wee.value * pricepercarat.value "  
-          formControlName="weight"  class="input"
-          [(ngModel)]="tableContent[i].w"  min="0" type="number" name="w" > </td>
 
-        <td><input  tabindex={{i*5+10}} #pricepercarat (input) ="totalPrice[i] = wee.value * pricepercarat.value "           
-          formControlName="pricePerCarat"  class="input"
-          [(ngModel)]="tableContent[i].pricePerCarat" min="0" type="number"
-             classNam="PricePerCarat" > </td>
+        </td>
+        <td>
 
-        <td ><input [value]="totalPrice[i]" formControlName="totalPrice"  class="input" ></td> 
+          <input formControlName="privateSerialName" type="text" class="input" tabindex={{i*5+7}}
+            [(ngModel)]="sale.privateSerialName">
+        </td>
+
+        <td><input [(ngModel)]="sale.stoneName" formControlName="stoneName" type="text" class="input"
+            [(ngModel)]="tableContent[i].stoneName" tabindex={{i*5+8}}> </td>
+
+        <td><input #wee tabindex={{i*5+9}} (input)="totalPrice[i] = wee.value * pricepercarat.value "
+            formControlName="weight" class="input" [(ngModel)]="tableContent[i].weight" min="0" type="number" name="w"> </td>
+
+        <td><input tabindex={{i*5+10}} #pricepercarat (input)="totalPrice[i] = wee.value * pricepercarat.value "
+            formControlName="pricePerCarat" class="input" [(ngModel)]="tableContent[i].pricePerCarat" min="0"
+            type="number" classNam="PricePerCarat"> </td>
+
+        <td><input [value]="totalPrice[i]" formControlName="totalPrice" class="input"></td>
+        <td (click)="rowSale(i,sale)" (click)="addSale()">ok</td>
       </tr>
-   </tbody>
-  </table> 
- <label class="error" *ngIf="salesForm.controls.dirty">נא למלא את כל הפרטים.</label>
+    </tbody>
+  </table>
+  <label class="error" *ngIf="salesForm.controls.dirty">נא למלא את כל הפרטים.</label>
   <br>
-  <button type="submit" [disabled]="!salesForm.valid" class="btn btn-primary" id="save">שמירה</button>&nbsp; &nbsp; 
-  
+  <button type="submit" class="btn btn-primary" id="save">שמירה</button>&nbsp; &nbsp;
+
   <button (click)="cancel()" class="btn btn-primary" id="cancel">ביטול</button>
 </form>
 <router-outlet></router-outlet>
+
 </html>
-    
- 
