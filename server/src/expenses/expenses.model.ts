@@ -1,4 +1,3 @@
-import { SSL_OP_NO_QUERY_MTU } from 'constants';
 import * as mongoose from 'mongoose';
 
 export const ExpensesSchema = new mongoose.Schema({

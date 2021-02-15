@@ -314,7 +314,7 @@
   <div class="tab-pane container fade" id="menu2">...</div>
 </div> -->
   <!-- Highlight Card -->
-  <div class="card highlight-card card-small">
+  <div class="card highlight-card card-small" style="font-family: Papyrus;">
     Diamond Partnership Business    
   </div>
    <!-- <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -368,8 +368,48 @@
 </div> -->
   
 
+<div id="app">
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <a href="#" class="navbar-brand">bezKoder</a>
+    <ul class="navbar-nav mr-auto" routerLinkActive="active">
+      <!-- <li class="nav-item">
+        <a href="/home" class="nav-link" routerLink="home">Home </a>
+      </li> -->
+      <!-- <li class="nav-item" *ngIf="showAdminBoard">
+        <a href="/admin" class="nav-link" routerLink="admin">Admin Board</a>
+      </li> -->
+      <!-- <li class="nav-item" *ngIf="showModeratorBoard">
+        <a href="/mod" class="nav-link" routerLink="mod">Moderator Board</a>
+      </li> -->
+      <li class="nav-item">
+        <a href="/user" class="nav-link" *ngIf="isLoggedIn" routerLink="user">User</a>
+      </li>
+    </ul>
 
-  
+    <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
+      <li class="nav-item">
+        <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
+      </li>
+      <li class="nav-item">
+        <a href="/login" class="nav-link" routerLink="login">Login</a>
+      </li>
+    </ul>
+
+     <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+   <!--   <li class="nav-item">
+        <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
+      </li>-->
+      <li class="nav-item">
+        <a href class="nav-link" (click)="logout()">LogOut</a>
+      </li>
+    </ul> 
+  </nav>
+
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+  <!-- <app-user></app-user> -->
   <app-nav-bar></app-nav-bar>
   <!-- <nav>
     <a [routerLink]="['/home']"routerLinkActive="active" style="background-color: #888;"></a>

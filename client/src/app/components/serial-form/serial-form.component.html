@@ -4,7 +4,6 @@
     [config]="{backdrop: 'static',  keyboard: false}"
     aria-hidden="true">
 
-
         <div class="modal-dialog modal-dialog-scrollable modal-l" role="document">
             <div class="modal-content">
                 <div class="modal-header text-center">
@@ -117,8 +116,7 @@
                         data-target="#basicExample" (click)="close()" mdbWavesEffect >
                         ביטול </button>
                         <button *ngIf="!(updateSerial)" [disabled]="!serialForm.valid" type="button" mdbBtn color="blue" rounded="true"
-                            data-toggle="modal" data-target="#basicExample" (click)="save()" mdbWavesEffect
-                            id="saveExpenses">
+                            data-toggle="modal" data-target="#basicExample" (click)="save()" mdbWavesEffect>
                             שמירה </button>
                         <button *ngIf="updateSerial" type="button" mdbBtn color="blue" rounded="true"
                             data-toggle="modal" data-target="#basicExample" (click)="update()" mdbWavesEffect>
@@ -199,7 +197,6 @@
                                                                                     (click)="removeExpPrivate(i,ip)"
                                                                                     class="fa fa-times"
                                                                                     aria-hidden="false"></i>
-
                                                                             </td>
                                                                         </tr>
                                                                     </div>
@@ -211,27 +208,21 @@
                                             </td>
                                             <td><i title="מחיקה" (click)="removePrivate(i)" class="fa fa-times"
                                                     aria-hidden="false"></i>
-
                                             </td>
-
                                         </tr>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </table>
                 </div>
 
                 <div class="modal-footer">
-
                     <button type="button" class="btn btn-primary" data-dismiss="modal"
                         (click)="cancelPrivateSerial()">ביטול</button>
                     <button class="btn btn-primary" (click)="savePrivateSerial()">שמירה</button>
-                    <!-- <button class="btn btn-primary" (click)="updatePrivateSerial()">שמירה</button> -->
                 </div>
             </div>
         </div>
-        <!-- </div> -->
     </div>
 </form>

@@ -14,9 +14,12 @@ import { AppComponent } from './app.component';
 import { ModalFormComponent } from './components/modal-form/modal-form.component'
 import { SerialFormComponent } from './components/serial-form/serial-form.component';
 import { ExpensesFormComponent } from './components/expenses-form/expenses-form.component';
-import { Sale } from './data/sale';
+import { UserComponent } from './components/user/user.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
+  { path: 'user', component: UserComponent },
   { path: 'home', component: HomeComponent },
   { path: 'checks', component: ChecksComponent},
   {
@@ -57,6 +60,12 @@ const routes: Routes = [
     ]
   },
  
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  // { path: 'profile', component: ProfileComponent },
+  // { path: 'user', component: BoardUserComponent },
+  // { path: 'mod', component: BoardModeratorComponent },
+  // { path: 'admin', component: BoardAdminComponent },
 
 ];
 

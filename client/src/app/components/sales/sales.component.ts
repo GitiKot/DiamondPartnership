@@ -91,8 +91,6 @@ export class SalesComponent implements OnInit {
     }
     else {
       this.updateSale = s;
-      console.log("s ", s);
-      console.log(this.updateSale);
 
       this.salesForm.patchValue({
         date: this.updateSale.date,
@@ -121,11 +119,29 @@ export class SalesComponent implements OnInit {
   update() {
     if (this.updateSale != undefined) {
       if (this.salesForm.valid) {
-        console.log("form", this.updateSale);
-        console.log("update form", this.salesForm.value);
+
 
         document.getElementById('raw').setAttribute('checked', 'true')
         this.saleService.updateSale(this.updateSale.id, this.salesForm.value).subscribe(() => {
+
+          // let upser=this.seriousnessService.findBySerailName(((((this).updateSale.publicSerialName)as any)as Seriousness).serialName);
+          //  console.log("upser",upser);
+          // this.seriousnessService.updateSerial(this.serialId, this.seriousnessList[this.place]).subscribe(() => {
+          // }, () => {
+          //   console.log("error");
+          // })
+         let serialName= ((this.updateSale.publicSerialName as any)as Seriousness ).serialName;
+          
+          let seria = this.seriousnessService.findBySerailName(serialName).subscribe(ans=>{
+            console.log("ans",ans);
+            this.seriousnessService.updateSerial(ans.id,ans).subscribe(()=>console.log("sss")
+            )
+            
+          },()=>console.log("error seria"));
+          
+                //  console.log("seria", seria);
+
+
           this.r.navigate(['sales-form/modal-form', 'מכירה'])
           this.salesForm.reset();
         }, () => {
@@ -151,7 +167,7 @@ export class SalesComponent implements OnInit {
 
   }
   ok(s) {
-    console.log("ok");
+
 
     if (s != '') {
       let saleDelete = this.currectSale;
@@ -237,7 +253,7 @@ export class SalesComponent implements OnInit {
     table = document.getElementById("salesTable");
     tr = table.getElementsByTagName("tr");
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[5];
+      td = tr[i].getElementsByTagName("td")[6];
       if (td) {
         txtValue = td.textContent || td.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -248,7 +264,6 @@ export class SalesComponent implements OnInit {
       }
     }
   }
-
 }
 
 

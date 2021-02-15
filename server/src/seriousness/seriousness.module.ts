@@ -13,10 +13,3 @@ import { seriousnessService } from './seriousness.service';
     providers:[seriousnessService],
 })
 export class SeriousnessModule {}
-
-
-
-
-
-
-

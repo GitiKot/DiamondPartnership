@@ -26,10 +26,8 @@ h3{
 #save{
     position: fixed; 
     bottom: 25px; left: 25px;
-    /* width: 75px;  */
 }
 #cancel{
     position: fixed; 
-    bottom: 25px; left: 110px; 
-    /* width: 75px; */
+    bottom: 25px; left: 130px; 
 }

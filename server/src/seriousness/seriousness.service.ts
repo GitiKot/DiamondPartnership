@@ -4,9 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Seriousness } from './interfaces/seriousness.interface';
 import { createSeriousnessDto } from './dto/create-seriousness.dto';
-import e from 'express';
 import { ObjectId } from 'mongodb';
-import { findSourceMap } from 'module';
 
 @Injectable()
 export class seriousnessService {
