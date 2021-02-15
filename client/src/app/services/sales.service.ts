@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { Sale } from '../data/sale'
 @Injectable({
   providedIn: 'root'
@@ -25,6 +25,7 @@ export class SalesService {
   }
   addSale(s: Sale): Observable<Sale> {
   
+
     return this.http.post<Sale>(this.salesUrl, s);
   }
   updateSale(saleId, sale: Sale) :Observable<Sale>{

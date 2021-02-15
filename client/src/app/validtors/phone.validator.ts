@@ -1,4 +1,4 @@
-import {  FormControl, ValidatorFn } from '@angular/forms';
+import { FormGroup, FormControl, ValidatorFn } from '@angular/forms';
 
 export function phoneValidator(): ValidatorFn {
     return (control: FormControl): { [key: string]: any } | null => {
@@ -8,7 +8,7 @@ export function phoneValidator(): ValidatorFn {
 
 
                     if (control.value[1] == 5) {
-                        if (control.value[2] == 3 || control.value[2] == 2 || control.value[2] == 4 || control.value[2] == 0|| control.value[2] == 5) {
+                        if (control.value[2] == 3 || control.value[2] == 2 || control.value[2] == 4 || control.value[2] == 5) {
                             return null;
                         }
                         else {

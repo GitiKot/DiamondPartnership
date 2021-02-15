@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { PartnerService } from 'src/app/services/partner.service';
 import { Partner } from 'src/app/data/partner';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -18,7 +19,7 @@ export class PartnersComponent implements OnInit {
   p: Partner;
   flagupdate = 0;
 
-  constructor(private partnerService: PartnerService,private formBuilder: FormBuilder) { }
+  constructor(private r: Router, private partnerService: PartnerService,private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.partnerService.getAllPartners().subscribe(ans => { this.partnersList = ans });
@@ -29,17 +30,22 @@ export class PartnersComponent implements OnInit {
   }
   f() {
     this.p = undefined;
+    console.log("p", this.p);
     this.flagupdate = 1;
-    console.log("f()", this.flagupdate);
+    console.log("f", this.flagupdate);
   }
   updateflag(part) {
     this.p = part;
+    console.log("update partner: ", part);
     this.flagupdate = 1;
-    console.log("updateflag()",this.flagupdate);
+    console.log("updateflag");
+    console.log(this.flagupdate);
   }
   updateFromFlag(event) {
+    console.log("updatefromflag");
+    console.log("evevt", event);
     this.flagupdate = event;
-    console.log("updatefromflag()",this.flagupdate);
+    console.log(this.flagupdate);
   }
   deletePartner(p) {
     var div = document.getElementById('alert');

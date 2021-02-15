@@ -20,10 +20,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SerialFormComponent } from './components/serial-form/serial-form.component';
 import { ExpensesFormComponent } from './components/expenses-form/expenses-form.component';
 import { SucssesModalComponent } from './components/sucsses-modal/sucsses-modal.component';
-import { UserComponent } from './components/user/user.component';
-import { RegisterComponent } from './components/register/register.component';
-import { LoginComponent } from './components/login/login.component';
-import { authInterceptorProviders } from './helpers/auth.interceptor';
 // import{HttpClientModule} from ''
 // import {MatInputModule} from '@angular/material/input';
 
@@ -57,13 +53,10 @@ import { authInterceptorProviders } from './helpers/auth.interceptor';
     NavBarComponent,
     ModalFormComponent,
     ExpensesFormComponent,
+    
     SerialFormComponent,
     
     SucssesModalComponent,
-    UserComponent,
-    RegisterComponent,
-    LoginComponent,
-    
     
     
   ],
@@ -78,7 +71,7 @@ import { authInterceptorProviders } from './helpers/auth.interceptor';
     
   ], 
   schemas: [NO_ERRORS_SCHEMA] ,
-  providers: [authInterceptorProviders],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -33,11 +33,6 @@
       <i class="fa fa-handshake-o" aria-hidden="true"></i>
       מכירה חדשה
     </a>
-    <!-- <a href="sales/true" style=" position: fixed; bottom: 25px; right: 25px;">
-      <i class="fa fa-arrow-circle-up fa-3x" aria-hidden="true"></i></a> -->
-    
-
-
   </div>
   <br> <br><br>&nbsp;&nbsp;
   <div class="container">
@@ -57,8 +52,9 @@
           <th>סה"כ</th>
           <th>גלם/מלוטש</th>
         </tr>
-      </thead> 
+      </thead>
       <tbody>
+
         <tr *ngFor="let s of salesList;let i = index" (mouseenter)="toolbar(i)" (mouseleave)="toolbar1(i)"
           id="row{{i}}">
           <td> <button id="del{{i}}" class="del" (click)="deleteSale(s)" title="מחיקה">
@@ -87,6 +83,7 @@
         </tr>
       </tbody>
     </table>
+
   </div>
   <div id="alert" class="alert alert-success">
     <strong> שים לב </strong>בקשת למחוק מכירה <button type="button" class="btn btn-outline-primary"

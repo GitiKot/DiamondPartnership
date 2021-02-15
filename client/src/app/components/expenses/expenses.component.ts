@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { Expenses } from 'src/app/data/expenses';
 import { ExpensesService } from 'src/app/services/expenses.service'
@@ -18,13 +19,15 @@ export class ExpensesComponent implements OnInit {
   @ViewChild('frame2') public showModalOnClick: ModalDirective;//model s
   @ViewChild('frame1') public showModalOnClick1: ModalDirective;//model big
   newexpensesForm: FormGroup;
+
   flagupdate = 0;
 
-  constructor(private expensesService: ExpensesService, private formBuilder: FormBuilder) { }
+  constructor(private r: Router, private expensesService: ExpensesService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
 
     this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
+    // console.log(this.expensesList);
     this.expensesService.getAllExpenses()
       .subscribe((data: any[]) => {
         this.newexpensesForm = this.formBuilder.group({
@@ -68,22 +71,28 @@ export class ExpensesComponent implements OnInit {
   f() {
     this.e = undefined;
     this.flagupdate = 1;
-    console.log("f()flagupdate",this.flagupdate);
-    
   }
   updateflag(ex) {
     this.e = ex;
     this.flagupdate = 1;
+    console.log("updateflag", this.flagupdate);
   }
   updateFromFlag(event) {
+    console.log("updatefromflag");
+    console.log("evevt", event);
     this.flagupdate = event;
+    console.log(this.flagupdate);
+
   }
   updateEi(i: number) {
     this.indexE = i;
   }
   // נראה לי שאפשר למחוק פונ' זו
   updateExpenses(exid: string, expenses: Expenses) {
+    console.log("updateExpenses",expenses);
+    console.log(this.expensesList[exid].id);
     expenses.id = this.expensesList[exid].id;
+
     this.expensesService.updateExpenses(this.expensesList[exid].id, expenses);
   }
   deleteExpe(e) {
@@ -125,3 +134,8 @@ export class ExpensesComponent implements OnInit {
     update.style.visibility = "hidden";
   }
 }
+
+
+
+
+

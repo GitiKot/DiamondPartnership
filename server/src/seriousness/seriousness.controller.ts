@@ -43,7 +43,6 @@ export class SeriousnessController {
     findBySerailName(@Param('serialName') serialName: string) {
 
         const ser = this.seriousnessService.findBySerailNameS(serialName);
-console.log("ser",ser);
 
         return ser;
     }

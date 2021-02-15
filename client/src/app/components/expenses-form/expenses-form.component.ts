@@ -40,9 +40,11 @@ export class ExpensesFormComponent implements OnInit {
       detail: this.formBuilder.array([]),
       Remarks: [''],
     })
+    // this.expensesForm.controls['PublicSerialName'].setValue(this.updateEx.PublicSerialName);
 
     if (this.updateEx != undefined) {
-      console.log("iu",this.updateEx.detail);
+      console.log("iu");
+      console.log(this.updateEx.detail);
       this.expensesForm.patchValue({
         PublicSerialName: this.updateEx.PublicSerialName,
         date: this.updateEx.date,
@@ -52,6 +54,8 @@ export class ExpensesFormComponent implements OnInit {
         amount: this.updateEx.amount,
         Remarks: this.updateEx.Remarks,
       });
+
+      // this.expensesForm.setControl('detail', this.formBuilder.array(this.updateEx.detail));
       this.updateEx.detail.forEach(e => {
         this.editDetail(e.expenses, e.price);
       })
@@ -76,7 +80,9 @@ export class ExpensesFormComponent implements OnInit {
       this.showModalOnClick.hide();
       this.showModalOnClick1.hide();
     }
-    else { }
+    else {
+      // this.r.navigate(['expenses']);
+    }
     console.log("close");
     this.updateFlag.emit(0);
   }
@@ -90,6 +96,7 @@ export class ExpensesFormComponent implements OnInit {
         this.r.navigate(['expenses/expenses-form/modal-form', 'הוצאה'])
       }, () => {
         console.log("error");
+        // this.expensesForm.reset();
       })
     }
     else {
@@ -97,6 +104,8 @@ export class ExpensesFormComponent implements OnInit {
     }
     this.showModalOnClick.hide();
     this.showModalOnClick1.hide();
+    // צריך פה לעשות רפרש לטבלה
+    // this.r.navigate(['expenses']);
     this.updateFlag.emit(1);
     this.r.navigate(['']);
   }
@@ -131,6 +140,7 @@ export class ExpensesFormComponent implements OnInit {
 
     this.showModalOnClick.hide();
     this.showModalOnClick1.show();
+    // if (this.expensesForm.value.detail) { }
   }
 
   cancelex() {
@@ -140,6 +150,7 @@ export class ExpensesFormComponent implements OnInit {
 
     this.showModalOnClick.hide();
     this.showModalOnClick1.show();
+
   }
 
   get PublicSerialName() {
@@ -148,9 +159,11 @@ export class ExpensesFormComponent implements OnInit {
   get date() {
     return this.expensesForm.get('date');
   }
+
   get getchack() {
     return this.expensesForm.get('getchack');
   }
+
   get InvoiceNumber() {
     return this.expensesForm.get('InvoiceNumber');
   }
@@ -163,6 +176,7 @@ export class ExpensesFormComponent implements OnInit {
   get detail(): FormArray {
     return this.expensesForm.get('detail') as FormArray
   }
+
   get expenses() {
     return this.expensesForm.get("detail").get('expenses');
   }
@@ -179,7 +193,9 @@ export class ExpensesFormComponent implements OnInit {
       price: '',
     })
   }
+
   addDetail() {
+
     this.detail.push(this.newDetail());
   }
   updateDetail(ex: string, p: number): FormGroup {
@@ -190,6 +206,7 @@ export class ExpensesFormComponent implements OnInit {
   }
 
   editDetail(ex: string, p: number) {
+
     this.detail.push(this.updateDetail(ex, p));
   }
   removeDetail(i: number) {
@@ -200,3 +217,7 @@ export class ExpensesFormComponent implements OnInit {
     console.log(this.expensesForm[i].detail.length);
   }
 }
+
+
+
+

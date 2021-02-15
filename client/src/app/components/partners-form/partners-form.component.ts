@@ -32,7 +32,7 @@ export class PartnersFormComponent implements OnInit {
           pel: ['', [Validators.compose([Validators.minLength(10), Validators.pattern('[0][5][0-9]{8}'), phoneValidator()])]],
           fax: ['', [Validators.required]],
           Remarks: [''],
-        }, ContactNumberValidator(['phone', 'pel', 'email']));
+        }, ContactNumberValidator(['phone', 'pel', 'email'])); console.log(this.partnersForm.controls.email.value);
 
       // this.partnersForm = new FormGroup({
       //   name: new FormControl('', Validators.required),
@@ -46,7 +46,8 @@ export class PartnersFormComponent implements OnInit {
     
       console.log("updateex", this.updateP);
       if (this.updateP != undefined) {
-        console.log("iu",this.updateP);
+        console.log("iu");
+        console.log(this.updateP);
         this.partnersForm.patchValue({
           name: this.updateP.name,
           contact: this.updateP.contact,
@@ -111,14 +112,16 @@ export class PartnersFormComponent implements OnInit {
   }
   get Remarks() {
     return this.partnersForm.get('Remarks');
-  }
+  } 
   save(){
+  
     if (this.partnersForm.valid) {
-      this.partnerService.addPartner(this.partnersForm.value).subscribe(()=> {
+      this.partnerService.addPartner(this.partnersForm.value)
+        .subscribe(a => {
           this.router.navigate(['partners/partners-form/modal-form', 'שותף'])  
         }, () => {
           console.log("error");
-        })
+        });
     }
     else{
       alert("חסרים נתונים");
@@ -136,22 +139,20 @@ export class PartnersFormComponent implements OnInit {
       }, () => {
         console.log("error");
       }) 
-      // this.showModalOnClick.hide();
-      // this.updateFlag.emit(1);
-    //  this.close();
+      this.showModalOnClick.hide();
+      this.updateFlag.emit(1);
+     this.close();
     }
     else {
       alert("חסרים נתונים");
     }
-    this.showModalOnClick.hide();
-    this.updateFlag.emit(1);
-    this.router.navigate(['']);
   }
   close() {
     if (this.updateP != undefined) {
       this.showModalOnClick.hide();
     }
-    else { }
+    else {
+    }
     console.log("close");
     this.updateFlag.emit(0);
   }
@@ -162,6 +163,7 @@ export class PartnersFormComponent implements OnInit {
   }
   ok(s) {
     console.log("ok");
+    
     if (s != '') {
       var tt = this.partnerService.deletePartner(this.currectPartner);
       console.log(tt);

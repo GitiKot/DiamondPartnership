@@ -6,13 +6,15 @@
 input:hover{
     background-color: #f1f1f1;
 }
-#save{
+  #save{
     position: fixed; 
     bottom: 25px; left: 25px;
+    /* width: 75px;  */
 }
 #cancel{
     position: fixed; 
     bottom: 25px; left: 110px; 
+    /* width: 90px; */
 }
 /* ///
  */
