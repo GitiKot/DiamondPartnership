@@ -69,25 +69,7 @@
       </tbody>
     </table>
 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <app-expenses-form *ngIf="flagupdate" [updateEx]="e" (updateFlag)="updateFromFlag($event)"></app-expenses-form>
 
     
       <div id="alert" class="alert alert-success">
