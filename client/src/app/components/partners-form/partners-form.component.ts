@@ -116,8 +116,7 @@ export class PartnersFormComponent implements OnInit {
   save(){
   
     if (this.partnersForm.valid) {
-      this.partnerService.addPartner(this.partnersForm.value)
-        .subscribe(a => {
+      this.partnerService.addPartner(this.partnersForm.value).subscribe(a => {
           this.router.navigate(['partners/partners-form/modal-form', 'שותף'])  
         }, () => {
           console.log("error");
@@ -139,13 +138,14 @@ export class PartnersFormComponent implements OnInit {
       }, () => {
         console.log("error");
       }) 
-      this.showModalOnClick.hide();
-      this.updateFlag.emit(1);
-     this.close();
     }
     else {
       alert("חסרים נתונים");
     }
+    this.showModalOnClick.hide();
+    this.updateFlag.emit(1);
+    // this.close();
+    this.router.navigate(['']);
   }
   close() {
     if (this.updateP != undefined) {
@@ -156,43 +156,43 @@ export class PartnersFormComponent implements OnInit {
     console.log("close");
     this.updateFlag.emit(0);
   }
-  deletePartner(p) {
-    var div = document.getElementById('alert');
-    div.style.visibility = "visible";
-    this.currectPartner = p;
-  }
-  ok(s) {
-    console.log("ok");
+  // deletePartner(p) {
+  //   var div = document.getElementById('alert');
+  //   div.style.visibility = "visible";
+  //   this.currectPartner = p;
+  // }
+  // ok(s) {
+  //   console.log("ok");
     
-    if (s != '') {
-      var tt = this.partnerService.deletePartner(this.currectPartner);
-      console.log(tt);
-      this.partnerService.getAllPartners().subscribe(ans => this.partnersList = ans);
-    }
-    this.currectPartner = null;
-    var div = document.getElementById('alert');
-    div.style.visibility = "hidden";
-  }
-  toolbar(i: number) {
+  //   if (s != '') {
+  //     var tt = this.partnerService.deletePartner(this.currectPartner);
+  //     console.log(tt);
+  //     this.partnerService.getAllPartners().subscribe(ans => this.partnersList = ans);
+  //   }
+  //   this.currectPartner = null;
+  //   var div = document.getElementById('alert');
+  //   div.style.visibility = "hidden";
+  // }
+  // toolbar(i: number) {
 
-    let row = document.getElementById("row" + i);
-    let del = document.getElementById("del" + i);
-    let update = document.getElementById("update" + i);
-    row.style.borderColor = " #f1f1f1";
-    del.style.display = "inline";
-    del.style.visibility = "visible";
-    update.style.display = "inline";
-    update.style.visibility = "visible";
-  }
-  toolbar1(i: number) {
+  //   let row = document.getElementById("row" + i);
+  //   let del = document.getElementById("del" + i);
+  //   let update = document.getElementById("update" + i);
+  //   row.style.borderColor = " #f1f1f1";
+  //   del.style.display = "inline";
+  //   del.style.visibility = "visible";
+  //   update.style.display = "inline";
+  //   update.style.visibility = "visible";
+  // }
+  // toolbar1(i: number) {
 
-    let row = document.getElementById("row" + i);
-    let del = document.getElementById("del" + i);
-    let update = document.getElementById("update" + i);
-    row.style.borderColor = "none";
-    del.style.display = "none";
-    del.style.visibility = "hidden";
-    update.style.display = "none";
-    update.style.visibility = "hidden";
-  }
+  //   let row = document.getElementById("row" + i);
+  //   let del = document.getElementById("del" + i);
+  //   let update = document.getElementById("update" + i);
+  //   row.style.borderColor = "none";
+  //   del.style.display = "none";
+  //   del.style.visibility = "hidden";
+  //   update.style.display = "none";
+  //   update.style.visibility = "hidden";
+  // }
 }
