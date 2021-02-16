@@ -159,6 +159,7 @@ export class SalesFormComponent implements OnInit {
               this.seriousnessList[this.place[i]].amountReceived = this.salesForm.value.newSaleRow[i].weight *
               this.salesForm.value.newSaleRow[i].pricePerCarat;
               this.seriousnessService.updateSerial(this.serialId[i], this.seriousnessList[this.place[i]]).subscribe(() => {
+              }, () => {
                 console.log("error");
               })
             });

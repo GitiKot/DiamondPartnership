@@ -82,7 +82,7 @@
         <div class="modal-footer d-flex justify-content-center">
           <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="close()">ביטול</button>
           <button *ngIf="!(updateP)" type="button" class="btn btn-primary" (click)="save()"
-            (click)="close()"  >שמירה</button>
+            (click)="close()" [disabled]="!partnersForm.valid" >שמירה</button>
           <button class="btn btn-primary" *ngIf="updateP" (click)="update()" >שמירה</button>
         </div>
       </div>

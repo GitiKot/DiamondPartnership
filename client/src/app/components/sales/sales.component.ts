@@ -126,6 +126,65 @@ export class SalesComponent implements OnInit {
 
         document.getElementById('raw').setAttribute('checked', 'true')
         this.saleService.updateSale(this.updateSale.id, this.salesForm.value).subscribe(() => {
+
+
+          // let upser=this.seriousnessService.findBySerailName(((((this).updateSale.publicSerialName)as any)as Seriousness).serialName);
+          //  console.log("upser",upser);
+          // this.seriousnessService.updateSerial(this.serialId, this.seriousnessList[this.place]).subscribe(() => {
+          // }, () => {
+          //   console.log("error");
+          // })
+
+          // let thisSale = this.salesList.forEach(s => {
+          //   if(s.publicSerialName==this.salesForm.controls.publicSerialName)
+          // });
+
+
+          let ser = <Seriousness>((this.updateSale.publicSerialName) as any)
+          console.log("updatesale",this.updateSale);
+
+          let idser;
+          this.seriousnessList.forEach(s => {
+            if (s.serialName == ser.serialName) {
+              idser = s.id;
+            }
+          });
+          ser.amountReceived = ((Number(this.salesForm.value.weight) *
+            Number(this.salesForm.value.pricePerCarat)))-((Number(this.updateSale.weight) *
+            Number(this.updateSale.pricePerCarat)));
+            console.log("ser.amountReceived",ser.amountReceived);
+
+          this.seriousnessService.updateSerial(idser, ser).subscribe(() => {
+          }, () => {
+            console.log("error");
+          })
+
+
+
+          // let serialName = ((this.updateSale.publicSerialName as any) as Seriousness).serialName;
+
+          // let serial = this.seriousnessService.findBySerailName(serialName).subscribe(ans => {
+          // console.log("ans", ans);
+          // console.log("", this.seriousnessList.forEach(s=>{
+          //   if(serialName==s.serialName){
+          //     s.amountReceived=50000;
+          //   }
+          // }));
+
+          // console.log("ans re", ans.amountReceived);
+
+          // ans.amountReceived = Number(this.salesForm.controls.weight) * Number(this.salesForm.controls.pricePerCarat);
+          // console.log("ans re", ans.amountReceived);
+
+          // this.seriousnessService.updateSerial(ans.id, ans).subscribe(() => console.log("sss")
+
+          // )
+          // console.log("ans after", ans);
+          // }, () => console.log("error seria"));
+          // console.log("serial",serial);
+
+          //  console.log("seria", seria);
+
           this.r.navigate(['sales-form/modal-form', 'מכירה'])
           this.salesForm.reset();
         }, () => {
