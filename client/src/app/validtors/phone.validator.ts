@@ -1,4 +1,4 @@
-import { FormGroup, FormControl, ValidatorFn } from '@angular/forms';
+import { FormControl, ValidatorFn } from '@angular/forms';
 
 export function phoneValidator(): ValidatorFn {
     return (control: FormControl): { [key: string]: any } | null => {
