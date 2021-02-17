@@ -1,0 +1,19 @@
+<div class="main">
+    <form [formGroup]="loginForm" (submit)="checkUser()">
+        <div class="form-group">
+            <label>שם משתמש</label>
+            <input type="text" class="form-control" formControlName="username">
+            <div class="error" *ngIf="loginForm.controls['username'].error!=null">שדה נדרש</div>
+        </div>
+        <div class="form-group">
+            <label>סיסמה</label>
+            <input type="password" class="form-control" formControlName="username">
+            <div class="error" *ngIf="loginForm.controls['username'].error!=null">שדה נדרש</div>
+        </div>
+        <div>
+            <input type="submit" class="btn btn-primary" value="הרשמי">
+            <a [routerLink]="['/register']" class="btn btn-primary">משתמשת חדשה</a>
+        </div>
+    </form>
+    <div class="error" *ngIf="failedMessage">שם משתמש או סיסמה שגויים</div>
+</div>

@@ -20,6 +20,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SerialFormComponent } from './components/serial-form/serial-form.component';
 import { ExpensesFormComponent } from './components/expenses-form/expenses-form.component';
 import { SucssesModalComponent } from './components/sucsses-modal/sucsses-modal.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { NavbarLoggedInComponent } from './components/navbar-logged-in/navbar-logged-in.component';
 // import{HttpClientModule} from ''
 // import {MatInputModule} from '@angular/material/input';
 
@@ -57,6 +60,12 @@ import { SucssesModalComponent } from './components/sucsses-modal/sucsses-modal.
     SerialFormComponent,
     
     SucssesModalComponent,
+    
+    LoginComponent,
+    
+    RegisterComponent,
+    
+    NavbarLoggedInComponent,
     
     
   ],

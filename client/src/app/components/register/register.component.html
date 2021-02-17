@@ -1,0 +1,29 @@
+<div class="main">
+    <form [formGroup]="registerForm" (submit)="checkUser()">
+        <div class="form-group">
+            <label>שם משתמש</label>
+            <input type="text" class="form-control" formControlName="username">
+            <div class="error" *ngIf="registerForm.controls['username'].error!=null">שדה נדרש</div>
+        </div>
+        <div class="form-group">
+            <label>סיסמה</label>
+            <input type="password" class="form-control" formControlName="password">
+            <div class="error" *ngIf="registerForm.controls['password'].error!=null">שדה נדרש</div>
+        </div>
+        <div class="form-group">
+            <label>אימות סיסמה</label>
+            <input type="password" class="form-control" formControlName="passwordOk">
+            <div class="error" *ngIf="registerForm.controls['passwordOk'].error!=null">שדה נדרש</div>
+        </div>
+        <div>
+            <input type="checkbox"> אני מסכימה עם כל התנאים של האתר.
+        </div>
+        <div>
+            <input type="submit" class="btn btn-primary" value="הוסף">
+            <input type="button" class="btn btn-primary" value="ביטול" (click)="res()">
+        </div>
+    </form>
+    <div class="error" *ngIf="failedMessage">לא הוכנסו כל הפרטים.</div>
+    <div class="error" *ngIf="holdMessage">שם או סיסמה כבר קיימים במערכת.</div>
+    <div class="error" *ngIf="passMassage">לא הקשת באימות סיסמה את הסיסמה שבחרת.</div>
+</div>
