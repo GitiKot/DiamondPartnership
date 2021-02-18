@@ -10,17 +10,13 @@ import { ExpensesComponent } from './components/expenses/expenses.component';
 import { ChecksComponent } from './components/checks/checks.component';
 import { PartnersFormComponent } from './components/partners-form/partners-form.component';
 import { SalesFormComponent } from './components/sales-form/sales-form.component';
+import { AppComponent } from './app.component';
 import { ModalFormComponent } from './components/modal-form/modal-form.component'
 import { SerialFormComponent } from './components/serial-form/serial-form.component';
 import { ExpensesFormComponent } from './components/expenses-form/expenses-form.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
-import {NavbarLoggedInComponent} from './components/navbar-logged-in/navbar-logged-in.component';
+import { Sale } from './data/sale';
 
 const routes: Routes = [
-{path:'login',component:LoginComponent},
-{path:'register',component:RegisterComponent},
-{ path: 'navbar-logged-in', component: NavbarLoggedInComponent },
   { path: 'home', component: HomeComponent },
   { path: 'checks', component: ChecksComponent},
   {

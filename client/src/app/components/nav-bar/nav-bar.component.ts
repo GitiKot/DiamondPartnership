@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NavbarLoggedInComponent } from '../navbar-logged-in/navbar-logged-in.component';
 
 @Component({
   selector: 'app-nav-bar',
@@ -14,7 +13,6 @@ a=true;
 
  
   ngOnInit(): void {
-   
   }
 
 }
