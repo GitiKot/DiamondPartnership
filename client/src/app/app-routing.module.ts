@@ -14,9 +14,10 @@ import { AppComponent } from './app.component';
 import { ModalFormComponent } from './components/modal-form/modal-form.component'
 import { SerialFormComponent } from './components/serial-form/serial-form.component';
 import { ExpensesFormComponent } from './components/expenses-form/expenses-form.component';
-import { Sale } from './data/sale';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
+  { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'checks', component: ChecksComponent},
   {
