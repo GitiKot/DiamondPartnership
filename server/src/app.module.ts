@@ -12,8 +12,8 @@ import { SeriousnessModule } from './seriousness/seriousness.module';
 
 // import { ChecksService } from './checks/checks.service';
 // import { ChecksController } from './checks/checks.controller';
-// import { CompaniesController } from './companies/companies.controller';
-// import { CompaniesService } from './companies/companies.service';
+import { CompaniesController } from './companies/companies.controller';
+import { CompaniesService } from './companies/companies.service';
 import { CompaniesModule } from './companies/companies.module';
 
 @Module({
@@ -24,9 +24,9 @@ import { CompaniesModule } from './companies/companies.module';
     ExpensesModule,
     ChecksModule,
     SeriousnessModule,
-    CompaniesModule,
+    CompaniesModule
   ],
-  controllers: [AppController,  ],//ChecksController,CompaniesController,
-  providers: [AppService, ],//ChecksService, CompaniesService, 
+  controllers: [AppController, CompaniesController, ],//ChecksController,
+  providers: [AppService, CompaniesService, ],//ChecksService, 
 })
 export class AppModule {}

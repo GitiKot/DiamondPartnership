@@ -6,33 +6,33 @@ import { createCompaniesDto } from './dto/create-companies.dto';
 
 @Injectable()
 export class CompaniesService {
-    constructor(@InjectModel('companies') private readonly companiesModel: Model<Companies>,) { }
+    constructor( @InjectModel('Companies') private readonly companiesModel: Model<Companies>,) { }
 
     addCompany(createCompaniesDto: createCompaniesDto): Promise<Companies> {
         const createExpenses = new this.companiesModel(createCompaniesDto);
         return createExpenses.save();
     }
-    getCompanyByNameAndPassword() {
+    getCompanyByNameAndPassword(){
 
     }
     // getAllCompanies() {
     // }
-    async updateCompany(
-        id: string,
-        nameCompany: string,
-        password: string,
-    ) {
-        const updatedCompany = await this.findCompany(id);
-
-        if (nameCompany) {
-            updatedCompany.nameCompany = nameCompany;
+   async updateCompany(
+            id: string,
+            nameCompany: string,
+            password: string,
+        ) {
+            const updatedCompany = await this.findCompany(id);
+            
+            if (nameCompany) {
+                updatedCompany.nameCompany = nameCompany;
+            }
+            if (password) {
+                updatedCompany.password = password;
+            }
+            updatedCompany.save();
         }
-        if (password) {
-            updatedCompany.password = password;
-        }
-        updatedCompany.save();
-    }
-    async deleteCompany(comId: string) {
+    async  deleteCompany(comId: string) {
         const result = await this.companiesModel.deleteOne({ _id: comId }).exec();
         if (result.n === 0) {
             throw new NotFoundException('Could not find company.');
@@ -53,8 +53,8 @@ export class CompaniesService {
         return {
             id: co.id,
             nameCompany: co.nameCompany,
-            password: co.pssword,
-
+            password: co.password,
+           
         };
     }
 
