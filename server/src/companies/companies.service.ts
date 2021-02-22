@@ -39,14 +39,14 @@ export class CompaniesService {
         }
     }
 
-    // async getCompany() {
-    //     const company = await this.companiesModel.find().exec();
-    //     return company.map(c => ({
-    //         id: c.id,
-    //         nameCompany: c.nameCompany,
-    //         password: c.password,
-    //     }))
-    // }
+    async getExpenses() {
+        const company = await this.companiesModel.find().exec();
+        return company.map(c => ({
+            id: c.id,
+            nameCompany: c.nameCompany,
+            password: c.password,
+        }))
+    }
 
     async getSingleCompany(ExpensesId: string) {
         const co = await this.findCompany(ExpensesId);
