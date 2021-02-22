@@ -12,9 +12,6 @@ import { SeriousnessModule } from './seriousness/seriousness.module';
 
 // import { ChecksService } from './checks/checks.service';
 // import { ChecksController } from './checks/checks.controller';
-import { CompaniesController } from './companies/companies.controller';
-import { CompaniesService } from './companies/companies.service';
-import { CompaniesModule } from './companies/companies.module';
 
 @Module({
   imports: [
@@ -23,10 +20,9 @@ import { CompaniesModule } from './companies/companies.module';
         'mongodb://localhost:27017/DiamondPartnership',{useNewUrlParser: true}),
     ExpensesModule,
     ChecksModule,
-    SeriousnessModule,
-    CompaniesModule
+    SeriousnessModule
   ],
-  controllers: [AppController, CompaniesController, ],//ChecksController,
-  providers: [AppService, CompaniesService, ],//ChecksService, 
+  controllers: [AppController, ],//ChecksController,
+  providers: [AppService, ],//ChecksService, 
 })
 export class AppModule {}
