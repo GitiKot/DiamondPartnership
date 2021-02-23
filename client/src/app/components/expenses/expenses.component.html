@@ -61,7 +61,7 @@
           <!-- style="overflow-y:scroll;" -->
           <td >{{e.Remarks}}</td>
           <td>{{e.amount|currency}}</td>
-          <td><button type="button" class="btn btn-primary" (click)="updateEi(ei)" (click)="frame.show()"
+          <td><button type="button" class="btn " (click)="updateEi(ei)" (click)="frame.show()"
               data-toggle="modal" data-target="#modalCart">+</button>          
             </td>
           <td>{{e.amountPartner}}</td>
@@ -104,13 +104,13 @@
               <tbody *ngIf="expensesList[indexE].detail">
                 <tr *ngFor="let e of expensesList[indexE].detail;let i=index">
                   <td>{{e.expenses}}</td>
-                  <td>{{e.price}}</td>
+                  <td>{{e.price|currency}}</td>
               </tbody>
             </table>
           </div>
-          <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
+          <!-- <div> <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
               (click)="frame.hide()">ביטול</button>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

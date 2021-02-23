@@ -1,4 +1,7 @@
 <html ng-app>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 <div>
   <h3>הוספת מכירות</h3>
 </div>
@@ -6,12 +9,18 @@
   class="form-inline">
   <br>
 
-  <span>
+  <!-- <span>
 
     <label for="datesale">מספר אבנים</label>
     <input type="number" min="0" formControlName="num" class="form-control" tabindex="0" (change)="numStonesFunc()"
       id="numStones">
-    <!-- <label  *ngIf="salesForm.controls['datesale'].error!=null">גדול </label> -->
+     <label  *ngIf="salesForm.controls['datesale'].error!=null">גדול </label> -->
+  <!-- </span>&nbsp; &nbsp; -->
+  <span>
+    <label for="invoiceNumber">שם לקוח:</label>
+    <input type="text"  class="form-control" tabindex="0">
+  
+
   </span>&nbsp; &nbsp;
   <span>
 
@@ -30,8 +39,7 @@
 
   <span>
     <label>תאריך פרעון:</label>
-    <input [value]="dateP" type="text" class="form-control" formControlName="date2" placeholder="אוטומטי" id="DueDate"
-      disabled="form-check-input">
+    <input [value]="dateP" class="form-control" placeholder="אוטומטי" id="DueDate" disabled="form-check-input">
   </span>&nbsp; &nbsp;
   <span>
     <label for="invoiceNumber">מספר חשבונית:</label>
@@ -44,12 +52,12 @@
     <label class="form-check-label">
       <label>
         <input type="radio" (input)="tableKeyPresent()" id="raw" class="form-check-input" tabindex="4"
-          formControlName="rawOrPolished" value="raw">&nbsp;גלם
+          formControlName="rawOrPolished" [checked]="true" value="raw">&nbsp;גלם
       </label>
       <label>
         &nbsp;
         <input type="radio" (input)="tableKeyPresent()" class="form-check-input" tabindex="5" value="polished"
-          formControlName="rawOrPolished" [checked]="false">&nbsp;מלוטש
+          formControlName="rawOrPolished">&nbsp;מלוטש
       </label>
     </label>
   </div>
@@ -67,11 +75,13 @@
         <th>משקל</th>
         <th style="height:5px ;"> מחיר לקראט</th>
         <th>סה"כ</th>
+        <th (click)="addSale()"><i title="הוספה"  style="color: darkgreen;" class="fa fa-plus" aria-hidden="true"></i></th>
       </tr>
-    </thead>  
- <tbody formArrayName="newSaleRow">
+    </thead>
+    <tbody formArrayName="newSaleRow">
       <tr *ngFor="let sale of newSaleRow.controls; let i=index" [formGroupName]="i">
-<!-- <td>
+
+      <!-- <td>
           <input style="border: none;" type="text" id="selectSerial" tabindex={{i*5+6}} name="example" list="List"
             [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedSerial" placeholder="בחר"
             (change)="selectedSaleId($event)">
@@ -81,39 +91,41 @@
             </option>
           </datalist>
 </td> -->
-<td>
-  <input style="border: none;" type="text" id="selectSerial" tabindex={{i*5+6}} name="example" list="List"
-    [ngModelOptions]="{standalone: true}"  formControlName="publicSerialName" placeholder="בחר"
-    (change)="selectedSaleId($event,i)">
-  <datalist id="List">
-    <option id="{{s.serialName}}" *ngFor="let s of seriousnessList ;let i=index" [attr.data-value]="s.id"
-      [attr.i]="i">{{s.serialName}}
-    </option>
-  </datalist>
-        </td>
-        <td>
-          <input formControlName="privateSerialName" type="text" class="input" tabindex={{i*5+7}} >
-        </td>
 
-        <td><input  formControlName="stoneName" type="text" class="input"
-          tabindex={{i*5+8}}> </td>
+      <td>
+        <input style="border: none;" type="text" id="selectSerial" tabindex={{i*5+6}} name="example" list="List"
+          [ngModelOptions]="{standalone: true}" formControlName="publicSerialName" placeholder="בחר"
+          (change)="selectedSaleId($event,i)">
+        <datalist id="List">
+          <option id="{{s.serialName}}" *ngFor="let s of seriousnessList ;let i=index" [attr.data-value]="s.id"
+            [attr.i]="i">{{s.serialName}}
+          </option>
+        </datalist>
+      </td>
+      <td>
+        <input formControlName="privateSerialName" type="text" class="input" tabindex={{i*5+7}}>
+      </td>
 
-        <td><input #wee tabindex={{i*5+9}} (input)="totalPrice[i] = wee.value * pricepercarat.value "
-          formControlName="weight" class="input"  min="0" type="number" name="w"> </td>
+      <td><input formControlName="stoneName" type="text" class="input" tabindex={{i*5+8}}> </td>
 
-        <td><input tabindex={{i*5+10}} #pricepercarat (input)="totalPrice[i] = wee.value * pricepercarat.value "
-            formControlName="pricePerCarat" class="input"  min="0"
-            type="number" classNam="PricePerCarat"> </td>
+      <td><input #wee tabindex={{i*5+9}} (input)="totalPrice[i] = wee.value * pricepercarat.value "
+          formControlName="weight" class="input" min="0" type="number" name="w"> </td>
 
-            <td><input [value]="totalPrice[i]" class="input"></td>
+      <td><input tabindex={{i*5+10}} #pricepercarat (input)="totalPrice[i] = wee.value * pricepercarat.value "
+          formControlName="pricePerCarat" class="input" min="0" type="number" classNam="PricePerCarat"> </td>
+
+      <td><input [value]="totalPrice[i]" class="input"></td>
+      <td><i title="מחיקה" (click)="removeSale(i)" style="color: crimson;" class="fa fa-times" aria-hidden="false"></i>
+
+      </td>
       </tr>
     </tbody>
   </table>
   <label class="error" *ngIf="salesForm.controls.dirty">נא למלא את כל הפרטים.</label><br>
   <div class="modal-footer d-flex">
-   <button type="button" (click)="cancel()" class="btn btn-primary" id="cancel">ביטול</button>
-   <button type="submit" class="btn btn-primary" id="save"  [disabled]="!salesForm.valid">שמירה</button>
-   </div>
+    <button type="button" (click)="cancel()" class="btn btn-primary" id="cancel">ביטול</button>
+    <button type="submit" class="btn btn-primary" id="save" [disabled]="!salesForm.valid">שמירה</button>
+  </div>
 </form>
 <router-outlet></router-outlet>
 

@@ -46,6 +46,7 @@ export class SalesFormComponent implements OnInit {
 
     this.salesForm.controls['numOfDate'].setValue(60);
     document.getElementById('raw').setAttribute('checked', 'true')
+    this.addSale()
   }
   get date() {
     return this.salesForm.get('date');
@@ -104,7 +105,7 @@ export class SalesFormComponent implements OnInit {
     this.newSaleRow.removeAt(i);
 
   }
-
+ 
   numStonesFunc() {
     for (let index = this.newSaleRow.length; index >= 0; index--) {
       this.removeSale(index)
