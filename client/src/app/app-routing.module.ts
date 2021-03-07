@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes,CanActivate  } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { PartnersComponent } from './components/partners/partners.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
@@ -14,14 +14,10 @@ import { AppComponent } from './app.component';
 import { ModalFormComponent } from './components/modal-form/modal-form.component'
 import { SerialFormComponent } from './components/serial-form/serial-form.component';
 import { ExpensesFormComponent } from './components/expenses-form/expenses-form.component';
-import { ProfileComponent } from './components/profile/profile.component';
-import {  AuthGuardService as AuthGuard } from './services/auth/auth-guard.service';
- 
+import { Sale } from './data/sale';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'login', component: HomeComponent },
-  { path: 'profile', component: ProfileComponent,  canActivate: [AuthGuard]  },
   { path: 'checks', component: ChecksComponent},
   {
     path: 'expenses', component: ExpensesComponent,
