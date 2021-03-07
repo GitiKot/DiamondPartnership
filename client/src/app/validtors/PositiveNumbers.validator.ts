@@ -1,13 +1,13 @@
-import { FormControl, NumberValueAccessor, ValidatorFn } from '@angular/forms';
+// import { FormControl, NumberValueAccessor, ValidatorFn } from '@angular/forms';
 
-export function PositiveNumbersValidator(): ValidatorFn {
+// export function PositiveNumbersValidator(): ValidatorFn {
 
-    return (control: FormControl): { [key: string]: any } | null => {
-        if (typeof +control.value === "number" && !isNaN(+control.value)) {
-            return null;
-        }
-        return { PositiveNumbersError: { requiredValue: '0' } };
+//     return (control: FormControl): { [key: string]: any } | null => {
+//         if (typeof +control.value === "number" && !isNaN(+control.value)) {
+//             return null;
+//         }
+//         return { PositiveNumbersError: { requiredValue: '0' } };
 
-    };
+//     };
 
-}
+// }

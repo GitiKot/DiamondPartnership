@@ -12,6 +12,8 @@ import { SeriousnessModule } from './seriousness/seriousness.module';
 
 // import { ChecksService } from './checks/checks.service';
 // import { ChecksController } from './checks/checks.controller';
+import { AuthModule } from './auth/auth.module';
+import { CompanyModule } from './company/company.module';
 
 @Module({
   imports: [
@@ -20,7 +22,9 @@ import { SeriousnessModule } from './seriousness/seriousness.module';
         'mongodb://localhost:27017/DiamondPartnership',{useNewUrlParser: true}),
     ExpensesModule,
     ChecksModule,
-    SeriousnessModule
+    SeriousnessModule,
+    AuthModule,
+    CompanyModule
   ],
   controllers: [AppController, ],//ChecksController,
   providers: [AppService, ],//ChecksService, 
