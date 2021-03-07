@@ -92,31 +92,19 @@
           </datalist>
 </td> -->
 
-      <td id="serialName" >
-        <input (input)="getPrivate($event)"style="border: none;" type="text" id="selectSerial" tabindex={{i*5+6}} name="example" list="List"
+      <td>
+        <input style="border: none;" type="text" id="selectSerial" tabindex={{i*5+6}} name="example" list="List"
           [ngModelOptions]="{standalone: true}" formControlName="publicSerialName" placeholder="בחר"
           (change)="selectedSaleId($event,i)">
         <datalist id="List">
-          <option id="{{s.serialName}}" *ngFor="let s of seriousnessList ;let ip=index" [attr.data-value]="s.id"
-            [attr.i]="ip">{{s.serialName}}
+          <option id="{{s.serialName}}" *ngFor="let s of seriousnessList ;let i=index" [attr.data-value]="s.id"
+            [attr.i]="i">{{s.serialName}}
           </option>
         </datalist>
       </td>
-      <!--    (change)="selectedSaleId($event,i)"  [attr.data-value]="s.id"-->
-      <td  >
-        <input style="border: none;" type="text" id="selectSerial" tabindex={{i*5+7}} name="example" list="ListP"
-        (change)="selectedPrivate($event,i)" [ngModelOptions]="{standalone: true}" formControlName="privateSerialName" placeholder="בחר"
-        >
-        <datalist id="ListP">
-          <option id="{{p.namePrivate}}" *ngFor="let p of selectPrivateSerial ;let i=index" 
-            [attr.i]="i">{{p.namePrivate}}
-          </option>
-        </datalist>
-      </td>
-
-      <!-- <td>
+      <td>
         <input formControlName="privateSerialName" type="text" class="input" tabindex={{i*5+7}}>
-      </td> -->
+      </td>
 
       <td><input formControlName="stoneName" type="text" class="input" tabindex={{i*5+8}}> </td>
 
