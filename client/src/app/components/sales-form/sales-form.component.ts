@@ -13,14 +13,15 @@ import { seriousnessService } from 'src/app/services/seriousness.service';
 })
 
 export class SalesFormComponent implements OnInit {
-  selectedSerial: Seriousness;
+ 
   numStones: number;
   salesForm: FormGroup;
   totalPrice = [];
   dateP: string;
   seriousnessList: Array<Seriousness>;
-  serialId=[];
-  place=[];
+  serialId = [];
+  place = [];
+  selectPrivateSerial = [];
   constructor(private router: Router, private seriousnessService: seriousnessService,
     private salesServise: SalesService, private formBuilder: FormBuilder) { }
 
@@ -37,7 +38,7 @@ export class SalesFormComponent implements OnInit {
       date: ['', [Validators.required]],
       numOfDate: ['', [Validators.required]],
       invoiceNumber: ['', [Validators.required]],
-      date2:[''],
+      date2: [''],
       num: [''],
       isOpen: [''],
       rawOrPolished: ['', [Validators.required]],
@@ -93,19 +94,19 @@ export class SalesFormComponent implements OnInit {
   newSale(): FormGroup {
     return this.formBuilder.group({
       publicSerialName: '',
-      privateSerialName:['', [Validators.required]],
-      stoneName:['', [Validators.required]],
+      privateSerialName: ['', [Validators.required]],
+      stoneName: ['', [Validators.required]],
       weight: ['', [Validators.required]],
       pricePerCarat: ['', [Validators.required]],
       // totalPrice: '',
-     }
+    }
     )
   }
   removeSale(i: number) {
     this.newSaleRow.removeAt(i);
 
   }
- 
+
   numStonesFunc() {
     for (let index = this.newSaleRow.length; index >= 0; index--) {
       this.removeSale(index)
@@ -115,18 +116,44 @@ export class SalesFormComponent implements OnInit {
     for (let i = 0; i < this.numStones; i++) {
       this.addSale();
     }
-  
+
   }
-  selectedSaleId(event,i:number) {  
-      let s = event.target.value;
+  selectedSaleId(event, i: number) {
+    let s = event.target.value;
     let ids = document.getElementById(s);
     if (ids) {
       this.serialId[i] = ids.getAttribute('data-value');
-      this.place[i] = ids.getAttribute('i'); 
+      this.place[i] = ids.getAttribute('i');
     }
     else {
       alert("עליך לבחור שם סריה קיימת")
     }
+  }
+  selectedPrivate(event, i: number) {
+    let p = event.target.value;
+    // let ids = document.getElementById(p);
+    console.log(this.serialId[i]);
+    let publ=this.seriousnessList.find(pub=>pub.id==this.serialId[i]);
+    console.log(publ);
+    
+   if(publ.privateSeria.find(s=>s.namePrivate == p)==undefined)
+   alert("סריה פרטית זו לא מופיעה בסריה זו")
+    // if (ids) {
+    //   this.serialP[i] = ids.getAttribute('data-value');
+    //   this.placeP[i] = ids.getAttribute('i');
+    // }
+    // else {
+    //   alert("עליך לבחור שם סריה קיימת")
+    // }
+  }
+  getPrivate(e) {
+
+    this.seriousnessService.findBySerailName(e.target.value).subscribe(ans => {
+      console.log(ans.privateSeria);
+      this.selectPrivateSerial = ans.privateSeria;
+    });
+
+
   }
   addEventCalcDate() {
     var d = (document.querySelector('#datesale') as HTMLInputElement).value;
@@ -137,45 +164,45 @@ export class SalesFormComponent implements OnInit {
 
     (document.querySelector('#DueDate') as HTMLInputElement).value = dateSales.toLocaleDateString();
   }
-  
+
   saveSale() {
-    var saleToDB = new Sale(),flag=0;
+    var saleToDB = new Sale(), flag = 0;
 
-        if (this.salesForm.valid) {
-          saleToDB.date = this.salesForm.value.date;
-          saleToDB.invoiceNumber = this.salesForm.value.invoiceNumber;
-          saleToDB.isOpen = true
-          saleToDB.numOfDate = this.salesForm.value.numOfDate;
-          saleToDB.rawOrPolished = this.salesForm.value.rawOrPolished; 
+    if (this.salesForm.valid) {
+      saleToDB.date = this.salesForm.value.date;
+      saleToDB.invoiceNumber = this.salesForm.value.invoiceNumber;
+      saleToDB.isOpen = true
+      saleToDB.numOfDate = this.salesForm.value.numOfDate;
+      saleToDB.rawOrPolished = this.salesForm.value.rawOrPolished;
 
-          for (let i = 0; i < this.numStones; i++) {
-            saleToDB.pricePerCarat = this.salesForm.value.newSaleRow[i].pricePerCarat;
-            saleToDB.publicSerialName = this.serialId[i];
-            saleToDB.privateSerialName = this.salesForm.value.newSaleRow[i].privateSerialName;
-            saleToDB.stoneName = this.salesForm.value.newSaleRow[i].stoneName;
-            saleToDB.weight = this.salesForm.value.newSaleRow[i].weight;
-            saleToDB.pricePerCarat = this.salesForm.value.newSaleRow[i].pricePerCarat;
-            this.salesServise.addSale(saleToDB)
-            .subscribe(() => {
-              this.seriousnessList[this.place[i]].amountReceived = this.salesForm.value.newSaleRow[i].weight *
+      for (let i = 0; i < this.numStones; i++) {
+        saleToDB.pricePerCarat = this.salesForm.value.newSaleRow[i].pricePerCarat;
+        saleToDB.publicSerialName = this.serialId[i];
+        saleToDB.privateSerialName = this.salesForm.value.newSaleRow[i].privateSerialName;
+        saleToDB.stoneName = this.salesForm.value.newSaleRow[i].stoneName;
+        saleToDB.weight = this.salesForm.value.newSaleRow[i].weight;
+        saleToDB.pricePerCarat = this.salesForm.value.newSaleRow[i].pricePerCarat;
+        this.salesServise.addSale(saleToDB)
+          .subscribe(() => {
+            this.seriousnessList[this.place[i]].amountReceived = this.salesForm.value.newSaleRow[i].weight *
               this.salesForm.value.newSaleRow[i].pricePerCarat;
-              this.seriousnessService.updateSerial(this.serialId[i], this.seriousnessList[this.place[i]]).subscribe(() => {
-              }, () => {
-                console.log("error");
-              })
-            });
-        }
+            this.seriousnessService.updateSerial(this.serialId[i], this.seriousnessList[this.place[i]]).subscribe(() => {
+            }, () => {
+              console.log("error");
+            })
+          });
       }
-        else {
-          alert("חלק מהנתונים אינם נכונים");
-          flag = 1;
-        }
-     
-      if (!flag)
-        this.router.navigate(['sales-form/modal-form', 'מכירה'])
-      else;
     }
-   
+    else {
+      alert("חלק מהנתונים אינם נכונים");
+      flag = 1;
+    }
+
+    if (!flag)
+      this.router.navigate(['sales-form/modal-form', 'מכירה'])
+    else;
+  }
+
   cancel() {
     this.router.navigate(['/sales/true']);
   }
