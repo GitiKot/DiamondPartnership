@@ -10,7 +10,8 @@ export class Expenses {
     amountPartner: number;
 
 
-    constructor(p?: string, d?: Date, g?: string, i?: number, r?: string, a?: number, ap?: number, de?: Array<{ expenses: string, price: number }>) {
+    constructor(p?: string, d?: Date, g?: string, i?: number, r?: string,
+         a?: number, ap?: number, de?: Array<{ expenses: string, price: number }>) {
         this.getchack = g;
         this.date = d;
         this.amountPartner = ap;

@@ -50,8 +50,7 @@ export class SalesController {
     const sale = await this.salesService.updateSale(sId, sdate, snumOfDate, sinvoiceNumber, spublicSerialName,
       sprivateSerialName, sstoneName, sweight, spricePerCarat, srawOrPolished, sisOpen,ssumPerPartner);
     return sale;
-    // return this.salesService.updateSale(id, sale);
-    // return null;
+   
   }
 
   @Delete(':id')
@@ -59,10 +58,7 @@ export class SalesController {
     await this.salesService.deleteSale(saleId);
     return null;
   }
-  // @Get(':id')
-  // getSale(@Param('id') saleId: string) {
-  //   return this.salesService.getSingleSale(saleId);
-  // }
+  
 
 
 

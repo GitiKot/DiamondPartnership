@@ -20,8 +20,6 @@ export class SeriousnessController {
 
     @Patch(':id')
     async updateSeriousness(
-        // parent:{type:mongoose.Schema.Types.ObjectId,ref:'Partner'},
-        // privateSeria:Array<{namePrivate:string,price:number,expenses:Array<{nameExpenses:string,price:number}>}>;
         @Param('id') id: string,
         @Body('serialName') serialName: string,
         @Body('partner') partner: ObjectId,
@@ -31,7 +29,8 @@ export class SeriousnessController {
         @Body('partnersPercent') partnersPercent: number,
         @Body('AmountReceivedPartner') AmountReceivedPartner: number,
         @Body('finishDate') finishDate: Date,
-        @Body('privateSeria') privateSeria: Array<{ namePrivate: string, price: number, expenses: Array<{ nameExpenses: string, exspensesPrice: number }> }>,
+        @Body('privateSeria') privateSeria: Array<{ namePrivate: string, price: number,
+            expenses: Array<{ nameExpenses: string, exspensesPrice: number }> }>,
 
     ) {
 

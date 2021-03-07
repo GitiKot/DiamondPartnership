@@ -109,40 +109,23 @@ export class ChecksComponent implements OnInit {
   // })
   // }
   calcCheckMoney(): number {
-
     let sum = 0, currentSum, apr = this.serial.AmountReceivedPartner, flag = false;
     console.log("סכום שהשותף קיבל: ", apr);
     if (this.getSelectedRows().length > 0) {
-      alert('בחרת לבד')
       this.getSelectedRows().forEach(s => {
         currentSum = <number>s.pricePerCarat * <number>s.weight;
-
         if (currentSum <= this.serial.cost - apr) {
-        alert('נכנס בקוסט')
-          //אם מתחת מחלקים באחוזים
           currentSum = currentSum * this.serial.partnersPercent / 100;
-          //מעדכנים את הכום של השותף- גדל
-          apr += currentSum;
-          this.arrSale.push({ i: s, j: currentSum })
-          // this.updateSale(s, currentSum);
+          apr += currentSum; this.arrSale.push({ i: s, j: currentSum })
           sum += currentSum;
         }
         else {
-          alert('לא נכנס  בקוסט')
-
-          if (flag || apr==this.serial.AmountReceivedPartner) {
-            alert('לא מתחלקת ')
-
-            currentSum /= 2;
-            // console.log(currentSum);
-            apr += currentSum
+          if (flag || apr == this.serial.AmountReceivedPartner) {
+            currentSum /= 2; apr += currentSum
             this.arrSale.push({ i: s, j: currentSum })
-            // this.updateSale(s, currentSum);
             sum += currentSum;
           }
           else {
-            alert('המכירה מתחלקת ')
-
             let forPartner = this.serial.cost - apr;
             sum += forPartner;
             let our = forPartner * (100 - this.serial.partnersPercent) / this.serial.partnersPercent;
@@ -151,80 +134,42 @@ export class ChecksComponent implements OnInit {
             newSale = s;
             sum += newSum;
             flag = true;
-            // newSale.sumPerPartner = newSum;
-            // newSale.isOpen = false;
             newSale.sum = (currentSum - forPartner - our);
             this.arrSale.push({ i: newSale, j: newSum })
-            // this.salesService.updateSale(newSale.id, newSale).subscribe();
-            // this.ClosedSalesList.push(newSale)
-            // console.log("newSAle", newSale);
-
           }
         }
       })
     }
     else {
-      flag=false;
-      alert('מחולל אוטמתי עד הקוסט ')
-
+      flag = false;
       if (this.serial.cost > this.serial.AmountReceivedPartner) {
-        alert(" עד הקוסט יש עדין מה לשלם")
-
         for (let s of this.OpenSalesList) {
           currentSum = <number>s.pricePerCarat * <number>s.weight;
-
           if (currentSum <= this.serial.cost - apr) {
-            alert("מתחת קוסט המכירה")
-            //אם מתחת מחלקים באחוזים
             currentSum = currentSum * this.serial.partnersPercent / 100;
-
-            //מעדכנים את הכום של השותף- גדל
             apr += currentSum;
-            this.arrSale.push({ i: s, j: currentSum })
-            // this.updateSale(s, currentSum);
-            sum += currentSum;
+            this.arrSale.push({ i: s, j: currentSum }); sum += currentSum;
             this.selectedRowIds.add(s.id)
           }
           else {
             if (!flag) {
-              alert('היא מתחלקת לשתים כי היא מכירה ראשונה מעל הקוסט')
               let forPartner = this.serial.cost - apr;
               sum += forPartner;
               let our = forPartner * (100 - this.serial.partnersPercent) / this.serial.partnersPercent;
-              let newSum = (currentSum - (forPartner + our)) ;
-              // sum += newSum;
+              let newSum = (currentSum - (forPartner + our));
               this.arrSale.push({ i: s, j: forPartner })
               this.selectedRowIds.add(s.id)
-              let newSale: Sale;
-              newSale = s;
-              flag = true;
-              // newSale.sumPerPartner = newSum;
-              // newSale.isOpen = false;
+              let newSale: Sale; newSale = s; flag = true;
               newSale.sum = newSum;
-              console.log("new sum:",newSum);
-              
-              newSale.pricePerCarat=newSum/2;
-              console.log("new pricePerCarat:",newSale.pricePerCarat);
-
-              newSale.isOpen=true; 
+              newSale.pricePerCarat = newSum / 2; newSale.isOpen = true;
               this.salesService.addSale(newSale).subscribe(
-                ()=>{
-                  alert('  נוספה מכירה חדשה לדאטא במחיר סה"כ',) ;
+                () => {
                   this.OpenSalesList.push(newSale)
-                }
-                ,()=>{console.log("eer");
-                }
-              )
-              // this.arrSale.push({ i: newSale, j: newSum })
-              // this.salesService.updateSale(newSale.id, newSale).subscribe();
-              // this.ClosedSalesList.push(newSale)
-              // console.log("newSAle", newSale);
-              console.log("newSAle", newSale);
-
-
+                }, () => {
+                  console.log("eer");
+                })
             }
             else {
-              alert('כבר הגענו עד הקוסט , כל טוב ')
               break;
             }
           }
@@ -236,17 +181,11 @@ export class ChecksComponent implements OnInit {
     }
     return sum;
   }
+
   calcCheckDate(): Date {
-this.getSelectedRows().forEach(s=>{
-  console.log(s);
-  
-})    
-    let finalDate: Date;
-    let paymentDate: Date;
+    let finalDate: Date; let currMoney: number;let paymentDate: Date;
     let saleDate;
-    let totalSumDate = 0;
-    let totalSumMoney = 0;
-    let currMoney: number;
+    let totalSumDate = 0;let totalSumMoney = 0;
     if (this.getSelectedRows().length > 0) {
       this.getSelectedRows().forEach(s => {
         currMoney = <number>s.pricePerCarat * <number>s.weight;
@@ -256,16 +195,16 @@ this.getSelectedRows().forEach(s=>{
         totalSumDate = totalSumDate + <number>(this.diffDate(paymentDate)) * <number>currMoney;
       });
     }
-    // else{
-    //   alert(" חישוב תאריך אוטומטי עד הקוסט")
-
-    // }
 
     totalSumDate /= totalSumMoney;
     finalDate = new Date('01/01/1970 02:00:00')
     finalDate.setDate(finalDate.getDate() + totalSumDate)
     return finalDate;
   }
+    // else{
+    //   alert(" חישוב תאריך אוטומטי עד הקוסט")
+
+    // }
 
   diffDate(d: Date): number {
     d.setHours(2);
@@ -347,13 +286,11 @@ this.getSelectedRows().forEach(s=>{
     this.checksForm.controls['date'].setValue(this.calcCheckDate())
     for (let index = 0; index < this.getSelectedRows().length; index++) {
       this.checksForm.value.IdSales.push(this.getSelectedRows()[index].id)
-      alert("מוסיפ id")
       console.log(this.getSelectedRows()[index].id);
-      
       sale = this.getSelectedRows()[index];
     }
 
-    
+
 
   }
   save() {

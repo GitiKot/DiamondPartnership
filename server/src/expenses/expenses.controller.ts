@@ -1,7 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ExpensesService } from './expenses.service';
 import { createExpensesDto } from './dto/create-expenses.dto';
-
 @Controller('expenses')
 export class ExpensesController {
     constructor(private readonly expensesService: ExpensesService) { }
@@ -9,7 +8,6 @@ export class ExpensesController {
     async addExpenses(@Body() createExpensesDto: createExpensesDto) {
         return this.expensesService.addExpenses(createExpensesDto);
     }
-
 
     @Get()
     async getAllExpenses() {
@@ -24,7 +22,6 @@ export class ExpensesController {
 
     @Patch(':id')
     async updateExpenses(
-
         @Param('id') exId: string,
         @Body('PublicSerialName') exPublicSerialName: string,
         @Body('date') exdate: Date,
