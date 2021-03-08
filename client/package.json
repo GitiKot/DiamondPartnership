@@ -20,7 +20,6 @@
     "@angular/platform-browser": "~10.0.14",
     "@angular/platform-browser-dynamic": "~10.0.14",
     "@angular/router": "~10.0.14",
-    "@auth0/angular-jwt": "^5.0.2",
     "angular-bootstrap-md": "^10.0.0",
     "angular-material": "^1.2.0",
     "animate.css": "^3.7.2",
