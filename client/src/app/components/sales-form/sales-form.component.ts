@@ -107,17 +107,17 @@ export class SalesFormComponent implements OnInit {
 
   }
 
-  numStonesFunc() {
-    for (let index = this.newSaleRow.length; index >= 0; index--) {
-      this.removeSale(index)
-    }
+  // numStonesFunc() {
+  //   for (let index = this.newSaleRow.length; index >= 0; index--) {
+  //     this.removeSale(index)
+  //   }
 
-    this.numStones = Number((document.querySelector('#numStones') as HTMLInputElement).value);
-    for (let i = 0; i < this.numStones; i++) {
-      this.addSale();
-    }
+  //   this.numStones = Number((document.querySelector('#numStones') as HTMLInputElement).value);
+  //   for (let i = 0; i < this.numStones; i++) {
+  //     this.addSale();
+  //   }
 
-  }
+  // }
   selectedSaleId(event, i: number) {
     let s = event.target.value;
     let ids = document.getElementById(s);
@@ -132,9 +132,7 @@ export class SalesFormComponent implements OnInit {
   selectedPrivate(event, i: number) {
     let p = event.target.value;
     // let ids = document.getElementById(p);
-    console.log(this.serialId[i]);
     let publ=this.seriousnessList.find(pub=>pub.id==this.serialId[i]);
-    console.log(publ);
     
    if(publ.privateSeria.find(s=>s.namePrivate == p)==undefined)
    alert("סריה פרטית זו לא מופיעה בסריה זו")
@@ -149,7 +147,6 @@ export class SalesFormComponent implements OnInit {
   getPrivate(e) {
 
     this.seriousnessService.findBySerailName(e.target.value).subscribe(ans => {
-      console.log(ans.privateSeria);
       this.selectPrivateSerial = ans.privateSeria;
     });
 
@@ -175,7 +172,7 @@ export class SalesFormComponent implements OnInit {
       saleToDB.numOfDate = this.salesForm.value.numOfDate;
       saleToDB.rawOrPolished = this.salesForm.value.rawOrPolished;
 
-      for (let i = 0; i < this.numStones; i++) {
+      for (let i = 0; i < this.newSaleRow.length; i++) {
         saleToDB.pricePerCarat = this.salesForm.value.newSaleRow[i].pricePerCarat;
         saleToDB.publicSerialName = this.serialId[i];
         saleToDB.privateSerialName = this.salesForm.value.newSaleRow[i].privateSerialName;

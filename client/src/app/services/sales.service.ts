@@ -25,14 +25,13 @@ export class SalesService {
   }
   addSale(s: Sale): Observable<Sale> {
   
-
     return this.http.post<Sale>(this.salesUrl, s);
   }
   updateSale(saleId, sale: Sale) :Observable<Sale>{
 
     const urlupdate = `${this.salesUrl}/${saleId}`;
     return this.http.patch<Sale>(urlupdate, sale, this.options)
-    
+ 
   }
 
  

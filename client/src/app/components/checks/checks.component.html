@@ -31,9 +31,9 @@
     <button type="button" class="btn btn-outline-primary" (click)="ok('')">ביטול</button>
   </div>
   <div *ngIf="checksList">
-    <button class="btn" (click)="test.toggle()"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
-    </button>
-    <div mdbCollapse #test="bs-collapse">
+    <!-- <button class="btn" (click)="test.toggle()"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+    </button>mdbCollapse #test="bs-collapse" -->
+    <div >
       <h5>שיקים סגורים</h5>
       <table id="checksTable" class="table table-hover">
         <!--mdbTable class="z-depth-1"id="myTable" -->
@@ -69,7 +69,7 @@
       </table>
     </div>
   </div>
-  <div mdbModal #framec="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
+  <div  *ngIf="checksList" mdbModal #framec="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-side modal-top-right" role="document">
       <div class="modal-content">
