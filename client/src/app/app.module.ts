@@ -20,6 +20,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SerialFormComponent } from './components/serial-form/serial-form.component';
 import { ExpensesFormComponent } from './components/expenses-form/expenses-form.component';
 import { SucssesModalComponent } from './components/sucsses-modal/sucsses-modal.component';
+import { MatTabsModule } from '@angular/material/tabs';
+
 // import{HttpClientModule} from ''
 // import {MatInputModule} from '@angular/material/input';
 
@@ -61,7 +63,7 @@ import { SucssesModalComponent } from './components/sucsses-modal/sucsses-modal.
     
   ],
   imports: [
-    
+    MatTableModule,
     HttpClientModule,
     BrowserModule,
     AppRoutingModule, ReactiveFormsModule,

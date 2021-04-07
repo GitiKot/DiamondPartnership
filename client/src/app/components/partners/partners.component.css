@@ -14,5 +14,10 @@
   #alert{
     visibility:hidden;
     bottom: 50px;
-     left: 25px;
+     left:bl 25px;
+  }
+  .title{
+    color:rgb(59, 56, 87);
+    padding-bottom: 35px;
+
   }
