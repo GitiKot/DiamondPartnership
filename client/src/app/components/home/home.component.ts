@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  // nav(){
-  //   this.router.navigate(['/nav-bar'])
-  // }
+ tabs(){
+    this.router.navigate(['/tabs'])
+  }
 }

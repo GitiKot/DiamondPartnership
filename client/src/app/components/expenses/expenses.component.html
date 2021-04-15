@@ -4,7 +4,7 @@
 <form *ngIf="newexpensesForm" [formGroup]="newexpensesForm">
 
   <body>
-    <h3>טבלת הוצאות</h3>
+    <!-- <h3>טבלת הוצאות</h3> -->
     <div class="form-inline d-flex justify-content-center md-form form-sm mt-0">
       <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
         xmlns="http://www.w3.org/2000/svg">
@@ -13,19 +13,30 @@
         <path fill-rule="evenodd"
           d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
       </svg>&nbsp;
-      <input type="text" id="publicSerialName" class="form-control form-control-sm ml-3" 
-      (keyup)="filterNameSeria()"  placeholder="סריה כללית" title="חיפוש לפי סריה כללית">
+      <input type="text" id="publicSerialName" class="form-control form-control-sm ml-3" (keyup)="filterNameSeria()"
+        placeholder="סריה כללית" title="חיפוש לפי סריה כללית">
+        <!-- <button type="button" id="newpartner" mdbBtn color="blue" rounded="true" data-toggle="modal" data-target="#basicExample"
+        (click)="newPartner()"  mdbWavesEffect ><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+             <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+           </svg>   שותף חדש
+   </button> -->
+
+   <!-- <button type="button" mdbBtn color="blue" rounded="true" data-toggle="modal" data-target="#basicExample" -->
+<!-- (click)="Uflag()"  mdbWavesEffect id="newSerial" class="waves-light"> -->
       <button type="button" mdbBtn color="blue" rounded="true" data-toggle="modal" data-target="#basicExample"
-      (click)="f()" mdbWavesEffect id="newexpenses" >
+        (click)="newExpenses()" mdbWavesEffect id="newexpenses">
+        <i class="fa fa-usd" aria-hidden="true"></i>
+
         הוצאה חדשה
+
       </button>
-      <a href="expenses" style=" position: fixed; bottom: 25px; right: 25px;">
-        <i class="fa fa-arrow-circle-up fa-3x" aria-hidden="true"></i></a>
-      <router-outlet></router-outlet>
+      <!-- <a href="expenses" style=" position: fixed; bottom: 25px; right: 25px;">
+        <i class="fa fa-arrow-circle-up fa-3x" aria-hidden="true"></i></a> -->
+      <!-- <router-outlet></router-outlet> -->
     </div>
     <table id="expensesTable" class="table table-hover">
-    <thead>
-        <tr class="header"> 
+      <thead>
+        <tr class="header">
           <th style="width: 53px;"></th>
           <th style="width: 53px;"></th>
           <th style="width: 150px;">שם סריה כללית</th>
@@ -45,7 +56,7 @@
             <button id="del{{ei}}" class="del" (click)="deleteExpe(e)" title="מחיקה">
               <i class="fa fa-trash" id="trash" aria-hidden="true"></i></button>
           </td>
-          <td >
+          <td>
             <button id="update{{ei}}" class="update" (click)="updateflag(e)" title="עדכון">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                 class="bi bi-brush-fill" viewBox="0 0 16 16">
@@ -59,31 +70,29 @@
           <td>{{e.getchack}}</td>
           <td>{{e.InvoiceNumber}}</td>
           <!-- style="overflow-y:scroll;" -->
-          <td >{{e.Remarks}}</td>
+          <td>{{e.Remarks}}</td>
           <td>{{e.amount|currency}}</td>
-          <td><button type="button" class="btn " (click)="updateEi(ei)" (click)="frame.show()"
-              data-toggle="modal" data-target="#modalCart">+</button>          
-            </td>
+          <td><button type="button" class="btn " (click)="updateEi(ei)" (click)="frame.show()" data-toggle="modal"
+              data-target="#modalCart">+</button>
+          </td>
           <td>{{e.amountPartner}}</td>
         </tr>
       </tbody>
     </table>
 
-    <app-expenses-form *ngIf="flagupdate" [updateEx]="e" (updateFlag)="updateFromFlag($event)"></app-expenses-form>
+    <!-- <app-expenses-form *ngIf="flagupdate" [updateEx]="e" (updateFlag)="updateFromFlag($event)"></app-expenses-form> -->
 
-    
-      <div id="alert" class="alert alert-success">
-        <strong>   שים לב   </strong>בקשת למחוק הוצאה<button type="button" class="btn btn-outline-primary"
-        (click)="ok('ok')" >אישור</button>
-        <button type="button" class="btn btn-outline-primary" (click)="ok('')" >ביטול</button>
-      </div>
-      
+
+    <div id="alert" class="alert alert-success">
+      <strong> שים לב </strong>בקשת למחוק הוצאה<button type="button" class="btn btn-outline-primary"
+        (click)="ok('ok')">אישור</button>
+      <button type="button" class="btn btn-outline-primary" (click)="ok('')">ביטול</button>
+    </div>
+
     <!-- -------model expenses------------------------------------ -->
 
     <div mdbModal #frame="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
-    [config]="{backdrop: 'static',  keyboard: false}" 
-    aria-labelledby="exampleModalLabel" 
-      aria-hidden="true">
+      [config]="{backdrop: 'static',  keyboard: false}" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-top" role="document">
         <!-- <div class="modal-dialog modal-fluid" role="document"> -->
         <div class="modal-content">
@@ -115,5 +124,5 @@
       </div>
     </div>
   </body>
-  <router-outlet></router-outlet>
+  <!-- <router-outlet></router-outlet> -->
 </form>

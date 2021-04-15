@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Email } from './data/Email';
+import {SendEmailService}from './services/send-email.service'
 
 @Component({
   selector: 'app-root',
@@ -7,5 +9,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'client';
+
+  constructor(private ff:SendEmailService){}
+  
+  send(){ 
+    const e=new Email()
+    e.recipientsEmail="bguko34"
+this.ff.sendEmail(e);
+  }
   
 }

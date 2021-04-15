@@ -75,16 +75,17 @@ export class ExpensesFormComponent implements OnInit {
       alert("עליך לבחור שם סריה קיימת")
     }
   }
-  close() {
-    if (this.updateEx != undefined) {
-      this.showModalOnClick.hide();
-      this.showModalOnClick1.hide();
-    }
-    else {
-      // this.r.navigate(['expenses']);
-    }
-    console.log("close");
-    this.updateFlag.emit(0);
+  close() {      
+this.r.navigate(['']);
+//זה של גיטי בשסיל עדכון
+
+    // if (this.updateEx != undefined) {
+    //   this.showModalOnClick.hide();
+    //   this.showModalOnClick1.hide();
+    // }
+    // else {
+    // }
+    // this.updateFlag.emit(0);
   }
   save() {
 

@@ -15,20 +15,23 @@ import { ModalFormComponent } from './components/modal-form/modal-form.component
 import { SerialFormComponent } from './components/serial-form/serial-form.component';
 import { ExpensesFormComponent } from './components/expenses-form/expenses-form.component';
 import { Sale } from './data/sale';
+import { TabsComponent } from './components/tabs/tabs.component';
 
 const routes: Routes = [
+  { path: '', component: AppComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'tabs', component: TabsComponent },
   { path: 'checks', component: ChecksComponent},
   {
     path: 'expenses', component: ExpensesComponent,
     children: [{ path: '', redirectTo: 'expenses', pathMatch: 'full' }
-      , {
+      ,
+    ]
+  }, {
         path: 'expenses-form', component: ExpensesFormComponent, children:
          [{ path: '', redirectTo: 'expenses-form', pathMatch: 'full' }       
        ,  { path: 'modal-form/:type', component:ModalFormComponent, }]
     },
-    ]
-  },
   { path: 'sales/:isSales', component: SalesComponent },
   { path: 'sales-form', component: SalesFormComponent,
   children:[

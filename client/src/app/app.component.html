@@ -45,6 +45,7 @@
     display: flex;
     align-items: center;
     background-color: #1976d2;
+
     color: white;
     font-weight: 600;
   }
@@ -64,7 +65,7 @@
 
   .content {
     display: flex;
-    margin: 82px auto 32px;
+    margin: 0px auto 32px;
     padding: 0 16px;
     /* max-width: 960px; */
     flex-direction: column;
@@ -130,7 +131,9 @@
   }
 
   .card.highlight-card {
-    background-color: #1976d2;
+    background-color: #d21976;
+    /* background-color: #1976d2; */
+
     color: white;
     font-weight: 600;
     border: none;
@@ -168,7 +171,6 @@
   a:hover {
     color: #125699;
   }
-
   .terminal {
     position: relative;
     width: 80%;
@@ -368,11 +370,12 @@
 </div> -->
   
 
-
+<button (click)="send()">email</button>
   
-  <app-nav-bar></app-nav-bar>
-<img width="100px" src="logo.png">
-  <!-- <nav>
+  <!-- <app-nav-bar></app-nav-bar> -->
+  <!-- <a [routerLink]="['/home']"routerLinkActive="active" style="background-color: #888;">לכניסה</a> -->
+<app-tabs class="app-tabs"></app-tabs>  
+<!-- <nav>
     <a [routerLink]="['/home']"routerLinkActive="active" style="background-color: #888;"></a>
   </nav> -->
 <!-- <app-home></app-home> -->

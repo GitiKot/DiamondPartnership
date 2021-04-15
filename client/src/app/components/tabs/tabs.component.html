@@ -1,0 +1,53 @@
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo fixed-top scrolling-navbar">
+    <span class="navbar-text" style="font-family: Papyrus;"> Diamond Partnership Business </span>
+    <mdb-navbar-brand>
+        <a class="navbar-brand" href="#">דף הבית</a>
+    </mdb-navbar-brand>
+    <links>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" (click)="addTab( 'שותפים')">שותפים</a>
+
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" (click)="addTab( 'הוצאות')">הוצאות</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" (click)="addTab( 'סריות')">סריות</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" (click)="addTab('מכירות')">מכירות</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" (click)="addTab( 'שיקים')">שיקים</a>
+            </li>
+        </ul>
+
+    </links>
+
+</mdb-navbar>
+
+<!-- [label]="tab" -->
+
+<mat-tab-group [selectedIndex]="selected.value" [backgroundColor]="brc"
+    (selectedIndexChange)="selected.setValue($event)" animationDuration="0ms">
+    <mat-tab *ngFor="let tab of tabs; let index = index" [ngSwitch]="tab">
+
+        <ng-template mat-tab-label>
+            <div class="col" style="margin-left: 20px;">{{tab}}</div>
+            <div class="col" style="margin-left: 20px;" (click)="removeTab(index)">X</div>
+        </ng-template>
+
+
+        <app-partners *ngSwitchCase="'שותפים'"> </app-partners>
+        <app-seriousness *ngSwitchCase="'סריות'"></app-seriousness>
+        <app-checks *ngSwitchCase="'שיקים'"></app-checks>
+        <app-expenses *ngSwitchCase="'הוצאות'"></app-expenses>
+        <app-sales *ngSwitchCase="'מכירות'"></app-sales>
+    </mat-tab>
+</mat-tab-group>
+<router-outlet></router-outlet>
+<!-- <button mat-raised-button class="example-delete-tab-button" [disabled]="tabs.length === 1"
+            (click)="removeTab(index)">
+            Delete Tab
+        </button> -->

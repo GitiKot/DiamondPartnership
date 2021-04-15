@@ -1,8 +1,9 @@
 #newexpenses{
     position: fixed; 
+    
     bottom: 25px; left: 25px;
-    /* width: 100px; */
-}
+    width: 150px;
+  height: 50px;}
 .del,.update{
   /* font-size: 18px; */
   color: blue;
@@ -17,5 +18,15 @@
   visibility:hidden;
   bottom: 50px;
    left: 25px;
+}
+.modal-backdrop{
+  position: relative;
+}
+.btn{
+  padding-left:12px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-right: 12px;
+  margin: 0px;
 }
   

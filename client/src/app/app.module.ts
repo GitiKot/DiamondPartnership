@@ -21,6 +21,7 @@ import { SerialFormComponent } from './components/serial-form/serial-form.compon
 import { ExpensesFormComponent } from './components/expenses-form/expenses-form.component';
 import { SucssesModalComponent } from './components/sucsses-modal/sucsses-modal.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { TabsComponent } from './components/tabs/tabs.component';
 
 // import{HttpClientModule} from ''
 // import {MatInputModule} from '@angular/material/input';
@@ -49,30 +50,32 @@ import { MatTabsModule } from '@angular/material/tabs';
     ChecksComponent,
     ExpensesComponent,
     PartnersFormComponent,
-    
+
     SalesFormComponent,
     HomeComponent,
     NavBarComponent,
     ModalFormComponent,
     ExpensesFormComponent,
-    
+
     SerialFormComponent,
-    
+
     SucssesModalComponent,
-    
-    
+
+    TabsComponent,
+
+
+
   ],
   imports: [
-    MatTableModule,
-    HttpClientModule,
+    MatTabsModule, HttpClientModule,
     BrowserModule,
     AppRoutingModule, ReactiveFormsModule,
     MDBBootstrapModule.forRoot(),
     BrowserAnimationsModule,
-    FormsModule,
-    
-  ], 
-  schemas: [NO_ERRORS_SCHEMA] ,
+    FormsModule
+
+  ],
+  schemas: [NO_ERRORS_SCHEMA],
   providers: [],
   bootstrap: [AppComponent]
 })

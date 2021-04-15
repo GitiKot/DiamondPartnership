@@ -54,6 +54,7 @@ export class ChecksComponent implements OnInit {
   OpenSalesList: Array<Sale>;
   ClosedSalesList: Array<Sale>;
   c: Checks;
+  sizeCollum =  new Array<number>(11);
   updateCheck: Checks;
   currentChecks: Checks;
   selectedRowIds: Set<string> = new Set<string>();
@@ -64,6 +65,7 @@ export class ChecksComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     this.checksForm = this.formBuilder.group({
       date: [''],
       numCheck: [''],
@@ -93,6 +95,7 @@ export class ChecksComponent implements OnInit {
     let printContents = document.getElementById('toPrint').innerHTML;
     let originalContents = document.body.innerHTML;
     document.body.innerHTML = printContents;
+
     window.print();
     document.body.innerHTML = originalContents;
 
@@ -183,9 +186,9 @@ export class ChecksComponent implements OnInit {
   }
 
   calcCheckDate(): Date {
-    let finalDate: Date; let currMoney: number;let paymentDate: Date;
+    let finalDate: Date; let currMoney: number; let paymentDate: Date;
     let saleDate;
-    let totalSumDate = 0;let totalSumMoney = 0;
+    let totalSumDate = 0; let totalSumMoney = 0;
     if (this.getSelectedRows().length > 0) {
       this.getSelectedRows().forEach(s => {
         currMoney = <number>s.pricePerCarat * <number>s.weight;
@@ -201,10 +204,10 @@ export class ChecksComponent implements OnInit {
     finalDate.setDate(finalDate.getDate() + totalSumDate)
     return finalDate;
   }
-    // else{
-    //   alert(" חישוב תאריך אוטומטי עד הקוסט")
+  // else{
+  //   alert(" חישוב תאריך אוטומטי עד הקוסט")
 
-    // }
+  // }
 
   diffDate(d: Date): number {
     d.setHours(2);
@@ -279,6 +282,8 @@ export class ChecksComponent implements OnInit {
   }
 
   createCheck() {
+    console.log("untilcost  ", this.selectedRowIds.size);
+
     this.arrSale = [];
     let sale: Sale;
     this.checksForm.controls['sum'].setValue(this.calcCheckMoney())
@@ -289,7 +294,9 @@ export class ChecksComponent implements OnInit {
       console.log(this.getSelectedRows()[index].id);
       sale = this.getSelectedRows()[index];
     }
-
+    if (this.untilcost || this.selectedRowIds.size) {
+      this.showModalOnClick.show()
+    }
 
 
   }
@@ -496,33 +503,17 @@ export class ChecksComponent implements OnInit {
     update.style.display = "none";
     update.style.visibility = "hidden";
   }
-  filterNameSeria() {
-    // var input, filter, table, tr, td, i, txtValue;
-    // input = document.getElementById("publicSerialName");
-    // filter = input.value.toUpperCase();
-    // table = document.getElementById("checksTable");
-    // tr = table.getElementsByTagName("tr");
-    // for (i = 0; i < tr.length; i++) {
-    //   td = tr[i].getElementsByTagName("td")[2];
-    //   if (td) {
-    //     txtValue = td.textContent || td.innerText;
-    //     if (txtValue.toUpperCase().indexOf(filter) > -1) {
-    //       tr[i].style.display = "";
-    //     } else {
-    //       tr[i].style.display = "none";
-    //     }
-    //   }
-    // }
-  }
-  searchPrivate() {
+  filterbyCiterion(event, numColumn: number) {
+    console.log(numColumn);
 
     var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("private");
-    filter = input.value.toUpperCase();
+    // input = document.getElementById("publicSerialName");
+    filter = event.target.value.toUpperCase();
+    // filter = input.value.toUpperCase();
     table = document.getElementById("salesTable");
     tr = table.getElementsByTagName("tr");
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[5];
+      td = tr[i].getElementsByTagName("td")[numColumn];
       if (td) {
         txtValue = td.textContent || td.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -533,6 +524,25 @@ export class ChecksComponent implements OnInit {
       }
     }
   }
+  // searchPrivate() {
+
+  //   var input, filter, table, tr, td, i, txtValue;
+  //   input = document.getElementById("private");
+  //   filter = input.value.toUpperCase();
+  //   table = document.getElementById("salesTable");
+  //   tr = table.getElementsByTagName("tr");
+  //   for (i = 0; i < tr.length; i++) {
+  //     td = tr[i].getElementsByTagName("td")[5];
+  //     if (td) {
+  //       txtValue = td.textContent || td.innerText;
+  //       if (txtValue.toUpperCase().indexOf(filter) > -1) {
+  //         tr[i].style.display = "";
+  //       } else {
+  //         tr[i].style.display = "none";
+  //       }
+  //     }
+  //   }
+  // }
   get date() {
     return this.checksForm.get('date');
   }

@@ -4,8 +4,9 @@
 <br>
 <h6 *ngIf="nameSerial != undefined">סריה {{nameSerial}}</h6>
 <h6 *ngIf="nameSerial == undefined" style="color:rgb(26, 29, 219);"> סריה לא נמצאה</h6>
-<form [formGroup]='salesForm' class="form-inline d-flex justify-content-center md-form form-sm mt-0">
-  <div *ngIf="isSalesPage == 'true'">
+<form [formGroup]='salesForm' class="form-inline d-flex justify-content-center md-form form-sm mt-0" style="width:1170px">
+  <div >
+    <!-- *ngIf="isSalesPage == 'true'" -->
     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
       xmlns="http://www.w3.org/2000/svg">
       <path fill-rule="evenodd"
@@ -27,12 +28,13 @@
     </svg>&nbsp;
     <input type="text" id="private" class="form-control form-control-sm ml-3 " (keyup)="searchPrivate()"
       placeholder="סריה פרטית" title="חיפוש לפי סריה פרטית">
-    <a class="btn btn-primary" *ngIf="isSalesPage == 'true'" [routerLink]="['/sales-form']">
+    <a class="btn btn-primary newSale"  [routerLink]="['/sales-form']">
       <!-- <i class="fa fa-diamond" style="font-size: 8px;" aria-hidden="true"></i>
       <i class="fa fa-diamond" style="font-size: 8px;" aria-hidden="true"></i> -->
       <i class="fa fa-handshake-o" aria-hidden="true"></i>
       מכירה חדשה
-    </a>
+    </a> 
+    <!-- *ngIf="isSalesPage == 'true'" -->
   </div>
   <br> <br><br>&nbsp;&nbsp;
   <div class="container">

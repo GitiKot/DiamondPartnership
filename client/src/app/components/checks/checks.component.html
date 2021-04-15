@@ -123,7 +123,7 @@
   </div>
 
   <div *ngIf="OpenSalesList.length>0">
-    <div><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
+    <!-- <div><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
         xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd"
           d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
@@ -132,7 +132,7 @@
       </svg>&nbsp;
       <input type="text" id="private" class="form-control form-control-sm ml-3 " (keyup)="searchPrivate()"
         placeholder="חיפוש סריה פרטית">
-    </div>
+    </div> -->
     <h5>שיקים פתוחים</h5>
 
     <div class="container">
@@ -155,7 +155,10 @@
           </tr>
         </thead>
         <tbody>
-
+<tr><th><i class="fa fa-filter"  ></i> </th>
+  <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
+  <th *ngFor="let one of sizeCollum;let index=index"><input class="filter" (keyup)="filterbyCiterion($event,index+1)" type="text"></th>
+ </tr>
           <tr *ngFor="let s of OpenSalesList; let i=index" [class.selectedRow]="rowIsSelected(s.id)"
             style="cursor: pointer;">
             <td><input id="cbox" type="checkbox" (click)="onRowClick(s.id)"></td>
@@ -179,10 +182,12 @@
           <!-- <button  type="button" class="btn btn-primary" (click)="framen.show()"
             data-toggle="modal" data-target="#modalCart">ל</button> -->
           <button *ngIf="OpenSalesList.length>0" type="button" id="newcheck" mdbBtn color="blue" rounded="true"
-            data-toggle="modal" data-target="#basicExample" (click)="framen.show()" (click)="createCheck()"
+            data-toggle="modal" data-target="#basicExample"  (click)="createCheck()"
+          
             mdbWavesEffect>לסגירת צ'ק <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+            {{untilcost}}
           </button>
-
+<!-- (click)="framen.show()" -->
         </tbody>
       </table>
 
@@ -203,10 +208,10 @@
             <span aria-hidden="true" (click)="framen.hide()" (click)="resetform()">&times;</span>
           </button>
         </div>
-        <div *ngIf="selectedRowIds.size==0" class="md-form mb-1">
+        <!-- <div *ngIf="selectedRowIds.size==0" class="md-form mb-1">
           <input type="checkbox" id="cb" (change)="untilcost=!untilcost" mdbInput>
           <label for="cb">חילול שיק עד הקוסט</label>
-        </div>
+        </div> -->
         <div class="modal-body mx-3">
 
           <div *ngIf="selectedRowIds.size>0||untilcost">

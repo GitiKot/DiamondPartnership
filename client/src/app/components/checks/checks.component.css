@@ -86,3 +86,8 @@ P{
 } 
 .fialInput {display:inline-block;} 
 
+.filter{
+  border-top: 0.5px solid rgb(15, 15, 13);
+ width:93px;
+
+}

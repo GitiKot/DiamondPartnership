@@ -133,6 +133,9 @@ export class ExpensesComponent implements OnInit {
     update.style.display = "none";
     update.style.visibility = "hidden";
   }
+  newExpenses(){
+    this.r.navigate(['expenses-form'])
+  }
 }
 
 

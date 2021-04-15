@@ -1,8 +1,80 @@
 /* You can add global styles to this file, and also import other style files */
-body{
-    direction: rtl;
-    text-align: center;
-    /* background-color: black; */
-
- 
+body {
+  direction: rtl;
+  text-align: center;
+  /* background-color: black; */
 }
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-tab-list {
+  .mat-ink-bar {
+    display: none;
+  }
+}
+
+.mat-tab-labels {
+  background-color: white;
+
+    .mat-tab-label {
+      // background-color: #3f51b5;
+      background-color: #e2eaf3;
+
+    opacity: 1;
+    padding: 5px;
+    //   border: 1px solid gray;
+    border-bottom: none;
+    color: #333;
+    min-width: 50px;
+    border-bottom: 1px solid rgb(15, 15, 13);
+
+  }
+  .mat-tab-label-active {
+    @extend .mat-tab-label;
+    //   color: blue;
+    -webkit-box-shadow: inset 0px 3px 0px 0px blue;
+    -moz-box-shadow: inset 0px 3px 0px 0px blue;
+    box-shadow: inset 0px 3px 0px 0px blue;
+
+    background-color: white;
+    border-bottom:none;
+
+    border-top: 1px solid rgb(15, 15, 13);
+    border-left: 1px solid rgb(15, 15, 13);
+    border-right: 1px solid rgb(15, 15, 13);
+    // border-top: 1px solid  rgb(255, 247, 30);
+    // border-left: 1px solid rgb(255, 247, 30);
+    // border-right: 1px solid rgb(255, 247, 30);
+    .mat-tab-label-content {
+      color: #3f51b5;
+      .col {
+        margin-left: 9px;
+      }
+      .ng-star-inserted {
+        margin-left: 1px;
+      }
+    }
+  }
+}
+//   .mat-tab-body-wrapper {
+//     top: -1px;
+//     border: 1px solid gray;
+//     padding: 10px;
+//   }
+
+.mat-tab-label-content {
+  width: 100px;
+  font-size: 16px;
+  padding-right: 40px;
+  padding-left: 18px;
+  color: black;
+}
+//
+// mat-ripple mat-tab-label mat-focus-indicator ng-star-inserted mat-tab-label-active

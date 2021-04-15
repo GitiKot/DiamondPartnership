@@ -19,31 +19,32 @@ export class PartnersComponent implements OnInit {
   p: Partner;
   flagupdate = 0;
 
-  constructor(private r: Router, private partnerService: PartnerService,private formBuilder: FormBuilder) { }
+  constructor(private r: Router, private partnerService: PartnerService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.partnerService.getAllPartners().subscribe(ans => { this.partnersList = ans });
     this.partnerService.getAllPartners()
       .subscribe((data: any[]) => {
-        this.partnersForm = this.formBuilder.group({ });
-      });   
+        this.partnersForm = this.formBuilder.group({});
+      });
   }
-  f() {
+
+  // עשיתי את זה במקום ה app-partner-form
+  newPartner() {    console.log("new");
+
+    this.r.navigate(['partners/partners-form'])
+
+  }
+  flag() {
     this.p = undefined;
-    console.log("p", this.p);
     this.flagupdate = 1;
-    console.log("f", this.flagupdate);
   }
   updateflag(part) {
     this.p = part;
-    console.log("update partner: ", part);
     this.flagupdate = 1;
-    console.log("updateflag");
-    console.log(this.flagupdate);
   }
   updateFromFlag(event) {
-    console.log("updatefromflag");
-    console.log("evevt", event);
+
     this.flagupdate = event;
     console.log(this.flagupdate);
   }

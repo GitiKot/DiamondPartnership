@@ -3,18 +3,20 @@
   box-sizing: border-box;
 }
 
-
+.newSale{
+  position: fixed; 
+  bottom: 25px; left: 25px;
+}
 
 #salesTable {
   border-collapse: collapse;
   width: 100%;
-  /* border: 1px solid #ddd; */
-  /* font-size: 18px; */
+ 
 }
 
 #salesTable th, #salesTable td {
   text-align: left;
-  /* padding: 12px; */
+  
 }
 
 #salesTable tr {

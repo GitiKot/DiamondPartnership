@@ -15,7 +15,7 @@ export class SeriousnessComponent implements OnInit {
   currectSeria: Seriousness;
   s: Seriousness;
   flagupdate = 0;
-  constructor(private seriousnessService: seriousnessService, private r: Router) { }
+  constructor(private seriousnessService: seriousnessService) { }
 
   seriousnessList: Array<Seriousness>
   ngOnInit(): void {
