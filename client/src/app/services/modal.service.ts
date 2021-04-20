@@ -13,6 +13,7 @@ export class ModalService {
   constructor() { }
 
   openModal(componentName, componentData = {},comAction?) {
+    
     this.isOpen = true;
     this.component = componentName;
     this.data = componentData;

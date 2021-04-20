@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
+// import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { Sale } from 'src/app/data/sale';
 import { Seriousness } from 'src/app/data/seriousness';
 import { ModalService } from 'src/app/services/modal.service';
@@ -15,7 +15,7 @@ import { seriousnessService } from 'src/app/services/seriousness.service';
 })
 export class SalesComponent implements OnInit {
 
-  @ViewChild('frame') public hideModalOnClick: ModalDirective;
+  // @ViewChild('frame') public hideModalOnClick: ModalDirective;
   salesForm: FormGroup;
   currectSale: Sale;
   isSalesPage = this.route.snapshot.paramMap.get('isSales');
@@ -86,41 +86,45 @@ export class SalesComponent implements OnInit {
   //   dateSales.setDate(dateSales.getDate() + num);
   //   (document.querySelector('#DueDate') as HTMLInputElement).value = dateSales.toLocaleDateString();
   updateModal(s) {
-    if (s.isOpen == false) {
-      alert("לא ניתן לעדכן מכירה שסגרו עליה צ'ק");
-      this.hideModalOnClick.hide();
-    }
-    else {
-      this.updateSale = s;
-      console.log("s ", s);
-      console.log(this.updateSale);
+    console.log(s);
+          this.modalService.openModal('sales-update',s,'update');
 
-      this.salesForm.patchValue({
-        date: this.updateSale.date,
-        numOfDate: this.updateSale.numOfDate,
-        invoiceNumber: this.updateSale.invoiceNumber,
-        publicSerialName: this.updateSale.publicSerialName,
-        privateSerialName: this.updateSale.privateSerialName,
-        stoneName: this.updateSale.stoneName,
-        weight: this.updateSale.weight,
-        pricePerCarat: this.updateSale.pricePerCarat,
-        isOpen: this.updateSale.isOpen,
-        rawOrPolished: this.updateSale.rawOrPolished,
-        totalPrice: Number(this.updateSale.weight) * Number(this.updateSale.pricePerCarat),
-      })
-    }
-  }
-  addEventCalcDate() {
-    var d = (document.querySelector('#datesale') as HTMLInputElement).value;
-    var dateSales = new Date(d)
-    var num: number = +(document.querySelector('#numOfDate') as HTMLInputElement).value;
-    dateSales.setDate(dateSales.getDate() + num);
+    // if (s.isOpen == false) {
+    //   alert("לא ניתן לעדכן מכירה שסגרו עליה צ'ק");
+    //   // this.hideModalOnClick.hide();
+    // }
+    // else {
+      // this.updateSale = s;
+      // console.log("s ", s);
+      // console.log(this.updateSale);
 
-    (document.querySelector('#DueDate') as HTMLInputElement).value = dateSales.toLocaleDateString();
+      // this.salesForm.patchValue({
+      //   date: this.updateSale.date,
+      //   numOfDate: this.updateSale.numOfDate,
+      //   invoiceNumber: this.updateSale.invoiceNumber,
+      //   publicSerialName: this.updateSale.publicSerialName,
+      //   privateSerialName: this.updateSale.privateSerialName,
+      //   stoneName: this.updateSale.stoneName,
+      //   weight: this.updateSale.weight,
+      //   pricePerCarat: this.updateSale.pricePerCarat,
+      //   isOpen: this.updateSale.isOpen,
+      //   rawOrPolished: this.updateSale.rawOrPolished,
+      //   totalPrice: Number(this.updateSale.weight) * Number(this.updateSale.pricePerCarat),
+      // })
+    // }
   }
+  // addEventCalcDate() {
+  //   var d = (document.querySelector('#datesale') as HTMLInputElement).value;
+  //   var dateSales = new Date(d)
+  //   var num: number = +(document.querySelector('#numOfDate') as HTMLInputElement).value;
+  //   dateSales.setDate(dateSales.getDate() + num);
+
+  //   (document.querySelector('#DueDate') as HTMLInputElement).value = dateSales.toLocaleDateString();
+  // }
   newSale() {
     // this.modalService.openModal('sales-form');
     this.modalService.changeSaleTab();
+  
   }
   update() {
     console.log('update');

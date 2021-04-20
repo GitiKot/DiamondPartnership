@@ -21,6 +21,7 @@ import { SerialFormComponent } from './components/serial-form/serial-form.compon
 import { ExpensesFormComponent } from './components/expenses-form/expenses-form.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TabsComponent } from './components/tabs/tabs.component';
+import { SalesUpdateComponent } from './components/sales-update/sales-update.component';
 
 // import{HttpClientModule} from ''
 // import {MatInputModule} from '@angular/material/input';
@@ -58,6 +59,7 @@ import { TabsComponent } from './components/tabs/tabs.component';
     ExpensesFormComponent,
     SerialFormComponent,
     TabsComponent,
+    SalesUpdateComponent,
     
   ],
   imports: [

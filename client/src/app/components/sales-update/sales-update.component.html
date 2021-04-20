@@ -1,0 +1,124 @@
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<form [formGroup]='salesForm' class="form-inline d-flex justify-content-center md-form form-sm mt-0" style="width:1170px">
+
+<div style="overflow-y: auto" mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1"
+role="dialog"
+[config]="{backdrop: 'static',  keyboard: false}" 
+aria-labelledby="myModalLabel" aria-hidden="true" (mouseenter)="addEventCalcDate()">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header text-center">
+      <h4 class="modal-title w-100 font-weight-bold"> עדכן פרטים עבור מכירה זו</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body mx-3">
+
+      <div class="row">
+        <div class="col-8 col-sm-6 col-example">
+          <div class="md-form mb-5">
+            <label for="form34">תאריך מכירה</label>
+            <input *ngIf="updateSale" (input)="addEventCalcDate()" type="date" id="datesale" class="form-control"
+              mdbInput mdbValidate [formControl]="date" [ngModel]="updateSale.date | date:'yyyy-MM-dd'">
+            <mdb-error *ngIf="date.invalid && (date.dirty || date.touched)"> </mdb-error>
+            <mdb-success *ngIf="date.valid && (date.dirty || date.touched)"></mdb-success>
+          </div>
+        </div>
+        <div class="col-8 col-sm-6 col-example">
+          <div class="md-form mb-5">
+
+            <input type="number" min="0" (input)="addEventCalcDate()" class="form-control" tabindex="2"
+              formControlName="numOfDate" id="numOfDate"><label for="form34">תנאי תשלום</label>
+            <mdb-error *ngIf="numOfDate.invalid && (numOfDate.dirty || numOfDate.touched)"></mdb-error>
+            <mdb-success *ngIf="numOfDate.valid && (numOfDate.dirty || numOfDate.touched)"></mdb-success>
+          </div>
+        </div>
+        <div class="col-8 col-sm-6 col-example">
+          <div class="md-form mb-5">
+
+            <input [value]="dateP" type="text" class="form-control" formControlName="date2" id="DueDate"
+              disabled="form-check-input"> <label for="form34">תאריך פרעון:</label>
+          </div>
+        </div>
+        <div class="col-8 col-sm-6 col-example">
+          <div class="md-form mb-5">
+            <input type="text" id="form32" class="form-control" mdbInput mdbValidate [formControl]="stoneName">
+            <label for="form8">שם אבן</label>
+            <mdb-error *ngIf="stoneName.invalid && (stoneName.dirty || stoneName.touched)"></mdb-error>
+            <mdb-success *ngIf="stoneName.valid && (stoneName.dirty || stoneName.touched)"></mdb-success>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-8 col-sm-6 col-example">
+          <div class="md-form mb-5">
+            <input type="number" min="0" id="form32" class="form-control" mdbInput mdbValidate
+              [formControl]="invoiceNumber">
+            <label for="form32">מספר חשבונית</label>
+            <mdb-error *ngIf="invoiceNumber.invalid && (invoiceNumber.dirty || invoiceNumber.touched)"> </mdb-error>
+            <mdb-success *ngIf="invoiceNumber.valid && (invoiceNumber.dirty || invoiceNumber.touched)">
+            </mdb-success>
+          </div>
+        </div>
+        <div class="col-8 col-sm-6 col-example">
+          <div class="md-form mb-5">
+            <input type="text" id="form32" class="form-control" mdbInput mdbValidate
+              [formControl]="privateSerialName">
+            <label for="form32">שם סריה פרטית</label>
+            <mdb-error *ngIf="privateSerialName.invalid && (privateSerialName.dirty || privateSerialName.touched)">
+            </mdb-error>
+            <mdb-success *ngIf="privateSerialName.valid && (privateSerialName.dirty || privateSerialName.touched)">
+            </mdb-success>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-8 col-sm-6 col-example">
+          <div class="md-form mb-5">
+            <input type="number" min="0" id="form32" class="form-control" mdbInput mdbValidate
+              [formControl]="pricePerCarat">
+            <label for="form8">מחיר לקרט</label>
+            <mdb-error *ngIf="pricePerCarat.invalid && (pricePerCarat.dirty || pricePerCarat.touched)"></mdb-error>
+            <mdb-success *ngIf="pricePerCarat.valid && (pricePerCarat.dirty || pricePerCarat.touched)">
+            </mdb-success>
+          </div>
+        </div>
+        <div class="col-8 col-sm-6 col-example">
+          <div class="md-form mb-5">
+            <input type="number" min="0" id="form32" class="form-control" mdbInput mdbValidate
+              [formControl]="weight">
+            <label for="form8">משקל</label>
+            <mdb-error *ngIf="weight.invalid && (weight.dirty || weight.touched)"></mdb-error>
+            <mdb-success *ngIf="weight.valid && (weight.dirty || weight.touched)"></mdb-success>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-8 col-sm-6 col-example">
+          <div class="md-form mb-5">
+            <label class="form-check-label">
+              <div>
+                <input type="radio" id="raw" class="form-check-input" formControlName="rawOrPolished" value="raw">
+                &nbsp;גלם
+              </div>
+              &nbsp;
+              <div>
+                <input type="radio" class="form-check-input" tabindex="5" value="polished"
+                  formControlName="rawOrPolished" [checked]="false">&nbsp;מלוטש
+              </div></label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer d-flex justify-content-center">
+      <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="close()" >ביטול</button>
+      <button class="btn btn-primary" (click)="update()" (click)="frame.hide()">שמירה</button>
+    </div>
+  </div>
+</div>
+</div>
+</form>
