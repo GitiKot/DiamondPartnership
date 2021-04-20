@@ -72,6 +72,8 @@ export class ExpensesComponent implements OnInit {
     this.flagupdate = 1;
   }
   updateflag(ex) {
+    this.modalService.openModal('expenses-form',ex,'update')
+
     this.e = ex;
     this.flagupdate = 1;
     console.log("updateflag", this.flagupdate);

@@ -20,6 +20,7 @@ export class ExpensesFormComponent implements OnInit {
   expensesList: Array<Expenses>;
   seriousnessList: Array<Seriousness>;
   place;
+  currentEx:Expenses;
   @Input() updateEx: Expenses;
   @Output() updateFlag = new EventEmitter<number>();
 
@@ -41,22 +42,25 @@ export class ExpensesFormComponent implements OnInit {
       Remarks: [''],
     })
     // this.expensesForm.controls['PublicSerialName'].setValue(this.updateEx.PublicSerialName);
-
-    if (this.updateEx != undefined) {
-      console.log("iu");
-      console.log(this.updateEx.detail);
-      this.expensesForm.patchValue({
-        PublicSerialName: this.updateEx.PublicSerialName,
-        date: this.updateEx.date,
-        getchack: this.updateEx.getchack,
-        InvoiceNumber: this.updateEx.InvoiceNumber,
-        amountPartner: this.updateEx.amountPartner,
-        amount: this.updateEx.amount,
-        Remarks: this.updateEx.Remarks,
-      });
+if(this.modalService.action==='update'){
+this.currentEx=this.modalService.data;
+  if (this.currentEx != undefined) {
+    console.log("iu");
+    console.log(this.currentEx.detail);
+    this.expensesForm.patchValue({
+      PublicSerialName: this.currentEx.PublicSerialName,
+      date: this.currentEx.date,
+      getchack: this.currentEx.getchack,
+      InvoiceNumber: this.currentEx.InvoiceNumber,
+      amountPartner: this.currentEx.amountPartner,
+      amount: this.currentEx.amount,
+      Remarks: this.currentEx.Remarks,
+    });
+}
+  
 
       // this.expensesForm.setControl('detail', this.formBuilder.array(this.updateEx.detail));
-      this.updateEx.detail.forEach(e => {
+      this.currentEx.detail.forEach(e => {
         this.editDetail(e.expenses, e.price);
       })
     }
@@ -87,6 +91,7 @@ this.modalService.closeModal();
     // else {
     // }
     // this.updateFlag.emit(0);
+    this.modalService.closeModal();
   }
   save() {
 
@@ -125,7 +130,7 @@ this.modalService.closeModal();
         this.expensesForm.value.amount = 0;
         console.log("sss", this.expensesForm.value.amount);
       }
-      this.expensesService.updateExpenses(this.updateEx.id, this.expensesForm.value).subscribe(e => {
+      this.expensesService.updateExpenses(this.currentEx.id, this.expensesForm.value).subscribe(e => {
 
         // this.r.navigate(['expenses/expenses-form/sucsses-form', 'הוצאה'])
         this.modalService.openModal('sucsses-form',{name: 'הוצאה'})
@@ -156,7 +161,7 @@ this.modalService.closeModal();
 
     this.showModalOnClick.hide();
     this.showModalOnClick1.show();
-
+    
   }
 
   get PublicSerialName() {

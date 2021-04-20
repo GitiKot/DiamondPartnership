@@ -8,9 +8,9 @@
                 <div class="modal-body mx-3">
 
                     <div class="modal-header text-center">
-                        <h4 *ngIf="!(updateEx)" class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור הוצאה חדשה
+                        <h4 *ngIf="!(currentEx)" class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור הוצאה חדשה
                         </h4>
-                        <h4 *ngIf="updateEx" class="modal-title w-100 font-weight-bold"> עדכן פרטים עבור הוצאה זו</h4>
+                        <h4 *ngIf="currentEx" class="modal-title w-100 font-weight-bold"> עדכן פרטים עבור הוצאה זו</h4>
 
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
                             <span aria-hidden="true">&times;</span>
@@ -41,10 +41,10 @@
                             </div>
                             <div class="col-4 col-sm-6 col-example">
                                 <div class="md-form mb-5">
-                                    <input *ngIf="!(updateEx)" type="date" id="form31" class="form-control" mdbInput
+                                    <input *ngIf="!(currentEx)" type="date" id="form31" class="form-control" mdbInput
                                         mdbValidate [formControl]="date">
-                                    <input *ngIf="updateEx" type="date" id="form31" class="form-control" mdbInput
-                                        mdbValidate [formControl]="date" [ngModel]="updateEx.date | date:'yyyy-MM-dd'">
+                                    <input *ngIf="currentEx" type="date" id="form31" class="form-control" mdbInput
+                                        mdbValidate [formControl]="date" [ngModel]="currentEx.date | date:'yyyy-MM-dd'">
                                     <label for="form31">תאריך</label>
                                     <mdb-error *ngIf="date.invalid && (date.dirty || date.touched)">
                                     </mdb-error>
@@ -117,10 +117,10 @@
                             <!--Footer-->
                             <!-- <div class="modal-footer"> -->
                             <div> <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                    (click)="frame1.hide()">ביטול</button>
-                                <button *ngIf="!(updateEx)" [disabled]="!expensesForm.valid" class="btn btn-primary" (click)=save()
-                                    (click)="frame1.hide()">שמירה</button>
-                                <button *ngIf="updateEx"[disabled]="!expensesForm.valid" class="btn btn-primary" (click)=update()
+                                (click)="close()"    (click)="frame1.hide()">ביטול</button>
+                                <button *ngIf="!(currentEx)" [disabled]="!expensesForm.valid" class="btn btn-primary" (click)=save()
+                                (click)="frame1.hide()">שמירה</button>
+                                <button *ngIf="currentEx"[disabled]="!expensesForm.valid" class="btn btn-primary" (click)=update()
                                     (click)="close()">שמירה</button>
                             </div>
                         </div>
@@ -136,7 +136,7 @@
                     <div class="modal-content">
                         <!--Header-->
                         <div class="modal-header text-center">
-                            <button (click)="cancelex()" type="button" class="close" data-dismiss="modal"
+                            <button (click)="close()" type="button" class="close" data-dismiss="modal"
                                 aria-label="Close">
                                 <span aria-hidden="true">×</span>
                                 <!-- <span aria-hidden="true">&times;</span> -->
