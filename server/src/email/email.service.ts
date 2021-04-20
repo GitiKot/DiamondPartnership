@@ -1,27 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
+import { Email } from './email.model';
+import { createEmailDto } from './dto/create-email.dto'
 import { Model } from 'mongoose';
-import { createEmailDto } from './send-email.controller';
+import { InjectModel } from '@nestjs/mongoose';
 import { MailService } from '@sendgrid/mail';
-import * as fs from "fs";
 
 @Injectable()
-export class SendEmailService {
-
+export class EmailService {
 
     constructor(
-        @InjectModel('sendEmail') private readonly sendEmailModel: Model<Email>, private mailService: MailService) { }
+        @InjectModel('Email') private readonly emailModel: Model<Email>, private mailService: MailService) { }
 
     async sendEmail(createEmailDto: createEmailDto): Promise<Email> {
         console.log(createEmailDto);
-        
-        console.log( this.mailService.setApiKey(process.env.SENDGRID_API_KEY));
-        
+
+        console.log(this.mailService.setApiKey(process.env.SENDGRID_API_KEY));
+
         this.mailService.setApiKey(process.env.SENDGRID_API_KEY);
         // const pathToAttachment = `${__dirname}/o.pdf`;
         // const attachment = fs.readFileSync(pathToAttachment).toString("base64");
 
-        const createEmail = new this.sendEmailModel(createEmailDto);
+        const createEmail = new this.emailModel(createEmailDto);
 
         const msg = {
             to: '6762692@gmail.com', // Change to your recipient
@@ -39,30 +38,12 @@ export class SendEmailService {
             // ]
         }
         this.mailService.send(msg)
-        .then(() => {
-          console.log('Email sent')
-        })
-        .catch((error) => {
-          console.error(error)
-        })
+            .then(() => {
+                console.log('Email sent')
+            })
+            .catch((error) => {
+                console.error(error)
+            })
         return createEmail.save();
     }
-}
-
-import { Document } from 'mongoose';
-
-export interface Email extends Document {
-    id: Date;
-    recipientsEmail: string;
-}
-
-import * as mongoose from 'mongoose';
-
-export const EmailSchema = new mongoose.Schema({
-
-    recipientsEmail: String
-});
-
-export interface Email extends mongoose.Document {
-    recipientsEmail: string;
 }

@@ -15,16 +15,15 @@ import { HomeComponent } from './components/home/home.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { ModalFormComponent } from './components/modal-form/modal-form.component';
+import { SucssesFormComponent } from './components/sucsses-form/sucsses-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SerialFormComponent } from './components/serial-form/serial-form.component';
 import { ExpensesFormComponent } from './components/expenses-form/expenses-form.component';
-import { SucssesModalComponent } from './components/sucsses-modal/sucsses-modal.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TabsComponent } from './components/tabs/tabs.component';
 
 // import{HttpClientModule} from ''
-// import {MatInputModule} from '@angular/material/input';
+import {MatInputModule} from '@angular/material/input';
 
 // import { NgModule } from '@angular/core';
 // import { BrowserModule } from '@angular/platform-browser';
@@ -42,7 +41,7 @@ import { TabsComponent } from './components/tabs/tabs.component';
 
 @NgModule({
   declarations: [
-    // MatInputModule,
+    MatInputModule,
     AppComponent,
     PartnersComponent,
     SeriousnessComponent,
@@ -54,14 +53,11 @@ import { TabsComponent } from './components/tabs/tabs.component';
     SalesFormComponent,
     HomeComponent,
     NavBarComponent,
-    ModalFormComponent,
+    SucssesFormComponent,
     ExpensesFormComponent,
-
     SerialFormComponent,
-
-    SucssesModalComponent,
-
     TabsComponent,
+    ,
 
 
 
@@ -72,8 +68,7 @@ import { TabsComponent } from './components/tabs/tabs.component';
     AppRoutingModule, ReactiveFormsModule,
     MDBBootstrapModule.forRoot(),
     BrowserAnimationsModule,
-    FormsModule
-
+    FormsModule,
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [],

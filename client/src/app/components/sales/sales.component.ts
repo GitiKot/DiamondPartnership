@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { Sale } from 'src/app/data/sale';
 import { Seriousness } from 'src/app/data/seriousness';
+import { ModalService } from 'src/app/services/modal.service';
 import { SalesService } from 'src/app/services/sales.service';
 import { seriousnessService } from 'src/app/services/seriousness.service';
 
@@ -23,7 +24,7 @@ export class SalesComponent implements OnInit {
   updateSale: Sale;
   seriousnessList: Array<Seriousness>;
   //  constructor(private r: Router, private saleService: SalesService,private route:ActivatedRoute) { }
-  constructor(private r: Router, private route: ActivatedRoute, private seriousnessService: seriousnessService, private saleService: SalesService) { }
+  constructor(private modalService: ModalService, private r: Router, private route: ActivatedRoute, private seriousnessService: seriousnessService, private saleService: SalesService) { }
   salesList: Array<Sale>
   nameSerial: string;
   ngOnInit(): void {
@@ -117,8 +118,13 @@ export class SalesComponent implements OnInit {
 
     (document.querySelector('#DueDate') as HTMLInputElement).value = dateSales.toLocaleDateString();
   }
-
+  newSale() {
+    // this.modalService.openModal('sales-form');
+    this.modalService.changeSaleTab();
+  }
   update() {
+    console.log('update');
+
     if (this.updateSale != undefined) {
       if (this.salesForm.valid) {
         console.log("form", this.updateSale);
@@ -141,7 +147,7 @@ export class SalesComponent implements OnInit {
 
 
           let ser = <Seriousness>((this.updateSale.publicSerialName) as any)
-          console.log("updatesale",this.updateSale);
+          console.log("updatesale", this.updateSale);
 
           let idser;
           this.seriousnessList.forEach(s => {
@@ -150,9 +156,9 @@ export class SalesComponent implements OnInit {
             }
           });
           ser.amountReceived = ((Number(this.salesForm.value.weight) *
-            Number(this.salesForm.value.pricePerCarat)))-((Number(this.updateSale.weight) *
-            Number(this.updateSale.pricePerCarat)));
-            console.log("ser.amountReceived",ser.amountReceived);
+            Number(this.salesForm.value.pricePerCarat))) - ((Number(this.updateSale.weight) *
+              Number(this.updateSale.pricePerCarat)));
+          console.log("ser.amountReceived", ser.amountReceived);
 
           this.seriousnessService.updateSerial(idser, ser).subscribe(() => {
           }, () => {

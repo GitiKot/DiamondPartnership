@@ -135,7 +135,7 @@
   </table>
   <label class="error" *ngIf="salesForm.controls.dirty">נא למלא את כל הפרטים.</label><br>
   <div class="modal-footer d-flex">
-    <button type="button" (click)="cancel()" class="btn btn-primary" [routerLink]="['']" id="cancel">ביטול</button>
+    <button type="button" (click)="cancel()" class="btn btn-primary"  id="cancel">ביטול</button>
     <button type="submit" class="btn btn-primary" id="save" [disabled]="!salesForm.valid">שמירה</button>
   </div>
 </form>

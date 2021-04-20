@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Sale } from 'src/app/data/sale';
 import { Seriousness } from 'src/app/data/seriousness';
+import { ModalService } from 'src/app/services/modal.service';
 import { SalesService } from 'src/app/services/sales.service'
 import { seriousnessService } from 'src/app/services/seriousness.service';
 
@@ -22,7 +23,7 @@ export class SalesFormComponent implements OnInit {
   serialId = [];
   place = [];
   selectPrivateSerial = [];
-  constructor(private router: Router, private seriousnessService: seriousnessService,
+  constructor( private modalService:ModalService,private router: Router, private seriousnessService: seriousnessService,
     private salesServise: SalesService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -196,12 +197,13 @@ export class SalesFormComponent implements OnInit {
     }
 
     if (!flag)
-      this.router.navigate(['sales-form/modal-form', 'מכירה'])
+    this.modalService.openModal('sucsses-form','מכירה')
     else;
   }
 
   cancel() {
-    this.router.navigate(['/sales/true']);
+    this.modalService.closeModal();
+
   }
   keypressEnter() {
 

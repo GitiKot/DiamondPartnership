@@ -22,6 +22,7 @@ body {
 
 .mat-tab-labels {
   background-color: white;
+  padding-top: 35px;
 
     .mat-tab-label {
       // background-color: #3f51b5;
@@ -78,3 +79,7 @@ body {
 }
 //
 // mat-ripple mat-tab-label mat-focus-indicator ng-star-inserted mat-tab-label-active
+
+.mat-tab-labels{
+margin-top: 15px;
+}

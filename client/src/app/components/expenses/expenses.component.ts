@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { Expenses } from 'src/app/data/expenses';
 import { ExpensesService } from 'src/app/services/expenses.service'
-
+import {ModalService}from '../../services/modal.service';
 @Component({
   selector: 'app-expenses',
   templateUrl: './expenses.component.html',
@@ -22,7 +21,7 @@ export class ExpensesComponent implements OnInit {
 
   flagupdate = 0;
 
-  constructor(private r: Router, private expensesService: ExpensesService, private formBuilder: FormBuilder) { }
+  constructor(public modalService:ModalService,  private expensesService: ExpensesService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
 
@@ -134,7 +133,10 @@ export class ExpensesComponent implements OnInit {
     update.style.visibility = "hidden";
   }
   newExpenses(){
-    this.r.navigate(['expenses-form'])
+    // this.r.navigate(['expenses-form'])
+   
+    this.modalService.openModal('expenses-form');
+    
   }
 }
 

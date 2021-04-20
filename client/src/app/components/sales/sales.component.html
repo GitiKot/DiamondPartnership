@@ -28,7 +28,7 @@
     </svg>&nbsp;
     <input type="text" id="private" class="form-control form-control-sm ml-3 " (keyup)="searchPrivate()"
       placeholder="סריה פרטית" title="חיפוש לפי סריה פרטית">
-    <a class="btn btn-primary newSale"  [routerLink]="['/sales-form']">
+    <a class="btn btn-primary newSale" (click)="newSale()">
       <!-- <i class="fa fa-diamond" style="font-size: 8px;" aria-hidden="true"></i>
       <i class="fa fa-diamond" style="font-size: 8px;" aria-hidden="true"></i> -->
       <i class="fa fa-handshake-o" aria-hidden="true"></i>

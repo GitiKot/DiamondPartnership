@@ -6,6 +6,7 @@ import { PartnerService } from 'src/app/services/partner.service';
 import { phoneValidator } from 'src/app/validtors/phone.validator';
 import { ContactNumberValidator } from 'src/app/validtors/contact.validator'
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
+import { ModalService } from 'src/app/services/modal.service';
 @Component({
   selector: 'app-partners-form',
   templateUrl: './partners-form.component.html',
@@ -20,7 +21,7 @@ export class PartnersFormComponent implements OnInit {
   @Output() updateFlag = new EventEmitter<number>();
   @ViewChild('frame') public showModalOnClick: ModalDirective;
 
-  constructor(private partnerService: PartnerService, private router: Router,private formBuilder: FormBuilder) { }
+  constructor(public modalService:ModalService,private partnerService: PartnerService, private router: Router,private formBuilder: FormBuilder) { }
  
   ngOnInit(): void 
   {
@@ -117,7 +118,9 @@ export class PartnersFormComponent implements OnInit {
   
     if (this.partnersForm.valid) {
       this.partnerService.addPartner(this.partnersForm.value).subscribe(a => {
-          this.router.navigate(['partners/partners-form/modal-form', 'שותף'])  
+          // this.router.navigate(['partners/partners-form/modal-form', 'שותף'])  
+          this.modalService.openModal('modal-form', { name: 'שותף'});
+
         }, () => {
           console.log("error");
         });
@@ -134,7 +137,8 @@ export class PartnersFormComponent implements OnInit {
     if (this.partnersForm.valid) {
 
       this.partnerService.updatePartner(this.updateP.id, this.partnersForm.value).subscribe(() => {
-        this.router.navigate(['partners/partners-form/modal-form', 'שותף'])
+        this.modalService.openModal('modal-form', { name: 'שותף'});
+        // this.router.navigate(['partners/partners-form/modal-form', 'שותף'])
       }, () => {
         console.log("error");
       }) 

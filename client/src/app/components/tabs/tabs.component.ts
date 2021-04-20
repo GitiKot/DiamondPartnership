@@ -1,8 +1,7 @@
-
-
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
+import { ModalService } from '../../services/modal.service';
 
 /**
  * @title Tab group with dynamically changing tabs
@@ -14,22 +13,21 @@ import { ThemePalette } from '@angular/material/core';
   styleUrls: ['./tabs.component.css']
 })
 export class TabsComponent {
-  tabs = [];
+  
+ public tabs = [];
   selected = new FormControl(0);
   brc: ThemePalette = 'warn';
-  ngOnInit(): void {
-
+  constructor( public modalService:ModalService){
+    if(this.modalService.saleFormPage)
+    this.tabs.push({classification:'sale-form',name:''})
   }
-  addTab(Classification) {
-    this.tabs.push(Classification);
-
+  ngOnInit(): void {
+  }
+  addTab(tab:{classification:string;name:string}) {
+    this.tabs.push(tab);
     this.selected.setValue(this.tabs.length - 1);
   }
-
   removeTab(index: number) {
-
     this.tabs.splice(index, 1);
   }
-
-  
 }

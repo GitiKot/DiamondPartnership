@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SucssesModalComponent } from './sucsses-modal.component';
+import { SucssesFormComponent } from './sucsses-form.component';
 
-describe('SucssesModalComponent', () => {
-  let component: SucssesModalComponent;
-  let fixture: ComponentFixture<SucssesModalComponent>;
+describe('ModalFormComponent', () => {
+  let component: SucssesFormComponent;
+  let fixture: ComponentFixture<SucssesFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SucssesModalComponent ]
+      declarations: [ SucssesFormComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SucssesModalComponent);
+    fixture = TestBed.createComponent(SucssesFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

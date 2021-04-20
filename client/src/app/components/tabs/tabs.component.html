@@ -6,20 +6,20 @@
     <links>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" (click)="addTab( 'שותפים')">שותפים</a>
+                <a class="nav-link" (click)="addTab({classification:'partners',name:'שותפים'})">שותפים</a>
 
             </li>
             <li class="nav-item">
-                <a class="nav-link" (click)="addTab( 'הוצאות')">הוצאות</a>
+                <a class="nav-link" (click)="addTab({classification:'expenses',name:'הוצאות'})">הוצאות</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" (click)="addTab( 'סריות')">סריות</a>
+                <a class="nav-link" (click)="addTab({classification:'seriousness',name:'סריות'})">סריות</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" (click)="addTab('מכירות')">מכירות</a>
+                <a class="nav-link" (click)="addTab({classification:'sales',name:'מכירות'})">מכירות</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" (click)="addTab( 'שיקים')">שיקים</a>
+                <a class="nav-link" (click)="addTab({classification:'checks',name:'שיקים'})">שיקים</a>
             </li>
         </ul>
 
@@ -31,23 +31,38 @@
 
 <mat-tab-group [selectedIndex]="selected.value" [backgroundColor]="brc"
     (selectedIndexChange)="selected.setValue($event)" animationDuration="0ms">
-    <mat-tab *ngFor="let tab of tabs; let index = index" [ngSwitch]="tab">
+    <mat-tab *ngFor="let tab of tabs; let index = index" [ngSwitch]="tab.classification">
 
         <ng-template mat-tab-label>
-            <div class="col" style="margin-left: 20px;">{{tab}}</div>
+            <div class="col" style="margin-left: 20px;">{{tab.name}}</div>
             <div class="col" style="margin-left: 20px;" (click)="removeTab(index)">X</div>
         </ng-template>
 
 
-        <app-partners *ngSwitchCase="'שותפים'"> </app-partners>
-        <app-seriousness *ngSwitchCase="'סריות'"></app-seriousness>
-        <app-checks *ngSwitchCase="'שיקים'"></app-checks>
-        <app-expenses *ngSwitchCase="'הוצאות'"></app-expenses>
-        <app-sales *ngSwitchCase="'מכירות'"></app-sales>
+        <app-partners *ngSwitchCase="'partners'"> </app-partners>
+        <app-seriousness *ngSwitchCase="'seriousness'"></app-seriousness>
+        <app-checks *ngSwitchCase="'checks'"></app-checks>
+        <app-expenses *ngSwitchCase="'expenses'"></app-expenses>
+        <app-sales *ngSwitchCase="'sales'"></app-sales>
+        <app-sales-form *ngSwitchCase="'sales-form'"></app-sales-form>
+
+
     </mat-tab>
 </mat-tab-group>
-<router-outlet></router-outlet>
+
+<div [ngSwitch]="modalService.component">
+    <app-sucsses-form *ngSwitchCase="'sucsses-form'"></app-sucsses-form>
+    <app-expenses-form *ngSwitchCase="'expenses-form'"></app-expenses-form>
+    <app-partners-form *ngSwitchCase="'partners-form'"></app-partners-form>
+    <app-serial-form *ngSwitchCase="'serial-form'"></app-serial-form>
+    <app-sales-form *ngSwitchCase="'sales-form'"></app-sales-form>
+</div>
+<a>{{modalService.isOpen}}</a>
+<a>{{modalService.component}}</a>
+<!-- <router-outlet></router-outlet> -->
 <!-- <button mat-raised-button class="example-delete-tab-button" [disabled]="tabs.length === 1"
             (click)="removeTab(index)">
             Delete Tab
         </button> -->
+
+       מכירה חדשה לטאב הטאב שואל אם עכשיו בסרביס אתה מכירה חדשה תכניס לי 

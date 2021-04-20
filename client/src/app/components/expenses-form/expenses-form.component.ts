@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { Expenses } from 'src/app/data/expenses';
 import { Seriousness } from 'src/app/data/seriousness';
 import { ExpensesService } from 'src/app/services/expenses.service';
+import { ModalService } from 'src/app/services/modal.service';
 import{ seriousnessService}from 'src/app/services/seriousness.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class ExpensesFormComponent implements OnInit {
   @Input() updateEx: Expenses;
   @Output() updateFlag = new EventEmitter<number>();
 
-  constructor(private r: Router, private expensesService: ExpensesService,private seriousnessService: seriousnessService, private formBuilder: FormBuilder) { }
+  constructor( public modalService:ModalService, private expensesService: ExpensesService,private seriousnessService: seriousnessService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.seriousnessService.getAllSeriousness().subscribe(ans => {
@@ -76,7 +76,8 @@ export class ExpensesFormComponent implements OnInit {
     }
   }
   close() {      
-this.r.navigate(['']);
+// this.r.navigate(['']);
+this.modalService.closeModal();
 //זה של גיטי בשסיל עדכון
 
     // if (this.updateEx != undefined) {
@@ -94,7 +95,8 @@ this.r.navigate(['']);
       this.expensesForm.value.amount = this.expensesForm.value.detail
         .reduce((prev, curr) => prev + Number(curr.price), 0);
       this.expensesService.addExpenses(this.expensesForm.value).subscribe(e => {
-        this.r.navigate(['expenses/expenses-form/modal-form', 'הוצאה'])
+        // this.r.navigate(['expenses/expenses-form/modal-form', 'הוצאה'])
+        this.modalService.openModal('modal-form',{name: 'הוצאה'})
       }, () => {
         console.log("error");
         // this.expensesForm.reset();
@@ -108,7 +110,7 @@ this.r.navigate(['']);
     // צריך פה לעשות רפרש לטבלה
     // this.r.navigate(['expenses']);
     this.updateFlag.emit(1);
-    this.r.navigate(['']);
+   this.modalService.closeModal()
   }
 
   update() {
@@ -124,7 +126,9 @@ this.r.navigate(['']);
         console.log("sss", this.expensesForm.value.amount);
       }
       this.expensesService.updateExpenses(this.updateEx.id, this.expensesForm.value).subscribe(e => {
-        this.r.navigate(['expenses/expenses-form/modal-form', 'הוצאה'])
+
+        // this.r.navigate(['expenses/expenses-form/modal-form', 'הוצאה'])
+        this.modalService.openModal('modal-form',{name: 'הוצאה'})
       }, () => {
         console.log("error");
       })
@@ -135,7 +139,8 @@ this.r.navigate(['']);
     this.showModalOnClick.hide();
     this.showModalOnClick1.hide();
     this.updateFlag.emit(1);
-    this.r.navigate(['']);
+    // this.r.navigate(['']);
+    this.modalService.closeModal();
   }
   savemodal() {
 

@@ -44,9 +44,6 @@ export class ChecksComponent implements OnInit {
   public chartClicked(e: any): void { }
   public chartHovered(e: any): void { }
 
-
-
-
   @ViewChild('framen') public showModalOnClick: ModalDirective;
   checksForm: FormGroup;
   untilcost: boolean

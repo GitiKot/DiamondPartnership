@@ -3,17 +3,20 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'angular-bootstrap-md';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
-  selector: 'app-modal-form',
-  templateUrl: './modal-form.component.html',
-  styleUrls: ['./modal-form.component.css']
+  selector: 'app-sucsses-form',
+  templateUrl: './sucsses-form.component.html',
+  styleUrls: ['./sucsses-form.component.css']
 })
-export class ModalFormComponent implements OnInit {
+export class SucssesFormComponent implements OnInit {
   validatingForm: FormGroup;
-  typeModel = this.route.snapshot.paramMap.get('type');
+  typeModel: string;
   @ViewChild('frame1') frame1: ModalDirective;
-  constructor(private route:ActivatedRoute,private r:Router) { }
+  constructor(private route:ActivatedRoute,private r:Router, private modalService: ModalService) {
+    this.typeModel = modalService.data?.name;
+   }
 
   // ngOnInit(): void {
   // }
@@ -30,20 +33,8 @@ export class ModalFormComponent implements OnInit {
     this.frame1.show();
   }
   hideFrame1(){
-    this.frame1.hide();
-this.r.navigate(['']);
-  }
-
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'modal-form',
-//   templateUrl: './modal-form.component.html',
-//   styleUrls: ['./modal-form.component.css']
-// })
-
-  
-  
-
-  
+//     this.frame1.hide();
+// this.r.navigate(['']);
+this.modalService.closeModal()
+  }  
 }

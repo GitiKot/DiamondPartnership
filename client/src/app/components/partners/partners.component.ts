@@ -4,6 +4,7 @@ import { PartnerService } from 'src/app/services/partner.service';
 import { Partner } from 'src/app/data/partner';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-partners',
@@ -19,7 +20,7 @@ export class PartnersComponent implements OnInit {
   p: Partner;
   flagupdate = 0;
 
-  constructor(private r: Router, private partnerService: PartnerService, private formBuilder: FormBuilder) { }
+  constructor(private modalService: ModalService, private partnerService: PartnerService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.partnerService.getAllPartners().subscribe(ans => { this.partnersList = ans });
@@ -30,10 +31,8 @@ export class PartnersComponent implements OnInit {
   }
 
   // עשיתי את זה במקום ה app-partner-form
-  newPartner() {    console.log("new");
-
-    this.r.navigate(['partners/partners-form'])
-
+  newPartner() {
+    this.modalService.openModal('partners-form');
   }
   flag() {
     this.p = undefined;
