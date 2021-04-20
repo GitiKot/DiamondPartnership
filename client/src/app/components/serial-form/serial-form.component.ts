@@ -112,7 +112,7 @@ export class SerialFormComponent implements OnInit {
     this.serialForm.get('partner').setValue(this.partnerId)
     if (this.serialForm.valid && this.serialForm.value.partner) {
       this.seriousnessService.addSeria(this.serialForm.value).subscribe(sss => {
-        this.r.navigate(['seriousness/serial-form/modal-form', 'סריה'])
+        this.r.navigate(['seriousness/serial-form/sucsses-form', 'סריה'])
       }, () => {
         console.log("error");
       })
@@ -136,7 +136,7 @@ export class SerialFormComponent implements OnInit {
     console.log(this.serialForm.valid);
     if (this.serialForm.valid) {
       this.seriousnessService.updateSerial(this.updateSerial.id, this.serialForm.value).subscribe(() => {
-        this.r.navigate(['seriousness/serial-form/modal-form', 'סריה'])
+        this.r.navigate(['seriousness/serial-form/sucsses-form', 'סריה'])
       }, () => {
         console.log("error");
       })

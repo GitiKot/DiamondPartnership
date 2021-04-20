@@ -23,7 +23,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { TabsComponent } from './components/tabs/tabs.component';
 
 // import{HttpClientModule} from ''
-import {MatInputModule} from '@angular/material/input';
+// import {MatInputModule} from '@angular/material/input';
+// import { CommonModule } from '@angular/common';
 
 // import { NgModule } from '@angular/core';
 // import { BrowserModule } from '@angular/platform-browser';
@@ -41,7 +42,7 @@ import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [
-    MatInputModule,
+    // MatInputModule,
     AppComponent,
     PartnersComponent,
     SeriousnessComponent,
@@ -49,7 +50,7 @@ import {MatInputModule} from '@angular/material/input';
     ChecksComponent,
     ExpensesComponent,
     PartnersFormComponent,
-
+    // CommonModule,
     SalesFormComponent,
     HomeComponent,
     NavBarComponent,
@@ -57,15 +58,13 @@ import {MatInputModule} from '@angular/material/input';
     ExpensesFormComponent,
     SerialFormComponent,
     TabsComponent,
-    ,
-
-
-
+    
   ],
   imports: [
     MatTabsModule, HttpClientModule,
     BrowserModule,
-    AppRoutingModule, ReactiveFormsModule,
+    AppRoutingModule, 
+    ReactiveFormsModule,
     MDBBootstrapModule.forRoot(),
     BrowserAnimationsModule,
     FormsModule,

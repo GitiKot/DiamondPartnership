@@ -95,8 +95,8 @@ this.modalService.closeModal();
       this.expensesForm.value.amount = this.expensesForm.value.detail
         .reduce((prev, curr) => prev + Number(curr.price), 0);
       this.expensesService.addExpenses(this.expensesForm.value).subscribe(e => {
-        // this.r.navigate(['expenses/expenses-form/modal-form', 'הוצאה'])
-        this.modalService.openModal('modal-form',{name: 'הוצאה'})
+        // this.r.navigate(['expenses/expenses-form/sucsses-form', 'הוצאה'])
+        this.modalService.openModal('sucsses-form',{name: 'הוצאה'})
       }, () => {
         console.log("error");
         // this.expensesForm.reset();
@@ -127,8 +127,8 @@ this.modalService.closeModal();
       }
       this.expensesService.updateExpenses(this.updateEx.id, this.expensesForm.value).subscribe(e => {
 
-        // this.r.navigate(['expenses/expenses-form/modal-form', 'הוצאה'])
-        this.modalService.openModal('modal-form',{name: 'הוצאה'})
+        // this.r.navigate(['expenses/expenses-form/sucsses-form', 'הוצאה'])
+        this.modalService.openModal('sucsses-form',{name: 'הוצאה'})
       }, () => {
         console.log("error");
       })

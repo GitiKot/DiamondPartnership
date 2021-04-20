@@ -14,6 +14,7 @@ import { SucssesFormComponent } from './components/sucsses-form/sucsses-form.com
 import { SerialFormComponent } from './components/serial-form/serial-form.component';
 import { ExpensesFormComponent } from './components/expenses-form/expenses-form.component';
 import { TabsComponent } from './components/tabs/tabs.component';
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   // { path: '', component: AppComponent },
@@ -29,7 +30,7 @@ const routes: Routes = [
   //  {
   //       path: 'expenses-form', component: ExpensesFormComponent, children:
   //        [{ path: '', redirectTo: 'expenses-form', pathMatch: 'full' }       
-  //      ,  { path: 'modal-form/:type', component:ModalFormComponent, }]
+  //      ,  { path: 'sucsses-form/:type', component:ModalFormComponent, }]
   //   },
   { path: 'sales/:isSales', component: SalesComponent },
   { path: 'sales-form', component: SalesFormComponent,

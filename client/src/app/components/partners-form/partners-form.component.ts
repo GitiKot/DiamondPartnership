@@ -118,8 +118,8 @@ export class PartnersFormComponent implements OnInit {
   
     if (this.partnersForm.valid) {
       this.partnerService.addPartner(this.partnersForm.value).subscribe(a => {
-          // this.router.navigate(['partners/partners-form/modal-form', 'שותף'])  
-          this.modalService.openModal('modal-form', { name: 'שותף'});
+          // this.router.navigate(['partners/partners-form/sucsses-form', 'שותף'])  
+          this.modalService.openModal('sucsses-form', { name: 'שותף'});
 
         }, () => {
           console.log("error");
@@ -137,8 +137,8 @@ export class PartnersFormComponent implements OnInit {
     if (this.partnersForm.valid) {
 
       this.partnerService.updatePartner(this.updateP.id, this.partnersForm.value).subscribe(() => {
-        this.modalService.openModal('modal-form', { name: 'שותף'});
-        // this.router.navigate(['partners/partners-form/modal-form', 'שותף'])
+        this.modalService.openModal('sucsses-form', { name: 'שותף'});
+        // this.router.navigate(['partners/partners-form/sucsses-form', 'שותף'])
       }, () => {
         console.log("error");
       }) 

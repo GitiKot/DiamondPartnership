@@ -191,7 +191,7 @@ export class SalesComponent implements OnInit {
 
           //  console.log("seria", seria);
 
-          this.r.navigate(['sales-form/modal-form', 'מכירה'])
+          this.r.navigate(['sales-form/sucsses-form', 'מכירה'])
           this.salesForm.reset();
         }, () => {
           console.log("error");
