@@ -39,8 +39,9 @@ export class PartnersComponent implements OnInit {
     this.flagupdate = 1;
   }
   updateflag(part) {
-    this.p = part;
-    this.flagupdate = 1;
+    console.log(part);
+    
+  this.modalService.openModal('partners-form',part,'update')
   }
   updateFromFlag(event) {
 

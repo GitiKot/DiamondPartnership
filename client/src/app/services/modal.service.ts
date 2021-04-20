@@ -9,12 +9,18 @@ export class ModalService {
   component = '';
   data: any;
   saleFormPage= false
+  action:string;
   constructor() { }
 
-  openModal(componentName, componentData = {}) {
+  openModal(componentName, componentData = {},comAction?) {
     this.isOpen = true;
     this.component = componentName;
     this.data = componentData;
+    if(comAction)
+    this.action=comAction;
+    else
+    this.action='';
+
   };
 
   closeModal() {

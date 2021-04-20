@@ -20,7 +20,6 @@ export class PartnersFormComponent implements OnInit {
   @Input() updateP: Partner;
   @Output() updateFlag = new EventEmitter<number>();
   @ViewChild('frame') public showModalOnClick: ModalDirective;
-
   constructor(public modalService:ModalService,private partnerService: PartnerService, private router: Router,private formBuilder: FormBuilder) { }
  
   ngOnInit(): void 
@@ -34,6 +33,9 @@ export class PartnersFormComponent implements OnInit {
           fax: ['', [Validators.required]],
           Remarks: [''],
         }, ContactNumberValidator(['phone', 'pel', 'email'])); console.log(this.partnersForm.controls.email.value);
+        if(this.modalService.action==='update')
+this.currectPartner=this.modalService.data;
+console.log(this.currectPartner);
 
       // this.partnersForm = new FormGroup({
       //   name: new FormControl('', Validators.required),
@@ -45,18 +47,18 @@ export class PartnersFormComponent implements OnInit {
       //   Remarks: new FormControl(''),
       // }, ContactNumberValidator(['phone', 'pel', 'email'])); console.log(this.partnersForm.controls.email.value);
     
-      console.log("updateex", this.updateP);
-      if (this.updateP != undefined) {
+      console.log("updateex", this.currectPartner);
+      if (this.currectPartner != undefined) {
         console.log("iu");
-        console.log(this.updateP);
+        console.log(this.currectPartner);
         this.partnersForm.patchValue({
-          name: this.updateP.name,
-          contact: this.updateP.contact,
-          phone: this.updateP.phone,
-          email: this.updateP.email,
-          pel: this.updateP.pel,
-          fax: this.updateP.fax,
-          Remarks: this.updateP.Remarks,
+          name: this.currectPartner.name,
+          contact: this.currectPartner.contact,
+          phone: this.currectPartner.phone,
+          email: this.currectPartner.email,
+          pel: this.currectPartner.pel,
+          fax: this.currectPartner.fax,
+          Remarks: this.currectPartner.Remarks,
         });
       }
     // var firstInput = document.getElementById('name');
