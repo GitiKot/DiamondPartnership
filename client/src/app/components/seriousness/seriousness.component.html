@@ -49,7 +49,7 @@
                 </button></td>
                 <td >
                     <!-- (click)="updateflag(s)" -->
-                    <button id="update{{i}}" class="update"   title="עדכון">
+                    <button id="update{{i}}" class="update"   title="עדכון" (click)="updateSeria(s)">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-brush-fill" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
@@ -103,10 +103,10 @@
         </tbody>
     </table>
 </div>
-<app-serial-form *ngIf="flagupdate" [updateSerial]="s" (updateFlag)="updateFromFlag($event)"></app-serial-form>
+<!-- <app-serial-form *ngIf="flagupdate" [updateSerial]="s" (updateFlag)="updateFromFlag($event)"></app-serial-form> -->
 
 <button type="button" mdbBtn color="blue" rounded="true" data-toggle="modal" data-target="#basicExample"
-(click)="Uflag()"  mdbWavesEffect id="newSerial" class="waves-light"><i class="fa fa-diamond"
+(click)="newSeria()"  mdbWavesEffect id="newSerial" class="waves-light"><i class="fa fa-diamond"
         aria-hidden="true"></i>
     סריה חדשה
 </button>

@@ -28,11 +28,11 @@
                         </div>
                         <div class="col-4 col-sm-6 col-example">
                             <div class="md-form mb-5">
-                                <input *ngIf="!(updateSerial)" type="date" id="form34" class="form-control" mdbInput
+                                <input *ngIf="!(currentSeria)" type="date" id="form34" class="form-control" mdbInput
                                     mdbValidate [formControl]="dateBuy" max="{{this.serialForm.value.finishDate}}">
-                                <input *ngIf="updateSerial" type="date" id="form34" class="form-control" mdbInput
+                                <input *ngIf="currentSeria" type="date" id="form34" class="form-control" mdbInput
                                     mdbValidate [formControl]="dateBuy"
-                                    [ngModel]="updateSerial.dateBuy | date:'yyyy-MM-dd'"
+                                    [ngModel]="currentSeria.dateBuy | date:'yyyy-MM-dd'"
                                     max="{{this.serialForm.value.finishDate}}">
                                 <label for="form34"> תאריך קניה</label>
                                 <mdb-error *ngIf="dateBuy.invalid && (dateBuy.dirty || dateBuy.touched)">
@@ -78,11 +78,11 @@
                         </div>
                         <div class="col-8 col-sm-6 col-example" *ngIf="closeSerial.checked">
                             <div class="md-form mb-8 ">
-                                <input *ngIf="!(updateSerial)" type="date" id="form34" class="form-control" mdbInput
+                                <input *ngIf="!(currentSeria)" type="date" id="form34" class="form-control" mdbInput
                                     mdbValidate [formControl]="finishDate" min="{{this.serialForm.value.dateBuy}}">
-                                <input *ngIf="updateSerial" type="date" id="form34" class="form-control" mdbInput
+                                <input *ngIf="currentSeria" type="date" id="form34" class="form-control" mdbInput
                                     mdbValidate [formControl]="finishDate" min="{{this.serialForm.value.dateBuy}}"
-                                    [ngModel]="updateSerial.finishDate | date:'yyyy-MM-dd'">
+                                    [ngModel]="currentSeria.finishDate | date:'yyyy-MM-dd'">
                                 <label for="form3"> תאריך סגירת סריה </label>
                             </div>
                         </div>
@@ -95,8 +95,8 @@
                                     [ngModelOptions]="{standalone: true}" placeholder="בחר"
                                     (change)="selectedPartnerId($event)">
                                 <datalist id="List">
-                                    <option *ngIf="updateSerial" value="{{updateSerial.partner.name}}">
-                                        {{updateSerial.partner.name}}</option>
+                                    <option *ngIf="currentSeria" value="{{currentSeria.partner.name}}">
+                                        {{currentSeria.partner.name}}</option>
                                     <option id="{{p.name}}" [attr.data-value]="p.id" *ngFor="let p of partnerList"
                                         [value]=" p.name">
                                     </option>
@@ -211,11 +211,11 @@
                         <button type="button" mdbBtn color="blue" rounded="true" data-toggle="modal"
                             data-target="#basicExample" (click)="close()" mdbWavesEffect>
                             ביטול </button>
-                        <button *ngIf="!(updateSerial)" [disabled]="!serialForm.valid" type="button" mdbBtn color="blue"
+                        <button *ngIf="!(currentSeria)" [disabled]="!serialForm.valid" type="button" mdbBtn color="blue"
                             rounded="true" data-toggle="modal" data-target="#basicExample" (click)="save()"
                             mdbWavesEffect>
                             שמירה </button>
-                        <button *ngIf="updateSerial" type="button" mdbBtn color="blue" rounded="true"
+                        <button *ngIf="currentSeria" type="button" mdbBtn color="blue" rounded="true"
                             data-toggle="modal" data-target="#basicExample" (click)="update()" mdbWavesEffect>
                             שמירה </button>
                         <!-- <router-outlet></router-outlet> -->

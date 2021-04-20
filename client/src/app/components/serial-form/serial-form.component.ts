@@ -5,6 +5,7 @@ import { CheckboxComponent } from 'angular-bootstrap-md';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { Partner } from 'src/app/data/partner';
 import { Seriousness } from 'src/app/data/seriousness';
+import { ModalService } from 'src/app/services/modal.service';
 import { PartnerService } from 'src/app/services/partner.service';
 import { seriousnessService } from 'src/app/services/seriousness.service';
 
@@ -19,11 +20,11 @@ export class SerialFormComponent implements OnInit {
   totalPrice = [];
   partnerId;
   @ViewChild('frame1') frame1: ModalDirective;
-  @ViewChild('frame2') frame2: ModalDirective;
-  @Input() updateSerial: Seriousness;
-  @Output() updateFlag = new EventEmitter<number>();
+  // @ViewChild('frame2') frame2: ModalDirective;
+ currentSeria: Seriousness;
+  // @Output() updateFlag = new EventEmitter<number>();
 
-  constructor(private changeDetectorRef: ChangeDetectorRef, private r: Router, private partnerService: PartnerService, private seriousnessService: seriousnessService, private formBuilder: FormBuilder) { }
+  constructor(private modalService:ModalService, private changeDetectorRef: ChangeDetectorRef, private r: Router, private partnerService: PartnerService, private seriousnessService: seriousnessService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.partnerService.getAllPartners().subscribe(ans => { this.partnerList = ans; })
@@ -38,37 +39,41 @@ export class SerialFormComponent implements OnInit {
       partner: [''],
     });
     this.totalPrice['לחץ לפרטים']
+if(this.modalService.action==='update'){
+this.currentSeria=this.modalService.data;
 
-    if (this.updateSerial != undefined) {
-      this.serialForm.patchValue({
-        serialName: this.updateSerial.serialName,
-        dateBuy: this.updateSerial.dateBuy,
-        cost: this.updateSerial.cost,
-        partnersPercent: this.updateSerial.partnersPercent,
-        finishDate: this.updateSerial.finishDate,
-        privateSeria: this.updateSerial.privateSeria,
-        partner: this.updateSerial.partner,
+  if (this.currentSeria != undefined) {
+    this.serialForm.patchValue({
+      serialName: this.currentSeria.serialName,
+      dateBuy: this.currentSeria.dateBuy,
+      cost: this.currentSeria.cost,
+      partnersPercent: this.currentSeria.partnersPercent,
+      finishDate: this.currentSeria.finishDate,
+      privateSeria: this.currentSeria.privateSeria,
+      partner: this.currentSeria.partner,
+    });
+    let i = 0;
+    this.currentSeria.privateSeria.forEach(s => {
+      this.editPrivateSerial(s.namePrivate, s.price);
+      s.expenses.forEach(ex => {
+        this.editExArrray(i, ex.nameExpenses, ex.exspensesPrice);
       });
-      let i = 0;
-      this.updateSerial.privateSeria.forEach(s => {
-        this.editPrivateSerial(s.namePrivate, s.price);
-        s.expenses.forEach(ex => {
-          this.editExArrray(i, ex.nameExpenses, ex.exspensesPrice);
-        });
-        i++;
-      })
-      if (this.updateSerial.finishDate) {
-        let cbox = document.getElementById('form3');
-        (((cbox as Element) as Input) as CheckboxComponent).checked = true;
-      }
+      i++;
+    })
+    if (this.currentSeria.finishDate) {
+      let cbox = document.getElementById('form3');
+      (((cbox as Element) as Input) as CheckboxComponent).checked = true;
     }
+  }
+}
+   
   }
   updateFinishDate() {
     let cbox = document.getElementById('form3');
-    if (this.updateSerial != undefined) {
-      if (this.updateSerial.finishDate != undefined) {
+    if (this.currentSeria != undefined) {
+      if (this.currentSeria.finishDate != undefined) {
         if ((((cbox as Element) as Input) as CheckboxComponent).checked == false) {
-          this.updateSerial.finishDate = null;
+          this.currentSeria.finishDate = null;
           this.serialForm.value.finishDate = null;
         }
       }
@@ -112,7 +117,8 @@ export class SerialFormComponent implements OnInit {
     this.serialForm.get('partner').setValue(this.partnerId)
     if (this.serialForm.valid && this.serialForm.value.partner) {
       this.seriousnessService.addSeria(this.serialForm.value).subscribe(sss => {
-        this.r.navigate(['seriousness/serial-form/sucsses-form', 'סריה'])
+        // this.r.navigate(['seriousness/serial-form/sucsses-form', 'סריה'])
+        this.modalService.openModal('sucsses-form', { name: 'סריה'});
       }, () => {
         console.log("error");
       })
@@ -120,7 +126,8 @@ export class SerialFormComponent implements OnInit {
     else {
         alert("חסרים נתונים")
     }
-    this.updateFlag.emit(1);
+    // this.updateFlag.emit(1);
+    this.modalService.closeModal();
   }
   update() {
     this.serialForm.get('partner').setValue(this.partnerId)
@@ -129,14 +136,15 @@ export class SerialFormComponent implements OnInit {
       this.serialForm.value.finishDate = null;
     }
     if (this.serialForm.value.partner == undefined) {
-      console.log("this.updateSerial.partner", this.updateSerial.partner);
-      this.serialForm.value.partner = this.updateSerial.partner;
+      console.log("this.currentSeria.partner", this.currentSeria.partner);
+      this.serialForm.value.partner = this.currentSeria.partner;
     }
     console.log(this.serialForm.value);
     console.log(this.serialForm.valid);
     if (this.serialForm.valid) {
-      this.seriousnessService.updateSerial(this.updateSerial.id, this.serialForm.value).subscribe(() => {
-        this.r.navigate(['seriousness/serial-form/sucsses-form', 'סריה'])
+      this.seriousnessService.updateSerial(this.currentSeria.id, this.serialForm.value).subscribe(() => {
+        // this.r.navigate(['seriousness/serial-form/sucsses-form', 'סריה'])
+        this.modalService.openModal('sucsses-form', { name: 'סריה'});
       }, () => {
         console.log("error");
       })
@@ -144,14 +152,18 @@ export class SerialFormComponent implements OnInit {
     else {
         alert("חסרים נתונים")
     }
-    this.updateFlag.emit(1);
+    // this.updateFlag.emit(1);
+    this.modalService.closeModal();
+
   }
   close() {
-    if (this.updateSerial != undefined) {
-      this.frame2.hide();
+    if (this.currentSeria != undefined) {
+      // this.frame/2.hide();
       this.frame1.hide();
-    }
-    this.updateFlag.emit(0);
+    }   
+     this.modalService.closeModal();
+
+    // this.updateFlag.emit(0);
   }
   get serialName() {
     return this.serialForm.get('serialName');
@@ -231,12 +243,12 @@ export class SerialFormComponent implements OnInit {
   }
   cancelPrivateSerial() {
     this.privateSeria.clear()
-    this.frame2.hide()
+    // this.frame2.hide()
   }
-  savePrivateSerial() {
-    console.log(this.privateSeria.value);
-    this.frame2.hide()
-  }
+  // savePr/ivateSerial() {
+    // consol/e.log(this.privateSeria.value);
+    // this.frame2.hide()
+  // }
   removePrivate(i: number) {
     this.privateSeria.removeAt(i);
   }

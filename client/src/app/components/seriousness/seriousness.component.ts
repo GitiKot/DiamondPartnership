@@ -1,8 +1,8 @@
 import { ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ModalDirective } from 'angular-bootstrap-md';
 import { Seriousness } from 'src/app/data/seriousness'
+import { ModalService } from 'src/app/services/modal.service';
 import { seriousnessService } from 'src/app/services/seriousness.service'
 @Component({
   selector: 'app-seriousness',
@@ -15,7 +15,7 @@ export class SeriousnessComponent implements OnInit {
   currectSeria: Seriousness;
   s: Seriousness;
   flagupdate = 0;
-  constructor(private seriousnessService: seriousnessService) { }
+  constructor(private modalService:ModalService ,private seriousnessService: seriousnessService) { }
 
   seriousnessList: Array<Seriousness>
   ngOnInit(): void {
@@ -23,17 +23,19 @@ export class SeriousnessComponent implements OnInit {
     this.seriousnessService.getAllSeriousness().subscribe(ans => { this.seriousnessList = ans });
 
   }
-  Uflag() {
-    this.s = undefined;
-    this.flagupdate = 1;
+  newSeria() {
+    this.modalService.openModal('serial-form');
   }
-  updateflag(serial) {
-    this.s = serial;
-    this.flagupdate = 1;
+ 
+  updateSeria(serial) {
+    
+    this.modalService.openModal('serial-form',serial,'update');
+    // this.s = serial;
+    // this.flagup/date = 1;
   }
-  updateFromFlag(event) {
-    this.flagupdate = event;
-  }
+  // updateFromFlag(event) {
+  //   this.flagupdate = event;
+  // }
   filterNameSeria() {
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("public");
@@ -103,7 +105,6 @@ export class SeriousnessComponent implements OnInit {
 
     if (messsege != '') {
       var tt = this.seriousnessService.deleteSeria(this.currectSeria);
-      // console.log( tt);
       this.seriousnessService.getAllSeriousness().subscribe(ans => this.seriousnessList = ans);
     }
     this.currectSeria = null;
