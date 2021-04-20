@@ -117,7 +117,27 @@ console.log(this.currectPartner);
     return this.partnersForm.get('Remarks');
   } 
   save(){
-  
+  if(this.modalService.action==='update'){
+    if (this.partnersForm.valid) {
+
+      this.partnerService.updatePartner(this.currectPartner.id, this.partnersForm.value).subscribe(() => {
+        this.modalService.openModal('sucsses-form', { name: 'שותף'});
+        // this.router.navigate(['partners/partners-form/sucsses-form', 'שותף'])
+      }, () => {
+        console.log("error");
+      }) 
+    }
+    else {
+      alert("חסרים נתונים");
+    }
+    // this.showModalOnClick.hide();
+    // this.updateFlag.emit(1);
+    // // this.close();
+    // this.router.navigate(['']);
+  }
+  else{
+
+ 
     if (this.partnersForm.valid) {
       this.partnerService.addPartner(this.partnersForm.value).subscribe(a => {
           // this.router.navigate(['partners/partners-form/sucsses-form', 'שותף'])  
@@ -130,6 +150,7 @@ console.log(this.currectPartner);
     else{
       alert("חסרים נתונים");
     }
+   }
     this.showModalOnClick.hide();
     this.updateFlag.emit(1);
     this.router.navigate(['']);
@@ -138,7 +159,7 @@ console.log(this.currectPartner);
 
     if (this.partnersForm.valid) {
 
-      this.partnerService.updatePartner(this.updateP.id, this.partnersForm.value).subscribe(() => {
+      this.partnerService.updatePartner(this.currectPartner.id, this.partnersForm.value).subscribe(() => {
         this.modalService.openModal('sucsses-form', { name: 'שותף'});
         // this.router.navigate(['partners/partners-form/sucsses-form', 'שותף'])
       }, () => {
@@ -154,6 +175,7 @@ console.log(this.currectPartner);
     this.router.navigate(['']);
   }
   close() {
+    this.modalService.closeModal();
     if (this.updateP != undefined) {
       this.showModalOnClick.hide();
     }
