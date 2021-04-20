@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { PartnerService } from 'src/app/services/partner.service';
 import { Partner } from 'src/app/data/partner';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -34,20 +33,12 @@ export class PartnersComponent implements OnInit {
   newPartner() {
     this.modalService.openModal('partners-form');
   }
-  flag() {
-    this.p = undefined;
-    this.flagupdate = 1;
-  }
+  
   updateflag(part) {
-    console.log(part);
     
   this.modalService.openModal('partners-form',part,'update')
   }
-  updateFromFlag(event) {
-
-    this.flagupdate = event;
-    console.log(this.flagupdate);
-  }
+ 
   deletePartner(p) {
     var div = document.getElementById('alert');
     div.style.visibility = "visible";
@@ -57,13 +48,13 @@ export class PartnersComponent implements OnInit {
 
     if (s != '') {
       var tt = this.partnerService.deletePartner(this.currectPartner);
-      console.log(tt);
       this.partnerService.getAllPartners().subscribe(ans => this.partnersList = ans);
     }
     this.currectPartner = null;
     var div = document.getElementById('alert');
     div.style.visibility = "hidden";
   }
+  
   toolbar(i: number) {
 
     let row = document.getElementById("row" + i);

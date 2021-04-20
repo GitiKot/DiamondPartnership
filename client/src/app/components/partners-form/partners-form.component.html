@@ -8,8 +8,8 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header text-center">
-          <h4 *ngIf="!(updateP)" class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור שותף חדש</h4>
-          <h4 *ngIf="updateP" class="modal-title w-100 font-weight-bold">עדכן פרטים עבור שותף זה</h4>
+          <h4 *ngIf="!(currectPartner)" class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור שותף חדש</h4>
+          <h4 *ngIf="currectPartner" class="modal-title w-100 font-weight-bold">עדכן פרטים עבור שותף זה</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()"
             (click)="frame.hide()">
             <span aria-hidden="true">&times;</span>
@@ -81,9 +81,8 @@
         
         <div class="modal-footer d-flex justify-content-center">
           <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="close()">ביטול</button>
-          <button *ngIf="!(updateP)" type="button" class="btn btn-primary" (click)="save()"
+          <button  type="button" class="btn btn-primary" (click)="save()"
             (click)="close()" [disabled]="!partnersForm.valid" >שמירה</button>
-          <button class="btn btn-primary" *ngIf="updateP" (click)="update()" >שמירה</button>
         </div>
       </div>
     </div>
