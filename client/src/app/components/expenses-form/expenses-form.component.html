@@ -26,8 +26,6 @@
                                         [ngModelOptions]="{standalone: true}"
                                         placeholder="בחר שם סריה כללית" (change)="selectedExpensesId($event)">
                                     <datalist id="List">
-                                        <!-- <option *ngIf="updateSerial" value="{{updateSerial.partner.name}}">
-                                            {{updateSerial.partner.name}}</option> -->
                                         <option id="{{s.serialName}}"  [attr.data-value]="s.id" [attr.i]="i" 
                                          *ngFor="let s of seriousnessList;let i=index" [value]=" s.serialName">
                                            </option>
@@ -71,7 +69,6 @@
                             </div>
                             <div class="col-4 col-sm-6 col-example">
                                 <div class="md-form mb-5">
-                                    <!-- <select class="browser-default custom-select" > -->
                                     <select class="form-control" mdbInput mdbValidate [formControl]="getchack">
                                         <option selected>קיבלתי צ'ק</option>
                                         <option value="לקזז מהצ'ק הבא">לקזז מהצ'ק הבא</option>
@@ -115,8 +112,8 @@
 
                         <div class="modal-footer d-flex justify-content-center">
                             <!--Footer-->
-                            <!-- <div class="modal-footer"> -->
-                            <div> <button type="button" class="btn btn-primary" data-dismiss="modal"
+                            <div> 
+                                <button type="button" class="btn btn-primary" data-dismiss="modal"
                                 (click)="close()"    (click)="frame1.hide()">ביטול</button>
                                 <button *ngIf="!(currentEx)" [disabled]="!expensesForm.valid" class="btn btn-primary" (click)=save()
                                 (click)="frame1.hide()">שמירה</button>
@@ -128,7 +125,7 @@
                 </div>
             </div>
 
-            <!-- model enter new expenses -->
+            <!-- modal enter new expenses -->
 
             <div mdbModal #frame2="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -136,10 +133,10 @@
                     <div class="modal-content">
                         <!--Header-->
                         <div class="modal-header text-center">
-                            <button (click)="close()" type="button" class="close" data-dismiss="modal"
+                            <button (click)="cancel()" type="button" class="close" data-dismiss="modal"
                                 aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                                <!-- <span aria-hidden="true">&times;</span> -->
+                                <!-- <span aria-hidden="true">×</span> -->
+                                <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
 

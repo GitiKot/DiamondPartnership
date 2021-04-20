@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component,  OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { Expenses } from 'src/app/data/expenses';
@@ -21,8 +21,6 @@ export class ExpensesFormComponent implements OnInit {
   seriousnessList: Array<Seriousness>;
   place;
   currentEx:Expenses;
-  @Input() updateEx: Expenses;
-  @Output() updateFlag = new EventEmitter<number>();
 
   constructor( public modalService:ModalService, private expensesService: ExpensesService,private seriousnessService: seriousnessService, private formBuilder: FormBuilder) { }
 
@@ -30,7 +28,6 @@ export class ExpensesFormComponent implements OnInit {
     this.seriousnessService.getAllSeriousness().subscribe(ans => {
       this.seriousnessList = ans;
     });
-    // this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
     this.expensesForm = this.formBuilder.group({
       PublicSerialName: ['', [Validators.required]],
       date: ['', [Validators.required]],
@@ -41,7 +38,7 @@ export class ExpensesFormComponent implements OnInit {
       detail: this.formBuilder.array([]),
       Remarks: [''],
     })
-    // this.expensesForm.controls['PublicSerialName'].setValue(this.updateEx.PublicSerialName);
+
 if(this.modalService.action==='update'){
 this.currentEx=this.modalService.data;
   if (this.currentEx != undefined) {
@@ -57,10 +54,7 @@ this.currentEx=this.modalService.data;
       Remarks: this.currentEx.Remarks,
     });
 }
-  
-
-      // this.expensesForm.setControl('detail', this.formBuilder.array(this.updateEx.detail));
-      this.currentEx.detail.forEach(e => {
+        this.currentEx.detail.forEach(e => {
         this.editDetail(e.expenses, e.price);
       })
     }
@@ -80,18 +74,12 @@ this.currentEx=this.modalService.data;
     }
   }
   close() {      
-// this.r.navigate(['']);
 this.modalService.closeModal();
-//זה של גיטי בשסיל עדכון
 
-    // if (this.updateEx != undefined) {
-    //   this.showModalOnClick.hide();
-    //   this.showModalOnClick1.hide();
-    // }
-    // else {
-    // }
-    // this.updateFlag.emit(0);
-    this.modalService.closeModal();
+    if (this.currentEx != undefined) {
+      this.showModalOnClick.hide();
+      this.showModalOnClick1.hide();
+    }
   }
   save() {
 
@@ -100,11 +88,9 @@ this.modalService.closeModal();
       this.expensesForm.value.amount = this.expensesForm.value.detail
         .reduce((prev, curr) => prev + Number(curr.price), 0);
       this.expensesService.addExpenses(this.expensesForm.value).subscribe(e => {
-        // this.r.navigate(['expenses/expenses-form/sucsses-form', 'הוצאה'])
         this.modalService.openModal('sucsses-form',{name: 'הוצאה'})
       }, () => {
         console.log("error");
-        // this.expensesForm.reset();
       })
     }
     else {
@@ -112,9 +98,7 @@ this.modalService.closeModal();
     }
     this.showModalOnClick.hide();
     this.showModalOnClick1.hide();
-    // צריך פה לעשות רפרש לטבלה
-    // this.r.navigate(['expenses']);
-    this.updateFlag.emit(1);
+   
    this.modalService.closeModal()
   }
 
@@ -128,11 +112,9 @@ this.modalService.closeModal();
       }
       else {
         this.expensesForm.value.amount = 0;
-        console.log("sss", this.expensesForm.value.amount);
       }
       this.expensesService.updateExpenses(this.currentEx.id, this.expensesForm.value).subscribe(e => {
 
-        // this.r.navigate(['expenses/expenses-form/sucsses-form', 'הוצאה'])
         this.modalService.openModal('sucsses-form',{name: 'הוצאה'})
       }, () => {
         console.log("error");
@@ -143,15 +125,16 @@ this.modalService.closeModal();
     }
     this.showModalOnClick.hide();
     this.showModalOnClick1.hide();
-    this.updateFlag.emit(1);
-    // this.r.navigate(['']);
     this.modalService.closeModal();
   }
   savemodal() {
-
     this.showModalOnClick.hide();
     this.showModalOnClick1.show();
-    // if (this.expensesForm.value.detail) { }
+  }
+
+  cancel() {
+    this.showModalOnClick.hide();
+    this.showModalOnClick1.show();
   }
 
   cancelex() {

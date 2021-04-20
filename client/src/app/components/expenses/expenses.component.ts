@@ -26,7 +26,6 @@ export class ExpensesComponent implements OnInit {
   ngOnInit(): void {
 
     this.expensesService.getAllExpenses().subscribe(ans => this.expensesList = ans);
-    // console.log(this.expensesList);
     this.expensesService.getAllExpenses()
       .subscribe((data: any[]) => {
         this.newexpensesForm = this.formBuilder.group({
@@ -89,13 +88,13 @@ export class ExpensesComponent implements OnInit {
     this.indexE = i;
   }
   // נראה לי שאפשר למחוק פונ' זו
-  updateExpenses(exid: string, expenses: Expenses) {
-    console.log("updateExpenses",expenses);
-    console.log(this.expensesList[exid].id);
-    expenses.id = this.expensesList[exid].id;
+  // updateExpenses(exid: string, expenses: Expenses) {
+  //   console.log("updateExpenses",expenses);
+  //   console.log(this.expensesList[exid].id);
+  //   expenses.id = this.expensesList[exid].id;
 
-    this.expensesService.updateExpenses(this.expensesList[exid].id, expenses);
-  }
+  //   this.expensesService.updateExpenses(this.expensesList[exid].id, expenses);
+  // }
   deleteExpe(e) {
     var div = document.getElementById('alert');
     div.style.visibility = "visible";
@@ -135,10 +134,7 @@ export class ExpensesComponent implements OnInit {
     update.style.visibility = "hidden";
   }
   newExpenses(){
-    // this.r.navigate(['expenses-form'])
-   
     this.modalService.openModal('expenses-form');
-    
   }
 }
 
