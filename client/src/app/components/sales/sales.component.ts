@@ -1,7 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-// import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { Sale } from 'src/app/data/sale';
 import { Seriousness } from 'src/app/data/seriousness';
 import { ModalService } from 'src/app/services/modal.service';
@@ -15,16 +13,12 @@ import { seriousnessService } from 'src/app/services/seriousness.service';
 })
 export class SalesComponent implements OnInit {
 
-  // @ViewChild('frame') public hideModalOnClick: ModalDirective;
   salesForm: FormGroup;
   currectSale: Sale;
-  isSalesPage = this.route.snapshot.paramMap.get('isSales');
   dateper = [];
-  dateP: string;
   updateSale: Sale;
   seriousnessList: Array<Seriousness>;
-  //  constructor(private r: Router, private saleService: SalesService,private route:ActivatedRoute) { }
-  constructor(private modalService: ModalService, private r: Router, private route: ActivatedRoute, private seriousnessService: seriousnessService, private saleService: SalesService) { }
+  constructor(private modalService: ModalService, private seriousnessService: seriousnessService, private saleService: SalesService) { }
   salesList: Array<Sale>
   nameSerial: string;
   ngOnInit(): void {
@@ -80,132 +74,19 @@ export class SalesComponent implements OnInit {
   get rawOrPolished() {
     return this.salesForm.get('rawOrPolished');
   }
-  // var d = (document.querySelector('#datesale') as HTMLInputElement).value;
-  //   var dateSales = new Date(d)
-  //   var num: number = +(document.querySelector('#numOfDate') as HTMLInputElement).value;
-  //   dateSales.setDate(dateSales.getDate() + num);
-  //   (document.querySelector('#DueDate') as HTMLInputElement).value = dateSales.toLocaleDateString();
+ 
   updateModal(s) {
-    console.log(s);
-          this.modalService.openModal('sales-update',s,'update');
 
-    // if (s.isOpen == false) {
-    //   alert("לא ניתן לעדכן מכירה שסגרו עליה צ'ק");
-    //   // this.hideModalOnClick.hide();
-    // }
-    // else {
-      // this.updateSale = s;
-      // console.log("s ", s);
-      // console.log(this.updateSale);
+    this.modalService.openModal('sales-update', s, 'update');
 
-      // this.salesForm.patchValue({
-      //   date: this.updateSale.date,
-      //   numOfDate: this.updateSale.numOfDate,
-      //   invoiceNumber: this.updateSale.invoiceNumber,
-      //   publicSerialName: this.updateSale.publicSerialName,
-      //   privateSerialName: this.updateSale.privateSerialName,
-      //   stoneName: this.updateSale.stoneName,
-      //   weight: this.updateSale.weight,
-      //   pricePerCarat: this.updateSale.pricePerCarat,
-      //   isOpen: this.updateSale.isOpen,
-      //   rawOrPolished: this.updateSale.rawOrPolished,
-      //   totalPrice: Number(this.updateSale.weight) * Number(this.updateSale.pricePerCarat),
-      // })
-    // }
   }
-  // addEventCalcDate() {
-  //   var d = (document.querySelector('#datesale') as HTMLInputElement).value;
-  //   var dateSales = new Date(d)
-  //   var num: number = +(document.querySelector('#numOfDate') as HTMLInputElement).value;
-  //   dateSales.setDate(dateSales.getDate() + num);
 
-  //   (document.querySelector('#DueDate') as HTMLInputElement).value = dateSales.toLocaleDateString();
-  // }
   newSale() {
     // this.modalService.openModal('sales-form');
     this.modalService.changeSaleTab();
-  
+
   }
-  update() {
-    console.log('update');
 
-    if (this.updateSale != undefined) {
-      if (this.salesForm.valid) {
-        console.log("form", this.updateSale);
-        console.log("update form", this.salesForm.value);
-
-        document.getElementById('raw').setAttribute('checked', 'true')
-        this.saleService.updateSale(this.updateSale.id, this.salesForm.value).subscribe(() => {
-
-
-          // let upser=this.seriousnessService.findBySerailName(((((this).updateSale.publicSerialName)as any)as Seriousness).serialName);
-          //  console.log("upser",upser);
-          // this.seriousnessService.updateSerial(this.serialId, this.seriousnessList[this.place]).subscribe(() => {
-          // }, () => {
-          //   console.log("error");
-          // })
-
-          // let thisSale = this.salesList.forEach(s => {
-          //   if(s.publicSerialName==this.salesForm.controls.publicSerialName)
-          // });
-
-
-          let ser = <Seriousness>((this.updateSale.publicSerialName) as any)
-          console.log("updatesale", this.updateSale);
-
-          let idser;
-          this.seriousnessList.forEach(s => {
-            if (s.serialName == ser.serialName) {
-              idser = s.id;
-            }
-          });
-          ser.amountReceived = ((Number(this.salesForm.value.weight) *
-            Number(this.salesForm.value.pricePerCarat))) - ((Number(this.updateSale.weight) *
-              Number(this.updateSale.pricePerCarat)));
-          console.log("ser.amountReceived", ser.amountReceived);
-
-          this.seriousnessService.updateSerial(idser, ser).subscribe(() => {
-          }, () => {
-            console.log("error");
-          })
-
-
-
-          // let serialName = ((this.updateSale.publicSerialName as any) as Seriousness).serialName;
-
-          // let serial = this.seriousnessService.findBySerailName(serialName).subscribe(ans => {
-          // console.log("ans", ans);
-          // console.log("", this.seriousnessList.forEach(s=>{
-          //   if(serialName==s.serialName){
-          //     s.amountReceived=50000;
-          //   }
-          // }));
-
-          // console.log("ans re", ans.amountReceived);
-
-          // ans.amountReceived = Number(this.salesForm.controls.weight) * Number(this.salesForm.controls.pricePerCarat);
-          // console.log("ans re", ans.amountReceived);
-
-          // this.seriousnessService.updateSerial(ans.id, ans).subscribe(() => console.log("sss")
-
-          // )
-          // console.log("ans after", ans);
-          // }, () => console.log("error seria"));
-          // console.log("serial",serial);
-
-          //  console.log("seria", seria);
-
-          this.r.navigate(['sales-form/sucsses-form', 'מכירה'])
-          this.salesForm.reset();
-        }, () => {
-          console.log("error");
-        });
-      }
-      else {
-        alert("חסרים נתונים");
-      }
-    }
-  }
   deleteSale(sale) {
     if (sale.isOpen == true) {
       var div = document.getElementById('alert');

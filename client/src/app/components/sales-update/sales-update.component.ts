@@ -5,7 +5,7 @@ import { Sale } from 'src/app/data/sale';
 import { Seriousness } from 'src/app/data/seriousness';
 import { ModalService } from 'src/app/services/modal.service';
 import { SalesService } from 'src/app/services/sales.service';
-import {seriousnessService} from 'src/app/services/seriousness.service';
+import { seriousnessService } from 'src/app/services/seriousness.service';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 
 
@@ -31,9 +31,9 @@ export class SalesUpdateComponent implements OnInit {
     this.seriousnessService.getAllSeriousness().subscribe(ans => {
       this.seriousnessList = ans;
     });
- this.updateSale=this.modalService.data;
- console.log("this.updateSale",this.updateSale);
- 
+    this.updateSale = this.modalService.data;
+    console.log("this.updateSale", this.updateSale);
+
     this.salesForm = new FormGroup({
       date: new FormControl('', Validators.required),
       numOfDate: new FormControl('', Validators.required),
@@ -99,39 +99,11 @@ export class SalesUpdateComponent implements OnInit {
   get rawOrPolished() {
     return this.salesForm.get('rawOrPolished');
   }
-  close()
-{
-  this.showModalOnClick.hide();
-  this.modalService.closeModal();
-} 
-//  updateModal(s) {
-//     console.log("sal",s);
-    
-//     if (s.isOpen == false) {
-//       alert("לא ניתן לעדכן מכירה שסגרו עליה צ'ק");
-//     }
-//     else {
-//       this.updateSale = s;
-//       console.log("s ", s);
-//       console.log(this.updateSale);
-
-//       this.salesForm.patchValue({
-//         date: this.updateSale.date,
-//         numOfDate: this.updateSale.numOfDate,
-//         invoiceNumber: this.updateSale.invoiceNumber,
-//         publicSerialName: this.updateSale.publicSerialName,
-//         privateSerialName: this.updateSale.privateSerialName,
-//         stoneName: this.updateSale.stoneName,
-//         weight: this.updateSale.weight,
-//         pricePerCarat: this.updateSale.pricePerCarat,
-//         isOpen: this.updateSale.isOpen,
-//         rawOrPolished: this.updateSale.rawOrPolished,
-//         totalPrice: Number(this.updateSale.weight) * Number(this.updateSale.pricePerCarat),
-//       })
-//     }
-//     this.showModalOnClick.hide();
-//     this.modalService.closeModal();
-//   }
+  close() {
+    this.showModalOnClick.hide();
+    this.modalService.closeModal();
+  }
+ 
   addEventCalcDate() {
     var d = (document.querySelector('#datesale') as HTMLInputElement).value;
     var dateSales = new Date(d)
@@ -140,7 +112,7 @@ export class SalesUpdateComponent implements OnInit {
 
     (document.querySelector('#DueDate') as HTMLInputElement).value = dateSales.toLocaleDateString();
   }
-  
+
   update() {
     console.log('update');
 
@@ -172,9 +144,7 @@ export class SalesUpdateComponent implements OnInit {
             console.log("error");
           })
 
-
-          // this.r.navigate(['sales-form/sucsses-form', 'מכירה'])
-this.modalService.openModal('sucsses-form' , { name: 'מכירה'});
+          this.modalService.openModal('sucsses-form', { name: 'מכירה' });
           this.salesForm.reset();
         }, () => {
           console.log("error");
@@ -186,6 +156,5 @@ this.modalService.openModal('sucsses-form' , { name: 'מכירה'});
     }
     this.modalService.closeModal();
   }
-
-  }
+}
 
