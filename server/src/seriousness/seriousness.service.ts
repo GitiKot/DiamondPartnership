@@ -92,7 +92,9 @@ export class seriousnessService {
         if (cost) {
             updatedSeriousness.cost = cost;
         } if (amountReceived) {
-            updatedSeriousness.amountReceived += amountReceived;
+            console.log('amountReceived ',amountReceived);
+            console.log('updatedSeriousness.amountReceived ',updatedSeriousness.amountReceived );
+            updatedSeriousness.amountReceived =updatedSeriousness.amountReceived+(amountReceived) ;
         }
         if (partnersPercent) {
             updatedSeriousness.partnersPercent = partnersPercent;

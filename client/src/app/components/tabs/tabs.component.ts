@@ -26,6 +26,8 @@ export class TabsComponent {
   addTab(tab:{classification:string;name:string}) {
     this.tabs.push(tab);
     this.selected.setValue(this.tabs.length - 1);
+    console.log(this.tabs);
+    
   }
   removeTab(index: number) {
     this.tabs.splice(index, 1);

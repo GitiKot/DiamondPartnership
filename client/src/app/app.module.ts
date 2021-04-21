@@ -22,7 +22,8 @@ import { ExpensesFormComponent } from './components/expenses-form/expenses-form.
 import { MatTabsModule } from '@angular/material/tabs';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { SalesUpdateComponent } from './components/sales-update/sales-update.component';
-
+import { CheckDetailsComponent } from './components/check-details/check-details.component';
+import { CheckFormComponent } from './components/check-form/check-form.component'
 // import{HttpClientModule} from ''
 // import {MatInputModule} from '@angular/material/input';
 // import { CommonModule } from '@angular/common';
@@ -60,7 +61,8 @@ import { SalesUpdateComponent } from './components/sales-update/sales-update.com
     SerialFormComponent,
     TabsComponent,
     SalesUpdateComponent,
-    
+    CheckDetailsComponent,
+    CheckFormComponent
   ],
   imports: [
     MatTabsModule, HttpClientModule,

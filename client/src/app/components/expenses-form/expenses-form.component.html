@@ -114,9 +114,10 @@
                             <!--Footer-->
                             <div> 
                                 <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                (click)="close()"    (click)="frame1.hide()">ביטול</button>
+                                (click)="close()"    >ביטול</button>
                                 <button *ngIf="!(currentEx)" [disabled]="!expensesForm.valid" class="btn btn-primary" (click)=save()
-                                (click)="frame1.hide()">שמירה</button>
+                              
+                                >שמירה</button>
                                 <button *ngIf="currentEx"[disabled]="!expensesForm.valid" class="btn btn-primary" (click)=update()
                                     (click)="close()">שמירה</button>
                             </div>

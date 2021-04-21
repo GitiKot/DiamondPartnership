@@ -14,7 +14,7 @@ export class SucssesFormComponent implements OnInit {
   validatingForm: FormGroup;
   typeModel: string;
   @ViewChild('frame1') frame1: ModalDirective;
-  constructor(private route:ActivatedRoute,private r:Router, private modalService: ModalService) {
+  constructor(private route:ActivatedRoute,private r:Router, public modalService: ModalService) {
     this.typeModel = modalService.data?.name;
    }
 

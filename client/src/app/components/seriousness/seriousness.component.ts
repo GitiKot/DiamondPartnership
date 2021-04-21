@@ -15,12 +15,13 @@ export class SeriousnessComponent implements OnInit {
   currectSeria: Seriousness;
   s: Seriousness;
   flagupdate = 0;
-  constructor(private modalService:ModalService ,private seriousnessService: seriousnessService) { }
+  constructor(private modalService:ModalService ,public seriousnessService: seriousnessService) { }
 
   seriousnessList: Array<Seriousness>
   ngOnInit(): void {
 
-    this.seriousnessService.getAllSeriousness().subscribe(ans => { this.seriousnessList = ans });
+    this.seriousnessService.getAllSeriousness().subscribe(ans => { this.seriousnessList = ans  });
+
 
   }
   newSeria() {

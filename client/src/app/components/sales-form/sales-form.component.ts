@@ -154,6 +154,8 @@ export class SalesFormComponent implements OnInit {
 
   }
   addEventCalcDate() {
+    console.log();
+    
     var d = (document.querySelector('#datesale') as HTMLInputElement).value;
     var dateSales = new Date(d)
 
@@ -184,6 +186,8 @@ export class SalesFormComponent implements OnInit {
           .subscribe(() => {
             this.seriousnessList[this.place[i]].amountReceived = this.salesForm.value.newSaleRow[i].weight *
               this.salesForm.value.newSaleRow[i].pricePerCarat;
+              console.log(this.seriousnessList[this.place[i]].amountReceived );
+              
             this.seriousnessService.updateSerial(this.serialId[i], this.seriousnessList[this.place[i]]).subscribe(() => {
             }, () => {
               console.log("error");

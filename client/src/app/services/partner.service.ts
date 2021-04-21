@@ -8,10 +8,19 @@ import {Partner} from '../data/partner'
 })
 export class PartnerService {
   options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-  partnerUrl = 'http://localhost:3000/partners';
+  partnerUrl = 'http://localhost:3000/partners'; 
+   partnerList: Array <Partner>
+
   constructor(private http: HttpClient) {
+    
+     this.getAllPartners().subscribe(ans => { this.partnerList = ans 
+    console.log(this.partnerList);
+    
+    })  
+
   }
   
+
   getAllPartners(): Observable<Partner[]> {
     return this.http.get<Partner[]>(this.partnerUrl);
   } 

@@ -9,7 +9,10 @@ import { Checks } from '../data/checks';
 export class ChecksService {
   options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
   checksUrl = 'http://localhost:3000/checks';
-  constructor(private http: HttpClient) { }
+  checkList:Array<Checks>;
+  constructor(private http: HttpClient) { 
+    
+  }
 
   getAllChecks(): Observable<Checks[]> {
     return this.http.get<Checks[]>(this.checksUrl);

@@ -16,7 +16,7 @@ export class ExpensesComponent implements OnInit {
   expensesList: Array<Expenses>;
   newexpensesForm: FormGroup;
 
-  constructor(public modalService:ModalService,  private expensesService: ExpensesService, private formBuilder: FormBuilder) { }
+  constructor(public modalService:ModalService,  public expensesService: ExpensesService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
 

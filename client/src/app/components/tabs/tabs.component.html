@@ -1,7 +1,7 @@
 <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo fixed-top scrolling-navbar">
     <span class="navbar-text" style="font-family: Papyrus;"> Diamond Partnership Business </span>
     <mdb-navbar-brand>
-        <a class="navbar-brand" href="#">דף הבית</a>
+        <a class="navbar-brand" href="/#">דף הבית</a>
     </mdb-navbar-brand>
     <links>
         <ul class="navbar-nav mr-auto">
@@ -19,15 +19,18 @@
                 <a class="nav-link" (click)="addTab({classification:'sales',name:'מכירות'})">מכירות</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" (click)="addTab({classification:'invoice',name:'חשבוניות'})">חשבוניות</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" (click)="addTab({classification:'checks',name:'שיקים'})">שיקים</a>
             </li>
+            
         </ul>
 
     </links>
 
 </mdb-navbar>
 
-<!-- [label]="tab" -->
 
 <mat-tab-group [selectedIndex]="selected.value" [backgroundColor]="brc"
     (selectedIndexChange)="selected.setValue($event)" animationDuration="0ms">
@@ -44,7 +47,7 @@
         <app-checks *ngSwitchCase="'checks'"></app-checks>
         <app-expenses *ngSwitchCase="'expenses'"></app-expenses>
         <app-sales *ngSwitchCase="'sales'"></app-sales>
-        <app-sales-form *ngSwitchCase="'sales-form'"></app-sales-form>
+        <app-sales-form *ngSwitchCase="'invoice'"></app-sales-form>
 
 
     </mat-tab>
@@ -55,8 +58,10 @@
     <app-expenses-form *ngSwitchCase="'expenses-form'"></app-expenses-form>
     <app-partners-form *ngSwitchCase="'partners-form'"></app-partners-form>
     <app-serial-form *ngSwitchCase="'serial-form'"></app-serial-form>
-    <app-sales-form *ngSwitchCase="'sales-form'"></app-sales-form>
     <app-sales-update *ngSwitchCase="'sales-update'"></app-sales-update>
+    <app-check-form *ngSwitchCase="'check-form'"></app-check-form>
+    <app-check-details *ngSwitchCase="'check-details'"></app-check-details>
+    
 </div>
 <a>{{modalService.isOpen}}</a>
 <a>{{modalService.component}}</a>

@@ -1,0 +1,51 @@
+<div   mdbModal #framec="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true"
+     >
+    <div  class="modal-dialog modal-side modal-top-right" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <button (click)="close($event)" type="button" class="close" data-dismiss="modal" aria-label="Close" >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <a (click)="print($event)" title="הדפסה"><i class="fa fa-print"></i></a>
+
+        <div class="modal-body" id="toPrint">
+          <h4 class="modal-title w-100 font-weight-bold">פרטי מכירות</h4>
+          <br>
+          <table class="table table-hover">
+
+            <thead class="header">
+              <tr>
+                <th> סריה כלית</th>
+                <th> סריה פרטית</th>
+                <th>שם אבן</th>
+                <th>קרט</th>
+                <th>מחיר</th>
+                <th>סך מכירה</th>
+                <th>סך לשותף</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let s of modalService.data.saleList;let i=index">
+                <td>{{s.publicSerialName.serialName}}</td>
+                <td>{{s.privateSerialName}}</td>
+                <td>{{s.stoneName}}</td>
+                <td>{{s.weight}}</td>
+                <td>{{s.pricePerCarat | currency:"USD":true}}</td>
+                <td *ngIf="s.sum==undefined"> רגיל{{s.weight*s.pricePerCarat | currency:"USD":true}}</td>
+                <td *ngIf="s.sum!=undefined">מיוחד{{s.sum | currency:"USD":true}}</td>
+                <td>{{ s.sumPerPartner| currency:"USD":true}}</td>
+
+              </tr>
+            </tbody> 
+          </table>
+          <br><br><br>
+          <h6>פרטי שיק</h6>
+          <p>סכום  {{currentChecks.sum | currency:"USD":true}}  </p>&nbsp;&nbsp;
+          <p>{{currentChecks.ReceiptOrInvoice}}</p>
+        </div>
+
+      </div>
+    </div>
+  </div>

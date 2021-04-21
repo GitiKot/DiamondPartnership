@@ -10,7 +10,13 @@ import { Expenses } from '../data/expenses';
 export class ExpensesService {
   options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
   expensesUrl = 'http://localhost:3000/expenses';
-  constructor(private http: HttpClient) { }
+  expensesList: Array <Expenses>
+  constructor(private http: HttpClient) { 
+    this.getAllExpenses().subscribe(ans => { this.expensesList = ans 
+      console.log(this.expensesList);
+      
+      })  
+  }
 
   getAllExpenses(): Observable<Expenses[]> {
     return this.http.get<Expenses[]>(this.expensesUrl);

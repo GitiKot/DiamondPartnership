@@ -27,12 +27,11 @@
     </svg>&nbsp;
     <input type="text" id="private" class="form-control form-control-sm ml-3 " (keyup)="searchPrivate()"
       placeholder="סריה פרטית" title="חיפוש לפי סריה פרטית">
-    <a class="btn btn-primary newSale" (click)="newSale()">
-      <!-- <i class="fa fa-diamond" style="font-size: 8px;" aria-hidden="true"></i>
-      <i class="fa fa-diamond" style="font-size: 8px;" aria-hidden="true"></i> -->
+    <!-- <a class="btn btn-primary newSale" (click)="newSale()">
+     
       <i class="fa fa-handshake-o" aria-hidden="true"></i>
       מכירה חדשה
-    </a> 
+    </a>  -->
   </div>
   <br> <br><br>&nbsp;&nbsp;
   <div class="container">
@@ -55,7 +54,7 @@
       </thead>
       <tbody>
 
-        <tr *ngFor="let s of salesList;let i = index" (mouseenter)="toolbar(i)" (mouseleave)="toolbar1(i)"
+        <tr *ngFor="let s of saleService.saleList;let i = index" (mouseenter)="toolbar(i)" (mouseleave)="toolbar1(i)"
           id="row{{i}}">
           <td> <button id="del{{i}}" class="del" (click)="deleteSale(s)" title="מחיקה">
               <i class="fa fa-trash" id="trash" aria-hidden="true"></i>

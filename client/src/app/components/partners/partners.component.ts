@@ -19,26 +19,32 @@ export class PartnersComponent implements OnInit {
   p: Partner;
   flagupdate = 0;
 
-  constructor(private modalService: ModalService, private partnerService: PartnerService, private formBuilder: FormBuilder) { }
+  constructor(private modalService: ModalService, public partnerService: PartnerService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.partnerService.getAllPartners().subscribe(ans => { this.partnersList = ans });
-    this.partnerService.getAllPartners()
-      .subscribe((data: any[]) => {
-        this.partnersForm = this.formBuilder.group({});
-      });
+
+    // this.partnerService.getAllPartners().subscribe(ans => {
+    //   this.partnerService.partnerList = ans
+    // });
+  
+
+
+    // this.partnerService.getAllPartners()
+    //   .subscribe((data: any[]) => {
+
+    //   });  
+    this.partnersForm = this.formBuilder.group({});
   }
 
-  // עשיתי את זה במקום ה app-partner-form
   newPartner() {
     this.modalService.openModal('partners-form');
   }
-  
+
   updateflag(part) {
-    
-  this.modalService.openModal('partners-form',part,'update')
+
+    this.modalService.openModal('partners-form', part, 'update')
   }
- 
+
   deletePartner(p) {
     var div = document.getElementById('alert');
     div.style.visibility = "visible";
@@ -54,7 +60,7 @@ export class PartnersComponent implements OnInit {
     var div = document.getElementById('alert');
     div.style.visibility = "hidden";
   }
-  
+
   toolbar(i: number) {
 
     let row = document.getElementById("row" + i);

@@ -36,7 +36,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let e of expensesList;let ei=index" (mouseenter)="toolbar(ei)" (mouseleave)="toolbar1(ei)"
+        <tr *ngFor="let e of  expensesService.expensesList;let ei=index" (mouseenter)="toolbar(ei)" (mouseleave)="toolbar1(ei)"
           id="row{{ei}}">
           <td>
             <button id="del{{ei}}" class="del" (click)="deleteExpe(e)" title="מחיקה">

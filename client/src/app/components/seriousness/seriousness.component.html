@@ -43,7 +43,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let s of seriousnessList;let i=index" (mouseenter)="toolbar(i)" (mouseleave)="toolbar1(i)" id="row{{i}}">
+            <tr *ngFor="let s of seriousnessService.seriousnessList;let i=index" (mouseenter)="toolbar(i)" (mouseleave)="toolbar1(i)" id="row{{i}}">
                <td> <button id="del{{i}}" class="del" (click)="deleteSerial(s)" title="מחיקה">
                     <i class="fa fa-trash"id="trash" aria-hidden="true"></i>
                 </button></td>

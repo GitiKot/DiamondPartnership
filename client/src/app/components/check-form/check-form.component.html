@@ -1,0 +1,69 @@
+<div mdbModal #framen="mdbModal" class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog"
+aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header text-center">
+        
+        <h4 class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור סגירת צ'ק</h4>
+
+      <!-- <h4 *ngIf="!(updateCheck)" class="modal-title w-100 font-weight-bold">מלא את הפרטים עבור סגירת צ'ק</h4> -->
+      <!-- <h4 *ngIf="updateCheck" class="modal-title w-100 font-weight-bold"> עדכן פרטים עבור צ'ק זה</h4> -->
+
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true" (click)="closeModal()" (click)="resetform()">&times;</span>
+      </button>
+    </div>
+    <!-- <div *ngIf="selectedRowIds.size==0" class="md-form mb-1">
+      <input type="checkbox" id="cb" (change)="untilcost=!untilcost" mdbInput>
+      <label for="cb">חילול שיק עד הקוסט</label>
+    </div> -->
+    <div class="modal-body mx-3">
+
+      <div >
+        <div class="md-form mb-5">
+          <input type="number" min="0" id="form32" class="form-control" mdbInput mdbValidate
+            [formControl]="numCheck">
+          <label for="form32">מספר צ'ק</label>
+          <mdb-error *ngIf="numCheck.invalid && (numCheck.dirty || numCheck.touched)">
+          </mdb-error>
+          <mdb-success *ngIf="numCheck.valid && (numCheck.dirty || numCheck.touched)">
+          </mdb-success>
+        </div>
+        <div class="md-form mb-5">
+          <select placeholder="vd" class="browser-default custom-select" mdbInput mdbValidate
+            [formControl]="ReceiptOrInvoice">
+            <!-- <select class="form-control" mdbInput mdbValidate [formControl]="ReceiptOrInvoice"> -->
+            <option value="" disabled selected> חשבונית/קבלה </option>
+
+            <option placeholder="sa" selected>קבלה</option>
+            <option value="חשבונית">חשבונית</option>
+          </select>
+          <mdb-error *ngIf="ReceiptOrInvoice.invalid && (ReceiptOrInvoice.dirty || ReceiptOrInvoice.touched)">
+          </mdb-error>
+          <mdb-success *ngIf="ReceiptOrInvoice.valid && (ReceiptOrInvoice.dirty || ReceiptOrInvoice.touched)">
+          </mdb-success>
+        </div>
+        <div>
+
+          <p for="finalSum">סכום:</p> &nbsp;<input class="fialInput" id="finalSum"
+            [value]="checksForm.controls['sum'].value | currency:'USD':true">
+
+        </div>
+        <div>
+          <p for="finalDate">תאריך:</p>&nbsp;
+          <input class="fialInput" id="finalDate" [value]="checksForm.controls['date'].value | date:'dd/MM/yy'">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer d-flex justify-content-center">
+      <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="closeModal()"
+        (click)="resetform()">ביטול</button>
+      <!-- <button *ngIf="!(updateCheck)" type="button" class="btn btn-primary" (click)="save()" 
+        [disabled]="!checksForm.valid">שמירה</button> -->
+        <button type="button" class="btn btn-primary" (click)="save()" 
+        [disabled]="!checksForm.valid">שמירה</button>
+      <!-- <button *ngIf="updateCheck" class="btn btn-primary" (click)=update() (click)="closeModal()">שמירה</button> -->
+    </div>
+  </div>
+</div>
+</div>

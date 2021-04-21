@@ -8,6 +8,7 @@ import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.direc
 import { seriousnessService } from 'src/app/services/seriousness.service';
 import { Seriousness } from 'src/app/data/seriousness';
 import { CheckboxComponent } from 'angular-bootstrap-md';
+import { ModalService } from 'src/app/services/modal.service';
 @Component({
   selector: 'app-checks',
   templateUrl: './checks.component.html',
@@ -51,17 +52,20 @@ export class ChecksComponent implements OnInit {
   OpenSalesList: Array<Sale>;
   ClosedSalesList: Array<Sale>;
   c: Checks;
-  sizeCollum =  new Array<number>(11);
+  sizeCollum = new Array<number>(11);
   updateCheck: Checks;
   currentChecks: Checks;
   selectedRowIds: Set<string> = new Set<string>();
   serial: Seriousness
   dateper = [];
-  constructor(private salesService: SalesService, private checksService: ChecksService,
+  arrSale = new Array()
+
+  constructor(private modalService: ModalService, public salesService: SalesService, public checksService: ChecksService,
     private formBuilder: FormBuilder, private seriousnessService: seriousnessService,
   ) { }
 
   ngOnInit() {
+    console.log(this.salesService.OpenSalesList);
 
     this.checksForm = this.formBuilder.group({
       date: [''],
@@ -71,8 +75,7 @@ export class ChecksComponent implements OnInit {
       IdSales: this.formBuilder.array([]),
       publicSerialName: ['', Validators.required]
     })
-    this.OpenSalesList = new Array();
-    this.ClosedSalesList = new Array();
+
     if (this.updateCheck != undefined) {
 
       this.checksForm.patchValue({
@@ -82,22 +85,33 @@ export class ChecksComponent implements OnInit {
         sum: this.updateCheck.sum,
       });
       this.checksForm.setControl('IdSales', this.formBuilder.array(this.updateCheck.IdSales));
-      this.checksForm.value.IdSales.forEach(s => {
-        this.IdSales.push(this.formBuilder.group(s));
-      });
+      // this.checksForm.value.IdSales.forEach(s => {
+      //   this.IdSales.push(this.formBuilder.group(s));
+      // });
     }
   }
-  print() {
-
-    let printContents = document.getElementById('toPrint').innerHTML;
-    let originalContents = document.body.innerHTML;
-    document.body.innerHTML = printContents;
-
-    window.print();
-    document.body.innerHTML = originalContents;
-
+  checkDetailSOpen(c: Checks) {
+    let arrSale = [];
+    this.salesService.ClosedSalesList.forEach(sale => {
+      this.currentChecks.IdSales.forEach(idCeck => {
+        if (sale.id == idCeck)
+          arrSale.push(sale)
+      })
+    })
+    let data = { check: c, saleList: arrSale }
+    this.modalService.openModal('check-details', data)
   }
-  arrSale = new Array()
+  // print() {
+
+  //   let printContents = document.getElementById('toPrint').innerHTML;
+  //   let originalContents = document.body.innerHTML;
+  //   document.body.innerHTML = printContents;
+
+  //   window.print();
+  //   document.body.innerHTML = originalContents;
+
+  // }
+
   //   calcSaleOpenUntilCost() {
 
   //     let currentSum, apr = this.serial.AmountReceivedPartner;
@@ -108,6 +122,9 @@ export class ChecksComponent implements OnInit {
   // }
   // })
   // }
+  opneCheckForm() {
+    this.modalService.openModal('check-form')
+  }
   calcCheckMoney(): number {
     let sum = 0, currentSum, apr = this.serial.AmountReceivedPartner, flag = false;
     console.log("סכום שהשותף קיבל: ", apr);
@@ -143,7 +160,7 @@ export class ChecksComponent implements OnInit {
     else {
       flag = false;
       if (this.serial.cost > this.serial.AmountReceivedPartner) {
-        for (let s of this.OpenSalesList) {
+        for (let s of this.salesService.OpenSalesList) {
           currentSum = <number>s.pricePerCarat * <number>s.weight;
           if (currentSum <= this.serial.cost - apr) {
             currentSum = currentSum * this.serial.partnersPercent / 100;
@@ -164,7 +181,7 @@ export class ChecksComponent implements OnInit {
               newSale.pricePerCarat = newSum / 2; newSale.isOpen = true;
               this.salesService.addSale(newSale).subscribe(
                 () => {
-                  this.OpenSalesList.push(newSale)
+                  this.salesService.OpenSalesList.push(newSale)
                 }, () => {
                   console.log("eer");
                 })
@@ -221,65 +238,63 @@ export class ChecksComponent implements OnInit {
     this.ClosedSalesList.push(sale);
 
   }
-  updateSerial() {
-    this.serial.AmountReceivedPartner += this.checksForm.controls['sum'].value;
-    this.seriousnessService.updateSerial(this.serial.id, this.serial).subscribe(() => {
+  // updateSerial() {
+  //   this.serial.AmountReceivedPartner += this.checksForm.controls['sum'].value;
+  //   this.seriousnessService.updateSerial(this.serial.id, this.serial).subscribe(() => {
 
-      this.chartDatasets = []
-      this.chartDatasets.push({
-        data: [
-          this.serial.cost, this.serial.AmountReceivedPartner, this.serial.cost - this.serial.AmountReceivedPartner, this.serial.amountReceived], label: 'הסכום בדולרים '
-      })
-    }, () => {
-      alert("error")
+  //     this.chartDatasets = []
+  //     this.chartDatasets.push({
+  //       data: [
+  //         this.serial.cost, this.serial.AmountReceivedPartner, this.serial.cost - this.serial.AmountReceivedPartner, this.serial.amountReceived], label: 'הסכום בדולרים '
+  //     })
+  //   }, () => {
+  //     alert("error")
 
-    })
-  }
-  getSalesFromId(): Array<Sale> {
-    let arr: Array<Sale>;
-    arr = new Array();
-    // console.log("curenty check", this.currentChecks);
-    if (this.currentChecks) {
-      this.ClosedSalesList.forEach(sale => {
-        this.currentChecks.IdSales.forEach(idCeck => {
-          if (sale.id == idCeck)
-            arr.push(sale)
-        })
-      })
+  //   })
+  // }
+  // getSalesFromId(): Array<Sale> {
+  //   let arr: Array<Sale>;
+  //   arr = new Array();
+  //   // console.log("curenty check", this.currentChecks);
+  //   if (this.currentChecks) {
+  //     this.ClosedSalesList.forEach(sale => {
+  //       this.currentChecks.IdSales.forEach(idCeck => {
+  //         if (sale.id == idCeck)
+  //           arr.push(sale)
+  //       })
+  //     })
+  //   }
 
-    }
-
-    // console.log("arr", arr);
+  //   // console.log("arr", arr);
 
 
-    // this.currentChecks.IdSales.forEach(id => {
-    //   arr.push(this.ClosedSalesList.find(sale => {
-    //     sale.id == id
-    //   }))
+  //   // this.currentChecks.IdSales.forEach(id => {
+  //   //   arr.push(this.ClosedSalesList.find(sale => {
+  //   //     sale.id == id
+  //   //   }))
 
-    // })
+  //   // })
 
-    // for (let c = 0; c < this.checksList.length; c++) {
-    //   if (this.checksList[Cid].id == this.checksList[c].id) {
-    //     //  אולי אפשר לעשות פונ אחרת 
-    //     let s = 0;
-    //     while (this.checksList[c].IdSales[s]) {
-    //       for (let i = 0; i < this.ClosedSalesList.length; i++) {
-    //         if (this.checksList[c].IdSales[s] == this.ClosedSalesList[i].id) {
-    //           arr.push(this.ClosedSalesList[i]);
-    //         }
-    //       }
-    //       s++;
-    //     }
-    //   }
-    // }
-    // console.log("arr", arr);
+  //   // for (let c = 0; c < this.checksList.length; c++) {
+  //   //   if (this.checksList[Cid].id == this.checksList[c].id) {
+  //   //     //  אולי אפשר לעשות פונ אחרת 
+  //   //     let s = 0;
+  //   //     while (this.checksList[c].IdSales[s]) {
+  //   //       for (let i = 0; i < this.ClosedSalesList.length; i++) {
+  //   //         if (this.checksList[c].IdSales[s] == this.ClosedSalesList[i].id) {
+  //   //           arr.push(this.ClosedSalesList[i]);
+  //   //         }
+  //   //       }
+  //   //       s++;
+  //   //     }
+  //   //   }
+  //   // }
+  //   // console.log("arr", arr);
 
-    return arr;
-  }
+  //   return arr;
+  // }
 
   createCheck() {
-    console.log("untilcost  ", this.selectedRowIds.size);
 
     this.arrSale = [];
     let sale: Sale;
@@ -288,78 +303,95 @@ export class ChecksComponent implements OnInit {
     this.checksForm.controls['date'].setValue(this.calcCheckDate())
     for (let index = 0; index < this.getSelectedRows().length; index++) {
       this.checksForm.value.IdSales.push(this.getSelectedRows()[index].id)
-      console.log(this.getSelectedRows()[index].id);
+      // console.log(this.getSelectedRows()[index].id);
       sale = this.getSelectedRows()[index];
     }
     if (this.untilcost || this.selectedRowIds.size) {
-      this.showModalOnClick.show()
+      this.modalService.openModal('check-form', { form: this.checksForm, arrSAle: this.arrSale, serial: this.serial })
     }
 
-
+    this.serial = undefined
   }
-  save() {
-    if (this.checksForm.valid) {
-      this.updateSerial();
-      this.checksService.addChecks(this.checksForm.value).subscribe(c => {
-        this.checksList.push(c);
-        // console.log(this.arrSale);
+  // save() {
+  //   if (this.checksForm.valid) {
+  //     this.updateSerial();
+  //     this.checksService.addChecks(this.checksForm.value).subscribe(c => {
+  //       this.checksList.push(c);
+  //       // console.log(this.arrSale);
 
-        this.arrSale.forEach(w => {
-          // console.log(w.i);
+  //       this.arrSale.forEach(w => {
+  //         // console.log(w.i);
 
-          this.updateSale(w.i, w.j)
+  //         this.updateSale(w.i, w.j)
 
-        })
+  //       })
 
-        this.spliceOpenSaleList();
-      })
-      this.checksForm.reset();
-    } else {
-      alert("חלק מהנתונים לא נכון")
-      console.log("form check", this.checksForm.value);
-    }
-  }
+  //       this.spliceOpenSaleList();
+  //     })
+  //     this.checksForm.reset();
+  //   } else {
+  //     alert("חלק מהנתונים לא נכון")
+  //     console.log("form check", this.checksForm.value);
+  //   }
+  // }
   spliceOpenSaleList() {
     this.getSelectedRows()
       .forEach(saleChecked => {
-        let i = this.OpenSalesList.indexOf(saleChecked)
+        let i = this.salesService.OpenSalesList.indexOf(saleChecked)
         if (i > -1) {
-          this.OpenSalesList.splice(i, 1);
+          this.salesService.OpenSalesList.splice(i, 1);
         }
       });
   }
   getSaleBySeria(e) {
     let i = 0;
-    this.OpenSalesList = [];
-    this.ClosedSalesList = [];
+    this.salesService.OpenSalesList = [];
+    this.salesService.ClosedSalesList = [];
+
+    //מיון סוג מכירות 
     this.salesService.findBySerailName(e.target.value).subscribe(ans => {
       ans.forEach(s => {
         if (s.isOpen == true) {
-          this.OpenSalesList.push(s);
+          this.salesService.OpenSalesList.push(s);
           let saleDate = new Date(s.date);
           let d = new Date();
           d.setDate(saleDate.getDate() + s.numOfDate);
           this.dateper[i] = d;
           i++;
         }
-        else { this.ClosedSalesList.push(s); }
+        else { this.salesService.ClosedSalesList.push(s); }
       })
+      //הכנסת השיקים 
       this.checksService.findBySerailName(e.target.value).subscribe(ans => {
-        this.checksList = ans;
-        if (this.checksList.length > 0)
-          this.currentChecks = this.checksList[0];
+        this.checksService.checkList = ans;
+        if (this.checksService.checkList.length > 0)
+          this.currentChecks = this.checksService.checkList[0];
       })
     });
+    //תביא את הסריה
     this.seriousnessService.findBySerailName(e.target.value).subscribe(ans => {
       this.serial = ans;
+      console.log(this.serial);
+
       // public chartLabels: Array<any> = ['קוסט','ניתן לשותף','נותר לקוסט','סכום התקבל'];
-      // 
+      
       this.chartDatasets = [];
-      this.chartDatasets.push({
+      if(this.modalService.data){
+         this.chartDatasets.push({
         data: [
-          this.serial.cost, this.serial.AmountReceivedPartner, this.serial.cost - this.serial.AmountReceivedPartner, this.serial.amountReceived], label: 'הסכום בדולרים '
+          this.modalService.data.serial.cost, this.modalService.data.serial.AmountReceivedPartner, this.modalService.data.serial.cost - this.modalService.data.serial.AmountReceivedPartner, this.modalService.data.serial.amountReceived], label: 'הסכום בדולרים '
+
+      }) }
+      else{
+        this.chartDatasets.push({
+          data: [
+            this.serial.cost, this.serial.AmountReceivedPartner, this.serial.cost - this.serial.AmountReceivedPartner, this.serial.amountReceived], label: 'הסכום בדולרים '
+  
+        })
+     
       }
-      )
+     
+      
       // { data: [1500000, 125000], label: 'הכותרת' }
     })
   }
@@ -398,9 +430,9 @@ export class ChecksComponent implements OnInit {
       //   (((document.getElementById('selectAll') as Element) as Input) as CheckboxComponent).checked = false
       // } 
       let cbox = document.querySelectorAll('td input');
-      if (this.OpenSalesList.length == this.getSelectedRows().length) {
+      if (this.salesService.OpenSalesList.length == this.getSelectedRows().length) {
         (((document.getElementById('selectAll') as Element) as Input) as CheckboxComponent).checked = false
-        this.OpenSalesList.forEach(s => {
+        this.salesService.OpenSalesList.forEach(s => {
           this.selectedRowIds.delete(s.id)
         })
         cbox.forEach(c => {
@@ -408,7 +440,7 @@ export class ChecksComponent implements OnInit {
         })
       }
       else {
-        this.OpenSalesList.forEach(s => {
+        this.salesService.OpenSalesList.forEach(s => {
           this.selectedRowIds.add(s.id)
         })
         cbox.forEach(c => {
@@ -429,7 +461,7 @@ export class ChecksComponent implements OnInit {
     return this.selectedRowIds.has(id);
   }
   getSelectedRows() {
-    return this.OpenSalesList.filter(x => this.selectedRowIds.has(x.id));
+    return this.salesService.OpenSalesList.filter(x => this.selectedRowIds.has(x.id));
   }
 
 
@@ -447,7 +479,7 @@ export class ChecksComponent implements OnInit {
       // console.log("sad", this.currentChecks);
 
       this.currentChecks.IdSales.forEach(idSale => {
-        let currSale = this.ClosedSalesList.find(s => s.id == idSale)
+        let currSale = this.salesService.ClosedSalesList.find(s => s.id == idSale)
         // console.log("currSale: ", currSale);
 
         currSale.isOpen = true;
@@ -555,4 +587,5 @@ export class ChecksComponent implements OnInit {
   get IdSales(): FormArray {
     return this.checksForm.get('IdSales') as FormArray;
   }
+
 }

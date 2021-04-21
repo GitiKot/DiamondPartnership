@@ -18,8 +18,8 @@ export class SalesComponent implements OnInit {
   dateper = [];
   updateSale: Sale;
   seriousnessList: Array<Seriousness>;
-  constructor(private modalService: ModalService, private seriousnessService: seriousnessService, private saleService: SalesService) { }
-  salesList: Array<Sale>
+  constructor(private modalService: ModalService, private seriousnessService: seriousnessService, public saleService: SalesService) { }
+  // salesList: Array<Sale>
   nameSerial: string;
   ngOnInit(): void {
     this.seriousnessService.getAllSeriousness().subscribe(ans => {
@@ -81,12 +81,7 @@ export class SalesComponent implements OnInit {
 
   }
 
-  newSale() {
-    // this.modalService.openModal('sales-form');
-    this.modalService.changeSaleTab();
-
-  }
-
+ 
   deleteSale(sale) {
     if (sale.isOpen == true) {
       var div = document.getElementById('alert');
@@ -127,7 +122,7 @@ export class SalesComponent implements OnInit {
       // console.log(tt);
       input = document.getElementById("public");
       nameSeria = input.value;
-      this.saleService.findBySerailName(nameSeria).subscribe(ans => this.salesList = ans);
+      this.saleService.findBySerailName(nameSeria).subscribe(ans => this.saleService.saleList = ans);
     }
     this.currectSale = null;
     var div = document.getElementById('alert');
@@ -136,16 +131,16 @@ export class SalesComponent implements OnInit {
   getSaleBySeria(e) {
 
     this.saleService.findBySerailName(e.target.value).subscribe(ans => {
-      this.salesList = ans;
+      this.saleService.saleList = ans;
       let i = 0;
-      this.salesList.forEach(sale => {
+      this.saleService.saleList.forEach(sale => {
         let saleDate = new Date(sale.date);
         let d = new Date();
         d.setDate(saleDate.getDate() + sale.numOfDate);
         this.dateper[i] = d;
         i++;
       })
-      if (this.salesList.length != 0)
+      if ( this.saleService.saleList.length != 0)
         this.nameSerial = e.target.value;
       else
         this.nameSerial = undefined;

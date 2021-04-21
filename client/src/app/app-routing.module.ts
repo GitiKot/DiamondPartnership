@@ -35,11 +35,9 @@ const routes: Routes = [
   //   },
   { path: 'sales/:isSales', component: SalesComponent },
   { path: 'sales-update', component: SalesUpdateComponent },
-  { path: 'sales-form', component: SalesFormComponent,
-  children:[
-    {path:'',redirectTo:'sales-form',pathMatch: 'full'}  ,
-   ] ,
-   },
+  { path: 'sales-form', component: SalesFormComponent, },
+ 
+  
   {
     path: 'seriousness', component: SeriousnessComponent,
     children: [{ path: '', redirectTo: 'seriousness', pathMatch: 'full' }

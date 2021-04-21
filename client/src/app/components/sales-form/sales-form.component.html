@@ -1,11 +1,11 @@
-<html ng-app>
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <div>
   <h3>הוספת מכירות</h3>
 </div>
-<form style="max-width: 960px" [formGroup]='salesForm' action="action" (submit)="saveSale()" method="POST"
+<form style="max-width: 960px" [formGroup]="salesForm" action="action" (submit)="saveSale()" method="POST"
   class="form-inline">
   <br>
 
@@ -39,7 +39,7 @@
 
   <span>
     <label>תאריך פרעון:</label>
-    <input [value]="dateP" class="form-control" placeholder="אוטומטי" id="DueDate" disabled="form-check-input">
+    <input [value]="dateP" class="form-control"  placeholder="אוטומטי" id="DueDate" disabled="form-check-input">
   </span>&nbsp; &nbsp;
   <span>
     <label for="invoiceNumber">מספר חשבונית:</label>
@@ -139,6 +139,5 @@
     <button type="submit" class="btn btn-primary" id="save" [disabled]="!salesForm.valid">שמירה</button>
   </div>
 </form>
-<router-outlet></router-outlet>
 
-</html>
+

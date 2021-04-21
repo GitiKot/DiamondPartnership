@@ -30,7 +30,7 @@
       (click)="ok('ok')">אישור</button> &nbsp;
     <button type="button" class="btn btn-outline-primary" (click)="ok('')">ביטול</button>
   </div>
-  <div *ngIf="checksList">
+  <div *ngIf="checksService.checkList">
     <!-- <button class="btn" (click)="test.toggle()"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
     </button>mdbCollapse #test="bs-collapse" -->
     <div >
@@ -47,7 +47,7 @@
           <th>פרטי מכירות</th>
         </tr>
         <tbody>
-          <tr *ngFor="let c of checksList;let ci=index" (click)="updateCi(c)" (mouseenter)="toolbar(ci)"
+          <tr *ngFor="let c of checksService.checkList;let ci=index" (click)="updateCi(c)" (mouseenter)="toolbar(ci)"
             (mouseleave)="toolbar1(ci)" id="row{{ci}}">
             <td> <button id="del{{ci}}" class="del" (click)="deleteCheck(c)" title="מחיקה">
                 <i class="fa fa-trash" id="trash" aria-hidden="true"></i></button> </td>
@@ -62,7 +62,7 @@
             <td>{{c.sum | currency:"USD":true}}</td>
             <td>{{c.ReceiptOrInvoice}}</td>
             <td>{{c.numCheck}}</td>
-            <td><button type="button" class="btn btn-primary" (click)="updateCi(c)" (click)="framec.show()"
+            <td><button type="button" class="btn btn-primary" (click)="updateCi(c)" (click)="checkDetailSOpen(c)"
                 data-toggle="modal" data-target="#modalCart" title="פרטי מכירות">+</button></td>
           </tr>
         </tbody>
@@ -70,7 +70,7 @@
     </div>
   </div>
 <!-- מודל פרטי מכירות  -->
-  <div  *ngIf="checksList" mdbModal #framec="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
+  <!-- <div  *ngIf="checksList" mdbModal #framec="mdbModal" class="modal fade" id="modalCart" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-side modal-top-right" role="document">
       <div class="modal-content">
@@ -78,7 +78,6 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="framec.hide()">
             <span aria-hidden="true">&times;</span>
           </button>
-          <mat-dialog-content>This will delete all elements that are currently on this page and cannot be undone.</mat-dialog-content>
         </div>
         <a (click)="print()" title="הדפסה"><i class="fa fa-print"></i></a>
 
@@ -100,7 +99,6 @@
             </thead>
             <tbody *ngIf="checksList!=undefined">
               <tr *ngFor="let s of getSalesFromId();let i=index">
-                <!-- <td>{{getSalesFromId().length}}</td> -->
                 <td>{{s.publicSerialName.serialName}}</td>
                 <td>{{s.privateSerialName}}</td>
                 <td>{{s.stoneName}}</td>
@@ -121,19 +119,12 @@
 
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <div *ngIf="OpenSalesList.length>0">
-    <!-- <div><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
-        xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd"
-          d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
-        <path fill-rule="evenodd"
-          d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
-      </svg>&nbsp;
-      <input type="text" id="private" class="form-control form-control-sm ml-3 " (keyup)="searchPrivate()"
-        placeholder="חיפוש סריה פרטית">
-    </div> -->
+
+  
+  <div *ngIf="salesService.OpenSalesList.length>0&&serial">
+   
     <h5>שיקים פתוחים</h5>
 
     <div class="container">
@@ -160,7 +151,7 @@
   <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
   <th *ngFor="let one of sizeCollum;let index=index"><input class="filter" (keyup)="filterbyCiterion($event,index+1)" type="text"></th>
  </tr>
-          <tr *ngFor="let s of OpenSalesList; let i=index" [class.selectedRow]="rowIsSelected(s.id)"
+          <tr *ngFor="let s of salesService.OpenSalesList; let i=index" [class.selectedRow]="rowIsSelected(s.id)"
             style="cursor: pointer;">
             <td><input id="cbox" type="checkbox" (click)="onRowClick(s.id)"></td>
             <td>{{s.date | date:'dd/MM/yy'}}</td>
@@ -172,7 +163,7 @@
             <td>{{s.weight}}</td>
             <td>{{s.pricePerCarat | currency:"USD":true}}</td>
             <td> {{s.weight*s.pricePerCarat | currency:"USD":true}}</td>
-            <td *ngIf="(serial).cost>=(serial).AmountReceivedPartner">
+            <td *ngIf="serial.cost>=serial.AmountReceivedPartner">
 
               {{s.weight*s.pricePerCarat*(serial).partnersPercent/100 | currency:"USD":true}}</td>
             <td *ngIf="(serial).AmountReceivedPartner>(serial).cost"> {{s.weight*s.pricePerCarat/2 |
@@ -182,7 +173,7 @@
           </tr>
           <!-- <button  type="button" class="btn btn-primary" (click)="framen.show()"
             data-toggle="modal" data-target="#modalCart">ל</button> -->
-          <button *ngIf="OpenSalesList.length>0" type="button" id="newcheck" mdbBtn color="blue" rounded="true"
+          <button *ngIf="salesService.OpenSalesList.length>0" type="button" id="newcheck" mdbBtn color="blue" rounded="true"
             data-toggle="modal" data-target="#basicExample"  (click)="createCheck()"
           
             mdbWavesEffect>לסגירת צ'ק <i class="fa fa-unlock-alt" aria-hidden="true"></i>
@@ -196,8 +187,12 @@
 
 
   </div>
+
+
+
+
 <!-- מודל טופס שיק -->
-  <div mdbModal #framen="mdbModal" class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog"
+  <!-- <div mdbModal #framen="mdbModal" class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -209,10 +204,7 @@
             <span aria-hidden="true" (click)="framen.hide()" (click)="resetform()">&times;</span>
           </button>
         </div>
-        <!-- <div *ngIf="selectedRowIds.size==0" class="md-form mb-1">
-          <input type="checkbox" id="cb" (change)="untilcost=!untilcost" mdbInput>
-          <label for="cb">חילול שיק עד הקוסט</label>
-        </div> -->
+        
         <div class="modal-body mx-3">
 
           <div *ngIf="selectedRowIds.size>0||untilcost">
@@ -228,7 +220,6 @@
             <div class="md-form mb-5">
               <select placeholder="vd" class="browser-default custom-select" mdbInput mdbValidate
                 [formControl]="ReceiptOrInvoice">
-                <!-- <select class="form-control" mdbInput mdbValidate [formControl]="ReceiptOrInvoice"> -->
                 <option value="" disabled selected> חשבונית/קבלה </option>
 
                 <option placeholder="sa" selected>קבלה</option>
@@ -260,14 +251,14 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <br>
   <div *ngIf="checksList" id="row">
     <span>סה"כ מכירות: </span>&nbsp;<input class="input" mdbInput mdbValidate disabled
-      placeholder="{{OpenSalesList.length+ClosedSalesList.length}}">
+      placeholder="{{salesService.OpenSalesList.length+salesService.ClosedSalesList.length}}">
     <span>צ'קים סגורים: </span>&nbsp;<input *ngIf="checksList" class="input" mdbInput mdbValidate disabled
       placeholder="{{checksList.length}}">
     <span>סה"כ מכירות פתוחות: </span><input class="input" mdbInput mdbValidate disabled
-      placeholder="{{OpenSalesList.length}}">
+      placeholder="{{salesService.OpenSalesList.length}}">
   </div>
 </form>

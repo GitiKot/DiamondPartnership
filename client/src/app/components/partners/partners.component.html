@@ -18,7 +18,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let p of partnersList;let i = index" (mouseenter)="toolbar(i)" (mouseleave)="toolbar1(i)" id="row{{i}}">
+            <tr *ngFor="let p of partnerService.partnerList;let i = index" (mouseenter)="toolbar(i)" (mouseleave)="toolbar1(i)" id="row{{i}}">
               <td> <button id="del{{i}}" class="del" (click)="deletePartner(p)" title="מחיקה">
                 <i class="fa fa-trash"id="trash" aria-hidden="true"></i>
             </button></td>

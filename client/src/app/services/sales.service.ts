@@ -8,8 +8,16 @@ import { Sale } from '../data/sale'
 export class SalesService {
   options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
   salesUrl = 'http://localhost:3000/sales';
-  constructor(private http: HttpClient) { }
-
+  OpenSalesList:Array<Sale>;
+  ClosedSalesList:Array<Sale>;
+  saleList: Array <Sale>
+     
+  constructor(private http: HttpClient) { 
+   this.OpenSalesList=[];
+   this.ClosedSalesList=[];
+   
+  }
+ 
 
   getAllSales(): Observable<Sale[]> {
     return this.http.get<Sale[]>(this.salesUrl);

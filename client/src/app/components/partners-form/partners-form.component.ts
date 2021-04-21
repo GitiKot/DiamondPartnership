@@ -72,12 +72,14 @@ this.currectPartner=this.modalService.data;
   get Remarks() {
     return this.partnersForm.get('Remarks');
   } 
+  // save and update partner 
   save(){
   if(this.modalService.action==='update'){
     if (this.partnersForm.valid) {
-
-      this.partnerService.updatePartner(this.currectPartner.id, this.partnersForm.value).subscribe(() => {
+      this.partnerService.updatePartner(this.currectPartner.id, this.partnersForm.value).subscribe(() => {   
+        this.partnerService.getAllPartners().subscribe(ans => { this.partnerService.partnerList = ans })  
         this.modalService.openModal('sucsses-form', { name: 'שותף'});
+      
       }, () => {
         console.log("error");
       }) 
@@ -90,6 +92,7 @@ this.currectPartner=this.modalService.data;
  
     if (this.partnersForm.valid) {
       this.partnerService.addPartner(this.partnersForm.value).subscribe(a => {
+        this.partnerService.partnerList.push(this.partnersForm.value)
           this.modalService.openModal('sucsses-form', { name: 'שותף'});
         }, () => {
           console.log("error");

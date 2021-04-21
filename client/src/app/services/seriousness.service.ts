@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Seriousness } from '../data/seriousness'
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,13 @@ export class seriousnessService {
 
   options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
   seriousnessUrl = 'http://localhost:3000/seriousness';
-  constructor(private http: HttpClient) { }
+  seriousnessList: Array <Seriousness>
+  constructor(private http: HttpClient) { 
+    this.getAllSeriousness().subscribe(ans => { this.seriousnessList = ans 
+      console.log(this.seriousnessList);
+      
+      })  
+  }
   getAllSeriousness(): Observable<Seriousness[]> {
     return this.http.get<Seriousness[]>(this.seriousnessUrl);
   }
@@ -31,6 +37,8 @@ export class seriousnessService {
   }
   updateSerial(sId:string,serial: Seriousness):Observable<Seriousness> {
     const urlupdate = `${this.seriousnessUrl}/${sId}`;
+    console.log(serial);
+    
     return this.http.patch<Seriousness>(urlupdate, serial, this.options);  
   }
   

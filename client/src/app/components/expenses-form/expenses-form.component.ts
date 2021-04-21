@@ -19,7 +19,7 @@ export class ExpensesFormComponent implements OnInit {
   expensesForm: FormGroup;
   expensesList: Array<Expenses>;
   seriousnessList: Array<Seriousness>;
-  place;
+  place; 
   currentEx:Expenses;
 
   constructor( public modalService:ModalService, private expensesService: ExpensesService,private seriousnessService: seriousnessService, private formBuilder: FormBuilder) { }
@@ -42,8 +42,7 @@ export class ExpensesFormComponent implements OnInit {
 if(this.modalService.action==='update'){
 this.currentEx=this.modalService.data;
   if (this.currentEx != undefined) {
-    console.log("iu");
-    console.log(this.currentEx.detail);
+    
     this.expensesForm.patchValue({
       PublicSerialName: this.currentEx.PublicSerialName,
       date: this.currentEx.date,
@@ -88,6 +87,7 @@ this.modalService.closeModal();
       this.expensesForm.value.amount = this.expensesForm.value.detail
         .reduce((prev, curr) => prev + Number(curr.price), 0);
       this.expensesService.addExpenses(this.expensesForm.value).subscribe(e => {
+        this.expensesService.expensesList.push(this.expensesForm.value)   
         this.modalService.openModal('sucsses-form',{name: 'הוצאה'})
       }, () => {
         console.log("error");
@@ -114,6 +114,8 @@ this.modalService.closeModal();
         this.expensesForm.value.amount = 0;
       }
       this.expensesService.updateExpenses(this.currentEx.id, this.expensesForm.value).subscribe(e => {
+        this.expensesService.getAllExpenses().subscribe(ans => { this.expensesService.expensesList = ans })  
+ 
 
         this.modalService.openModal('sucsses-form',{name: 'הוצאה'})
       }, () => {

@@ -137,13 +137,13 @@ export class SalesUpdateComponent implements OnInit {
           ser.amountReceived = ((Number(this.salesForm.value.weight) *
             Number(this.salesForm.value.pricePerCarat))) - ((Number(this.updateSale.weight) *
               Number(this.updateSale.pricePerCarat)));
-          console.log("ser.amountReceived", ser.amountReceived);
+console.log(ser);
 
           this.seriousnessService.updateSerial(idser, ser).subscribe(() => {
           }, () => {
             console.log("error");
           })
-
+          this.saleService.findBySerailName(ser.serialName).subscribe(ans => { this.saleService.saleList = ans })
           this.modalService.openModal('sucsses-form', { name: 'מכירה' });
           this.salesForm.reset();
         }, () => {

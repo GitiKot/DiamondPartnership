@@ -1,6 +1,5 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { CheckboxComponent } from 'angular-bootstrap-md';
 import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { Partner } from 'src/app/data/partner';
@@ -20,11 +19,9 @@ export class SerialFormComponent implements OnInit {
   totalPrice = [];
   partnerId;
   @ViewChild('frame1') frame1: ModalDirective;
-  // @ViewChild('frame2') frame2: ModalDirective;
  currentSeria: Seriousness;
-  // @Output() updateFlag = new EventEmitter<number>();
 
-  constructor(private modalService:ModalService, private changeDetectorRef: ChangeDetectorRef, private r: Router, private partnerService: PartnerService, private seriousnessService: seriousnessService, private formBuilder: FormBuilder) { }
+  constructor(private modalService:ModalService, private changeDetectorRef: ChangeDetectorRef, private partnerService: PartnerService, private seriousnessService: seriousnessService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.partnerService.getAllPartners().subscribe(ans => { this.partnerList = ans; })
@@ -117,8 +114,8 @@ this.currentSeria=this.modalService.data;
     this.serialForm.get('partner').setValue(this.partnerId)
     if (this.serialForm.valid && this.serialForm.value.partner) {
       this.seriousnessService.addSeria(this.serialForm.value).subscribe(sss => {
-        // this.r.navigate(['seriousness/serial-form/sucsses-form', 'סריה'])
-        this.modalService.openModal('sucsses-form', { name: 'סריה'});
+        this.seriousnessService.seriousnessList.push(this.serialForm.value) 
+                this.modalService.openModal('sucsses-form', { name: 'סריה'});
       }, () => {
         console.log("error");
       })
@@ -126,7 +123,6 @@ this.currentSeria=this.modalService.data;
     else {
         alert("חסרים נתונים")
     }
-    // this.updateFlag.emit(1);
     this.modalService.closeModal();
   }
   update() {
@@ -136,14 +132,12 @@ this.currentSeria=this.modalService.data;
       this.serialForm.value.finishDate = null;
     }
     if (this.serialForm.value.partner == undefined) {
-      console.log("this.currentSeria.partner", this.currentSeria.partner);
       this.serialForm.value.partner = this.currentSeria.partner;
     }
-    console.log(this.serialForm.value);
-    console.log(this.serialForm.valid);
+   
     if (this.serialForm.valid) {
       this.seriousnessService.updateSerial(this.currentSeria.id, this.serialForm.value).subscribe(() => {
-        // this.r.navigate(['seriousness/serial-form/sucsses-form', 'סריה'])
+        this.seriousnessService.getAllSeriousness().subscribe(ans => { this.seriousnessService.seriousnessList = ans })  
         this.modalService.openModal('sucsses-form', { name: 'סריה'});
       }, () => {
         console.log("error");
@@ -152,18 +146,14 @@ this.currentSeria=this.modalService.data;
     else {
         alert("חסרים נתונים")
     }
-    // this.updateFlag.emit(1);
     this.modalService.closeModal();
 
   }
   close() {
     if (this.currentSeria != undefined) {
-      // this.frame/2.hide();
       this.frame1.hide();
     }   
      this.modalService.closeModal();
-
-    // this.updateFlag.emit(0);
   }
   get serialName() {
     return this.serialForm.get('serialName');
@@ -243,12 +233,8 @@ this.currentSeria=this.modalService.data;
   }
   cancelPrivateSerial() {
     this.privateSeria.clear()
-    // this.frame2.hide()
   }
-  // savePr/ivateSerial() {
-    // consol/e.log(this.privateSeria.value);
-    // this.frame2.hide()
-  // }
+  
   removePrivate(i: number) {
     this.privateSeria.removeAt(i);
   }
