@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ModalDirective } from 'angular-bootstrap-md/lib/free/modals/modal.directive';
 import { Expenses } from 'src/app/data/expenses';
 import { ExpensesService } from 'src/app/services/expenses.service'
 import {ModalService}from '../../services/modal.service';
@@ -15,11 +14,7 @@ export class ExpensesComponent implements OnInit {
   e: Expenses;
   expensesForm: FormGroup;
   expensesList: Array<Expenses>;
-  @ViewChild('frame2') public showModalOnClick: ModalDirective;//model s
-  @ViewChild('frame1') public showModalOnClick1: ModalDirective;//model big
   newexpensesForm: FormGroup;
-
-  flagupdate = 0;
 
   constructor(public modalService:ModalService,  private expensesService: ExpensesService, private formBuilder: FormBuilder) { }
 
@@ -66,35 +61,17 @@ export class ExpensesComponent implements OnInit {
       }
     }
   }
-  f() {
-    this.e = undefined;
-    this.flagupdate = 1;
-  }
+ 
   updateflag(ex) {
     this.modalService.openModal('expenses-form',ex,'update')
-
-    this.e = ex;
-    this.flagupdate = 1;
-    console.log("updateflag", this.flagupdate);
   }
-  updateFromFlag(event) {
-    console.log("updatefromflag");
-    console.log("evevt", event);
-    this.flagupdate = event;
-    console.log(this.flagupdate);
-
-  }
+  
   updateEi(i: number) {
     this.indexE = i;
+    console.log("this.indexE",this.indexE);
+    
   }
-  // נראה לי שאפשר למחוק פונ' זו
-  // updateExpenses(exid: string, expenses: Expenses) {
-  //   console.log("updateExpenses",expenses);
-  //   console.log(this.expensesList[exid].id);
-  //   expenses.id = this.expensesList[exid].id;
-
-  //   this.expensesService.updateExpenses(this.expensesList[exid].id, expenses);
-  // }
+  
   deleteExpe(e) {
     var div = document.getElementById('alert');
     div.style.visibility = "visible";
