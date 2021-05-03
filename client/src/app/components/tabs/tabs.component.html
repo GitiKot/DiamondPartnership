@@ -1,7 +1,9 @@
 <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo fixed-top scrolling-navbar">
     <span class="navbar-text" style="font-family: Papyrus;"> Diamond Partnership Business </span>
     <mdb-navbar-brand>
-        <a class="navbar-brand" href="/#">דף הבית</a>
+        <a class="navbar-brand" href="/#"  >Log out</a>
+        <img class="img" src="../assets/public/logo.png" style="margin-left:10px;margin-right:10px ;width: 150px; height: 50px;">
+
     </mdb-navbar-brand>
     <links>
         <ul class="navbar-nav mr-auto">
@@ -18,6 +20,9 @@
             <li class="nav-item">
                 <a class="nav-link" (click)="addTab({classification:'sales',name:'מכירות'})">מכירות</a>
             </li>
+            <!-- <li class="nav-item">
+                <a class="nav-link" (click)="newSale()">חשבוניות</a>
+            </li> -->
             <li class="nav-item">
                 <a class="nav-link" (click)="addTab({classification:'invoice',name:'חשבוניות'})">חשבוניות</a>
             </li>
@@ -47,7 +52,7 @@
         <app-checks *ngSwitchCase="'checks'"></app-checks>
         <app-expenses *ngSwitchCase="'expenses'"></app-expenses>
         <app-sales *ngSwitchCase="'sales'"></app-sales>
-        <app-sales-form *ngSwitchCase="'invoice'"></app-sales-form>
+        <app-sales-form class="app-sales-form" *ngSwitchCase="'invoice'"></app-sales-form>
 
 
     </mat-tab>
@@ -63,8 +68,7 @@
     <app-check-details *ngSwitchCase="'check-details'"></app-check-details>
     
 </div>
-<a>{{modalService.isOpen}}</a>
-<a>{{modalService.component}}</a>
+
 <!-- <router-outlet></router-outlet> -->
 <!-- <button mat-raised-button class="example-delete-tab-button" [disabled]="tabs.length === 1"
             (click)="removeTab(index)">

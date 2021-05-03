@@ -19,8 +19,8 @@ export class CheckFormComponent implements OnInit {
   checksForm: FormGroup;
 
   ngOnInit(): void {
-    console.log(this.modalService.data
-    );
+    // console.log(this.modalService.data
+    // );
     this.checksForm = this.formBuilder.group({
       date: [''],
       numCheck: ['', Validators.required],
@@ -70,52 +70,49 @@ export class CheckFormComponent implements OnInit {
     })
   }
   save() {
-    console.log("form check", this.checksForm.value);
+    // console.log("form check", this.checksForm.value);
 
     if (this.checksForm.valid) {
       this.updateSerial();
       this.checksService.addChecks(this.checksForm.value).subscribe(c => {
-        console.log("form check", this.checksForm.value);
 
 
         this.modalService.data.arrSAle.forEach(w => {
           this.updateSale(w.i, w.j)
         })
-        this.checksService.checkList.push(this.checksForm.value);
-        this.spliceOpenSaleList()
-
+        this.checksService.checkList.push(this.modalService.data.form.value);
+        console.log("aaaaaaaaaaa", this.checksService.checkList);
+        
+        this.checksService.seccussesNewCheck = true;
 
         this.modalService.openModal('sucsses-form', { name: 'צק' })
       })
       this.checksForm.reset();
     } else {
       alert("חלק מהנתונים לא נכון")
-      console.log("form check", this.checksForm.value);
     }
   }
-  spliceOpenSaleList() {
+  // spliceOpenSaleList() {
 
-    let name = this.checksForm.value.publicSerialName;
-   
-    console.log("name", this.modalService.data.serial.serialName);
-    
-    this.salesService.findBySerailName('aaa').subscribe(ans => {
-      ans.forEach(s => {
-        if (s.isOpen == true) {
-          this.salesService.OpenSalesList.push(s);
-          // let saleDate = new Date(s.date);
-          // let d = new Date();
-          // d.setDate(saleDate.getDate() + s.numOfDate);
-          // this.dateper[i] = d;
-          // i++;
-        }
-        else { this.salesService.ClosedSalesList.push(s); }
-      })
-      console.log("open", this.salesService.OpenSalesList);
+  //   let name = this.checksForm.value.publicSerialName;
 
-    });
+  //   // console.log("name", this.modalService.data.serial.serialName);
 
+  //   this.salesService.findBySerailName('aaa').subscribe(ans => {
+  //     ans.forEach(s => {
+  //       if (s.isOpen == true) {
+  //         this.salesService.OpenSalesList.push(s);
+  //         // let saleDate = new Date(s.date);
+  //         // let d = new Date();
+  //         // d.setDate(saleDate.getDate() + s.numOfDate);
+  //         // this.dateper[i] = d;
+  //         // i++;
+  //       }
+  //       else { this.salesService.ClosedSalesList.push(s); }
+  //     })
+  //     // console.log("open", this.salesService.OpenSalesList);
 
+  //   });
 
 
 
@@ -123,7 +120,9 @@ export class CheckFormComponent implements OnInit {
 
 
 
-  }
+
+
+  // }
   resetform() {
     this.checksForm.reset();
   }

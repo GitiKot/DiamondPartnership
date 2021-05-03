@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
+import { Router } from '@angular/router';
 import { ModalService } from 'src/app/services/modal.service';
 // import { ModalService } from '../../services/modal.service';
 
@@ -18,7 +19,7 @@ export class TabsComponent {
   tabs = [];
   selected = new FormControl(0);
   brc: ThemePalette = 'warn';
-  constructor(public modalService:ModalService ){
+  constructor(public modalService:ModalService,private r:Router ){
     
   }
   ngOnInit(): void {
@@ -28,6 +29,9 @@ export class TabsComponent {
     this.selected.setValue(this.tabs.length - 1);
     console.log(this.tabs);
     
+  }
+  newSale(){
+    this.r.navigate(['/sales-form'])
   }
   removeTab(index: number) {
     this.tabs.splice(index, 1);

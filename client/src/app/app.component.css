@@ -1,3 +1,13 @@
 .app-tabs{
     margin-top: 12px;
 }
+.mat-tab-body-wrapper {
+    background-color: white;
+    z-index: 100;
+}
+.img{
+    position: fixed;
+    top:0;
+    left: 0;
+    FONT-WEIGHT: 700;height: 390px;width: 680px;margin-top: 300px;margin-right: 380px;
+}

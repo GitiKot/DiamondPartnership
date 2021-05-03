@@ -12,7 +12,6 @@ export class seriousnessService {
   seriousnessList: Array <Seriousness>
   constructor(private http: HttpClient) { 
     this.getAllSeriousness().subscribe(ans => { this.seriousnessList = ans 
-      console.log(this.seriousnessList);
       
       })  
   }

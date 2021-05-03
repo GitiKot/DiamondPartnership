@@ -154,8 +154,6 @@ export class SalesFormComponent implements OnInit {
 
   }
   addEventCalcDate() {
-    console.log();
-    
     var d = (document.querySelector('#datesale') as HTMLInputElement).value;
     var dateSales = new Date(d)
 
@@ -201,12 +199,17 @@ export class SalesFormComponent implements OnInit {
     }
 
     if (!flag)
-    this.modalService.openModal('sucsses-form','מכירה')
+    this.modalService.openModal('sucsses-form',{name:'מכירה'})
     else;
+
+    this.router.navigate([''])
   }
 
   cancel() {
+    this.router.navigate([''])
+
     this.modalService.closeModal();
+
 
   }
   keypressEnter() {

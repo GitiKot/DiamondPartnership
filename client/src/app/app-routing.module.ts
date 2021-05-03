@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
 import { SalesUpdateComponent } from './components/sales-update/sales-update.component';
 
 const routes: Routes = [
-  // { path: '', component: AppComponent },
+  { path: 'app', component: AppComponent },
   { path: 'home', component: HomeComponent },
   { path: 'tabs', component: TabsComponent },
   { path: 'checks', component: ChecksComponent},

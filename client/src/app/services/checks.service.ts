@@ -10,6 +10,7 @@ export class ChecksService {
   options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
   checksUrl = 'http://localhost:3000/checks';
   checkList:Array<Checks>;
+  seccussesNewCheck=false;
   constructor(private http: HttpClient) { 
     
   }

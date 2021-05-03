@@ -131,17 +131,23 @@ export class ChecksComponent implements OnInit {
     if (this.getSelectedRows().length > 0) {
       this.getSelectedRows().forEach(s => {
         currentSum = <number>s.pricePerCarat * <number>s.weight;
+        //אם הסכום של המכירה הנוכחית עדין בקוסט
         if (currentSum <= this.serial.cost - apr) {
           currentSum = currentSum * this.serial.partnersPercent / 100;
           apr += currentSum; this.arrSale.push({ i: s, j: currentSum })
           sum += currentSum;
         }
+        //עכשיו אנחנו עוברים את הקוסט!
         else {
+          this.untilcost=true;
+                    //כבר עברנו בשיק הנוכחי את הקוסט
+                    //איך יודעים ? לפי הפלאג או מקרה קצה :שכל בסכום של המכירה הנוכחית כבר ברווח ז"א שעוד לא הבאנו לשותף כלום במכירה הנוכחית 
           if (flag || apr == this.serial.AmountReceivedPartner) {
             currentSum /= 2; apr += currentSum
             this.arrSale.push({ i: s, j: currentSum })
             sum += currentSum;
           }
+                    //פעם ראשונה שאנו עוברים את הקוסט ןבאמצע השיק  
           else {
             let forPartner = this.serial.cost - apr;
             sum += forPartner;
@@ -303,14 +309,20 @@ export class ChecksComponent implements OnInit {
     this.checksForm.controls['date'].setValue(this.calcCheckDate())
     for (let index = 0; index < this.getSelectedRows().length; index++) {
       this.checksForm.value.IdSales.push(this.getSelectedRows()[index].id)
-      // console.log(this.getSelectedRows()[index].id);
       sale = this.getSelectedRows()[index];
+    }
+    if (this.serial.cost<=this.serial.AmountReceivedPartner&&this.selectedRowIds.size<=0)
+    {
+      alert("כבר שילמת את הקוסט עליך לבחור מכירות ")
     }
     if (this.untilcost || this.selectedRowIds.size) {
       this.modalService.openModal('check-form', { form: this.checksForm, arrSAle: this.arrSale, serial: this.serial })
     }
+    
+    
+      this.spliceOpenSaleList();
+  
 
-    this.serial = undefined
   }
   // save() {
   //   if (this.checksForm.valid) {
@@ -335,6 +347,8 @@ export class ChecksComponent implements OnInit {
   //   }
   // }
   spliceOpenSaleList() {
+    console.log("here");
+
     this.getSelectedRows()
       .forEach(saleChecked => {
         let i = this.salesService.OpenSalesList.indexOf(saleChecked)
@@ -374,24 +388,25 @@ export class ChecksComponent implements OnInit {
       console.log(this.serial);
 
       // public chartLabels: Array<any> = ['קוסט','ניתן לשותף','נותר לקוסט','סכום התקבל'];
-      
-      this.chartDatasets = [];
-      if(this.modalService.data){
-         this.chartDatasets.push({
-        data: [
-          this.modalService.data.serial.cost, this.modalService.data.serial.AmountReceivedPartner, this.modalService.data.serial.cost - this.modalService.data.serial.AmountReceivedPartner, this.modalService.data.serial.amountReceived], label: 'הסכום בדולרים '
 
-      }) }
-      else{
+      this.chartDatasets = [];
+      if (this.modalService.data) {
+        this.chartDatasets.push({
+          data: [
+            this.modalService.data.serial.cost, this.modalService.data.serial.AmountReceivedPartner, this.modalService.data.serial.cost - this.modalService.data.serial.AmountReceivedPartner, this.modalService.data.serial.amountReceived], label: 'הסכום בדולרים '
+
+        })
+      }
+      else {
         this.chartDatasets.push({
           data: [
             this.serial.cost, this.serial.AmountReceivedPartner, this.serial.cost - this.serial.AmountReceivedPartner, this.serial.amountReceived], label: 'הסכום בדולרים '
-  
+
         })
-     
+
       }
-     
-      
+
+
       // { data: [1500000, 125000], label: 'הכותרת' }
     })
   }

@@ -15,7 +15,7 @@ export class CheckDetailsComponent implements OnInit {
   @ViewChild('framec') public showModalOnClick: ModalDirective;
   constructor(public modalService: ModalService) { }
 
-  ngOnInit(): void { console.log(this.modalService.data);
+  ngOnInit(): void { console.log(this.modalService.data.c);
     this.currentChecks = this.modalService.data.check;
    
     
