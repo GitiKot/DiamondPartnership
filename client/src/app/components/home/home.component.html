@@ -1,4 +1,4 @@
-
+<!-- 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,23 +7,40 @@
     <title>Document</title>
 </head>
 <body>
-    <!-- <app-nav-bar></app-nav-bar> -->
-    <div class="form-group">
-        <label for="usr">הרשאת גישה:</label>
-        <input type="text" class="form-control" id="usr" name="username">
-      </div>
+<form>  <div class="form-group">
+        <label for="usr">:אימייל</label>
+        <input type="text" class="form-control" id="usr" [formControl]="password" name="password">
       <div class="form-group">
-        <label for="pwd">סיסמה:</label>
-        <input type="password" class="form-control" id="pwd" name="password">
+        <label for="pwd">הרשאת גישה:</label>
+        <input type="password" class="form-control" id="pwd"  [formControl]="AllowingAccess">
       </div>
+    </div>
       
-      <!-- <nav>
-    <a [routerLink]="['/nav-bar']"routerLinkActive="active" style="background-color: #888;">enter</a>
-  </nav>  -->
+   
     
-      <button type="button"  class="btn btn-primary" (click)="tabs()">כניסה</button>
-     
+      <button type="button" [disable]="!accsessForm.valid" class="btn btn-primary" (click)="tabs()">כניסה</button>
+     </form>
       <router-outlet></router-outlet>
 
 </body>
-</html>
+</html> -->
+
+<!-- Default form login -->
+<div style="margin-right:550px; margin-top: 150px;">
+<form [formGroup]='accsessForm' style="width: 500px;"
+ class="text-center border border-light p-5">
+
+  <p class="h4 mb-4">כניסה</p>
+
+  <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" [formControl]="password" placeholder="E-mail">
+
+  <input type="password" id="defaultLoginFormPassword" class="form-control mb-4"   [formControl]="AllowingAccess" placeholder="הרשאת גישה:">
+
+ 
+
+  <button [disabled]="!accsessForm.valid" mdbBtn color="info" block="true" class="my-4" type="submit"(click)="SingIn()" >Sign in</button>
+
+ 
+
+</form>
+</div>

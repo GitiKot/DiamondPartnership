@@ -10,13 +10,14 @@ import { ExpensesModule } from './expenses/expenses.module';
 import { ChecksModule } from './checks/checks.module';
 import { SeriousnessModule } from './seriousness/seriousness.module';
 import { EmailModule } from './email/email.module';
+import { UseresModule } from './user/useres.module';
 // import { ChecksService } from './checks/checks.service';
 // import { ChecksController } from './checks/checks.controller';
 
 
 @Module({
   imports: [
-    PartnersModule,SalesModule,HttpModule, ExpensesModule,
+    PartnersModule,SalesModule,HttpModule, ExpensesModule,UseresModule,
     ChecksModule,
     SeriousnessModule,
 EmailModule,    MongooseModule.forRoot(
